@@ -1,0 +1,77 @@
+# ──────────────────────────────────────────────────────────────
+# LiverSira-AI  •  .gitignore
+# ──────────────────────────────────────────────────────────────
+
+# ── Python ────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+*.whl
+
+# ── Virtual environments ─────────────────────────────────────
+.venv/
+venv/
+ENV/
+env/
+
+# ── IDE / editor settings ────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ── OS files ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# ── Jupyter ───────────────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ── pytest / coverage ─────────────────────────────────────────
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# ── Data files (too large for GitHub) ─────────────────────────
+# Raw and processed data should NOT be committed.
+# Place a sample or use Git LFS / external storage instead.
+data/raw/
+data/processed/
+
+# ── Archives ──────────────────────────────────────────────────
+*.rar
+*.zip
+*.tar.gz
+*.7z
+
+# ── Logs ──────────────────────────────────────────────────────
+*.log
+
+# ── Environment variables ─────────────────────────────────────
+.env
+.env.*
+
+# ── Model artifacts / weights ─────────────────────────────────
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.onnx
+*.pkl
+*.joblib
+models/
+
