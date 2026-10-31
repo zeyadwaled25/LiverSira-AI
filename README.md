@@ -4,6 +4,7 @@
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Tests: Passing](https://img.shields.io/badge/tests-16%20passed-brightgreen.svg)](tests/)
 
 ## Overview
 
@@ -13,13 +14,22 @@ This repository handles the **NLP data pipeline**: transforming raw radiology re
 
 > **System boundaries:** The platform does **not** independently diagnose cancer, replace confirmatory CT/MRI examinations, or override physician decisions. All AI outputs are advisory.
 
-### Pipeline Scripts
+### Pipeline & Architecture
 
-| Script | Purpose |
-|--------|---------|
-| [`audit_dataset.py`](src/audit_dataset.py) | Profile the raw CSV — missing values, duplicates, target-column consistency |
-| [`check_pdf_csv_match.py`](src/check_pdf_csv_match.py) | Cross-check BDMAP IDs between the CSV metadata and 9,262 PDF report files |
-| [`prepare_nlp_dataset.py`](src/prepare_nlp_dataset.py) | Clean report text, standardize missing-value placeholders, produce `liver_nlp_clean.csv` |
+| Tier | Component | Purpose |
+|------|-----------|---------|
+| **Schemas** | [`schemas/master_schema.py`](schemas/master_schema.py) | Master Record schema preserving all 37 columns & multi-organ data |
+| | [`schemas/ground_truth_schema.py`](schemas/ground_truth_schema.py) | Benchmark target schema with consistency validators & audit status |
+| | [`schemas/inference_schema.py`](schemas/inference_schema.py) | Model prediction schema with evidence text spans & ternary logic |
+| **Data Ops** | [`src/generate_master_jsonl.py`](src/generate_master_jsonl.py) | Generates `master_records.jsonl` (9,262 records, 0 rows dropped) |
+| | [`src/generate_ground_truth_jsonl.py`](src/generate_ground_truth_jsonl.py) | Generates source-derived `ground_truth.jsonl` (pending verification) |
+| | [`src/audit_target_consistency.py`](src/audit_target_consistency.py) | Automated text vs label consistency audit across all 9,262 studies |
+| | [`src/split_dataset.py`](src/split_dataset.py) | Stratified 70/15/15 dataset partitioning into Train/Val/Test |
+| | [`src/baseline_extractor.py`](src/baseline_extractor.py) | Rule-based clinical NLP baseline extracting 4 core targets |
+| **Evaluation** | [`evaluation/evaluate_baseline.py`](evaluation/evaluate_baseline.py) | Benchmark evaluation against Ground Truth across dataset splits |
+| | [`src/audit_dataset.py`](src/audit_dataset.py) | Profile the raw CSV — missing values, duplicates, target consistency |
+| | [`src/check_pdf_csv_match.py`](src/check_pdf_csv_match.py) | Cross-check BDMAP IDs between CSV metadata and 9,262 PDF reports |
+| | [`src/prepare_nlp_dataset.py`](src/prepare_nlp_dataset.py) | Clean report text, produce `liver_nlp_clean.csv` |
 
 ## Project Structure
 
@@ -30,16 +40,27 @@ LiverSira-AI/
 │   │   ├── AbdomenAtlas3.0MiniWithMeta.csv
 │   │   └── pdf_reports/            # 9,262 radiology report PDFs
 │   └── processed/                  # Pipeline outputs (git-ignored)
+│       ├── master_records.jsonl    # 9,262 full study records
+│       ├── ground_truth.jsonl      # 9,262 benchmark records
 │       └── liver_nlp_clean.csv
+├── schemas/                        # Pydantic v2 data models
+│   ├── __init__.py
+│   ├── master_schema.py
+│   ├── ground_truth_schema.py
+│   └── inference_schema.py
 ├── src/
 │   ├── __init__.py
-│   ├── audit_dataset.py            # Data-quality audit
+│   ├── audit_dataset.py            # Data-quality profiling
 │   ├── check_pdf_csv_match.py      # PDF ↔ CSV ID matching
-│   └── prepare_nlp_dataset.py      # NLP dataset builder
-├── tests/                          # Test suite
+│   ├── generate_ground_truth_jsonl.py
+│   ├── generate_master_jsonl.py
+│   ├── prepare_nlp_dataset.py      # NLP dataset builder
+│   └── validate_targets.py         # Human adjudication sampler
+├── tests/                          # Pytest test suite
+│   └── test_schemas.py
 ├── docs/                           # Documentation
 ├── evaluation/                     # Model evaluation outputs
-├── schemas/                        # Data schemas
+├── pyproject.toml                  # Pytest configuration
 ├── .gitignore
 ├── LICENSE
 ├── README.md
@@ -77,7 +98,7 @@ pip install -r requirements.txt
 2. Extract PDF reports into `data/raw/pdf_reports/`.
 3. See [`data/README.md`](data/README.md) for the expected directory layout.
 
-### Usage
+### Running the Pipeline
 
 ```bash
 # 1. Audit the raw dataset
@@ -88,6 +109,18 @@ python -m src.check_pdf_csv_match
 
 # 3. Build the clean NLP dataset
 python -m src.prepare_nlp_dataset
+
+# 4. Generate Master Dataset JSONL (all 9,262 records)
+python -m src.generate_master_jsonl
+
+# 5. Generate Ground Truth JSONL (pending verification)
+python -m src.generate_ground_truth_jsonl
+
+# 6. Extract human validation review sample (79 cases)
+python -m src.validate_targets
+
+# 7. Run test suite
+pytest
 ```
 
 ## Dataset Details
@@ -95,9 +128,11 @@ python -m src.prepare_nlp_dataset
 | Property | Value |
 |----------|-------|
 | Source | [AbdomenAtlas 3.0 Mini](https://github.com/MrGiovanni/AbdomenAtlas) |
-| Records | 9,262 |
+| Total Records | 9,262 |
+| Positive Liver Lesion Records | 1,470 |
 | PDF reports | 9,262 |
-| Key columns | BDMAP ID, narrative report, lesion count, location (1–8), diameter (cm), attenuation |
+| Master JSONL Records | 9,262 |
+| Ground Truth JSONL Records | 9,262 |
 
 ### Missing-Value Placeholders
 
@@ -111,7 +146,7 @@ The pipeline standardizes missing liver-lesion values with explicit sentinels:
 
 ## Part of the HCC Surveillance AI Platform
 
-This NLP pipeline is one component of a larger clinical system (see the [Project Scope Document](docs/) for full details):
+This NLP pipeline is one component of a larger clinical system:
 
 | Phase | Component | Status |
 |-------|-----------|--------|
