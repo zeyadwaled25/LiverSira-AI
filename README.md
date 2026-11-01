@@ -69,6 +69,9 @@ LiverSira-AI/
 ├── evaluation/
 │   ├── evaluate_baseline.py        # Baseline metrics
 │   └── baseline_inferences.jsonl   # Baseline predictions (9,262 records)
+├── scripts/
+│   ├── __init__.py
+│   └── run_pipeline.py             # One-shot end-to-end pipeline runner
 ├── tests/                          # Pytest test suite
 │   ├── test_schemas.py
 │   ├── test_audit.py
@@ -84,7 +87,7 @@ LiverSira-AI/
 
 ### Prerequisites
 
-- Python 3.12 or later
+- Python 3.12 or later (tested on 3.14; dependencies are pinned in `requirements.txt` / `pyproject.toml`)
 - The [AbdomenAtlas 3.0 Mini](https://github.com/MrGiovanni/AbdomenAtlas) dataset (CSV + PDF reports)
 
 ### Installation
@@ -113,11 +116,19 @@ pip install -r requirements.txt
 
 ### Running the Pipeline
 
+Run the steps in order, or execute the whole pipeline at once:
+
+```bash
+python -m scripts.run_pipeline
+```
+
+Individual steps (equivalent to the one-shot command above):
+
 ```bash
 # 1. Audit the raw dataset
 python -m src.audit_dataset
 
-# 2. Verify PDF ↔ CSV matching
+# 2. Verify PDF <-> CSV matching
 python -m src.check_pdf_csv_match
 
 # 3. Build the clean NLP dataset
@@ -129,7 +140,7 @@ python -m src.generate_master_jsonl
 # 5. Generate Ground Truth JSONL (pending verification)
 python -m src.generate_ground_truth_jsonl
 
-# 6. Audit label ↔ report consistency
+# 6. Audit label <-> report consistency
 python -m src.audit_target_consistency
 
 # 7. Extract human validation review sample (79 cases)

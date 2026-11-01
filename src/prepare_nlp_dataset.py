@@ -18,7 +18,7 @@ import re
 
 import pandas as pd
 
-# ── paths and column-name constants ────────────────────────────
+# -- paths and column-name constants ----------------------------
 INPUT_PATH = Path("data/raw/AbdomenAtlas3.0MiniWithMeta.csv")
 OUTPUT_PATH = Path("data/processed/liver_nlp_clean.csv")
 
@@ -75,7 +75,7 @@ def prepare_dataset(input_path: Path, output_path: Path) -> pd.DataFrame:
     no_lesions = count.eq(0)
     has_lesions = count.gt(0)
 
-    # No liver lesions → largest-lesion fields do not apply.
+    # No liver lesions -> largest-lesion fields do not apply.
     df.loc[no_lesions, LOCATION] = "NO_LESION"
     df.loc[no_lesions, DIAMETER] = "NOT_APPLICABLE"
     df.loc[no_lesions, ATTENUATION] = "NOT_APPLICABLE"

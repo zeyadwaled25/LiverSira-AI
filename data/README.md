@@ -25,7 +25,30 @@ data/
     └── dataset_splits.csv                 # Output of split_dataset.py
 ```
 
-## How to Obtain the Data
+## Data Versioning / External Storage (optional)
+
+The raw and processed datasets are intentionally excluded from Git (see
+`.gitignore`) because they are too large for GitHub. Recommended options
+for reproducibility:
+
+- **DVC** — version the `data/` directory alongside the code without
+  storing binaries in Git. Typical setup:
+
+  ```bash
+  pip install dvc
+  dvc init
+  dvc add data/raw data/processed
+  dvc remote add -d storage <your-remote-url>
+  dvc push
+  ```
+
+- **External storage** — keep the datasets on cloud/object storage
+  (S3, GCS, Azure Blob, or a shared drive) and document the download
+  location in this README.
+
+Either approach keeps the repository small while keeping the pipeline
+reproducible. The code itself is pinned (see `requirements.txt` and
+`pyproject.toml`) so the same versions are used across machines.
 
 1. Download the AbdomenAtlas 3.0 Mini dataset.
 2. Place `AbdomenAtlas3.0MiniWithMeta.csv` in `data/raw/`.

@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pandas as pd
 
-# ── column name constants ──────────────────────────────────────
+# -- column name constants --------------------------------------
 ID = "BDMAP ID"
 TEXT = "narrative report"
 COUNT = "number of liver lesion instances"
@@ -40,7 +40,7 @@ def load_and_validate(csv_path: Path) -> pd.DataFrame:
 
 
 def print_overview(df: pd.DataFrame) -> None:
-    """Section 1 – basic dataset statistics."""
+    """Section 1 - basic dataset statistics."""
     text = df[TEXT].astype("string")
 
     print("\n" + "=" * 60)
@@ -56,7 +56,7 @@ def print_overview(df: pd.DataFrame) -> None:
 
 
 def print_missing_values(df: pd.DataFrame) -> None:
-    """Section 2 – columns ranked by percentage of missing values."""
+    """Section 2 - columns ranked by percentage of missing values."""
     print("\n" + "=" * 60)
     print("2. COLUMNS WITH MOST MISSING VALUES")
     print("=" * 60)
@@ -74,7 +74,7 @@ def print_missing_values(df: pd.DataFrame) -> None:
 
 
 def print_target_checks(df: pd.DataFrame) -> None:
-    """Section 3 – consistency between lesion count and target columns."""
+    """Section 3 - consistency between lesion count and target columns."""
     count = pd.to_numeric(df[COUNT], errors="coerce")
     location = df[LOCATION]
     diameter = pd.to_numeric(df[DIAMETER], errors="coerce")
@@ -110,7 +110,7 @@ def print_target_checks(df: pd.DataFrame) -> None:
 
 
 def print_text_quality(df: pd.DataFrame) -> None:
-    """Section 4 – narrative-report length and duplicate stats."""
+    """Section 4 - narrative-report length and duplicate stats."""
     text = df[TEXT].astype("string")
 
     print("\n" + "=" * 60)
@@ -131,7 +131,7 @@ def print_text_quality(df: pd.DataFrame) -> None:
 
 
 def print_review_cases(df: pd.DataFrame) -> None:
-    """Section 5 – specific IDs that need manual review."""
+    """Section 5 - specific IDs that need manual review."""
     text = df[TEXT].astype("string")
     count = pd.to_numeric(df[COUNT], errors="coerce")
     location = df[LOCATION]

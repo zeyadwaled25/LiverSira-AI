@@ -33,7 +33,7 @@ def collect_pdf_ids(data_dir: Path) -> dict[str, list[Path]]:
 
 
 def main() -> None:
-    """Run the CSV ↔ PDF matching report."""
+    """Run the CSV <-> PDF matching report."""
     df = pd.read_csv(CSV_PATH)
 
     print("=" * 50)
@@ -60,7 +60,7 @@ def main() -> None:
     }
 
     print("\n" + "=" * 50)
-    print("CSV ↔ PDF MATCHING")
+    print("CSV <-> PDF MATCHING")
     print("=" * 50)
 
     print(f"CSV IDs with matching PDF: {len(csv_ids & pdf_id_set)}")
