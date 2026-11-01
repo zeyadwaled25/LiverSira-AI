@@ -8,13 +8,11 @@ Computes standard clinical NLP metrics:
 - Categorical Extraction (attenuation): Accuracy, Micro/Macro F1
 """
 
-from collections import Counter
 import json
 from pathlib import Path
 from typing import Any
 
 import numpy as np
-import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 
 GROUND_TRUTH_PATH = Path("data/processed/ground_truth.jsonl")

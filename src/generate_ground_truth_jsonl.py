@@ -39,7 +39,7 @@ def generate_ground_truth_records(input_path: Path, output_path: Path) -> int:
 
     written_count = 0
     with open(output_path, "w", encoding="utf-8") as f_out:
-        for idx, row in df.iterrows():
+        for _, row in df.iterrows():
             record_id = str(row["BDMAP ID"])
             count = int(row["number of liver lesion instances"])
             has_lesion = count > 0

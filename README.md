@@ -21,15 +21,17 @@ This repository handles the **NLP data pipeline**: transforming raw radiology re
 | **Schemas** | [`schemas/master_schema.py`](schemas/master_schema.py) | Master Record schema preserving all 37 columns & multi-organ data |
 | | [`schemas/ground_truth_schema.py`](schemas/ground_truth_schema.py) | Benchmark target schema with consistency validators & audit status |
 | | [`schemas/inference_schema.py`](schemas/inference_schema.py) | Model prediction schema with evidence text spans & ternary logic |
-| **Data Ops** | [`src/generate_master_jsonl.py`](src/generate_master_jsonl.py) | Generates `master_records.jsonl` (9,262 records, 0 rows dropped) |
+| **Data Ops** | [`src/audit_dataset.py`](src/audit_dataset.py) | Profile the raw CSV — missing values, duplicates, target consistency |
+| | [`src/check_pdf_csv_match.py`](src/check_pdf_csv_match.py) | Cross-check BDMAP IDs between CSV metadata and 9,262 PDF reports |
+| | [`src/prepare_nlp_dataset.py`](src/prepare_nlp_dataset.py) | Clean report text, produce `liver_nlp_clean.csv` |
+| | [`src/generate_master_jsonl.py`](src/generate_master_jsonl.py) | Generates `master_records.jsonl` (9,262 records, 0 rows dropped) |
 | | [`src/generate_ground_truth_jsonl.py`](src/generate_ground_truth_jsonl.py) | Generates source-derived `ground_truth.jsonl` (pending verification) |
 | | [`src/audit_target_consistency.py`](src/audit_target_consistency.py) | Automated text vs label consistency audit across all 9,262 studies |
+| | [`src/validate_targets.py`](src/validate_targets.py) | Extracts the 79-case human adjudication sample |
+| | [`src/adjudicate_validation_sample.py`](src/adjudicate_validation_sample.py) | Records adjudication and promotes verified labels in `ground_truth.jsonl` |
 | | [`src/split_dataset.py`](src/split_dataset.py) | Stratified 70/15/15 dataset partitioning into Train/Val/Test |
 | | [`src/baseline_extractor.py`](src/baseline_extractor.py) | Rule-based clinical NLP baseline extracting 4 core targets |
 | **Evaluation** | [`evaluation/evaluate_baseline.py`](evaluation/evaluate_baseline.py) | Benchmark evaluation against Ground Truth across dataset splits |
-| | [`src/audit_dataset.py`](src/audit_dataset.py) | Profile the raw CSV — missing values, duplicates, target consistency |
-| | [`src/check_pdf_csv_match.py`](src/check_pdf_csv_match.py) | Cross-check BDMAP IDs between CSV metadata and 9,262 PDF reports |
-| | [`src/prepare_nlp_dataset.py`](src/prepare_nlp_dataset.py) | Clean report text, produce `liver_nlp_clean.csv` |
 
 ## Project Structure
 
@@ -40,9 +42,13 @@ LiverSira-AI/
 │   │   ├── AbdomenAtlas3.0MiniWithMeta.csv
 │   │   └── pdf_reports/            # 9,262 radiology report PDFs
 │   └── processed/                  # Pipeline outputs (git-ignored)
-│       ├── master_records.jsonl    # 9,262 full study records
-│       ├── ground_truth.jsonl      # 9,262 benchmark records
-│       └── liver_nlp_clean.csv
+│       ├── liver_nlp_clean.csv
+│       ├── master_records.jsonl
+│       ├── ground_truth.jsonl
+│       ├── target_consistency_audit.csv
+│       ├── target_validation_review.csv
+│       ├── splits.json
+│       └── dataset_splits.csv
 ├── schemas/                        # Pydantic v2 data models
 │   ├── __init__.py
 │   ├── master_schema.py
@@ -52,14 +58,21 @@ LiverSira-AI/
 │   ├── __init__.py
 │   ├── audit_dataset.py            # Data-quality profiling
 │   ├── check_pdf_csv_match.py      # PDF ↔ CSV ID matching
-│   ├── generate_ground_truth_jsonl.py
-│   ├── generate_master_jsonl.py
 │   ├── prepare_nlp_dataset.py      # NLP dataset builder
-│   └── validate_targets.py         # Human adjudication sampler
+│   ├── validate_targets.py         # Human adjudication sampler
+│   ├── adjudicate_validation_sample.py
+│   ├── generate_master_jsonl.py
+│   ├── generate_ground_truth_jsonl.py
+│   ├── audit_target_consistency.py
+│   ├── split_dataset.py
+│   └── baseline_extractor.py       # Rule-based NLP baseline
+├── evaluation/
+│   ├── evaluate_baseline.py        # Baseline metrics
+│   └── baseline_inferences.jsonl   # Baseline predictions (9,262 records)
 ├── tests/                          # Pytest test suite
-│   └── test_schemas.py
-├── docs/                           # Documentation
-├── evaluation/                     # Model evaluation outputs
+│   ├── test_schemas.py
+│   ├── test_audit.py
+│   └── test_baseline.py
 ├── pyproject.toml                  # Pytest configuration
 ├── .gitignore
 ├── LICENSE
@@ -116,10 +129,25 @@ python -m src.generate_master_jsonl
 # 5. Generate Ground Truth JSONL (pending verification)
 python -m src.generate_ground_truth_jsonl
 
-# 6. Extract human validation review sample (79 cases)
+# 6. Audit label ↔ report consistency
+python -m src.audit_target_consistency
+
+# 7. Extract human validation review sample (79 cases)
 python -m src.validate_targets
 
-# 7. Run test suite
+# 8. Adjudicate the sample and promote verified labels
+python -m src.adjudicate_validation_sample
+
+# 9. Create stratified 70/15/15 splits
+python -m src.split_dataset
+
+# 10. Run the rule-based NLP baseline
+python -m src.baseline_extractor
+
+# 11. Evaluate the baseline on the validation and test splits
+python -m evaluation.evaluate_baseline
+
+# 12. Run test suite
 pytest
 ```
 

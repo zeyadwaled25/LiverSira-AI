@@ -11,7 +11,6 @@ Guarantees:
 """
 
 from pathlib import Path
-import json
 import re
 import pandas as pd
 from schemas.master_schema import MasterRecord
@@ -62,7 +61,7 @@ def generate_master_records(input_path: Path, output_path: Path) -> int:
 
     written_count = 0
     with open(output_path, "w", encoding="utf-8") as f_out:
-        for idx, row in df.iterrows():
+        for _, row in df.iterrows():
             # 1. Raw columns dictionary (NaN -> None)
             raw_cols = {col: clean_val(row[col]) for col in df.columns}
 

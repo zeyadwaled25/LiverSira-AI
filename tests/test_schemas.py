@@ -20,14 +20,11 @@ from schemas.ground_truth_schema import (
     ValidationStatus,
 )
 from schemas.inference_schema import (
-    ConfidenceScores,
     EvidenceSpan,
     InferenceRecord,
-    InputReference,
     LargestLesionInference,
     LiverLesionsInference,
     MissingOrUnclearField,
-    StudyMetadata,
 )
 
 

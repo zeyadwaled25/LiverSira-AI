@@ -12,7 +12,6 @@ Actions:
 """
 
 from pathlib import Path
-import json
 import pandas as pd
 from schemas.ground_truth_schema import GroundTruthRecord, ValidationStatus
 

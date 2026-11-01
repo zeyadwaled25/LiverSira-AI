@@ -2,7 +2,6 @@
 
 from src.audit_target_consistency import (
     audit_single_record,
-    get_liver_sentences,
     split_sentences,
 )
 

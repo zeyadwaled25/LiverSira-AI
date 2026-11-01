@@ -16,7 +16,13 @@ data/
 │       ├── BDMAP_00000002.pdf
 │       └── ...
 └── processed/
-    └── liver_nlp_clean.csv                # Output of prepare_nlp_dataset.py
+    ├── liver_nlp_clean.csv                # Output of prepare_nlp_dataset.py
+    ├── master_records.jsonl               # Output of generate_master_jsonl.py
+    ├── ground_truth.jsonl                 # Output of generate_ground_truth_jsonl.py
+    ├── target_consistency_audit.csv       # Output of audit_target_consistency.py
+    ├── target_validation_review.csv       # Output of validate_targets.py
+    ├── splits.json                        # Output of split_dataset.py
+    └── dataset_splits.csv                 # Output of split_dataset.py
 ```
 
 ## How to Obtain the Data
@@ -24,5 +30,6 @@ data/
 1. Download the AbdomenAtlas 3.0 Mini dataset.
 2. Place `AbdomenAtlas3.0MiniWithMeta.csv` in `data/raw/`.
 3. Extract the PDF reports into `data/raw/pdf_reports/`.
-4. Run `python -m src.prepare_nlp_dataset` to generate the processed dataset.
+4. Run the pipeline steps in the main [README](../README.md#running-the-pipeline)
+   to generate the `data/processed/` outputs.
 

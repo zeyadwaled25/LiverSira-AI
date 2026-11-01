@@ -11,13 +11,10 @@ Outputs structured predictions following schemas.inference_schema.InferenceRecor
 into evaluation/baseline_inferences.jsonl and calculates performance metrics.
 """
 
-from collections import Counter
-import json
 from pathlib import Path
+import json
 import re
 from typing import Any
-
-import pandas as pd
 
 from schemas.inference_schema import (
     InferenceRecord,
@@ -28,7 +25,6 @@ from schemas.inference_schema import (
 )
 
 MASTER_RECORDS_PATH = Path("data/processed/master_records.jsonl")
-SPLITS_JSON_PATH = Path("data/processed/splits.json")
 OUTPUT_INFERENCE_PATH = Path("evaluation/baseline_inferences.jsonl")
 
 WORD_TO_NUM: dict[str, int] = {
