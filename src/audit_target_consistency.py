@@ -14,52 +14,14 @@ Produces:
 from collections import Counter
 import json
 from pathlib import Path
-import re
 from typing import Any
 
 import pandas as pd
+from src.nlp_parser import get_liver_sentences, parse_liver_report, split_sentences
 
 MASTER_PATH = Path("data/processed/master_records.jsonl")
 GT_PATH = Path("data/processed/ground_truth.jsonl")
 OUTPUT_CSV = Path("data/processed/target_consistency_audit.csv")
-
-WORD_TO_NUM: dict[str, int] = {
-    "a": 1,
-    "an": 1,
-    "one": 1,
-    "single": 1,
-    "two": 2,
-    "three": 3,
-    "four": 4,
-    "five": 5,
-    "six": 6,
-    "seven": 7,
-    "eight": 8,
-    "nine": 9,
-    "ten": 10,
-}
-
-
-def split_sentences(text: str) -> list[str]:
-    """Split text into sentences while respecting decimal numbers (e.g. '86.6')."""
-    if not text:
-        return []
-    return [
-        s.strip()
-        for s in re.split(r"\.(?:\s+(?=[A-Z])|\s*$)", text)
-        if s.strip()
-    ]
-
-
-def get_liver_sentences(text: str) -> list[str]:
-    """Filter sentences relevant to liver or abdominal impressions."""
-    sents = split_sentences(text)
-    return [
-        s
-        for s in sents
-        if any(k in s.lower() for k in ["liver", "hepatic", "impression"])
-    ]
-
 
 def audit_single_record(master: dict[str, Any], gt: dict[str, Any]) -> dict[str, Any]:
     """Perform rule-based consistency check for a single record."""
@@ -92,32 +54,28 @@ def audit_single_record(master: dict[str, Any], gt: dict[str, Any]) -> dict[str,
     l_cnt: int = gt_lbl["lesion_count"]
     largest: dict[str, Any] | None = gt_lbl.get("largest_lesion")
 
-    liver_sents = get_liver_sentences(text)
-    liver_text = " ".join(liver_sents)
+    parsed = parse_liver_report(text)
+    liver_text = parsed.liver_text
 
     # 1. has_lesion check
-    has_mention = False
-    for s in liver_sents:
-        if re.search(
-            r"(?:liver|hepatic)[^.]*?(?:lesion|mass|nodule|tumor)", s, re.I
-        ) or re.search(
-            r"(?:lesion|mass|tumor)[^.]*?(?:in|of) (?:the )?(?:liver|hepatic segment)",
-            s,
-            re.I,
-        ):
-            if not re.search(r"\bno\b|\bwithout\b|\bnegative\b|\bfree of\b", s, re.I):
-                has_mention = True
-                break
+    has_mention = parsed.presence
 
     if not has_l:
         # Expected negative
-        if not has_mention:
+        if has_mention is False:
             hl_status = "MATCH"
             cnt_status = "MATCH"
             loc_status = "MATCH"
             diam_status = "MATCH"
             att_status = "MATCH"
             disc = ""
+        elif has_mention is None:
+            hl_status = "UNCERTAIN"
+            cnt_status = "UNCERTAIN"
+            loc_status = "UNCERTAIN"
+            diam_status = "UNCERTAIN"
+            att_status = "UNCERTAIN"
+            disc = "No definitive lesion presence conclusion found in text"
         else:
             hl_status = "MISMATCH"
             cnt_status = "MISMATCH"
@@ -132,7 +90,7 @@ def audit_single_record(master: dict[str, Any], gt: dict[str, Any]) -> dict[str,
             "has_lesion_gt": False,
             "has_lesion_status": hl_status,
             "count_gt": 0,
-            "count_text": 0 if not has_mention else None,
+            "count_text": 0 if has_mention is False else None,
             "count_status": cnt_status,
             "location_gt": None,
             "location_text": None,
@@ -149,50 +107,23 @@ def audit_single_record(master: dict[str, Any], gt: dict[str, Any]) -> dict[str,
 
     # has_lesion == True
     discrepancies: list[str] = []
-    hl_status = "MATCH" if has_mention else "MISMATCH"
+    if has_mention is True:
+        hl_status = "MATCH"
+    elif has_mention is False:
+        hl_status = "MISMATCH"
+    else:
+        hl_status = "UNCERTAIN"
     if hl_status == "MISMATCH":
         discrepancies.append(
             "Lesions in GT but no affirmative liver lesion found in text"
         )
+    elif hl_status == "UNCERTAIN":
+        discrepancies.append(
+            "Lesion presence is ambiguous or not definitively stated in text"
+        )
 
     # 2. Count check
-    found_cnt: int | None = None
-    m_tot = re.search(r"total of (\d+)(?: liver)? lesions", text, re.I)
-    if m_tot:
-        found_cnt = int(m_tot.group(1))
-    else:
-        m_add = re.search(
-            r"(\d+|one|two|three|four|five|six|seven|eight|nine|ten) additional liver lesions",
-            text,
-            re.I,
-        )
-        if m_add:
-            w = m_add.group(1).lower()
-            add = WORD_TO_NUM.get(w, int(w) if w.isdigit() else 0)
-            found_cnt = add + 1
-        else:
-            m_cnt = re.search(
-                r"\b(a|an|one|single|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+(?:single\s+)?(?:small\s+|large\s+)?(?:\w+attenuating\s+)?liver (?:lesions|masses|lesion|mass)",
-                text,
-                re.I,
-            )
-            if m_cnt:
-                w = m_cnt.group(1).lower()
-                found_cnt = WORD_TO_NUM.get(w, int(w) if w.isdigit() else None)
-            else:
-                m_single = re.search(
-                    r"\b(a|an|one|single)\s+(?:small\s+|large\s+)?(?:\w+attenuating\s+)?liver (?:lesion|mass)",
-                    text,
-                    re.I,
-                )
-                if m_single:
-                    found_cnt = 1
-                elif "contains two lesions" in text.lower():
-                    found_cnt = 2
-                elif "contains three lesions" in text.lower():
-                    found_cnt = 3
-                elif "contains four lesions" in text.lower():
-                    found_cnt = 4
+    found_cnt = parsed.lesion_count
 
     if found_cnt is not None:
         if found_cnt == l_cnt:
@@ -212,14 +143,7 @@ def audit_single_record(master: dict[str, Any], gt: dict[str, Any]) -> dict[str,
     )
     gt_loc_str = ", ".join(str(s) for s in sorted(gt_segs)) if gt_segs else None
 
-    m_seg = re.search(
-        r"hepatic segment[s]?\s*([1-8\s,and/-]+?)(?:\s+measuring|\s+with|\s+and\s+has|\.|\(|\n|,?\s*measur)",
-        text,
-        re.I,
-    )
-    text_segs = (
-        set([int(x) for x in re.findall(r"[1-8]", m_seg.group(1))]) if m_seg else None
-    )
+    text_segs = set(parsed.location_segments) if parsed.location_segments else None
     text_loc_str = (
         ", ".join(str(s) for s in sorted(text_segs)) if text_segs else None
     )
@@ -249,36 +173,14 @@ def audit_single_record(master: dict[str, Any], gt: dict[str, Any]) -> dict[str,
 
     # 4. Diameter check
     gt_diam = largest.get("source_diameter_cm") if largest else None
-    m_diam = re.search(
-        r"largest (?:liver )?(?:lesion|mass|one)[^.]*?measuring\s*(\d+(?:\.\d+)?)\s*(?:x\s*(\d+(?:\.\d+)?))?\s*cm",
-        text,
-        re.I,
-    )
-    if not m_diam:
-        m_diam = re.search(
-            r"(?:liver|hepatic)\s+(?:lesion|mass)[^.]*?measuring\s*(\d+(?:\.\d+)?)\s*(?:x\s*(\d+(?:\.\d+)?))?\s*cm",
-            text,
-            re.I,
-        )
-    if not m_diam:
-        m_diam = re.search(
-            r"measuring\s*(\d+(?:\.\d+)?)\s*(?:x\s*(\d+(?:\.\d+)?))?\s*cm[^.]*?hepatic segment",
-            text,
-            re.I,
-        )
-
-    text_diam: float | None = None
-    if m_diam and gt_diam is not None:
-        d1 = float(m_diam.group(1))
-        d2 = float(m_diam.group(2)) if m_diam.group(2) else d1
-        max_d = max(d1, d2)
-        text_diam = max_d
-        if abs(max_d - gt_diam) <= 0.05 or abs(d1 - gt_diam) <= 0.05:
+    text_diam = parsed.derived_max_diameter_cm
+    if text_diam is not None and gt_diam is not None:
+        if abs(text_diam - gt_diam) <= 0.05:
             diam_status = "MATCH"
         else:
             diam_status = "MISMATCH"
             discrepancies.append(
-                f"Diameter mismatch: GT={gt_diam} cm vs text={max_d} cm"
+                f"Diameter mismatch: GT={gt_diam} cm vs text={text_diam} cm"
             )
     else:
         diam_status = "UNCERTAIN"
@@ -290,25 +192,7 @@ def audit_single_record(master: dict[str, Any], gt: dict[str, Any]) -> dict[str,
     gt_att = largest.get("attenuation") if largest else None
     gt_att_str = str(gt_att).lower() if gt_att else None
 
-    m_att = re.search(
-        r"(hypoattenuating|hyperattenuating|isoattenuating)\s+(?:relative to the liver\s+)?liver (?:lesion|mass)",
-        text,
-        re.I,
-    )
-    if not m_att:
-        m_att = re.search(
-            r"largest (?:liver )?(?:lesion|mass|one)[^.]*?(hypoattenuating|hyperattenuating|isoattenuating)",
-            text,
-            re.I,
-        )
-    if not m_att:
-        m_att = re.search(
-            r"(?:liver|hepatic)\s+(?:lesion|mass)[^.]*?(hypoattenuating|hyperattenuating|isoattenuating)",
-            text,
-            re.I,
-        )
-
-    text_att = m_att.group(1).lower() if m_att else None
+    text_att = parsed.attenuation
     att_in_liver = [
         t
         for t in ["hypoattenuating", "hyperattenuating", "isoattenuating"]

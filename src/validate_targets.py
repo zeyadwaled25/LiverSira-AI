@@ -83,6 +83,9 @@ def create_validation_sample(input_path: Path, output_path: Path) -> pd.DataFram
     review["reviewed_attenuation"] = ""
     review["targets_match_report"] = ""
     review["review_notes"] = ""
+    # These must be completed by a human reviewer; they are intentionally blank.
+    review["reviewer_id"] = ""
+    review["reviewed_at"] = ""
 
     columns = [
         ID,
@@ -99,6 +102,8 @@ def create_validation_sample(input_path: Path, output_path: Path) -> pd.DataFram
         "reviewed_attenuation",
         "targets_match_report",
         "review_notes",
+        "reviewer_id",
+        "reviewed_at",
     ]
 
     review = review[columns]

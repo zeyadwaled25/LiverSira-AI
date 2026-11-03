@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="120" viewBox="0 0 900 120">
+  <style>
+    .node { fill:#1f6feb; stroke:#fff; stroke-width:2; rx:8; }
+    .label { fill:#fff; font-family:sans-serif; font-size:11px; text-anchor:middle; }
+    .pulse { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+  </style>
+  <g class="pulse">
+    <rect class="node" x="10" y="40" width="90" height="40"/>
+    <text class="label" x="55" y="65">Audit</text>
+  </g>
+  <line x1="100" y1="60" x2="120" y2="60" stroke="#888" stroke-width="2"/>
+  <rect class="node" x="120" y="40" width="90" height="40"/>
+  <text class="label" x="165" y="65">PDF Match</text>
+  <line x1="210" y1="60" x2="230" y2="60" stroke="#888" stroke-width="2"/>
+  <rect class="node" x="230" y="40" width="90" height="40"/>
+  <text class="label" x="275" y="65">Clean NLP</text>
+  <line x1="320" y1="60" x2="340" y2="60" stroke="#888" stroke-width="2"/>
+  <rect class="node" x="340" y="40" width="90" height="40"/>
+  <text class="label" x="385" y="65">Master JSONL</text>
+  <line x1="430" y1="60" x2="450" y2="60" stroke="#888" stroke-width="2"/>
+  <rect class="node" x="450" y="40" width="90" height="40"/>
+  <text class="label" x="495" y="65">Ground Truth</text>
+  <line x1="540" y1="60" x2="560" y2="60" stroke="#888" stroke-width="2"/>
+  <rect class="node" x="560" y="40" width="90" height="40"/>
+  <text class="label" x="605" y="65">Consistency</text>
+  <line x1="650" y1="60" x2="670" y2="60" stroke="#888" stroke-width="2"/>
+  <rect class="node" x="670" y="40" width="90" height="40"/>
+  <text class="label" x="715" y="65">Split</text>
+  <line x1="760" y1="60" x2="780" y2="60" stroke="#888" stroke-width="2"/>
+  <rect class="node" x="780" y="40" width="110" height="40"/>
+  <text class="label" x="835" y="65">Baseline Eval</text>
+</svg>

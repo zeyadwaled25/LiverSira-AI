@@ -1,6 +1,12 @@
 """Unit tests for the rule-based baseline extraction logic."""
 
-from src.baseline_extractor import extract_liver_lesion_features
+from pathlib import Path
+import json
+
+from src.baseline_extractor import (
+    extract_liver_lesion_features,
+    run_baseline_inference,
+)
 
 
 def test_baseline_negative_case():
@@ -41,3 +47,67 @@ def test_baseline_positive_multi_lesions_multi_segments():
     assert features["derived_max_diameter_cm"] == 6.5
     assert features["attenuation"] == "hypoattenuating"
 
+
+def test_baseline_normal_description_is_unclear_not_negative():
+    features = extract_liver_lesion_features(
+        "The liver is normal in size and appearance."
+    )
+
+    assert features["has_lesion"] is None
+    assert features["lesion_count"] is None
+    assert features["missing_or_unclear"] == [
+        {
+            "field": "liver_lesions.has_lesion",
+            "reason": "not_mentioned",
+        }
+    ]
+
+
+def test_baseline_missing_narrative_is_unclear(tmp_path: Path):
+    master_path = tmp_path / "master.jsonl"
+    output_path = tmp_path / "inferences.jsonl"
+    master_path.write_text(
+        json.dumps(
+            {
+                "id": "MISSING_TEXT",
+                "reports": {"narrative_clean": None},
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    records = run_baseline_inference(master_path, output_path)
+
+    assert records[0].liver_lesions.has_lesion is None
+    assert records[0].liver_lesions.lesion_count is None
+    assert records[0].missing_or_unclear[0].field == "liver_lesions.has_lesion"
+    assert records[0].missing_or_unclear[0].reason == "not_mentioned"
+
+
+def test_baseline_explicit_negative_is_false():
+    features = extract_liver_lesion_features(
+        "The liver is normal. No focal liver lesions are identified."
+    )
+
+    assert features["has_lesion"] is False
+    assert features["lesion_count"] == 0
+    assert features["missing_or_unclear"] == []
+
+
+def test_inference_record_preserves_evidence_offsets(tmp_path: Path):
+    text = "No focal liver lesions are identified."
+    master_path = tmp_path / "master.jsonl"
+    output_path = tmp_path / "inferences.jsonl"
+    master_path.write_text(
+        json.dumps({"id": "NEGATIVE", "reports": {"narrative_clean": text}})
+        + "\n",
+        encoding="utf-8",
+    )
+
+    records = run_baseline_inference(master_path, output_path)
+    evidence = records[0].evidence_spans[0]
+
+    assert evidence.target_field == "liver_lesions.has_lesion"
+    assert text[evidence.start:evidence.end] == evidence.text
+    assert evidence.text == text

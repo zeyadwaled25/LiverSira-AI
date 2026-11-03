@@ -13,51 +13,26 @@ into evaluation/baseline_inferences.jsonl and calculates performance metrics.
 
 from pathlib import Path
 import json
-import re
 from typing import Any
 
 from schemas.inference_schema import (
     InferenceRecord,
     InputReference,
+    EvidenceSpan,
     LargestLesionInference,
     LiverLesionsInference,
+    MissingOrUnclearField,
     StudyMetadata,
 )
+from src.nlp_parser import parse_liver_report
 
 MASTER_RECORDS_PATH = Path("data/processed/master_records.jsonl")
 OUTPUT_INFERENCE_PATH = Path("evaluation/baseline_inferences.jsonl")
 
-WORD_TO_NUM: dict[str, int] = {
-    "a": 1,
-    "an": 1,
-    "one": 1,
-    "single": 1,
-    "two": 2,
-    "three": 3,
-    "four": 4,
-    "five": 5,
-    "six": 6,
-    "seven": 7,
-    "eight": 8,
-    "nine": 9,
-    "ten": 10,
-}
-
-
-def split_sentences(text: str) -> list[str]:
-    """Split text into sentences while respecting decimal numbers."""
-    if not text:
-        return []
-    return [
-        s.strip()
-        for s in re.split(r"\.(?:\s+(?=[A-Z])|\s*$)", text)
-        if s.strip()
-    ]
-
-
 def extract_liver_lesion_features(text: str | None) -> dict[str, Any]:
-    """Rule-based extractor for the 4 core liver lesion targets."""
-    if not text:
+    """Extract liver targets while preserving unknown presence as ``None``."""
+    parsed = parse_liver_report(text, include_broad_attenuation_fallback=True)
+    if parsed.presence is False:
         return {
             "has_lesion": False,
             "lesion_count": 0,
@@ -65,162 +40,38 @@ def extract_liver_lesion_features(text: str | None) -> dict[str, Any]:
             "reported_dimensions_cm": None,
             "derived_max_diameter_cm": None,
             "attenuation": None,
+            "missing_or_unclear": [],
+            "evidence": [item.__dict__ for item in parsed.evidence],
         }
 
-    sents = split_sentences(text)
-    liver_sents = [
-        s
-        for s in sents
-        if any(k in s.lower() for k in ["liver", "hepatic", "impression"])
-    ]
-    liver_text = " ".join(liver_sents)
-
-    # 1. Affirmative liver lesion detection
-    has_mention = False
-    for s in liver_sents:
-        if re.search(
-            r"(?:liver|hepatic)[^.]*?(?:lesion|mass|nodule|tumor)", s, re.I
-        ) or re.search(
-            r"(?:lesion|mass|tumor)[^.]*?(?:in|of) (?:the )?(?:liver|hepatic segment)",
-            s,
-            re.I,
-        ):
-            if not re.search(r"\bno\b|\bwithout\b|\bnegative\b|\bfree of\b", s, re.I):
-                has_mention = True
-                break
-
-    if not has_mention:
+    if parsed.presence is None:
         return {
-            "has_lesion": False,
-            "lesion_count": 0,
+            "has_lesion": None,
+            "lesion_count": None,
             "location_segments": None,
             "reported_dimensions_cm": None,
             "derived_max_diameter_cm": None,
             "attenuation": None,
+            "missing_or_unclear": [
+                {
+                    "field": "liver_lesions.has_lesion",
+                    "reason": parsed.presence_reason or "ambiguous",
+                }
+            ],
+            "evidence": [item.__dict__ for item in parsed.evidence],
         }
-
-    # 2. Lesion count extraction
-    found_cnt: int | None = None
-    m_tot = re.search(r"total of (\d+)(?: liver)? lesions", text, re.I)
-    if m_tot:
-        found_cnt = int(m_tot.group(1))
-    else:
-        m_add = re.search(
-            r"(\d+|one|two|three|four|five|six|seven|eight|nine|ten) additional liver lesions",
-            text,
-            re.I,
-        )
-        if m_add:
-            w = m_add.group(1).lower()
-            add = WORD_TO_NUM.get(w, int(w) if w.isdigit() else 0)
-            found_cnt = add + 1
-        else:
-            m_cnt = re.search(
-                r"\b(a|an|one|single|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+(?:single\s+)?(?:small\s+|large\s+)?(?:\w+attenuating\s+)?liver (?:lesions|masses|lesion|mass)",
-                text,
-                re.I,
-            )
-            if m_cnt:
-                w = m_cnt.group(1).lower()
-                found_cnt = WORD_TO_NUM.get(w, int(w) if w.isdigit() else None)
-            else:
-                m_single = re.search(
-                    r"\b(a|an|one|single)\s+(?:small\s+|large\s+)?(?:\w+attenuating\s+)?liver (?:lesion|mass)",
-                    text,
-                    re.I,
-                )
-                if m_single:
-                    found_cnt = 1
-                elif "contains two lesions" in text.lower():
-                    found_cnt = 2
-                elif "contains three lesions" in text.lower():
-                    found_cnt = 3
-                elif "contains four lesions" in text.lower():
-                    found_cnt = 4
-
-    # Default to 1 if lesion confirmed affirmative but unquantified
-    if found_cnt is None:
-        found_cnt = 1
-
-    # 3. Location segments (Couinaud 1-8)
-    m_seg = re.search(
-        r"hepatic segment[s]?\s*([1-8\s,and/-]+?)(?:\s+measuring|\s+with|\s+and\s+has|\.|\(|\n|,?\s*measur)",
-        text,
-        re.I,
-    )
-    segs = (
-        sorted(list(set([int(x) for x in re.findall(r"[1-8]", m_seg.group(1))])))
-        if m_seg
-        else None
-    )
-
-    # 4. Dimensions and Diameter
-    m_diam = re.search(
-        r"largest (?:liver )?(?:lesion|mass|one)[^.]*?measuring\s*(\d+(?:\.\d+)?)\s*(?:x\s*(\d+(?:\.\d+)?))?\s*cm",
-        text,
-        re.I,
-    )
-    if not m_diam:
-        m_diam = re.search(
-            r"(?:liver|hepatic)\s+(?:lesion|mass)[^.]*?measuring\s*(\d+(?:\.\d+)?)\s*(?:x\s*(\d+(?:\.\d+)?))?\s*cm",
-            text,
-            re.I,
-        )
-    if not m_diam:
-        m_diam = re.search(
-            r"measuring\s*(\d+(?:\.\d+)?)\s*(?:x\s*(\d+(?:\.\d+)?))?\s*cm[^.]*?hepatic segment",
-            text,
-            re.I,
-        )
-
-    dimensions: list[float] | None = None
-    max_d: float | None = None
-    if m_diam:
-        d1 = float(m_diam.group(1))
-        d2 = float(m_diam.group(2)) if m_diam.group(2) else None
-        dimensions = [d1, d2] if d2 is not None else [d1]
-        max_d = max(dimensions)
-
-    # 5. Attenuation
-    m_att = re.search(
-        r"(hypoattenuating|hyperattenuating|isoattenuating)\s+(?:relative to the liver\s+)?liver (?:lesion|mass)",
-        text,
-        re.I,
-    )
-    if not m_att:
-        m_att = re.search(
-            r"largest (?:liver )?(?:lesion|mass|one)[^.]*?(hypoattenuating|hyperattenuating|isoattenuating)",
-            text,
-            re.I,
-        )
-    if not m_att:
-        m_att = re.search(
-            r"(?:liver|hepatic)\s+(?:lesion|mass)[^.]*?(hypoattenuating|hyperattenuating|isoattenuating)",
-            text,
-            re.I,
-        )
-    if not m_att:
-        m_att = re.search(
-            r"(?:lesions|masses)[^.]*?(hypoattenuating|hyperattenuating|isoattenuating)",
-            text,
-            re.I,
-        )
-    if not m_att:
-        m_att = re.search(
-            r"(hypoattenuating|hyperattenuating|isoattenuating)",
-            liver_text,
-            re.I,
-        )
-
-    att = m_att.group(1).lower() if m_att else None
 
     return {
         "has_lesion": True,
-        "lesion_count": found_cnt,
-        "location_segments": segs,
-        "reported_dimensions_cm": dimensions,
-        "derived_max_diameter_cm": max_d,
-        "attenuation": att,
+        "lesion_count": (
+            parsed.lesion_count if parsed.lesion_count is not None else 1
+        ),
+        "location_segments": parsed.location_segments,
+        "reported_dimensions_cm": parsed.reported_dimensions_cm,
+        "derived_max_diameter_cm": parsed.derived_max_diameter_cm,
+        "attenuation": parsed.attenuation,
+        "missing_or_unclear": [],
+        "evidence": [item.__dict__ for item in parsed.evidence],
     }
 
 
@@ -247,7 +98,7 @@ def run_baseline_inference(
             text = master_rec.get("reports", {}).get("narrative_clean")
             features = extract_liver_lesion_features(text)
 
-            if features["has_lesion"]:
+            if features["has_lesion"] is True:
                 largest_obj = LargestLesionInference(
                     location_segments=features["location_segments"],
                     reported_dimensions_cm=features["reported_dimensions_cm"],
@@ -256,6 +107,14 @@ def run_baseline_inference(
                 )
             else:
                 largest_obj = None
+
+            missing_or_unclear = [
+                MissingOrUnclearField(**item)
+                for item in features["missing_or_unclear"]
+            ]
+            evidence_spans = [
+                EvidenceSpan(**item) for item in features["evidence"]
+            ]
 
             inference_rec = InferenceRecord(
                 id=rec_id,
@@ -268,8 +127,8 @@ def run_baseline_inference(
                     lesion_count=features["lesion_count"],
                     largest_lesion=largest_obj,
                 ),
-                evidence_spans=[],
-                missing_or_unclear=[],
+                evidence_spans=evidence_spans,
+                missing_or_unclear=missing_or_unclear,
                 confidence=None,
             )
 

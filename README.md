@@ -6,6 +6,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tests: Passing](https://img.shields.io/badge/tests-16%20passed-brightgreen.svg)](tests/)
 
+![Pipeline flow](docs/media/pipeline_flow.svg)
+
 ## Overview
 
 **LiverSira-AI** is the data-processing backbone of the **HCC Surveillance AI Platform** — a medical decision-support system for monitoring liver cirrhosis patients and predicting hepatocellular carcinoma (HCC) risk.
@@ -27,8 +29,9 @@ This repository handles the **NLP data pipeline**: transforming raw radiology re
 | | [`src/generate_master_jsonl.py`](src/generate_master_jsonl.py) | Generates `master_records.jsonl` (9,262 records, 0 rows dropped) |
 | | [`src/generate_ground_truth_jsonl.py`](src/generate_ground_truth_jsonl.py) | Generates source-derived `ground_truth.jsonl` (pending verification) |
 | | [`src/audit_target_consistency.py`](src/audit_target_consistency.py) | Automated text vs label consistency audit across all 9,262 studies |
+| | [`src/nlp_parser.py`](src/nlp_parser.py) | Shared rule-based parsing used by the baseline and consistency audit |
 | | [`src/validate_targets.py`](src/validate_targets.py) | Extracts the 79-case human adjudication sample |
-| | [`src/adjudicate_validation_sample.py`](src/adjudicate_validation_sample.py) | Records adjudication and promotes verified labels in `ground_truth.jsonl` |
+| | [`src/adjudicate_validation_sample.py`](src/adjudicate_validation_sample.py) | Validates reviewer-entered adjudication and promotes eligible records in `ground_truth.jsonl` |
 | | [`src/split_dataset.py`](src/split_dataset.py) | Stratified 70/15/15 dataset partitioning into Train/Val/Test |
 | | [`src/baseline_extractor.py`](src/baseline_extractor.py) | Rule-based clinical NLP baseline extracting 4 core targets |
 | **Evaluation** | [`evaluation/evaluate_baseline.py`](evaluation/evaluate_baseline.py) | Benchmark evaluation against Ground Truth across dataset splits |
@@ -59,6 +62,7 @@ LiverSira-AI/
 │   ├── audit_dataset.py            # Data-quality profiling
 │   ├── check_pdf_csv_match.py      # PDF ↔ CSV ID matching
 │   ├── prepare_nlp_dataset.py      # NLP dataset builder
+│   ├── nlp_parser.py              # Shared baseline/audit text parser
 │   ├── validate_targets.py         # Human adjudication sampler
 │   ├── adjudicate_validation_sample.py
 │   ├── generate_master_jsonl.py
@@ -146,7 +150,8 @@ python -m src.audit_target_consistency
 # 7. Extract human validation review sample (79 cases)
 python -m src.validate_targets
 
-# 8. Adjudicate the sample and promote verified labels
+# 8. Enter reviewer adjudication plus reviewer_id and reviewed_at in the CSV,
+#    then promote only valid, attributable reviews
 python -m src.adjudicate_validation_sample
 
 # 9. Create stratified 70/15/15 splits
@@ -160,6 +165,20 @@ python -m evaluation.evaluate_baseline
 
 # 12. Run test suite
 pytest
+```
+
+## Visual Demonstrations
+
+Suggested animations/GIFs to embed for maximum impact (place assets under `docs/media/`):
+
+1. **Pipeline flow (animated SVG)** — `docs/media/pipeline_flow.svg`: Animate the 11-step pipeline (`audit_dataset` → `evaluate_baseline`) with highlighted nodes as data flows. Embed at top of "Pipeline & Architecture".
+2. **Report → structured features (GIF)** — `docs/media/extraction_demo.gif`: Screen recording of `baseline_extractor.py` turning a raw radiology report into 4 extracted targets. Embed in "Usage Examples" / baseline section.
+3. **Consistency audit heatmap (GIF)** — `docs/media/audit_heatmap.gif`: `audit_target_consistency.py` output heatmap of text-vs-label agreement. Embed in Evaluation section.
+4. **Stratified split distribution (animated SVG)** — `docs/media/split_distribution.svg`: Bar chart animating class balance across Train/Val/Test. Embed in Dataset Details.
+
+Embed pattern:
+```markdown
+![Pipeline flow](docs/media/pipeline_flow.svg)
 ```
 
 ## Dataset Details
