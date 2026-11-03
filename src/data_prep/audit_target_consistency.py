@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-from src.nlp_parser import get_liver_sentences, parse_liver_report, split_sentences
+from src.nlp_parser import parse_liver_report, split_sentences
 
 MASTER_PATH = Path("data/processed/master_records.jsonl")
 GT_PATH = Path("data/processed/ground_truth.jsonl")

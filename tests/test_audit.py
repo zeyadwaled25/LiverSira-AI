@@ -1,6 +1,6 @@
 """Unit tests for the automated target consistency audit logic."""
 
-from src.audit_target_consistency import (
+from src.data_prep.audit_target_consistency import (
     audit_single_record,
     split_sentences,
 )
@@ -98,4 +98,3 @@ def test_audit_single_record_negative_case():
     assert result["has_lesion_status"] == "MATCH"
     assert result["count_status"] == "MATCH"
     assert result["overall_status"] == "MATCH"
-

@@ -14,15 +14,15 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 STEPS = [
-    "src.audit_dataset",
-    "src.check_pdf_csv_match",
-    "src.prepare_nlp_dataset",
-    "src.generate_master_jsonl",
-    "src.generate_ground_truth_jsonl",
-    "src.audit_target_consistency",
-    "src.validate_targets",
-    "src.adjudicate_validation_sample",
-    "src.split_dataset",
+    "src.data_prep.audit_dataset",
+    "src.data_prep.check_pdf_csv_match",
+    "src.data_prep.prepare_nlp_dataset",
+    "src.data_prep.generate_master_jsonl",
+    "src.data_prep.generate_ground_truth_jsonl",
+    "src.data_prep.audit_target_consistency",
+    "src.data_prep.validate_targets",
+    "src.data_prep.adjudicate_validation_sample",
+    "src.data_prep.split_dataset",
     "src.baseline_extractor",
     "evaluation.evaluate_baseline",
 ]

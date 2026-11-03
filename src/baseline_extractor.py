@@ -8,7 +8,7 @@ Extracts structured liver findings from raw/cleaned radiology narrative reports:
 5. Largest Lesion Attenuation (hypo/iso/hyperattenuating)
 
 Outputs structured predictions following schemas.inference_schema.InferenceRecord
-into evaluation/baseline_inferences.jsonl and calculates performance metrics.
+into evaluation/baseline/baseline_inferences_updated.jsonl and calculates performance metrics.
 """
 
 from pathlib import Path
@@ -27,7 +27,7 @@ from schemas.inference_schema import (
 from src.nlp_parser import parse_liver_report
 
 MASTER_RECORDS_PATH = Path("data/processed/master_records.jsonl")
-OUTPUT_INFERENCE_PATH = Path("evaluation/baseline_inferences.jsonl")
+OUTPUT_INFERENCE_PATH = Path("evaluation/baseline/baseline_inferences_updated.jsonl")
 
 def extract_liver_lesion_features(text: str | None) -> dict[str, Any]:
     """Extract liver targets while preserving unknown presence as ``None``."""

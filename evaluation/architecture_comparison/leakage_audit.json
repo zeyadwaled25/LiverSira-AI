@@ -1,0 +1,79 @@
+{
+  "train_count": 6482,
+  "validation_count": 1389,
+  "exact_duplicate_narratives": 0,
+  "exact_duplicate_validation_records": 0,
+  "exact_duplicate_examples": [],
+  "repeated_template_count_train": 474,
+  "repeated_template_count_validation": 102,
+  "template_overlap_count": 298,
+  "template_overlap_validation_records": 468,
+  "near_duplicate_thresholds": {
+    "cosine_char_tfidf_ge_0.90": 1,
+    "cosine_char_tfidf_ge_0.95": 0
+  },
+  "near_duplicate_examples": [
+    {
+      "validation_id": "BDMAP_00004582",
+      "train_id": "BDMAP_00004574",
+      "similarity": 0.9165603712362153,
+      "validation_text": "The spleen is normal in size, measuring [NUM] cc in volume. The liver, pancreas, and kidneys are unremarkable, with no evidence of tumor or other significant abnormalities. IMPRESSION: [NUM]. Normal spleen size. [NUM]. No evidence of tumor "
+    },
+    {
+      "validation_id": "BDMAP_00002511",
+      "train_id": "BDMAP_00001128",
+      "similarity": 0.8955166652626602,
+      "validation_text": "The patient has a normal-sized spleen, measuring [NUM] cc in volume, with a mean Hounsfield Unit (HU) value of [NUM] +/- [NUM]. The liver is also normal in size, with a volume of [NUM] cc and a mean HU value of [NUM] +/- [NUM]. The pancreas"
+    },
+    {
+      "validation_id": "BDMAP_00001546",
+      "train_id": "BDMAP_00009045",
+      "similarity": 0.890009661836681,
+      "validation_text": "The spleen, liver, pancreas, and kidneys were evaluated. The spleen demonstrates a mean attenuation of [NUM] Hounsfield Units (HU). The liver shows a mean attenuation of [NUM] HU. The pancreas has a mean attenuation of [NUM] HU. The kidneys"
+    },
+    {
+      "validation_id": "BDMAP_00000111",
+      "train_id": "BDMAP_00006434",
+      "similarity": 0.879174480103712,
+      "validation_text": "The spleen, liver, pancreas, and kidneys were evaluated. The spleen demonstrates a mean attenuation of [NUM] Hounsfield Units (HU). The liver shows a mean attenuation of [NUM] HU. The pancreas has a mean attenuation of [NUM] HU. The kidneys"
+    },
+    {
+      "validation_id": "BDMAP_00006937",
+      "train_id": "BDMAP_00001356",
+      "similarity": 0.8698000578089247,
+      "validation_text": "The spleen, liver, pancreas, and kidneys were evaluated. The spleen demonstrates a mean attenuation of [NUM] Hounsfield Units (HU). The liver shows a mean attenuation of [NUM] HU. The pancreas has a mean attenuation of [NUM] HU. The kidneys"
+    },
+    {
+      "validation_id": "BDMAP_00003331",
+      "train_id": "BDMAP_00001467",
+      "similarity": 0.8579698936724893,
+      "validation_text": "The spleen, liver, pancreas, and kidneys were evaluated. The spleen and liver demonstrated normal mean Hounsfield unit (HU) values of [NUM] and [NUM], respectively. The pancreas was normal in size, with a volume of [NUM] cc and a mean HU va"
+    },
+    {
+      "validation_id": "BDMAP_00007815",
+      "train_id": "BDMAP_00006793",
+      "similarity": 0.8508600566191701,
+      "validation_text": "The spleen, liver, pancreas, and kidneys were evaluated. The spleen demonstrates a mean attenuation of [NUM] Hounsfield Units (HU). The liver shows a mean attenuation of [NUM] HU. The pancreas has a mean attenuation of [NUM] HU. The kidneys"
+    },
+    {
+      "validation_id": "BDMAP_00007934",
+      "train_id": "BDMAP_00000296",
+      "similarity": 0.844907377842517,
+      "validation_text": "The spleen, liver, pancreas, and kidneys are all within normal limits in terms of size and appearance. The spleen measures [NUM] cc in volume, the liver measures [NUM] cc in volume, the pancreas measures [NUM] cc in volume, and the kidneys "
+    },
+    {
+      "validation_id": "BDMAP_00003100",
+      "train_id": "BDMAP_00006842",
+      "similarity": 0.8373797488184731,
+      "validation_text": "The spleen, liver, pancreas, and kidneys are all within normal limits in terms of size and appearance. The spleen measures [NUM] cc in volume, the liver measures [NUM] cc, the pancreas measures [NUM] cc, and the combined kidney volume is [N"
+    },
+    {
+      "validation_id": "BDMAP_00002645",
+      "train_id": "BDMAP_00005249",
+      "similarity": 0.82726676698045,
+      "validation_text": "The spleen, liver, pancreas, and kidneys are all within normal limits in terms of size and appearance. The spleen measures [NUM] cc in volume, the liver measures [NUM] cc, the pancreas measures [NUM] cc, and the combined kidney volume is [N"
+    }
+  ],
+  "patient_level_leakage_status": "not_assessed_patient_id_unavailable",
+  "label_signal_note": "Text-to-label association cannot be proven absent because labels are source-derived; this audit checks split overlap and template similarity only."
+}

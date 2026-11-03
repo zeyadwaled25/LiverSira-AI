@@ -1,0 +1,375 @@
+{
+  "task": "has_lesion",
+  "status": "validation_only_experiment",
+  "configuration": {
+    "task": "has_lesion",
+    "input_field": "narrative_clean",
+    "label_source": "ground_truth.ground_truth.has_lesion",
+    "label_policy": "Use all non-empty train labels; source labels are provisional, and audit groups are retained for analysis.",
+    "audit_policy": "MATCH/MISMATCH/UNCERTAIN are not used as automatic inclusion filters.",
+    "missing_policy": "Exclude only empty narrative_clean from model fitting/evaluation.",
+    "test_policy": "No Test records are loaded, fitted, tuned, or evaluated.",
+    "architecture": "word+character TF-IDF FeatureUnion followed by class-weighted LogisticRegression",
+    "hyperparameters": {
+      "word_ngram_range": [
+        1,
+        2
+      ],
+      "char_ngram_range": [
+        3,
+        5
+      ],
+      "min_df": 2,
+      "max_features_per_view": 80000,
+      "sublinear_tf": true,
+      "class_weight": "balanced",
+      "max_iter": 1000,
+      "solver": "liblinear",
+      "threshold": 0.5
+    },
+    "random_seed": 42,
+    "train_count": 6482,
+    "validation_count": 1389,
+    "train_label_counts": {
+      "positive": 1029,
+      "negative": 5453
+    },
+    "validation_label_counts": {
+      "negative": 1169,
+      "positive": 220
+    }
+  },
+  "validation_metrics": {
+    "evaluated": 1389,
+    "coverage": 1.0,
+    "confusion_matrix": {
+      "labels": [
+        false,
+        true
+      ],
+      "rows_true": {
+        "false": {
+          "predicted_false": 1169,
+          "predicted_true": 0
+        },
+        "true": {
+          "predicted_false": 1,
+          "predicted_true": 219
+        }
+      }
+    },
+    "accuracy": 0.9992800575953924,
+    "precision": 1.0,
+    "recall": 0.9954545454545455,
+    "f1": 0.9977220956719818,
+    "macro_f1": 0.998647281269082,
+    "weighted_f1": 0.999279391515049,
+    "per_class": {
+      "negative": {
+        "precision": 0.9991452991452991,
+        "recall": 1.0,
+        "f1-score": 0.9995724668661822,
+        "support": 1169.0
+      },
+      "positive": {
+        "precision": 1.0,
+        "recall": 0.9954545454545455,
+        "f1-score": 0.9977220956719818,
+        "support": 220.0
+      }
+    }
+  },
+  "comparison_on_common_eligible_records": {
+    "common_coverage": 0.40028797696184304,
+    "common_evaluated": 556,
+    "learned_model": {
+      "evaluated": 556,
+      "coverage": 1.0,
+      "confusion_matrix": {
+        "labels": [
+          false,
+          true
+        ],
+        "rows_true": {
+          "false": {
+            "predicted_false": 336,
+            "predicted_true": 0
+          },
+          "true": {
+            "predicted_false": 1,
+            "predicted_true": 219
+          }
+        }
+      },
+      "accuracy": 0.9982014388489209,
+      "precision": 1.0,
+      "recall": 0.9954545454545455,
+      "f1": 0.9977220956719818,
+      "macro_f1": 0.9981181057854709,
+      "weighted_f1": 0.9982007266005153,
+      "per_class": {
+        "negative": {
+          "precision": 0.9970326409495549,
+          "recall": 1.0,
+          "f1-score": 0.9985141158989599,
+          "support": 336.0
+        },
+        "positive": {
+          "precision": 1.0,
+          "recall": 0.9954545454545455,
+          "f1-score": 0.9977220956719818,
+          "support": 220.0
+        }
+      }
+    },
+    "rule_based_baseline": {
+      "evaluated": 556,
+      "coverage": 1.0,
+      "confusion_matrix": {
+        "labels": [
+          false,
+          true
+        ],
+        "rows_true": {
+          "false": {
+            "predicted_false": 330,
+            "predicted_true": 6
+          },
+          "true": {
+            "predicted_false": 0,
+            "predicted_true": 220
+          }
+        }
+      },
+      "accuracy": 0.9892086330935251,
+      "precision": 0.9734513274336283,
+      "recall": 1.0,
+      "f1": 0.9865470852017937,
+      "macro_f1": 0.9887690380963923,
+      "weighted_f1": 0.9892326110024596,
+      "per_class": {
+        "negative": {
+          "precision": 1.0,
+          "recall": 0.9821428571428571,
+          "f1-score": 0.990990990990991,
+          "support": 336.0
+        },
+        "positive": {
+          "precision": 0.9734513274336283,
+          "recall": 1.0,
+          "f1-score": 0.9865470852017937,
+          "support": 220.0
+        }
+      }
+    },
+    "learned_correct_baseline_wrong": 6,
+    "baseline_correct_learned_wrong": 1,
+    "examples": [
+      {
+        "winner": "learned_model",
+        "audit_group": "MISMATCH",
+        "true": false,
+        "learned_prediction": false,
+        "baseline_prediction": true,
+        "category": "conflicting_source_label",
+        "text": "The patient's spleen is of normal size, measuring [NUM] cc in volume, with a mean Hounsfield Unit (HU) value of [NUM] +/- [NUM]. The liver is also of normal size, with a volume of [NUM] cc and a mean HU value of [NUM] +/- [NUM]. The pancrea"
+      },
+      {
+        "winner": "rule_based_baseline",
+        "audit_group": "MATCH",
+        "true": true,
+        "learned_prediction": false,
+        "baseline_prediction": true,
+        "category": "other",
+        "text": "The patient underwent a non-contrast CT scan of the abdomen. The spleen is normal in size, measuring [NUM] cc in volume, with a mean Hounsfield Unit (HU) value of [NUM] +/- [NUM]. The liver is also normal in size, with a volume of [NUM] cc,"
+      },
+      {
+        "winner": "learned_model",
+        "audit_group": "MISMATCH",
+        "true": false,
+        "learned_prediction": false,
+        "baseline_prediction": true,
+        "category": "ambiguous_report",
+        "text": "The spleen, liver, pancreas, and kidneys are within normal limits in terms of size and enhancement. The spleen measures [NUM] cc in volume, the liver measures [NUM] cc, the pancreas measures [NUM] cc, and the combined kidney volume is [NUM]"
+      },
+      {
+        "winner": "learned_model",
+        "audit_group": "MISMATCH",
+        "true": false,
+        "learned_prediction": false,
+        "baseline_prediction": true,
+        "category": "conflicting_source_label",
+        "text": "The patient has a hypoattenuating mass in the head of the pancreas, measuring [NUM] x [NUM] cm (image [NUM]). The mass has a volume of [NUM] cc and is in contact with the duodenum. The tumor does not involve the SMA, aorta, portal vein and "
+      },
+      {
+        "winner": "learned_model",
+        "audit_group": "MISMATCH",
+        "true": false,
+        "learned_prediction": false,
+        "baseline_prediction": true,
+        "category": "conflicting_source_label",
+        "text": "The spleen, liver, pancreas, and kidneys are all within normal limits in terms of size and appearance. The spleen measures [NUM] cc in volume, the liver measures [NUM] cc, the pancreas measures [NUM] cc, and the combined kidney volume is [N"
+      },
+      {
+        "winner": "learned_model",
+        "audit_group": "MISMATCH",
+        "true": false,
+        "learned_prediction": false,
+        "baseline_prediction": true,
+        "category": "negation_related",
+        "text": "The spleen, liver, pancreas, and kidneys are all within normal limits in terms of size and enhancement pattern. The spleen measures [NUM] cc in volume, the liver measures [NUM] cc in volume, the pancreas measures [NUM] cc in volume, and the"
+      },
+      {
+        "winner": "learned_model",
+        "audit_group": "MISMATCH",
+        "true": false,
+        "learned_prediction": false,
+        "baseline_prediction": true,
+        "category": "conflicting_source_label",
+        "text": "The patient has two hypoattenuating pancreatic masses. The larger mass, located in the body of the pancreas, measures [NUM] x [NUM] cm (image [NUM]) and has a volume of [NUM] cc. The smaller mass, located in the tail of the pancreas, measur"
+      }
+    ]
+  },
+  "audit_group_metrics": {
+    "MATCH": {
+      "studies": 1271,
+      "metrics": {
+        "evaluated": 1271,
+        "coverage": 1.0,
+        "confusion_matrix": {
+          "labels": [
+            false,
+            true
+          ],
+          "rows_true": {
+            "false": {
+              "predicted_false": 1163,
+              "predicted_true": 0
+            },
+            "true": {
+              "predicted_false": 1,
+              "predicted_true": 107
+            }
+          }
+        },
+        "accuracy": 0.999213217938631,
+        "precision": 1.0,
+        "recall": 0.9907407407407407,
+        "f1": 0.9953488372093023,
+        "macro_f1": 0.9974595496746985,
+        "weighted_f1": 0.9992115572679265,
+        "per_class": {
+          "negative": {
+            "precision": 0.9991408934707904,
+            "recall": 1.0,
+            "f1-score": 0.9995702621400946,
+            "support": 1163.0
+          },
+          "positive": {
+            "precision": 1.0,
+            "recall": 0.9907407407407407,
+            "f1-score": 0.9953488372093023,
+            "support": 108.0
+          }
+        }
+      }
+    },
+    "MISMATCH": {
+      "studies": 38,
+      "metrics": {
+        "evaluated": 38,
+        "coverage": 1.0,
+        "confusion_matrix": {
+          "labels": [
+            false,
+            true
+          ],
+          "rows_true": {
+            "false": {
+              "predicted_false": 6,
+              "predicted_true": 0
+            },
+            "true": {
+              "predicted_false": 0,
+              "predicted_true": 32
+            }
+          }
+        },
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "macro_f1": 1.0,
+        "weighted_f1": 1.0,
+        "per_class": {
+          "negative": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 6.0
+          },
+          "positive": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 32.0
+          }
+        }
+      }
+    },
+    "UNCERTAIN": {
+      "studies": 80,
+      "metrics": {
+        "evaluated": 80,
+        "coverage": 1.0,
+        "confusion_matrix": {
+          "labels": [
+            false,
+            true
+          ],
+          "rows_true": {
+            "false": {
+              "predicted_false": 0,
+              "predicted_true": 0
+            },
+            "true": {
+              "predicted_false": 0,
+              "predicted_true": 80
+            }
+          }
+        },
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "macro_f1": 1.0,
+        "weighted_f1": 1.0,
+        "per_class": {
+          "negative": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "positive": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 80.0
+          }
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Labels are source-derived and not clinical gold standard.",
+    "The 79 legacy cases are not treated as human verified.",
+    "Validation only; test set was not used.",
+    "No independent evidence annotations exist."
+  ],
+  "artifacts": {
+    "model": "evaluation\\model_artifacts\\learned_presence_tfidf_logreg.joblib",
+    "config": "evaluation\\model_artifacts\\learned_presence_config.json",
+    "validation_predictions": "evaluation\\learned_presence_validation\\learned_presence_validation_predictions.jsonl"
+  }
+}

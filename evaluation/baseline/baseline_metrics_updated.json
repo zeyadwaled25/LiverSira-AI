@@ -1,6 +1,6 @@
 {
   "comparison_basis": "source_labels_not_clinical_gold_standard",
-  "inference_file": "evaluation\\baseline_inferences_updated.jsonl",
+  "inference_file": "evaluation\\baseline\\baseline_inferences_updated.jsonl",
   "splits_file": "data\\processed\\splits.json",
   "id_validation": {
     "ground_truth_count": 9262,

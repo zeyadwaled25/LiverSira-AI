@@ -1,0 +1,18 @@
+{
+  "architecture": "word_tfidf_logistic_regression",
+  "word_ngram_range": [
+    1,
+    2
+  ],
+  "min_df": 2,
+  "max_features": 80000,
+  "sublinear_tf": true,
+  "class_weight": "balanced",
+  "solver": "liblinear",
+  "max_iter": 1000,
+  "random_seed": 42,
+  "threshold": 0.5,
+  "input_field": "narrative_clean",
+  "label_source": "ground_truth.ground_truth.has_lesion",
+  "label_policy": "All non-empty Train and Validation source labels retained."
+}

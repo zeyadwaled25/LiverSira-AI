@@ -1,4 +1,4 @@
-from evaluation.evaluate_baseline import evaluate_split
+from evaluation.baseline.evaluate_baseline import evaluate_split
 
 
 def _record(record_id, has_lesion, count, largest=None, missing=None):

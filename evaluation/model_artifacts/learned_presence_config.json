@@ -1,0 +1,38 @@
+{
+  "task": "has_lesion",
+  "input_field": "narrative_clean",
+  "label_source": "ground_truth.ground_truth.has_lesion",
+  "label_policy": "Use all non-empty train labels; source labels are provisional, and audit groups are retained for analysis.",
+  "audit_policy": "MATCH/MISMATCH/UNCERTAIN are not used as automatic inclusion filters.",
+  "missing_policy": "Exclude only empty narrative_clean from model fitting/evaluation.",
+  "test_policy": "No Test records are loaded, fitted, tuned, or evaluated.",
+  "architecture": "word+character TF-IDF FeatureUnion followed by class-weighted LogisticRegression",
+  "hyperparameters": {
+    "word_ngram_range": [
+      1,
+      2
+    ],
+    "char_ngram_range": [
+      3,
+      5
+    ],
+    "min_df": 2,
+    "max_features_per_view": 80000,
+    "sublinear_tf": true,
+    "class_weight": "balanced",
+    "max_iter": 1000,
+    "solver": "liblinear",
+    "threshold": 0.5
+  },
+  "random_seed": 42,
+  "train_count": 6482,
+  "validation_count": 1389,
+  "train_label_counts": {
+    "positive": 1029,
+    "negative": 5453
+  },
+  "validation_label_counts": {
+    "negative": 1169,
+    "positive": 220
+  }
+}

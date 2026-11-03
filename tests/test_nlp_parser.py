@@ -1,6 +1,6 @@
 import pytest
 
-from src.audit_target_consistency import audit_single_record
+from src.data_prep.audit_target_consistency import audit_single_record
 from src.baseline_extractor import extract_liver_lesion_features
 from src.nlp_parser import parse_liver_report
 

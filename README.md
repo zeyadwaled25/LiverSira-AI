@@ -23,18 +23,21 @@ This repository handles the **NLP data pipeline**: transforming raw radiology re
 | **Schemas** | [`schemas/master_schema.py`](schemas/master_schema.py) | Master Record schema preserving all 37 columns & multi-organ data |
 | | [`schemas/ground_truth_schema.py`](schemas/ground_truth_schema.py) | Benchmark target schema with consistency validators & audit status |
 | | [`schemas/inference_schema.py`](schemas/inference_schema.py) | Model prediction schema with evidence text spans & ternary logic |
-| **Data Ops** | [`src/audit_dataset.py`](src/audit_dataset.py) | Profile the raw CSV — missing values, duplicates, target consistency |
-| | [`src/check_pdf_csv_match.py`](src/check_pdf_csv_match.py) | Cross-check BDMAP IDs between CSV metadata and 9,262 PDF reports |
-| | [`src/prepare_nlp_dataset.py`](src/prepare_nlp_dataset.py) | Clean report text, produce `liver_nlp_clean.csv` |
-| | [`src/generate_master_jsonl.py`](src/generate_master_jsonl.py) | Generates `master_records.jsonl` (9,262 records, 0 rows dropped) |
-| | [`src/generate_ground_truth_jsonl.py`](src/generate_ground_truth_jsonl.py) | Generates source-derived `ground_truth.jsonl` (pending verification) |
-| | [`src/audit_target_consistency.py`](src/audit_target_consistency.py) | Automated text vs label consistency audit across all 9,262 studies |
+| **Data Ops** | [`src/data_prep/audit_dataset.py`](src/data_prep/audit_dataset.py) | Profile the raw CSV — missing values, duplicates, target consistency |
+| | [`src/data_prep/check_pdf_csv_match.py`](src/data_prep/check_pdf_csv_match.py) | Cross-check BDMAP IDs between CSV metadata and 9,262 PDF reports |
+| | [`src/data_prep/prepare_nlp_dataset.py`](src/data_prep/prepare_nlp_dataset.py) | Clean report text, produce `liver_nlp_clean.csv` |
+| | [`src/data_prep/generate_master_jsonl.py`](src/data_prep/generate_master_jsonl.py) | Generates `master_records.jsonl` (9,262 records, 0 rows dropped) |
+| | [`src/data_prep/generate_ground_truth_jsonl.py`](src/data_prep/generate_ground_truth_jsonl.py) | Generates source-derived `ground_truth.jsonl` (pending verification) |
+| | [`src/data_prep/audit_target_consistency.py`](src/data_prep/audit_target_consistency.py) | Automated text vs label consistency audit across all 9,262 studies |
 | | [`src/nlp_parser.py`](src/nlp_parser.py) | Shared rule-based parsing used by the baseline and consistency audit |
-| | [`src/validate_targets.py`](src/validate_targets.py) | Extracts the 79-case human adjudication sample |
-| | [`src/adjudicate_validation_sample.py`](src/adjudicate_validation_sample.py) | Validates reviewer-entered adjudication and promotes eligible records in `ground_truth.jsonl` |
-| | [`src/split_dataset.py`](src/split_dataset.py) | Stratified 70/15/15 dataset partitioning into Train/Val/Test |
-| | [`src/baseline_extractor.py`](src/baseline_extractor.py) | Rule-based clinical NLP baseline extracting 4 core targets |
-| **Evaluation** | [`evaluation/evaluate_baseline.py`](evaluation/evaluate_baseline.py) | Benchmark evaluation against Ground Truth across dataset splits |
+| | [`src/data_prep/validate_targets.py`](src/data_prep/validate_targets.py) | Extracts the 79-case human adjudication sample |
+| | [`src/data_prep/adjudicate_validation_sample.py`](src/data_prep/adjudicate_validation_sample.py) | Validates reviewer-entered adjudication and promotes eligible records in `ground_truth.jsonl` |
+| | [`src/data_prep/split_dataset.py`](src/data_prep/split_dataset.py) | Stratified 70/15/15 dataset partitioning into Train/Val/Test |
+| | [`src/baseline_extractor.py`](src/baseline_extractor.py) | Rule-based NLP baseline extracting liver-lesion targets |
+| **Evaluation** | [`evaluation/baseline/evaluate_baseline.py`](evaluation/baseline/evaluate_baseline.py) | Evaluation against Ground Truth across validation and test splits |
+| **Learned NLP** | [`experiments/learned_presence/train_learned_presence.py`](experiments/learned_presence/train_learned_presence.py) | Validation-only learned presence experiment |
+| | [`experiments/learned_presence/compare_learned_presence.py`](experiments/learned_presence/compare_learned_presence.py) | Validation-only architecture and leakage comparison |
+| | [`experiments/learned_presence/final_evaluate_learned_presence.py`](experiments/learned_presence/final_evaluate_learned_presence.py) | Single final Test evaluation of the frozen model |
 
 ## Project Structure
 
@@ -59,20 +62,29 @@ LiverSira-AI/
 │   └── inference_schema.py
 ├── src/
 │   ├── __init__.py
-│   ├── audit_dataset.py            # Data-quality profiling
-│   ├── check_pdf_csv_match.py      # PDF ↔ CSV ID matching
-│   ├── prepare_nlp_dataset.py      # NLP dataset builder
+│   ├── data_prep/                  # Dataset preparation and review workflows
+│   │   ├── audit_dataset.py
+│   │   ├── check_pdf_csv_match.py
+│   │   ├── prepare_nlp_dataset.py
+│   │   ├── generate_master_jsonl.py
+│   │   ├── generate_ground_truth_jsonl.py
+│   │   ├── audit_target_consistency.py
+│   │   ├── validate_targets.py
+│   │   ├── adjudicate_validation_sample.py
+│   │   └── split_dataset.py
 │   ├── nlp_parser.py              # Shared baseline/audit text parser
-│   ├── validate_targets.py         # Human adjudication sampler
-│   ├── adjudicate_validation_sample.py
-│   ├── generate_master_jsonl.py
-│   ├── generate_ground_truth_jsonl.py
-│   ├── audit_target_consistency.py
-│   ├── split_dataset.py
-│   └── baseline_extractor.py       # Rule-based NLP baseline
+│   ├── baseline_extractor.py       # Rule-based NLP baseline
+├── experiments/
+│   └── learned_presence/           # Learned validation and final evaluation scripts
+│       ├── train_learned_presence.py
+│       ├── compare_learned_presence.py
+│       └── final_evaluate_learned_presence.py
 ├── evaluation/
-│   ├── evaluate_baseline.py        # Baseline metrics
-│   └── baseline_inferences.jsonl   # Baseline predictions (9,262 records)
+│   ├── baseline/                   # Baseline code, metrics, reports, and both inference generations
+│   ├── model_artifacts/            # Initial learned-model artifacts
+│   ├── learned_presence_validation/ # Validation predictions, metrics, and report
+│   ├── architecture_comparison/   # Validation-only comparison artifacts
+│   └── final_test/                 # Frozen final Test artifacts
 ├── scripts/
 │   ├── __init__.py
 │   └── run_pipeline.py             # One-shot end-to-end pipeline runner
@@ -130,42 +142,94 @@ Individual steps (equivalent to the one-shot command above):
 
 ```bash
 # 1. Audit the raw dataset
-python -m src.audit_dataset
+python -m src.data_prep.audit_dataset
 
 # 2. Verify PDF <-> CSV matching
-python -m src.check_pdf_csv_match
+python -m src.data_prep.check_pdf_csv_match
 
 # 3. Build the clean NLP dataset
-python -m src.prepare_nlp_dataset
+python -m src.data_prep.prepare_nlp_dataset
 
 # 4. Generate Master Dataset JSONL (all 9,262 records)
-python -m src.generate_master_jsonl
+python -m src.data_prep.generate_master_jsonl
 
 # 5. Generate Ground Truth JSONL (pending verification)
-python -m src.generate_ground_truth_jsonl
+python -m src.data_prep.generate_ground_truth_jsonl
 
 # 6. Audit label <-> report consistency
-python -m src.audit_target_consistency
+python -m src.data_prep.audit_target_consistency
 
 # 7. Extract human validation review sample (79 cases)
-python -m src.validate_targets
+python -m src.data_prep.validate_targets
 
-# 8. Enter reviewer adjudication plus reviewer_id and reviewed_at in the CSV,
-#    then promote only valid, attributable reviews
-python -m src.adjudicate_validation_sample
+# 8. A human reviewer must complete every review field, reviewer_id, and
+#    reviewed_at in the CSV. The adjudicator reads the CSV without rewriting it
+#    and promotes only valid, attributable reviews.
+python -m src.data_prep.adjudicate_validation_sample
 
 # 9. Create stratified 70/15/15 splits
-python -m src.split_dataset
+python -m src.data_prep.split_dataset
 
-# 10. Run the rule-based NLP baseline
+# 10. Run the rule-based NLP baseline.
+#     Writes evaluation/baseline/baseline_inferences_updated.jsonl.
+#     The historical baseline_inferences.jsonl remains unchanged.
 python -m src.baseline_extractor
 
-# 11. Evaluate the baseline on the validation and test splits
-python -m evaluation.evaluate_baseline
+# 11. Evaluate the updated baseline on validation and test splits
+python -m evaluation.baseline.evaluate_baseline
 
 # 12. Run test suite
 pytest
 ```
+
+`scripts.run_pipeline` executes the same data preparation, adjudication,
+baseline, and evaluation steps in order. It requires the raw and processed
+data described in [`data/README.md`](data/README.md). The adjudication step
+reads the existing review cohort without rewriting it and updates only the
+ground-truth validation metadata for complete, attributable reviews; it is not
+a learned-model training step.
+
+### First learned NLP experiment
+
+The first learned experiment targets binary `has_lesion` prediction using only
+`narrative_clean`. It uses word/character TF-IDF features with class-weighted
+logistic regression, trains on `train`, and evaluates on `val` only. It does
+not use the Test split, structured reports, or ground-truth fields as input.
+
+```bash
+python -m experiments.learned_presence.train_learned_presence
+```
+
+Artifacts are written under `evaluation/model_artifacts/` and validation outputs
+under `evaluation/learned_presence_validation/`. The source-derived labels are provisional comparisons,
+not clinical gold-standard labels; the 79 legacy cases are not treated as
+human verified.
+
+To compare the limited learned candidates without loading Test:
+
+```bash
+python -m experiments.learned_presence.compare_learned_presence
+```
+
+Comparison artifacts and the leakage/duplicate audit are written under
+`evaluation/architecture_comparison/`.
+
+### Final Test evaluation
+
+After architecture selection is frozen, train on Train + Validation and run
+the final Test evaluation once:
+
+```bash
+python -m experiments.learned_presence.final_evaluate_learned_presence
+```
+
+This writes the frozen model, configuration, Test predictions, metrics, and
+report under `evaluation/final_test/`. It does not modify baseline inference
+files or any dataset/split.
+
+Learned-model results compare against source-derived labels, not a clinical
+gold standard. The legacy 79-case cohort is not treated as Human Verified, and
+Patient-level leakage cannot be ruled out because Patient IDs are unavailable.
 
 ## Visual Demonstrations
 

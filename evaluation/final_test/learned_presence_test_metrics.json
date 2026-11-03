@@ -1,0 +1,314 @@
+{
+  "status": "final_test_evaluation_once",
+  "task": "has_lesion",
+  "test_studies": 1390,
+  "train_plus_validation_studies": 7871,
+  "test_policy": "Test was used only after model freeze for this single final evaluation.",
+  "frozen_configuration": {
+    "architecture": "word_tfidf_logistic_regression",
+    "word_ngram_range": [
+      1,
+      2
+    ],
+    "min_df": 2,
+    "max_features": 80000,
+    "sublinear_tf": true,
+    "class_weight": "balanced",
+    "solver": "liblinear",
+    "max_iter": 1000,
+    "random_seed": 42,
+    "threshold": 0.5,
+    "input_field": "narrative_clean",
+    "label_source": "ground_truth.ground_truth.has_lesion",
+    "label_policy": "All non-empty Train and Validation source labels retained."
+  },
+  "full_test_metrics": {
+    "evaluated": 1390,
+    "coverage": 1.0,
+    "confusion_matrix": {
+      "labels": [
+        false,
+        true
+      ],
+      "rows_true": {
+        "false": {
+          "predicted_false": 1169,
+          "predicted_true": 0
+        },
+        "true": {
+          "predicted_false": 1,
+          "predicted_true": 220
+        }
+      }
+    },
+    "accuracy": 0.9992805755395684,
+    "precision": 1.0,
+    "recall": 0.995475113122172,
+    "f1": 0.9977324263038548,
+    "macro_f1": 0.9986524465850185,
+    "weighted_f1": 0.9992799136544739,
+    "per_class": {
+      "negative": {
+        "precision": 0.9991452991452991,
+        "recall": 1.0,
+        "f1-score": 0.9995724668661822,
+        "support": 1169.0
+      },
+      "positive": {
+        "precision": 1.0,
+        "recall": 0.995475113122172,
+        "f1-score": 0.9977324263038548,
+        "support": 221.0
+      }
+    },
+    "specificity": 1.0
+  },
+  "paired_baseline_comparison": {
+    "evaluated": 525,
+    "subset_fraction_of_test": 0.3776978417266187,
+    "learned_prediction_coverage": 1.0,
+    "baseline_prediction_coverage": 1.0,
+    "learned_model": {
+      "evaluated": 525,
+      "coverage": 1.0,
+      "confusion_matrix": {
+        "labels": [
+          false,
+          true
+        ],
+        "rows_true": {
+          "false": {
+            "predicted_false": 304,
+            "predicted_true": 0
+          },
+          "true": {
+            "predicted_false": 1,
+            "predicted_true": 220
+          }
+        }
+      },
+      "accuracy": 0.9980952380952381,
+      "precision": 1.0,
+      "recall": 0.995475113122172,
+      "f1": 0.9977324263038548,
+      "macro_f1": 0.99804519508953,
+      "weighted_f1": 0.9980946423451702,
+      "per_class": {
+        "negative": {
+          "precision": 0.9967213114754099,
+          "recall": 1.0,
+          "f1-score": 0.9983579638752053,
+          "support": 304.0
+        },
+        "positive": {
+          "precision": 1.0,
+          "recall": 0.995475113122172,
+          "f1-score": 0.9977324263038548,
+          "support": 221.0
+        }
+      },
+      "specificity": 1.0
+    },
+    "rule_based_baseline": {
+      "evaluated": 525,
+      "coverage": 1.0,
+      "confusion_matrix": {
+        "labels": [
+          false,
+          true
+        ],
+        "rows_true": {
+          "false": {
+            "predicted_false": 299,
+            "predicted_true": 5
+          },
+          "true": {
+            "predicted_false": 0,
+            "predicted_true": 221
+          }
+        }
+      },
+      "accuracy": 0.9904761904761905,
+      "precision": 0.9778761061946902,
+      "recall": 1.0,
+      "f1": 0.9888143176733781,
+      "macro_f1": 0.9902612218549312,
+      "weighted_f1": 0.9904899705160148,
+      "per_class": {
+        "negative": {
+          "precision": 1.0,
+          "recall": 0.9835526315789473,
+          "f1-score": 0.9917081260364843,
+          "support": 304.0
+        },
+        "positive": {
+          "precision": 0.9778761061946902,
+          "recall": 1.0,
+          "f1-score": 0.9888143176733781,
+          "support": 221.0
+        }
+      },
+      "specificity": 0.9835526315789473
+    },
+    "f1_difference_learned_minus_baseline": 0.008918108630476707,
+    "macro_f1_difference_learned_minus_baseline": 0.0077839732345988955,
+    "learned_correct_baseline_wrong": 5,
+    "baseline_correct_learned_wrong": 1
+  },
+  "audit_groups": {
+    "MATCH": {
+      "studies": 1284,
+      "metrics": {
+        "evaluated": 1284,
+        "coverage": 1.0,
+        "confusion_matrix": {
+          "labels": [
+            false,
+            true
+          ],
+          "rows_true": {
+            "false": {
+              "predicted_false": 1163,
+              "predicted_true": 0
+            },
+            "true": {
+              "predicted_false": 0,
+              "predicted_true": 121
+            }
+          }
+        },
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "macro_f1": 1.0,
+        "weighted_f1": 1.0,
+        "per_class": {
+          "negative": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 1163.0
+          },
+          "positive": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 121.0
+          }
+        },
+        "specificity": 1.0
+      }
+    },
+    "MISMATCH": {
+      "studies": 38,
+      "metrics": {
+        "evaluated": 38,
+        "coverage": 1.0,
+        "confusion_matrix": {
+          "labels": [
+            false,
+            true
+          ],
+          "rows_true": {
+            "false": {
+              "predicted_false": 6,
+              "predicted_true": 0
+            },
+            "true": {
+              "predicted_false": 0,
+              "predicted_true": 32
+            }
+          }
+        },
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "macro_f1": 1.0,
+        "weighted_f1": 1.0,
+        "per_class": {
+          "negative": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 6.0
+          },
+          "positive": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 32.0
+          }
+        },
+        "specificity": 1.0
+      }
+    },
+    "UNCERTAIN": {
+      "studies": 68,
+      "metrics": {
+        "evaluated": 68,
+        "coverage": 1.0,
+        "confusion_matrix": {
+          "labels": [
+            false,
+            true
+          ],
+          "rows_true": {
+            "false": {
+              "predicted_false": 0,
+              "predicted_true": 0
+            },
+            "true": {
+              "predicted_false": 1,
+              "predicted_true": 67
+            }
+          }
+        },
+        "accuracy": 0.9852941176470589,
+        "precision": 1.0,
+        "recall": 0.9852941176470589,
+        "f1": 0.9925925925925926,
+        "macro_f1": 0.4962962962962963,
+        "weighted_f1": 0.9925925925925926,
+        "per_class": {
+          "negative": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 0.0
+          },
+          "positive": {
+            "precision": 1.0,
+            "recall": 0.9852941176470589,
+            "f1-score": 0.9925925925925926,
+            "support": 68.0
+          }
+        },
+        "specificity": null
+      }
+    }
+  },
+  "error_examples": [
+    {
+      "category": "other",
+      "audit_group": "UNCERTAIN",
+      "true": true,
+      "prediction": false,
+      "text": "The patient has an enlarged spleen, measuring [NUM] cc in volume, with a mean HU value of [NUM] +/- [NUM]. The liver is of normal size, with a volume of [NUM] cc and a mean HU value of [NUM] +/- [NUM]. A liver lesion is identified in hepati"
+    }
+  ],
+  "limitations": [
+    "Source labels are not clinical gold standard.",
+    "The 79 legacy cases are not Human Verified.",
+    "Patient-level leakage cannot be assessed without Patient IDs.",
+    "No abstention mechanism; non-empty Test prediction coverage is 1.0."
+  ],
+  "artifacts": {
+    "model": "evaluation\\final_test\\learned_presence_word_logreg_final.joblib",
+    "configuration": "evaluation\\final_test\\learned_presence_word_logreg_final_config.json",
+    "predictions": "evaluation\\final_test\\learned_presence_test_predictions.jsonl",
+    "metrics": "evaluation\\final_test\\learned_presence_test_metrics.json",
+    "report": "evaluation\\final_test\\learned_presence_test_report.md"
+  }
+}
