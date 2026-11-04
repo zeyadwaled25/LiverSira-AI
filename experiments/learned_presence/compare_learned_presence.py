@@ -21,10 +21,10 @@ from sklearn.svm import LinearSVC
 from experiments.learned_presence.train_learned_presence import _metrics
 from experiments.learned_presence.utils import load_audit, load_jsonl, snippet
 
-MASTER_PATH = Path("data/processed/master_records.jsonl")
-GT_PATH = Path("data/processed/ground_truth.jsonl")
-SPLITS_PATH = Path("data/processed/splits.json")
-AUDIT_PATH = Path("data/processed/target_consistency_audit.csv")
+MASTER_PATH = Path("data/processed/nlp/master_records.jsonl")
+GT_PATH = Path("data/processed/nlp/ground_truth.jsonl")
+SPLITS_PATH = Path("data/processed/nlp/splits.json")
+AUDIT_PATH = Path("data/processed/nlp/target_consistency_audit.csv")
 BASELINE_PATH = Path("evaluation/baseline/baseline_inferences_updated.jsonl")
 EXPERIMENT_DIR = Path("evaluation/architecture_comparison")
 REPORT_PATH = EXPERIMENT_DIR / "comparison_report.md"

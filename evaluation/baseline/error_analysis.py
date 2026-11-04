@@ -5,9 +5,9 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-GROUND_TRUTH_PATH = Path("data/processed/ground_truth.jsonl")
+GROUND_TRUTH_PATH = Path("data/processed/nlp/ground_truth.jsonl")
 INFERENCES_PATH = Path("evaluation/baseline/baseline_inferences_updated.jsonl")
-SPLITS_PATH = Path("data/processed/splits.json")
+SPLITS_PATH = Path("data/processed/nlp/splits.json")
 OUTPUT_JSON = Path("evaluation/baseline/baseline_error_analysis.json")
 OUTPUT_REPORT = Path("evaluation/baseline/baseline_error_analysis.md")
 

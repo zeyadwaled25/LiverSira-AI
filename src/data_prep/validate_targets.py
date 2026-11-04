@@ -4,7 +4,7 @@ Samples:
 - 30 randomly selected NO_LESION studies.
 - 30 randomly selected positive lesion studies with documented Couinaud location.
 - All 19 positive lesion cases where Couinaud location is missing/undocumented.
-Total: 79 cases saved to data/processed/target_validation_review.csv.
+Total: 79 cases saved to data/processed/nlp/target_validation_review.csv.
 
 Used by reviewers to audit target labels before upgrading validation_status
 from 'pending' to 'verified'.
@@ -14,8 +14,8 @@ from pathlib import Path
 import pandas as pd
 
 # 1. Paths
-INPUT_PATH = Path("data/processed/liver_nlp_clean.csv")
-OUTPUT_PATH = Path("data/processed/target_validation_review.csv")
+INPUT_PATH = Path("data/processed/nlp/liver_nlp_clean.csv")
+OUTPUT_PATH = Path("data/processed/nlp/target_validation_review.csv")
 
 ID = "BDMAP ID"
 TEXT = "narrative_original"

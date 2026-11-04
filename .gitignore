@@ -49,9 +49,12 @@ coverage.xml
 # ── Data files (too large for GitHub) ─────────────────────────
 # Raw and processed data should NOT be committed.
 # Place a sample or use Git LFS / external storage instead.
-data/nlp/raw/
-data/nlp/processed/
+data/raw/nlp/
+data/processed/nlp/
 data/cv/
+data/raw/cv/
+data/processed/cv/
+data/manifests/
 
 # ── Archives ──────────────────────────────────────────────────
 *.rar
@@ -75,4 +78,3 @@ data/cv/
 *.pkl
 *.joblib
 models/
-

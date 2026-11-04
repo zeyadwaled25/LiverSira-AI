@@ -5,10 +5,10 @@ import json
 from pathlib import Path
 from typing import Any
 
-MASTER_PATH = Path("data/processed/master_records.jsonl")
-GROUND_TRUTH_PATH = Path("data/processed/ground_truth.jsonl")
-SPLITS_PATH = Path("data/processed/splits.json")
-AUDIT_PATH = Path("data/processed/target_consistency_audit.csv")
+MASTER_PATH = Path("data/processed/nlp/master_records.jsonl")
+GROUND_TRUTH_PATH = Path("data/processed/nlp/ground_truth.jsonl")
+SPLITS_PATH = Path("data/processed/nlp/splits.json")
+AUDIT_PATH = Path("data/processed/nlp/target_consistency_audit.csv")
 OUTPUT_PATH = Path("evaluation/baseline/benchmark_eligibility_manifest.csv")
 SUMMARY_PATH = Path("evaluation/baseline/benchmark_eligibility_summary.json")
 

@@ -26,6 +26,8 @@ import textwrap
 from pathlib import Path
 from datetime import datetime
 
+from curesight.common.paths import CV_MANIFEST_DIR, CV_RAW_DIR
+
 # Fix Windows console encoding (CP1252 → UTF-8)
 if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf_8"):
     try:
@@ -49,8 +51,8 @@ except ImportError:
     print("⚠  pandas not installed – metadata analysis will be limited.")
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-BASE = Path(r"d:\University\Graduation Project\LiverSira AI\data\cv\SMC-LUD")
-OUT_DIR = BASE / "manifests"
+BASE = CV_RAW_DIR
+OUT_DIR = CV_MANIFEST_DIR
 OUT_DIR.mkdir(exist_ok=True)
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
@@ -817,7 +819,7 @@ def _write_audit_report(
     lines = []
     lines.append("# CureSight / SMC-LUD Dataset Audit Report")
     lines.append(f"\n**Generated:** {summary['generated_at']}")
-    lines.append(f"\n**Dataset root:** `data/cv/SMC-LUD/`\n")
+    lines.append(f"\n**Dataset root:** `data/raw/cv/SMC-LUD/`\n")
 
     lines.append("---\n")
     lines.append("## 1. Dataset Overview\n")

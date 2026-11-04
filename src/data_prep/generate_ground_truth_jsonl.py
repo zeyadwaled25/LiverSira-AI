@@ -24,8 +24,8 @@ from schemas.ground_truth_schema import (
     ValidationStatus,
 )
 
-INPUT_CSV = Path("data/raw/AbdomenAtlas3.0MiniWithMeta.csv")
-OUTPUT_JSONL = Path("data/processed/ground_truth.jsonl")
+INPUT_CSV = Path("data/raw/nlp/AbdomenAtlas3.0MiniWithMeta.csv")
+OUTPUT_JSONL = Path("data/processed/nlp/ground_truth.jsonl")
 
 
 def generate_ground_truth_records(input_path: Path, output_path: Path) -> int:
@@ -112,4 +112,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

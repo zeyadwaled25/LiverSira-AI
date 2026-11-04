@@ -19,8 +19,8 @@ import re
 import pandas as pd
 
 # -- paths and column-name constants ----------------------------
-INPUT_PATH = Path("data/raw/AbdomenAtlas3.0MiniWithMeta.csv")
-OUTPUT_PATH = Path("data/processed/liver_nlp_clean.csv")
+INPUT_PATH = Path("data/raw/nlp/AbdomenAtlas3.0MiniWithMeta.csv")
+OUTPUT_PATH = Path("data/processed/nlp/liver_nlp_clean.csv")
 
 ID = "BDMAP ID"
 TEXT = "narrative report"

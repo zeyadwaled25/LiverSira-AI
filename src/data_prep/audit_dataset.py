@@ -160,7 +160,7 @@ def print_review_cases(df: pd.DataFrame) -> None:
 
 def main() -> None:
     """Run the full audit pipeline."""
-    csv_path = Path("data/raw/AbdomenAtlas3.0MiniWithMeta.csv")
+    csv_path = Path("data/raw/nlp/AbdomenAtlas3.0MiniWithMeta.csv")
     df = load_and_validate(csv_path)
 
     print_overview(df)

@@ -1,6 +1,6 @@
 # LiverSira-AI
 
-> NLP data pipeline for the HCC Surveillance AI Platform — extracting structured liver-lesion features from radiology reports.
+> CV and NLP data pipelines for the HCC Surveillance AI Platform.
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -12,7 +12,7 @@
 
 **LiverSira-AI** is the data-processing backbone of the **HCC Surveillance AI Platform** — a medical decision-support system for monitoring liver cirrhosis patients and predicting hepatocellular carcinoma (HCC) risk.
 
-This repository handles the **NLP data pipeline**: transforming raw radiology reports from the [AbdomenAtlas 3.0 Mini](https://github.com/MrGiovanni/AbdomenAtlas) dataset into structured, machine-learning-ready features. These features feed downstream models for lesion classification, risk scoring, and follow-up prediction.
+The NLP pipeline transforms raw radiology reports from the [AbdomenAtlas 3.0 Mini](https://github.com/MrGiovanni/AbdomenAtlas) dataset into structured features. The CV pipeline audits and materializes a leakage-free patient-level split of the SMC-LUD liver ultrasound dataset. The pipelines remain independent.
 
 > **System boundaries:** The platform does **not** independently diagnose cancer, replace confirmatory CT/MRI examinations, or override physician decisions. All AI outputs are advisory.
 
@@ -38,23 +38,21 @@ This repository handles the **NLP data pipeline**: transforming raw radiology re
 | **Learned NLP** | [`experiments/learned_presence/train_learned_presence.py`](experiments/learned_presence/train_learned_presence.py) | Validation-only learned presence experiment |
 | | [`experiments/learned_presence/compare_learned_presence.py`](experiments/learned_presence/compare_learned_presence.py) | Validation-only architecture and leakage comparison |
 | | [`experiments/learned_presence/final_evaluate_learned_presence.py`](experiments/learned_presence/final_evaluate_learned_presence.py) | Single final Test evaluation of the frozen model |
+| **CV** | [`src/curesight/cv/data/materialize_patient_split.py`](src/curesight/cv/data/materialize_patient_split.py) | Materializes the verified patient-level SMC-LUD split |
 
 ## Project Structure
 
 ```
 LiverSira-AI/
 ├── data/
-│   ├── raw/                        # Source data (git-ignored — see data/README.md)
-│   │   ├── AbdomenAtlas3.0MiniWithMeta.csv
-│   │   └── pdf_reports/            # 9,262 radiology report PDFs
-│   └── processed/                  # Pipeline outputs (git-ignored)
-│       ├── liver_nlp_clean.csv
-│       ├── master_records.jsonl
-│       ├── ground_truth.jsonl
-│       ├── target_consistency_audit.csv
-│       ├── target_validation_review.csv
-│       ├── splits.json
-│       └── dataset_splits.csv
+│   ├── raw/
+│   │   ├── cv/SMC-LUD/             # Original CV dataset
+│   │   └── nlp/                    # Raw NLP CSV/PDF data
+│   ├── processed/
+│   │   ├── cv/SMC-LUD/patient_split_v1/
+│   │   └── nlp/                    # NLP pipeline outputs
+│   └── manifests/
+│       └── cv/SMC-LUD/             # CV audit and patient-level manifests
 ├── schemas/                        # Pydantic v2 data models
 │   ├── __init__.py
 │   ├── master_schema.py
@@ -62,6 +60,9 @@ LiverSira-AI/
 │   └── inference_schema.py
 ├── src/
 │   ├── __init__.py
+│   ├── curesight/
+│   │   ├── common/                 # Shared repository-relative paths
+│   │   └── cv/data/                # CV dataset workflows
 │   ├── data_prep/                  # Dataset preparation and review workflows
 │   │   ├── audit_dataset.py
 │   │   ├── check_pdf_csv_match.py
@@ -74,6 +75,8 @@ LiverSira-AI/
 │   │   └── split_dataset.py
 │   ├── nlp_parser.py              # Shared baseline/audit text parser
 │   ├── baseline_extractor.py       # Rule-based NLP baseline
+│   ├── analyze_dataset.py           # CV audit entry point
+│   ├── create_patient_level_split.py # CV manifest generation
 ├── experiments/
 │   └── learned_presence/           # Learned validation and final evaluation scripts
 │       ├── train_learned_presence.py
@@ -86,7 +89,7 @@ LiverSira-AI/
 │   ├── architecture_comparison/   # Validation-only comparison artifacts
 │   └── final_test/                 # Frozen final Test artifacts
 ├── scripts/
-│   ├── __init__.py
+│   ├── data/materialize_cv_split.py # Copy verified CV split
 │   └── run_pipeline.py             # One-shot end-to-end pipeline runner
 ├── tests/                          # Pytest test suite
 │   ├── test_schemas.py
@@ -126,8 +129,8 @@ pip install -r requirements.txt
 
 ### Data Setup
 
-1. Place `AbdomenAtlas3.0MiniWithMeta.csv` in `data/raw/`.
-2. Extract PDF reports into `data/raw/pdf_reports/`.
+1. Place `AbdomenAtlas3.0MiniWithMeta.csv` in `data/raw/nlp/`.
+2. Extract PDF reports into `data/raw/nlp/pdf_reports/`.
 3. See [`data/README.md`](data/README.md) for the expected directory layout.
 
 ### Running the Pipeline

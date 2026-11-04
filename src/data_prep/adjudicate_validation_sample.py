@@ -15,8 +15,8 @@ import pandas as pd
 
 from schemas.ground_truth_schema import GroundTruthRecord, ValidationStatus
 
-REVIEW_CSV = Path("data/processed/target_validation_review.csv")
-GT_JSONL = Path("data/processed/ground_truth.jsonl")
+REVIEW_CSV = Path("data/processed/nlp/target_validation_review.csv")
+GT_JSONL = Path("data/processed/nlp/ground_truth.jsonl")
 
 REQUIRED_REVIEW_COLUMNS = (
     "BDMAP ID",

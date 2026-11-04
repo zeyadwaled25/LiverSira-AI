@@ -1,7 +1,7 @@
 """Generate Master Medical Records JSONL.
 
 Transforms the full AbdomenAtlas 3.0 Mini dataset (all 37 columns, all 9,262 rows)
-into validated MasterRecord objects and streams them to data/processed/master_records.jsonl.
+into validated MasterRecord objects and streams them to data/processed/nlp/master_records.jsonl.
 
 Guarantees:
 - 0 rows excluded (preserves all records regardless of missing narrative text).
@@ -15,8 +15,8 @@ import re
 import pandas as pd
 from schemas.master_schema import MasterRecord
 
-INPUT_CSV = Path("data/raw/AbdomenAtlas3.0MiniWithMeta.csv")
-OUTPUT_JSONL = Path("data/processed/master_records.jsonl")
+INPUT_CSV = Path("data/raw/nlp/AbdomenAtlas3.0MiniWithMeta.csv")
+OUTPUT_JSONL = Path("data/processed/nlp/master_records.jsonl")
 
 
 def clean_val(v: object) -> object:
@@ -193,4 +193,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

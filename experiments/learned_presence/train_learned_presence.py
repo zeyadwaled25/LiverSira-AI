@@ -31,10 +31,10 @@ from experiments.learned_presence.utils import (
     snippet,
 )
 
-MASTER_PATH = Path("data/processed/master_records.jsonl")
-GT_PATH = Path("data/processed/ground_truth.jsonl")
-SPLITS_PATH = Path("data/processed/splits.json")
-AUDIT_PATH = Path("data/processed/target_consistency_audit.csv")
+MASTER_PATH = Path("data/processed/nlp/master_records.jsonl")
+GT_PATH = Path("data/processed/nlp/ground_truth.jsonl")
+SPLITS_PATH = Path("data/processed/nlp/splits.json")
+AUDIT_PATH = Path("data/processed/nlp/target_consistency_audit.csv")
 BASELINE_PATH = Path("evaluation/baseline/baseline_inferences_updated.jsonl")
 ARTIFACT_DIR = Path("evaluation/model_artifacts")
 MODEL_PATH = ARTIFACT_DIR / "learned_presence_tfidf_logreg.joblib"

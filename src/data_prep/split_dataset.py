@@ -4,7 +4,7 @@ Methodology:
 - Stratified Split based on `has_lesion_gt` (ensuring balanced positive/negative ratio across splits).
 - Independent Study Units: Each BDMAP ID corresponds to an independent CT scan.
 - Leakage Prevention: Narrative reports are strictly segregated across partitions.
-- Saves partition indices/metadata to data/processed/splits.json.
+- Saves partition indices/metadata to data/processed/nlp/splits.json.
 """
 
 from pathlib import Path
@@ -13,10 +13,10 @@ import hashlib
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-AUDIT_CSV = Path("data/processed/target_consistency_audit.csv")
-OUTPUT_SPLITS_JSON = Path("data/processed/splits.json")
-OUTPUT_SPLITS_CSV = Path("data/processed/dataset_splits.csv")
-OUTPUT_SPLIT_METADATA_JSON = Path("data/processed/split_metadata.json")
+AUDIT_CSV = Path("data/processed/nlp/target_consistency_audit.csv")
+OUTPUT_SPLITS_JSON = Path("data/processed/nlp/splits.json")
+OUTPUT_SPLITS_CSV = Path("data/processed/nlp/dataset_splits.csv")
+OUTPUT_SPLIT_METADATA_JSON = Path("data/processed/nlp/split_metadata.json")
 RANDOM_STATE = 42
 TRAIN_FRACTION = 0.70
 VALIDATION_FRACTION = 0.15

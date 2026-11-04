@@ -10,19 +10,15 @@ This directory contains the project's datasets.
 ```
 data/
 ├── raw/
-│   ├── AbdomenAtlas3.0MiniWithMeta.csv    # Source metadata (9,262 rows)
-│   └── pdf_reports/                       # One PDF per BDMAP ID (9,262 files)
-│       ├── BDMAP_00000001.pdf
-│       ├── BDMAP_00000002.pdf
-│       └── ...
+│   ├── cv/SMC-LUD/                        # Original SMC-LUD ultrasound images
+│   └── nlp/
+│       ├── AbdomenAtlas3.0MiniWithMeta.csv
+│       └── pdf_reports/                   # One PDF per BDMAP ID
+├── manifests/
+│   └── cv/SMC-LUD/                        # CV audit and patient-level manifests
 └── processed/
-    ├── liver_nlp_clean.csv                # Output of prepare_nlp_dataset.py
-    ├── master_records.jsonl               # Output of generate_master_jsonl.py
-    ├── ground_truth.jsonl                 # Output of generate_ground_truth_jsonl.py
-    ├── target_consistency_audit.csv       # Output of audit_target_consistency.py
-    ├── target_validation_review.csv       # Output of validate_targets.py
-    ├── splits.json                        # Output of split_dataset.py
-    └── dataset_splits.csv                 # Output of split_dataset.py
+    ├── cv/SMC-LUD/patient_split_v1/       # Physical CV split
+    └── nlp/                               # NLP pipeline outputs
 ```
 
 ## Data Versioning / External Storage (optional)
@@ -51,8 +47,7 @@ reproducible. The code itself is pinned (see `requirements.txt` and
 `pyproject.toml`) so the same versions are used across machines.
 
 1. Download the AbdomenAtlas 3.0 Mini dataset.
-2. Place `AbdomenAtlas3.0MiniWithMeta.csv` in `data/raw/`.
-3. Extract the PDF reports into `data/raw/pdf_reports/`.
+2. Place `AbdomenAtlas3.0MiniWithMeta.csv` in `data/raw/nlp/`.
+3. Extract the PDF reports into `data/raw/nlp/pdf_reports/`.
 4. Run the pipeline steps in the main [README](../README.md#running-the-pipeline)
    to generate the `data/processed/` outputs.
-

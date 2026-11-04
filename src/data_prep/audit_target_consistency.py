@@ -7,7 +7,7 @@ Categorizes field-level and study-level agreement into:
 - UNCERTAIN: Wording is unquantified, multi-focal, or ambiguous.
 
 Produces:
-- data/processed/target_consistency_audit.csv
+- data/processed/nlp/target_consistency_audit.csv
 - Structured statistical audit report for clinical review.
 """
 
@@ -19,9 +19,9 @@ from typing import Any
 import pandas as pd
 from src.nlp_parser import parse_liver_report, split_sentences
 
-MASTER_PATH = Path("data/processed/master_records.jsonl")
-GT_PATH = Path("data/processed/ground_truth.jsonl")
-OUTPUT_CSV = Path("data/processed/target_consistency_audit.csv")
+MASTER_PATH = Path("data/processed/nlp/master_records.jsonl")
+GT_PATH = Path("data/processed/nlp/ground_truth.jsonl")
+OUTPUT_CSV = Path("data/processed/nlp/target_consistency_audit.csv")
 
 def audit_single_record(master: dict[str, Any], gt: dict[str, Any]) -> dict[str, Any]:
     """Perform rule-based consistency check for a single record."""

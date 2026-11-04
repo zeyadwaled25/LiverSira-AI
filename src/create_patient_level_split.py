@@ -14,10 +14,11 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+from curesight.common.paths import CV_MANIFEST_DIR, CV_RAW_DIR
 
-BASE = Path(__file__).resolve().parents[1] / "data" / "cv" / "SMC-LUD"
+BASE = CV_RAW_DIR
 ORIGINAL = BASE / "original_data"
-MANIFEST_DIR = BASE / "manifests"
+MANIFEST_DIR = CV_MANIFEST_DIR
 OUTPUT_MANIFEST = MANIFEST_DIR / "patient_level_manifest.csv"
 OUTPUT_SUMMARY = MANIFEST_DIR / "patient_level_split_summary.json"
 REPORT = MANIFEST_DIR / "dataset_audit_report.md"

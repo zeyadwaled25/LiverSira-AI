@@ -12,7 +12,7 @@ import re
 
 import pandas as pd
 
-DATA_DIR = Path("data/raw")
+DATA_DIR = Path("data/raw/nlp")
 CSV_PATH = DATA_DIR / "AbdomenAtlas3.0MiniWithMeta.csv"
 
 

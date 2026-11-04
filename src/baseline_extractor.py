@@ -27,7 +27,7 @@ from schemas.inference_schema import (
 )
 from src.nlp_parser import parse_liver_report
 
-MASTER_RECORDS_PATH = Path("data/processed/master_records.jsonl")
+MASTER_RECORDS_PATH = Path("data/processed/nlp/master_records.jsonl")
 OUTPUT_INFERENCE_PATH = Path("evaluation/baseline/baseline_inferences_updated.jsonl")
 OUTPUT_MANIFEST_PATH = Path("evaluation/baseline/baseline_manifest.json")
 BASELINE_VERSION = "rule-based-v1.0.0"
