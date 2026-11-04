@@ -1,0 +1,196 @@
+{
+  "baseline_version": "rule-based-v1.0.0",
+  "splits": {
+    "val": {
+      "counts": {
+        "attenuation_error": 8,
+        "attenuation_excluded": 5,
+        "diameter_cm_error": 19,
+        "diameter_cm_excluded": 37,
+        "false_positive": 6,
+        "lesion_count_error": 58,
+        "location_segments_error": 3,
+        "location_segments_excluded": 11,
+        "presence_abstention": 833
+      },
+      "examples": {
+        "presence_abstention": [
+          "BDMAP_00000008",
+          "BDMAP_00000016",
+          "BDMAP_00000039",
+          "BDMAP_00000053",
+          "BDMAP_00000059",
+          "BDMAP_00000068",
+          "BDMAP_00000077",
+          "BDMAP_00000082",
+          "BDMAP_00000150",
+          "BDMAP_00000157",
+          "BDMAP_00000159",
+          "BDMAP_00000160",
+          "BDMAP_00000173",
+          "BDMAP_00000184",
+          "BDMAP_00000202",
+          "BDMAP_00000217",
+          "BDMAP_00000241",
+          "BDMAP_00000254",
+          "BDMAP_00000259",
+          "BDMAP_00000279"
+        ],
+        "lesion_count_error": [
+          "BDMAP_00000014",
+          "BDMAP_00000163",
+          "BDMAP_00000188",
+          "BDMAP_00000283",
+          "BDMAP_00000396",
+          "BDMAP_00000457",
+          "BDMAP_00000489",
+          "BDMAP_00000498",
+          "BDMAP_00000549",
+          "BDMAP_00000584",
+          "BDMAP_00000722",
+          "BDMAP_00000752",
+          "BDMAP_00000754",
+          "BDMAP_00000780",
+          "BDMAP_00000800",
+          "BDMAP_00000930",
+          "BDMAP_00001115",
+          "BDMAP_00001185",
+          "BDMAP_00001219",
+          "BDMAP_00001411"
+        ],
+        "diameter_cm_error": [
+          "BDMAP_00000258",
+          "BDMAP_00000310",
+          "BDMAP_00000459",
+          "BDMAP_00000491",
+          "BDMAP_00000722",
+          "BDMAP_00000947",
+          "BDMAP_00001134",
+          "BDMAP_00001190",
+          "BDMAP_00002036",
+          "BDMAP_00002493",
+          "BDMAP_00002531",
+          "BDMAP_00002546",
+          "BDMAP_00003795",
+          "BDMAP_00004091",
+          "BDMAP_00004137",
+          "BDMAP_00004601",
+          "BDMAP_00004961",
+          "BDMAP_00005082",
+          "BDMAP_00005090"
+        ],
+        "attenuation_error": [
+          "BDMAP_00000258",
+          "BDMAP_00000310",
+          "BDMAP_00000792",
+          "BDMAP_00003490",
+          "BDMAP_00003867",
+          "BDMAP_00004529",
+          "BDMAP_00004576",
+          "BDMAP_00004818"
+        ],
+        "location_segments_error": [
+          "BDMAP_00000283",
+          "BDMAP_00000396",
+          "BDMAP_00000754"
+        ],
+        "false_positive": [
+          "BDMAP_00001537",
+          "BDMAP_00004617",
+          "BDMAP_00004632",
+          "BDMAP_00004867",
+          "BDMAP_00006555",
+          "BDMAP_00007765"
+        ]
+      }
+    },
+    "test": {
+      "counts": {
+        "attenuation_error": 1,
+        "attenuation_excluded": 2,
+        "diameter_cm_error": 18,
+        "diameter_cm_excluded": 28,
+        "false_positive": 5,
+        "lesion_count_error": 43,
+        "location_segments_excluded": 8,
+        "presence_abstention": 865
+      },
+      "examples": {
+        "presence_abstention": [
+          "BDMAP_00000003",
+          "BDMAP_00000017",
+          "BDMAP_00000020",
+          "BDMAP_00000023",
+          "BDMAP_00000028",
+          "BDMAP_00000041",
+          "BDMAP_00000047",
+          "BDMAP_00000049",
+          "BDMAP_00000069",
+          "BDMAP_00000071",
+          "BDMAP_00000093",
+          "BDMAP_00000096",
+          "BDMAP_00000132",
+          "BDMAP_00000148",
+          "BDMAP_00000161",
+          "BDMAP_00000185",
+          "BDMAP_00000190",
+          "BDMAP_00000195",
+          "BDMAP_00000197",
+          "BDMAP_00000215"
+        ],
+        "false_positive": [
+          "BDMAP_00000004",
+          "BDMAP_00000291",
+          "BDMAP_00002942",
+          "BDMAP_00003347",
+          "BDMAP_00003530"
+        ],
+        "lesion_count_error": [
+          "BDMAP_00000187",
+          "BDMAP_00000211",
+          "BDMAP_00000273",
+          "BDMAP_00000400",
+          "BDMAP_00000965",
+          "BDMAP_00001401",
+          "BDMAP_00001731",
+          "BDMAP_00001745",
+          "BDMAP_00001749",
+          "BDMAP_00001972",
+          "BDMAP_00001981",
+          "BDMAP_00002045",
+          "BDMAP_00002084",
+          "BDMAP_00002172",
+          "BDMAP_00002281",
+          "BDMAP_00002289",
+          "BDMAP_00002359",
+          "BDMAP_00002719",
+          "BDMAP_00002874",
+          "BDMAP_00003038"
+        ],
+        "diameter_cm_error": [
+          "BDMAP_00000206",
+          "BDMAP_00000819",
+          "BDMAP_00001292",
+          "BDMAP_00001409",
+          "BDMAP_00001749",
+          "BDMAP_00002030",
+          "BDMAP_00002669",
+          "BDMAP_00002718",
+          "BDMAP_00002719",
+          "BDMAP_00003054",
+          "BDMAP_00003186",
+          "BDMAP_00003335",
+          "BDMAP_00003864",
+          "BDMAP_00003887",
+          "BDMAP_00004259",
+          "BDMAP_00004557",
+          "BDMAP_00005175",
+          "BDMAP_00005508"
+        ],
+        "attenuation_error": [
+          "BDMAP_00001749"
+        ]
+      }
+    }
+  }
+}

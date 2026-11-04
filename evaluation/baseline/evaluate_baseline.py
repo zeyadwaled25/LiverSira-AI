@@ -57,7 +57,7 @@ def _location_metrics(
         union = truth | prediction
         ious.append(1.0 if not union else len(truth & prediction) / len(union))
         exact.append(float(truth == prediction))
-    return {"iou": _mean(ious), "exact_match": _mean(exact)}
+    return {"iou": _mean(ious), "exact_match": _mean(exact), "denominator": len(ious)}
 
 
 def _presence_metrics(
@@ -81,6 +81,7 @@ def _presence_metrics(
         "f1": _rate(2 * tp, 2 * tp + fp + fn),
         "specificity": _rate(tn, tn + fp),
         "evaluated": len(y_true),
+        "denominator": len(y_true),
         "abstained_predictions": uncertain,
     }
 
@@ -227,6 +228,7 @@ def _evaluate_records(
         "lesion_count": {
             "exact_match": _rate(sum(t == p for t, p in zip(count_true, count_pred)), len(count_true)),
             "mae": _mean([abs(t - p) for t, p in zip(count_true, count_pred)]),
+            "denominator": len(count_true),
         },
         "location": _location_metrics(location_true, location_pred),
         "diameter": {
@@ -236,9 +238,11 @@ def _evaluate_records(
                 sum(abs(t - p) <= 0.5 for t, p in zip(diameter_true, diameter_pred)),
                 len(diameter_true),
             ),
+            "denominator": len(diameter_true),
         },
         "attenuation": {
             "accuracy": _rate(sum(t == p for t, p in zip(attenuation_true, attenuation_pred)), len(attenuation_true)),
+            "denominator": len(attenuation_true),
         },
         "per_field": {},
         "evidence_coverage": {},
@@ -248,6 +252,13 @@ def _evaluate_records(
             ),
             "by_field": dict(sorted(uncertainty.items())),
             "presence_abstentions": presence_uncertain,
+        },
+        "metric_denominators": {
+            "presence": len(presence_true),
+            "lesion_count": len(count_true),
+            "location": len(location_true),
+            "diameter": len(diameter_true),
+            "attenuation": len(attenuation_true),
         },
     }
     for field in FIELD_NAMES:
@@ -376,6 +387,13 @@ def _markdown_report(metrics: dict[str, Any]) -> str:
     lines += [
         "",
         "## Target/prediction definitions",
+        "Every metric denominator is the number of paired records with both an "
+        "applicable ground-truth value and a non-missing prediction. Presence "
+        "uses evaluated non-abstaining predictions; lesion count, location, "
+        "diameter, and attenuation use their respective field-level evaluated "
+        "counts. Abstentions, missing targets, and non-applicable negative "
+        "studies are excluded and reported separately.",
+        "",
         "- Lesion count: `ground_truth.lesion_count` vs `liver_lesions.lesion_count`.",
         "- Location: `ground_truth.largest_lesion.location_segments` vs "
         "`liver_lesions.largest_lesion.location_segments`.",

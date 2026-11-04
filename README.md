@@ -167,18 +167,24 @@ python -m src.data_prep.validate_targets
 #    and promotes only valid, attributable reviews.
 python -m src.data_prep.adjudicate_validation_sample
 
-# 9. Create stratified 70/15/15 splits
+# 9. Create and freeze stratified 70/15/15 study-level splits
 python -m src.data_prep.split_dataset
 
-# 10. Run the rule-based NLP baseline.
+# 10. Create the benchmark eligibility manifest
+python -m src.data_prep.create_benchmark_manifest
+
+# 11. Run the rule-based NLP baseline.
 #     Writes evaluation/baseline/baseline_inferences_updated.jsonl.
 #     The historical baseline_inferences.jsonl remains unchanged.
 python -m src.baseline_extractor
 
-# 11. Evaluate the updated baseline on validation and test splits
+# 12. Evaluate the updated baseline on validation and test splits
 python -m evaluation.baseline.evaluate_baseline
 
-# 12. Run test suite
+# 13. Produce baseline error analysis
+python -m evaluation.baseline.error_analysis
+
+# 14. Run test suite
 pytest
 ```
 
@@ -230,6 +236,15 @@ files or any dataset/split.
 Learned-model results compare against source-derived labels, not a clinical
 gold standard. The legacy 79-case cohort is not treated as Human Verified, and
 Patient-level leakage cannot be ruled out because Patient IDs are unavailable.
+The split is therefore explicitly **study-level only**. The frozen split
+procedure, `random_state=42`, input hash, and this limitation are recorded in
+[`data/processed/split_metadata.json`](data/processed/split_metadata.json).
+Benchmark eligibility and exclusion reasons are recorded in
+[`evaluation/baseline/benchmark_eligibility_manifest.csv`](evaluation/baseline/benchmark_eligibility_manifest.csv).
+The baseline version and output hash are recorded in
+[`evaluation/baseline/baseline_manifest.json`](evaluation/baseline/baseline_manifest.json);
+its error analysis is written to
+[`evaluation/baseline/baseline_error_analysis.md`](evaluation/baseline/baseline_error_analysis.md).
 
 ## Visual Demonstrations
 

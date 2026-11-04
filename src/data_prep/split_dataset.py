@@ -9,19 +9,26 @@ Methodology:
 
 from pathlib import Path
 import json
+import hashlib
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
 AUDIT_CSV = Path("data/processed/target_consistency_audit.csv")
 OUTPUT_SPLITS_JSON = Path("data/processed/splits.json")
 OUTPUT_SPLITS_CSV = Path("data/processed/dataset_splits.csv")
+OUTPUT_SPLIT_METADATA_JSON = Path("data/processed/split_metadata.json")
+RANDOM_STATE = 42
+TRAIN_FRACTION = 0.70
+VALIDATION_FRACTION = 0.15
+TEST_FRACTION = 0.15
 
 
 def generate_splits(
     audit_csv_path: Path,
     splits_json_path: Path,
     splits_csv_path: Path,
-    random_state: int = 42,
+    random_state: int = RANDOM_STATE,
+    metadata_json_path: Path = OUTPUT_SPLIT_METADATA_JSON,
 ) -> dict[str, list[str]]:
     """Execute stratified 70/15/15 dataset split and persist partition mappings."""
     print("=" * 60)
@@ -81,8 +88,40 @@ def generate_splits(
             mapping_rows.append({"id": item_id, "split": split_name})
     pd.DataFrame(mapping_rows).to_csv(splits_csv_path, index=False)
 
+    audit_sha256 = hashlib.sha256(audit_csv_path.read_bytes()).hexdigest()
+    split_ids_sha256 = hashlib.sha256(
+        "\n".join(f"{name}:{item_id}" for name in sorted(splits) for item_id in splits[name]).encode()
+    ).hexdigest()
+    metadata = {
+        "schema_version": "1.0",
+        "status": "frozen",
+        "method": "two_stage_stratified_study_level_split",
+        "fractions": {
+            "train": TRAIN_FRACTION,
+            "validation": VALIDATION_FRACTION,
+            "test": TEST_FRACTION,
+        },
+        "random_state": random_state,
+        "stratification_target": "has_lesion_gt",
+        "unit": "study",
+        "patient_level_leakage": {
+            "status": "not_assessable",
+            "reason": "The Master Record has no patient identifier; only study IDs, age, and sex are available.",
+        },
+        "source_audit_sha256": audit_sha256,
+        "split_ids_sha256": split_ids_sha256,
+        "counts": {name: len(ids) for name, ids in splits.items()},
+        "excluded_before_split": {
+            "count": len(df) - total_valid,
+            "rule": "discrepancy_details != 'Missing narrative report'",
+        },
+    }
+    metadata_json_path.parent.mkdir(parents=True, exist_ok=True)
+    metadata_json_path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+
     print(f"\n[DONE] Partition IDs saved to:  {splits_json_path}")
     print(f"[DONE] Partition table saved to: {splits_csv_path}")
+    print(f"[DONE] Split metadata saved to: {metadata_json_path}")
     print("=" * 60)
 
     return splits
@@ -95,4 +134,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

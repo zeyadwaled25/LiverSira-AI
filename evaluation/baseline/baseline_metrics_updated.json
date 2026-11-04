@@ -25,9 +25,9 @@
       "missing_ground_truth_ids": [],
       "missing_inference_ids": [],
       "group_counts": {
-        "MATCH": 1271,
-        "MISMATCH": 38,
-        "UNCERTAIN": 80
+        "MATCH": 438,
+        "MISMATCH": 870,
+        "UNCERTAIN": 81
       },
       "presence": {
         "confusion_matrix": {
@@ -52,23 +52,28 @@
         "f1": 0.9865470852017937,
         "specificity": 0.9821428571428571,
         "evaluated": 556,
+        "denominator": 556,
         "abstained_predictions": 833
       },
       "lesion_count": {
         "exact_match": 0.7363636363636363,
-        "mae": 2.190909090909091
+        "mae": 2.190909090909091,
+        "denominator": 220
       },
       "location": {
         "iou": 0.9889952153110048,
-        "exact_match": 0.9856459330143541
+        "exact_match": 0.9856459330143541,
+        "denominator": 209
       },
       "diameter": {
         "mae_cm": 0.3737704918032787,
         "tolerance_cm": 0.5,
-        "tolerance_accuracy": 0.8961748633879781
+        "tolerance_accuracy": 0.8961748633879781,
+        "denominator": 183
       },
       "attenuation": {
-        "accuracy": 0.9627906976744186
+        "accuracy": 0.9627906976744186,
+        "denominator": 215
       },
       "per_field": {
         "has_lesion": {
@@ -155,15 +160,22 @@
         },
         "presence_abstentions": 833
       },
+      "metric_denominators": {
+        "presence": 556,
+        "lesion_count": 220,
+        "location": 209,
+        "diameter": 183,
+        "attenuation": 215
+      },
       "split": "validation",
       "comparison_groups": {
         "MATCH": {
-          "studies_in_split": 1271,
-          "paired_studies": 1271,
+          "studies_in_split": 438,
+          "paired_studies": 438,
           "missing_ground_truth_ids": [],
           "missing_inference_ids": [],
           "group_counts": {
-            "MATCH": 1271
+            "MATCH": 438
           },
           "presence": {
             "confusion_matrix": {
@@ -188,46 +200,49 @@
             "f1": 1.0,
             "specificity": 1.0,
             "evaluated": 438,
-            "abstained_predictions": 833
+            "denominator": 438,
+            "abstained_predictions": 0
           },
           "lesion_count": {
             "exact_match": 1.0,
-            "mae": 0.0
+            "mae": 0.0,
+            "denominator": 108
           },
           "location": {
             "iou": 1.0,
-            "exact_match": 1.0
+            "exact_match": 1.0,
+            "denominator": 104
           },
           "diameter": {
             "mae_cm": 0.0,
             "tolerance_cm": 0.5,
-            "tolerance_accuracy": 1.0
+            "tolerance_accuracy": 1.0,
+            "denominator": 108
           },
           "attenuation": {
-            "accuracy": 1.0
+            "accuracy": 1.0,
+            "denominator": 108
           },
           "per_field": {
             "has_lesion": {
-              "eligible": 1271,
+              "eligible": 438,
               "evaluated": 438,
-              "excluded": 833,
+              "excluded": 0,
               "not_applicable": 0,
-              "exclusion_reasons": {
-                "prediction_uncertain": 833
-              }
+              "exclusion_reasons": {}
             },
             "lesion_count": {
               "eligible": 108,
               "evaluated": 108,
               "excluded": 0,
-              "not_applicable": 1163,
+              "not_applicable": 330,
               "exclusion_reasons": {}
             },
             "location_segments": {
               "eligible": 108,
               "evaluated": 104,
               "excluded": 4,
-              "not_applicable": 1163,
+              "not_applicable": 330,
               "exclusion_reasons": {
                 "ground_truth_missing": 4
               }
@@ -236,22 +251,22 @@
               "eligible": 108,
               "evaluated": 108,
               "excluded": 0,
-              "not_applicable": 1163,
+              "not_applicable": 330,
               "exclusion_reasons": {}
             },
             "attenuation": {
               "eligible": 108,
               "evaluated": 108,
               "excluded": 0,
-              "not_applicable": 1163,
+              "not_applicable": 330,
               "exclusion_reasons": {}
             }
           },
           "evidence_coverage": {
             "has_lesion": {
-              "records_with_evidence": 685,
-              "eligible_records": 1271,
-              "coverage": 0.5389457120377655,
+              "records_with_evidence": 438,
+              "eligible_records": 438,
+              "coverage": 1.0,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "lesion_count": {
@@ -280,21 +295,26 @@
             }
           },
           "uncertainty": {
-            "records_with_any_missing_or_unclear": 833,
-            "by_field": {
-              "liver_lesions.has_lesion": 833
-            },
-            "presence_abstentions": 833
+            "records_with_any_missing_or_unclear": 0,
+            "by_field": {},
+            "presence_abstentions": 0
+          },
+          "metric_denominators": {
+            "presence": 438,
+            "lesion_count": 108,
+            "location": 104,
+            "diameter": 108,
+            "attenuation": 108
           },
           "split": "MATCH"
         },
         "MISMATCH": {
-          "studies_in_split": 38,
-          "paired_studies": 38,
+          "studies_in_split": 870,
+          "paired_studies": 870,
           "missing_ground_truth_ids": [],
           "missing_inference_ids": [],
           "group_counts": {
-            "MISMATCH": 38
+            "MISMATCH": 870
           },
           "presence": {
             "confusion_matrix": {
@@ -309,72 +329,79 @@
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 32
+                  "predicted_true": 31
                 }
               }
             },
-            "accuracy": 0.8421052631578947,
-            "precision": 0.8421052631578947,
+            "accuracy": 0.8378378378378378,
+            "precision": 0.8378378378378378,
             "recall": 1.0,
-            "f1": 0.9142857142857143,
+            "f1": 0.9117647058823529,
             "specificity": 0.0,
-            "evaluated": 38,
-            "abstained_predictions": 0
+            "evaluated": 37,
+            "denominator": 37,
+            "abstained_predictions": 833
           },
           "lesion_count": {
-            "exact_match": 0.53125,
-            "mae": 3.84375
+            "exact_match": 0.5483870967741935,
+            "mae": 3.7096774193548385,
+            "denominator": 31
           },
           "location": {
-            "iou": 0.9258064516129032,
-            "exact_match": 0.9032258064516129
+            "iou": 0.9566666666666667,
+            "exact_match": 0.9333333333333333,
+            "denominator": 30
           },
           "diameter": {
-            "mae_cm": 2.2064516129032254,
+            "mae_cm": 2.2800000000000002,
             "tolerance_cm": 0.5,
-            "tolerance_accuracy": 0.3870967741935484
+            "tolerance_accuracy": 0.36666666666666664,
+            "denominator": 30
           },
           "attenuation": {
-            "accuracy": 0.9032258064516129
+            "accuracy": 0.9,
+            "denominator": 30
           },
           "per_field": {
             "has_lesion": {
-              "eligible": 38,
-              "evaluated": 38,
-              "excluded": 0,
+              "eligible": 870,
+              "evaluated": 37,
+              "excluded": 833,
               "not_applicable": 0,
-              "exclusion_reasons": {}
+              "exclusion_reasons": {
+                "prediction_uncertain": 833
+              }
             },
             "lesion_count": {
-              "eligible": 32,
-              "evaluated": 32,
+              "eligible": 31,
+              "evaluated": 31,
               "excluded": 0,
-              "not_applicable": 6,
+              "not_applicable": 839,
               "exclusion_reasons": {}
             },
             "location_segments": {
-              "eligible": 32,
-              "evaluated": 31,
+              "eligible": 31,
+              "evaluated": 30,
               "excluded": 1,
-              "not_applicable": 6,
+              "not_applicable": 839,
               "exclusion_reasons": {
                 "prediction_missing": 1
               }
             },
             "diameter_cm": {
-              "eligible": 32,
-              "evaluated": 31,
+              "eligible": 31,
+              "evaluated": 30,
               "excluded": 1,
-              "not_applicable": 6,
+              "not_applicable": 839,
               "exclusion_reasons": {
                 "prediction_missing": 1
               }
             },
             "attenuation": {
-              "eligible": 32,
-              "evaluated": 31,
+              "eligible": 31,
+              "evaluated": 30,
               "excluded": 1,
-              "not_applicable": 6,
+              "not_applicable": 839,
               "exclusion_reasons": {
                 "prediction_missing": 1
               }
@@ -382,50 +409,59 @@
           },
           "evidence_coverage": {
             "has_lesion": {
-              "records_with_evidence": 38,
-              "eligible_records": 38,
-              "coverage": 1.0,
+              "records_with_evidence": 284,
+              "eligible_records": 870,
+              "coverage": 0.3264367816091954,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "lesion_count": {
               "records_with_evidence": 24,
-              "eligible_records": 32,
-              "coverage": 0.75,
+              "eligible_records": 31,
+              "coverage": 0.7741935483870968,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "location_segments": {
-              "records_with_evidence": 31,
-              "eligible_records": 32,
-              "coverage": 0.96875,
+              "records_with_evidence": 30,
+              "eligible_records": 31,
+              "coverage": 0.967741935483871,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "diameter_cm": {
-              "records_with_evidence": 31,
-              "eligible_records": 32,
-              "coverage": 0.96875,
+              "records_with_evidence": 30,
+              "eligible_records": 31,
+              "coverage": 0.967741935483871,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "attenuation": {
-              "records_with_evidence": 32,
-              "eligible_records": 32,
+              "records_with_evidence": 31,
+              "eligible_records": 31,
               "coverage": 1.0,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             }
           },
           "uncertainty": {
-            "records_with_any_missing_or_unclear": 0,
-            "by_field": {},
-            "presence_abstentions": 0
+            "records_with_any_missing_or_unclear": 833,
+            "by_field": {
+              "liver_lesions.has_lesion": 833
+            },
+            "presence_abstentions": 833
+          },
+          "metric_denominators": {
+            "presence": 37,
+            "lesion_count": 31,
+            "location": 30,
+            "diameter": 30,
+            "attenuation": 30
           },
           "split": "MISMATCH"
         },
         "UNCERTAIN": {
-          "studies_in_split": 80,
-          "paired_studies": 80,
+          "studies_in_split": 81,
+          "paired_studies": 81,
           "missing_ground_truth_ids": [],
           "missing_inference_ids": [],
           "group_counts": {
-            "UNCERTAIN": 80
+            "UNCERTAIN": 81
           },
           "presence": {
             "confusion_matrix": {
@@ -440,7 +476,7 @@
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 80
+                  "predicted_true": 81
                 }
               }
             },
@@ -449,43 +485,48 @@
             "recall": 1.0,
             "f1": 1.0,
             "specificity": null,
-            "evaluated": 80,
+            "evaluated": 81,
+            "denominator": 81,
             "abstained_predictions": 0
           },
           "lesion_count": {
-            "exact_match": 0.4625,
-            "mae": 4.4875
+            "exact_match": 0.4567901234567901,
+            "mae": 4.530864197530864,
+            "denominator": 81
           },
           "location": {
-            "iou": 1.0,
-            "exact_match": 1.0
+            "iou": 0.9866666666666667,
+            "exact_match": 0.9866666666666667,
+            "denominator": 75
           },
           "diameter": {
             "mae_cm": 0.0,
             "tolerance_cm": 0.5,
-            "tolerance_accuracy": 1.0
+            "tolerance_accuracy": 1.0,
+            "denominator": 45
           },
           "attenuation": {
-            "accuracy": 0.9342105263157895
+            "accuracy": 0.935064935064935,
+            "denominator": 77
           },
           "per_field": {
             "has_lesion": {
-              "eligible": 80,
-              "evaluated": 80,
+              "eligible": 81,
+              "evaluated": 81,
               "excluded": 0,
               "not_applicable": 0,
               "exclusion_reasons": {}
             },
             "lesion_count": {
-              "eligible": 80,
-              "evaluated": 80,
+              "eligible": 81,
+              "evaluated": 81,
               "excluded": 0,
               "not_applicable": 0,
               "exclusion_reasons": {}
             },
             "location_segments": {
-              "eligible": 80,
-              "evaluated": 74,
+              "eligible": 81,
+              "evaluated": 75,
               "excluded": 6,
               "not_applicable": 0,
               "exclusion_reasons": {
@@ -494,8 +535,8 @@
               }
             },
             "diameter_cm": {
-              "eligible": 80,
-              "evaluated": 44,
+              "eligible": 81,
+              "evaluated": 45,
               "excluded": 36,
               "not_applicable": 0,
               "exclusion_reasons": {
@@ -503,8 +544,8 @@
               }
             },
             "attenuation": {
-              "eligible": 80,
-              "evaluated": 76,
+              "eligible": 81,
+              "evaluated": 77,
               "excluded": 4,
               "not_applicable": 0,
               "exclusion_reasons": {
@@ -514,33 +555,33 @@
           },
           "evidence_coverage": {
             "has_lesion": {
-              "records_with_evidence": 80,
-              "eligible_records": 80,
+              "records_with_evidence": 81,
+              "eligible_records": 81,
               "coverage": 1.0,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "lesion_count": {
               "records_with_evidence": 22,
-              "eligible_records": 80,
-              "coverage": 0.275,
+              "eligible_records": 81,
+              "coverage": 0.2716049382716049,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "location_segments": {
-              "records_with_evidence": 74,
-              "eligible_records": 80,
-              "coverage": 0.925,
+              "records_with_evidence": 75,
+              "eligible_records": 81,
+              "coverage": 0.9259259259259259,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "diameter_cm": {
-              "records_with_evidence": 70,
-              "eligible_records": 80,
-              "coverage": 0.875,
+              "records_with_evidence": 71,
+              "eligible_records": 81,
+              "coverage": 0.8765432098765432,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "attenuation": {
-              "records_with_evidence": 78,
-              "eligible_records": 80,
-              "coverage": 0.975,
+              "records_with_evidence": 79,
+              "eligible_records": 81,
+              "coverage": 0.9753086419753086,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             }
           },
@@ -548,6 +589,13 @@
             "records_with_any_missing_or_unclear": 0,
             "by_field": {},
             "presence_abstentions": 0
+          },
+          "metric_denominators": {
+            "presence": 81,
+            "lesion_count": 81,
+            "location": 75,
+            "diameter": 45,
+            "attenuation": 77
           },
           "split": "UNCERTAIN"
         }
@@ -559,8 +607,8 @@
       "missing_ground_truth_ids": [],
       "missing_inference_ids": [],
       "group_counts": {
-        "MATCH": 1284,
-        "MISMATCH": 38,
+        "MATCH": 420,
+        "MISMATCH": 902,
         "UNCERTAIN": 68
       },
       "presence": {
@@ -586,23 +634,28 @@
         "f1": 0.9888143176733781,
         "specificity": 0.9835526315789473,
         "evaluated": 525,
+        "denominator": 525,
         "abstained_predictions": 865
       },
       "lesion_count": {
         "exact_match": 0.8054298642533937,
-        "mae": 1.1085972850678734
+        "mae": 1.1085972850678734,
+        "denominator": 221
       },
       "location": {
         "iou": 1.0,
-        "exact_match": 1.0
+        "exact_match": 1.0,
+        "denominator": 213
       },
       "diameter": {
         "mae_cm": 0.27564766839378235,
         "tolerance_cm": 0.5,
-        "tolerance_accuracy": 0.9067357512953368
+        "tolerance_accuracy": 0.9067357512953368,
+        "denominator": 193
       },
       "attenuation": {
-        "accuracy": 0.9954337899543378
+        "accuracy": 0.9954337899543378,
+        "denominator": 219
       },
       "per_field": {
         "has_lesion": {
@@ -689,15 +742,22 @@
         },
         "presence_abstentions": 865
       },
+      "metric_denominators": {
+        "presence": 525,
+        "lesion_count": 221,
+        "location": 213,
+        "diameter": 193,
+        "attenuation": 219
+      },
       "split": "test",
       "comparison_groups": {
         "MATCH": {
-          "studies_in_split": 1284,
-          "paired_studies": 1284,
+          "studies_in_split": 420,
+          "paired_studies": 420,
           "missing_ground_truth_ids": [],
           "missing_inference_ids": [],
           "group_counts": {
-            "MATCH": 1284
+            "MATCH": 420
           },
           "presence": {
             "confusion_matrix": {
@@ -722,46 +782,49 @@
             "f1": 1.0,
             "specificity": 1.0,
             "evaluated": 420,
-            "abstained_predictions": 864
+            "denominator": 420,
+            "abstained_predictions": 0
           },
           "lesion_count": {
             "exact_match": 1.0,
-            "mae": 0.0
+            "mae": 0.0,
+            "denominator": 121
           },
           "location": {
             "iou": 1.0,
-            "exact_match": 1.0
+            "exact_match": 1.0,
+            "denominator": 119
           },
           "diameter": {
             "mae_cm": 0.0,
             "tolerance_cm": 0.5,
-            "tolerance_accuracy": 1.0
+            "tolerance_accuracy": 1.0,
+            "denominator": 121
           },
           "attenuation": {
-            "accuracy": 1.0
+            "accuracy": 1.0,
+            "denominator": 121
           },
           "per_field": {
             "has_lesion": {
-              "eligible": 1284,
+              "eligible": 420,
               "evaluated": 420,
-              "excluded": 864,
+              "excluded": 0,
               "not_applicable": 0,
-              "exclusion_reasons": {
-                "prediction_uncertain": 864
-              }
+              "exclusion_reasons": {}
             },
             "lesion_count": {
               "eligible": 121,
               "evaluated": 121,
               "excluded": 0,
-              "not_applicable": 1163,
+              "not_applicable": 299,
               "exclusion_reasons": {}
             },
             "location_segments": {
               "eligible": 121,
               "evaluated": 119,
               "excluded": 2,
-              "not_applicable": 1163,
+              "not_applicable": 299,
               "exclusion_reasons": {
                 "ground_truth_missing": 2
               }
@@ -770,22 +833,22 @@
               "eligible": 121,
               "evaluated": 121,
               "excluded": 0,
-              "not_applicable": 1163,
+              "not_applicable": 299,
               "exclusion_reasons": {}
             },
             "attenuation": {
               "eligible": 121,
               "evaluated": 121,
               "excluded": 0,
-              "not_applicable": 1163,
+              "not_applicable": 299,
               "exclusion_reasons": {}
             }
           },
           "evidence_coverage": {
             "has_lesion": {
-              "records_with_evidence": 627,
-              "eligible_records": 1284,
-              "coverage": 0.4883177570093458,
+              "records_with_evidence": 420,
+              "eligible_records": 420,
+              "coverage": 1.0,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "lesion_count": {
@@ -814,21 +877,26 @@
             }
           },
           "uncertainty": {
-            "records_with_any_missing_or_unclear": 864,
-            "by_field": {
-              "liver_lesions.has_lesion": 864
-            },
-            "presence_abstentions": 864
+            "records_with_any_missing_or_unclear": 0,
+            "by_field": {},
+            "presence_abstentions": 0
+          },
+          "metric_denominators": {
+            "presence": 420,
+            "lesion_count": 121,
+            "location": 119,
+            "diameter": 121,
+            "attenuation": 121
           },
           "split": "MATCH"
         },
         "MISMATCH": {
-          "studies_in_split": 38,
-          "paired_studies": 38,
+          "studies_in_split": 902,
+          "paired_studies": 902,
           "missing_ground_truth_ids": [],
           "missing_inference_ids": [],
           "group_counts": {
-            "MISMATCH": 38
+            "MISMATCH": 902
           },
           "presence": {
             "confusion_matrix": {
@@ -853,46 +921,51 @@
             "f1": 0.927536231884058,
             "specificity": 0.0,
             "evaluated": 37,
-            "abstained_predictions": 1
+            "denominator": 37,
+            "abstained_predictions": 865
           },
           "lesion_count": {
             "exact_match": 0.625,
-            "mae": 2.4375
+            "mae": 2.4375,
+            "denominator": 32
           },
           "location": {
             "iou": 1.0,
-            "exact_match": 1.0
+            "exact_match": 1.0,
+            "denominator": 30
           },
           "diameter": {
             "mae_cm": 1.6624999999999999,
             "tolerance_cm": 0.5,
-            "tolerance_accuracy": 0.4375
+            "tolerance_accuracy": 0.4375,
+            "denominator": 32
           },
           "attenuation": {
-            "accuracy": 0.96875
+            "accuracy": 0.96875,
+            "denominator": 32
           },
           "per_field": {
             "has_lesion": {
-              "eligible": 38,
+              "eligible": 902,
               "evaluated": 37,
-              "excluded": 1,
+              "excluded": 865,
               "not_applicable": 0,
               "exclusion_reasons": {
-                "prediction_uncertain": 1
+                "prediction_uncertain": 865
               }
             },
             "lesion_count": {
               "eligible": 32,
               "evaluated": 32,
               "excluded": 0,
-              "not_applicable": 6,
+              "not_applicable": 870,
               "exclusion_reasons": {}
             },
             "location_segments": {
               "eligible": 32,
               "evaluated": 30,
               "excluded": 2,
-              "not_applicable": 6,
+              "not_applicable": 870,
               "exclusion_reasons": {
                 "ground_truth_missing": 1,
                 "prediction_missing": 1
@@ -902,22 +975,22 @@
               "eligible": 32,
               "evaluated": 32,
               "excluded": 0,
-              "not_applicable": 6,
+              "not_applicable": 870,
               "exclusion_reasons": {}
             },
             "attenuation": {
               "eligible": 32,
               "evaluated": 32,
               "excluded": 0,
-              "not_applicable": 6,
+              "not_applicable": 870,
               "exclusion_reasons": {}
             }
           },
           "evidence_coverage": {
             "has_lesion": {
-              "records_with_evidence": 38,
-              "eligible_records": 38,
-              "coverage": 1.0,
+              "records_with_evidence": 245,
+              "eligible_records": 902,
+              "coverage": 0.27161862527716185,
               "note": "Evidence coverage only; no independent evidence annotations exist, so evidence accuracy is not claimed."
             },
             "lesion_count": {
@@ -946,11 +1019,18 @@
             }
           },
           "uncertainty": {
-            "records_with_any_missing_or_unclear": 1,
+            "records_with_any_missing_or_unclear": 865,
             "by_field": {
-              "liver_lesions.has_lesion": 1
+              "liver_lesions.has_lesion": 865
             },
-            "presence_abstentions": 1
+            "presence_abstentions": 865
+          },
+          "metric_denominators": {
+            "presence": 37,
+            "lesion_count": 32,
+            "location": 30,
+            "diameter": 32,
+            "attenuation": 32
           },
           "split": "MISMATCH"
         },
@@ -985,23 +1065,28 @@
             "f1": 1.0,
             "specificity": null,
             "evaluated": 68,
+            "denominator": 68,
             "abstained_predictions": 0
           },
           "lesion_count": {
             "exact_match": 0.5441176470588235,
-            "mae": 2.4558823529411766
+            "mae": 2.4558823529411766,
+            "denominator": 68
           },
           "location": {
             "iou": 1.0,
-            "exact_match": 1.0
+            "exact_match": 1.0,
+            "denominator": 64
           },
           "diameter": {
             "mae_cm": 0.0,
             "tolerance_cm": 0.5,
-            "tolerance_accuracy": 1.0
+            "tolerance_accuracy": 1.0,
+            "denominator": 40
           },
           "attenuation": {
-            "accuracy": 1.0
+            "accuracy": 1.0,
+            "denominator": 66
           },
           "per_field": {
             "has_lesion": {
@@ -1083,6 +1168,13 @@
             "records_with_any_missing_or_unclear": 0,
             "by_field": {},
             "presence_abstentions": 0
+          },
+          "metric_denominators": {
+            "presence": 68,
+            "lesion_count": 68,
+            "location": 64,
+            "diameter": 40,
+            "attenuation": 66
           },
           "split": "UNCERTAIN"
         }

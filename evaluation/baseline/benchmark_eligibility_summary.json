@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "eligibility_rule": "frozen split membership + Master narrative_clean + GroundTruthRecord",
+  "patient_level_leakage": "not_assessable_no_patient_id",
+  "counts": {
+    "train": {
+      "eligible": 6482,
+      "excluded": 0
+    },
+    "val": {
+      "eligible": 1389,
+      "excluded": 0
+    },
+    "test": {
+      "eligible": 1390,
+      "excluded": 0
+    }
+  },
+  "exclusions": {
+    "missing_narrative": 1,
+    "not_in_frozen_split": 1
+  }
+}

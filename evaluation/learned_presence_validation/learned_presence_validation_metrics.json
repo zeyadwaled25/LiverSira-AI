@@ -232,9 +232,9 @@
   },
   "audit_group_metrics": {
     "MATCH": {
-      "studies": 1271,
+      "studies": 438,
       "metrics": {
-        "evaluated": 1271,
+        "evaluated": 438,
         "coverage": 1.0,
         "confusion_matrix": {
           "labels": [
@@ -243,7 +243,7 @@
           ],
           "rows_true": {
             "false": {
-              "predicted_false": 1163,
+              "predicted_false": 330,
               "predicted_true": 0
             },
             "true": {
@@ -252,18 +252,18 @@
             }
           }
         },
-        "accuracy": 0.999213217938631,
+        "accuracy": 0.997716894977169,
         "precision": 1.0,
         "recall": 0.9907407407407407,
         "f1": 0.9953488372093023,
-        "macro_f1": 0.9974595496746985,
-        "weighted_f1": 0.9992115572679265,
+        "macro_f1": 0.9969179889526087,
+        "weighted_f1": 0.9977133124389422,
         "per_class": {
           "negative": {
-            "precision": 0.9991408934707904,
+            "precision": 0.9969788519637462,
             "recall": 1.0,
-            "f1-score": 0.9995702621400946,
-            "support": 1163.0
+            "f1-score": 0.9984871406959153,
+            "support": 330.0
           },
           "positive": {
             "precision": 1.0,
@@ -275,9 +275,9 @@
       }
     },
     "MISMATCH": {
-      "studies": 38,
+      "studies": 870,
       "metrics": {
-        "evaluated": 38,
+        "evaluated": 870,
         "coverage": 1.0,
         "confusion_matrix": {
           "labels": [
@@ -286,12 +286,12 @@
           ],
           "rows_true": {
             "false": {
-              "predicted_false": 6,
+              "predicted_false": 839,
               "predicted_true": 0
             },
             "true": {
               "predicted_false": 0,
-              "predicted_true": 32
+              "predicted_true": 31
             }
           }
         },
@@ -306,21 +306,21 @@
             "precision": 1.0,
             "recall": 1.0,
             "f1-score": 1.0,
-            "support": 6.0
+            "support": 839.0
           },
           "positive": {
             "precision": 1.0,
             "recall": 1.0,
             "f1-score": 1.0,
-            "support": 32.0
+            "support": 31.0
           }
         }
       }
     },
     "UNCERTAIN": {
-      "studies": 80,
+      "studies": 81,
       "metrics": {
-        "evaluated": 80,
+        "evaluated": 81,
         "coverage": 1.0,
         "confusion_matrix": {
           "labels": [
@@ -334,7 +334,7 @@
             },
             "true": {
               "predicted_false": 0,
-              "predicted_true": 80
+              "predicted_true": 81
             }
           }
         },
@@ -355,7 +355,7 @@
             "precision": 1.0,
             "recall": 1.0,
             "f1-score": 1.0,
-            "support": 80.0
+            "support": 81.0
           }
         }
       }

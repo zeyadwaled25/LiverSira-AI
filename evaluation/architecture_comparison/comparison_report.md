@@ -35,21 +35,21 @@ On the common subset, the learned model improves F1 over the Regex baseline by a
 
 ## Group performance
 ### word_logistic_regression
-- MATCH: n=1271, F1=0.9953, Macro F1=0.9975
-- MISMATCH: n=38, F1=1.0000, Macro F1=1.0000
-- UNCERTAIN: n=80, F1=1.0000, Macro F1=1.0000
+- MATCH: n=438, F1=0.9953, Macro F1=0.9969
+- MISMATCH: n=870, F1=1.0000, Macro F1=1.0000
+- UNCERTAIN: n=81, F1=1.0000, Macro F1=1.0000
 ### char_logistic_regression
-- MATCH: n=1271, F1=0.9907, Macro F1=0.9949
-- MISMATCH: n=38, F1=1.0000, Macro F1=1.0000
-- UNCERTAIN: n=80, F1=1.0000, Macro F1=1.0000
+- MATCH: n=438, F1=0.9953, Macro F1=0.9969
+- MISMATCH: n=870, F1=0.9841, Macro F1=0.9918
+- UNCERTAIN: n=81, F1=1.0000, Macro F1=1.0000
 ### word_char_logistic_regression
-- MATCH: n=1271, F1=0.9953, Macro F1=0.9975
-- MISMATCH: n=38, F1=1.0000, Macro F1=1.0000
-- UNCERTAIN: n=80, F1=1.0000, Macro F1=1.0000
+- MATCH: n=438, F1=0.9953, Macro F1=0.9969
+- MISMATCH: n=870, F1=1.0000, Macro F1=1.0000
+- UNCERTAIN: n=81, F1=1.0000, Macro F1=1.0000
 ### word_char_linear_svm
-- MATCH: n=1271, F1=0.9907, Macro F1=0.9949
-- MISMATCH: n=38, F1=1.0000, Macro F1=1.0000
-- UNCERTAIN: n=80, F1=1.0000, Macro F1=1.0000
+- MATCH: n=438, F1=0.9907, Macro F1=0.9938
+- MISMATCH: n=870, F1=1.0000, Macro F1=1.0000
+- UNCERTAIN: n=81, F1=1.0000, Macro F1=1.0000
 
 ## Risks and interpretation
 - Labels are source-derived comparisons, not clinical gold standard.

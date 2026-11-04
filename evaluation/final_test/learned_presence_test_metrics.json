@@ -157,9 +157,9 @@
   },
   "audit_groups": {
     "MATCH": {
-      "studies": 1284,
+      "studies": 420,
       "metrics": {
-        "evaluated": 1284,
+        "evaluated": 420,
         "coverage": 1.0,
         "confusion_matrix": {
           "labels": [
@@ -168,7 +168,7 @@
           ],
           "rows_true": {
             "false": {
-              "predicted_false": 1163,
+              "predicted_false": 299,
               "predicted_true": 0
             },
             "true": {
@@ -188,7 +188,7 @@
             "precision": 1.0,
             "recall": 1.0,
             "f1-score": 1.0,
-            "support": 1163.0
+            "support": 299.0
           },
           "positive": {
             "precision": 1.0,
@@ -201,9 +201,9 @@
       }
     },
     "MISMATCH": {
-      "studies": 38,
+      "studies": 902,
       "metrics": {
-        "evaluated": 38,
+        "evaluated": 902,
         "coverage": 1.0,
         "confusion_matrix": {
           "labels": [
@@ -212,7 +212,7 @@
           ],
           "rows_true": {
             "false": {
-              "predicted_false": 6,
+              "predicted_false": 870,
               "predicted_true": 0
             },
             "true": {
@@ -232,7 +232,7 @@
             "precision": 1.0,
             "recall": 1.0,
             "f1-score": 1.0,
-            "support": 6.0
+            "support": 870.0
           },
           "positive": {
             "precision": 1.0,

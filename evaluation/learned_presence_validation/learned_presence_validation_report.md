@@ -34,9 +34,9 @@ Comparison uses the 556 validation records where the baseline emitted a predicti
 ## Audit-group analysis
 | Group | Studies | Accuracy | F1 |
 |---|---:|---:|---:|
-| MATCH | 1271 | 0.9992 | 0.9953 |
-| MISMATCH | 38 | 1.0000 | 1.0000 |
-| UNCERTAIN | 80 | 1.0000 | 1.0000 |
+| MATCH | 438 | 0.9977 | 0.9953 |
+| MISMATCH | 870 | 1.0000 | 1.0000 |
+| UNCERTAIN | 81 | 1.0000 | 1.0000 |
 
 ## Error analysis
 Examples below are redacted: IDs and numeric values are removed. They are source-label comparison errors, not clinical error adjudications.
@@ -44,7 +44,7 @@ Examples below are redacted: IDs and numeric values are removed. They are source
 - `learned_model` / `conflicting_source_label` / audit `MISMATCH`: The patient's spleen is of normal size, measuring [NUM] cc in volume, with a mean Hounsfield Unit (HU) value of [NUM] +/- [NUM]. The liver is also of normal size, with a volume of [NUM] cc and a mean HU value of [NUM] +/- [NUM]. The pancrea
 - `rule_based_baseline` / `other` / audit `MATCH`: The patient underwent a non-contrast CT scan of the abdomen. The spleen is normal in size, measuring [NUM] cc in volume, with a mean Hounsfield Unit (HU) value of [NUM] +/- [NUM]. The liver is also normal in size, with a volume of [NUM] cc,
 - `learned_model` / `ambiguous_report` / audit `MISMATCH`: The spleen, liver, pancreas, and kidneys are within normal limits in terms of size and enhancement. The spleen measures [NUM] cc in volume, the liver measures [NUM] cc, the pancreas measures [NUM] cc, and the combined kidney volume is [NUM]
-- `learned_model` / `conflicting_source_label` / audit `MISMATCH`: The patient has a hypoattenuating mass in the head of the pancreas, measuring [NUM] x [NUM] cm (image [NUM]). The mass has a volume of [NUM] cc and is in contact with the duodenum. The tumor does not involve the SMA, aorta, portal vein and
+- `learned_model` / `conflicting_source_label` / audit `MISMATCH`: The patient has a hypoattenuating mass in the head of the pancreas, measuring [NUM] x [NUM] cm (image [NUM]). The mass has a volume of [NUM] cc and is in contact with the duodenum. The tumor does not involve the SMA, aorta, portal vein and 
 - `learned_model` / `conflicting_source_label` / audit `MISMATCH`: The spleen, liver, pancreas, and kidneys are all within normal limits in terms of size and appearance. The spleen measures [NUM] cc in volume, the liver measures [NUM] cc, the pancreas measures [NUM] cc, and the combined kidney volume is [N
 - `learned_model` / `negation_related` / audit `MISMATCH`: The spleen, liver, pancreas, and kidneys are all within normal limits in terms of size and enhancement pattern. The spleen measures [NUM] cc in volume, the liver measures [NUM] cc in volume, the pancreas measures [NUM] cc in volume, and the
 - `learned_model` / `conflicting_source_label` / audit `MISMATCH`: The patient has two hypoattenuating pancreatic masses. The larger mass, located in the body of the pancreas, measures [NUM] x [NUM] cm (image [NUM]) and has a volume of [NUM] cc. The smaller mass, located in the tail of the pancreas, measur

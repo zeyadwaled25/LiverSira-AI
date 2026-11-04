@@ -215,9 +215,9 @@
       },
       "audit_groups": {
         "MATCH": {
-          "studies": 1271,
+          "studies": 438,
           "metrics": {
-            "evaluated": 1271,
+            "evaluated": 438,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -226,7 +226,7 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 1163,
+                  "predicted_false": 330,
                   "predicted_true": 0
                 },
                 "true": {
@@ -235,18 +235,18 @@
                 }
               }
             },
-            "accuracy": 0.999213217938631,
+            "accuracy": 0.997716894977169,
             "precision": 1.0,
             "recall": 0.9907407407407407,
             "f1": 0.9953488372093023,
-            "macro_f1": 0.9974595496746985,
-            "weighted_f1": 0.9992115572679265,
+            "macro_f1": 0.9969179889526087,
+            "weighted_f1": 0.9977133124389422,
             "per_class": {
               "negative": {
-                "precision": 0.9991408934707904,
+                "precision": 0.9969788519637462,
                 "recall": 1.0,
-                "f1-score": 0.9995702621400946,
-                "support": 1163.0
+                "f1-score": 0.9984871406959153,
+                "support": 330.0
               },
               "positive": {
                 "precision": 1.0,
@@ -258,9 +258,9 @@
           }
         },
         "MISMATCH": {
-          "studies": 38,
+          "studies": 870,
           "metrics": {
-            "evaluated": 38,
+            "evaluated": 870,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -269,12 +269,12 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 6,
+                  "predicted_false": 839,
                   "predicted_true": 0
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 32
+                  "predicted_true": 31
                 }
               }
             },
@@ -289,21 +289,21 @@
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 6.0
+                "support": 839.0
               },
               "positive": {
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 32.0
+                "support": 31.0
               }
             }
           }
         },
         "UNCERTAIN": {
-          "studies": 80,
+          "studies": 81,
           "metrics": {
-            "evaluated": 80,
+            "evaluated": 81,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -317,7 +317,7 @@
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 80
+                  "predicted_true": 81
                 }
               }
             },
@@ -338,7 +338,7 @@
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 80.0
+                "support": 81.0
               }
             }
           }
@@ -510,9 +510,9 @@
       },
       "audit_groups": {
         "MATCH": {
-          "studies": 1271,
+          "studies": 438,
           "metrics": {
-            "evaluated": 1271,
+            "evaluated": 438,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -521,8 +521,8 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 1162,
-                  "predicted_true": 1
+                  "predicted_false": 330,
+                  "predicted_true": 0
                 },
                 "true": {
                   "predicted_false": 1,
@@ -530,32 +530,32 @@
                 }
               }
             },
-            "accuracy": 0.998426435877262,
-            "precision": 0.9907407407407407,
+            "accuracy": 0.997716894977169,
+            "precision": 1.0,
             "recall": 0.9907407407407407,
-            "f1": 0.9907407407407407,
-            "macro_f1": 0.9949404477564409,
-            "weighted_f1": 0.998426435877262,
+            "f1": 0.9953488372093023,
+            "macro_f1": 0.9969179889526087,
+            "weighted_f1": 0.9977133124389422,
             "per_class": {
               "negative": {
-                "precision": 0.999140154772141,
-                "recall": 0.999140154772141,
-                "f1-score": 0.999140154772141,
-                "support": 1163.0
+                "precision": 0.9969788519637462,
+                "recall": 1.0,
+                "f1-score": 0.9984871406959153,
+                "support": 330.0
               },
               "positive": {
-                "precision": 0.9907407407407407,
+                "precision": 1.0,
                 "recall": 0.9907407407407407,
-                "f1-score": 0.9907407407407407,
+                "f1-score": 0.9953488372093023,
                 "support": 108.0
               }
             }
           }
         },
         "MISMATCH": {
-          "studies": 38,
+          "studies": 870,
           "metrics": {
-            "evaluated": 38,
+            "evaluated": 870,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -564,41 +564,41 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 6,
-                  "predicted_true": 0
+                  "predicted_false": 838,
+                  "predicted_true": 1
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 32
+                  "predicted_true": 31
                 }
               }
             },
-            "accuracy": 1.0,
-            "precision": 1.0,
+            "accuracy": 0.9988505747126437,
+            "precision": 0.96875,
             "recall": 1.0,
-            "f1": 1.0,
-            "macro_f1": 1.0,
-            "weighted_f1": 1.0,
+            "f1": 0.9841269841269841,
+            "macro_f1": 0.99176534060255,
+            "weighted_f1": 0.9988593544327306,
             "per_class": {
               "negative": {
                 "precision": 1.0,
-                "recall": 1.0,
-                "f1-score": 1.0,
-                "support": 6.0
+                "recall": 0.99880810488677,
+                "f1-score": 0.9994036970781157,
+                "support": 839.0
               },
               "positive": {
-                "precision": 1.0,
+                "precision": 0.96875,
                 "recall": 1.0,
-                "f1-score": 1.0,
-                "support": 32.0
+                "f1-score": 0.9841269841269841,
+                "support": 31.0
               }
             }
           }
         },
         "UNCERTAIN": {
-          "studies": 80,
+          "studies": 81,
           "metrics": {
-            "evaluated": 80,
+            "evaluated": 81,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -612,7 +612,7 @@
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 80
+                  "predicted_true": 81
                 }
               }
             },
@@ -633,7 +633,7 @@
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 80.0
+                "support": 81.0
               }
             }
           }
@@ -648,8 +648,8 @@
           "text": "The patient underwent a non-contrast CT scan of the abdomen. The spleen is normal in size, measuring [NUM] cc in volume, with a mean Hounsfield Unit (HU) value of [NUM] +/- [NUM]. The liver is also normal in size, with a volume of [NUM] cc,"
         },
         {
-          "audit_group": "MATCH",
-          "category": "other",
+          "audit_group": "MISMATCH",
+          "category": "conflicting_source_label",
           "true": false,
           "prediction": true,
           "text": "The patient's spleen is of normal size, measuring [NUM] cc in volume, with a mean Hounsfield Unit (HU) value of [NUM] +/- [NUM]. The liver is also of normal size, with a volume of [NUM] cc and a mean HU value of [NUM] +/- [NUM]. The pancrea"
@@ -812,9 +812,9 @@
       },
       "audit_groups": {
         "MATCH": {
-          "studies": 1271,
+          "studies": 438,
           "metrics": {
-            "evaluated": 1271,
+            "evaluated": 438,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -823,7 +823,7 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 1163,
+                  "predicted_false": 330,
                   "predicted_true": 0
                 },
                 "true": {
@@ -832,18 +832,18 @@
                 }
               }
             },
-            "accuracy": 0.999213217938631,
+            "accuracy": 0.997716894977169,
             "precision": 1.0,
             "recall": 0.9907407407407407,
             "f1": 0.9953488372093023,
-            "macro_f1": 0.9974595496746985,
-            "weighted_f1": 0.9992115572679265,
+            "macro_f1": 0.9969179889526087,
+            "weighted_f1": 0.9977133124389422,
             "per_class": {
               "negative": {
-                "precision": 0.9991408934707904,
+                "precision": 0.9969788519637462,
                 "recall": 1.0,
-                "f1-score": 0.9995702621400946,
-                "support": 1163.0
+                "f1-score": 0.9984871406959153,
+                "support": 330.0
               },
               "positive": {
                 "precision": 1.0,
@@ -855,9 +855,9 @@
           }
         },
         "MISMATCH": {
-          "studies": 38,
+          "studies": 870,
           "metrics": {
-            "evaluated": 38,
+            "evaluated": 870,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -866,12 +866,12 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 6,
+                  "predicted_false": 839,
                   "predicted_true": 0
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 32
+                  "predicted_true": 31
                 }
               }
             },
@@ -886,21 +886,21 @@
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 6.0
+                "support": 839.0
               },
               "positive": {
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 32.0
+                "support": 31.0
               }
             }
           }
         },
         "UNCERTAIN": {
-          "studies": 80,
+          "studies": 81,
           "metrics": {
-            "evaluated": 80,
+            "evaluated": 81,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -914,7 +914,7 @@
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 80
+                  "predicted_true": 81
                 }
               }
             },
@@ -935,7 +935,7 @@
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 80.0
+                "support": 81.0
               }
             }
           }
@@ -1112,9 +1112,9 @@
       },
       "audit_groups": {
         "MATCH": {
-          "studies": 1271,
+          "studies": 438,
           "metrics": {
-            "evaluated": 1271,
+            "evaluated": 438,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -1123,7 +1123,7 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 1163,
+                  "predicted_false": 330,
                   "predicted_true": 0
                 },
                 "true": {
@@ -1132,18 +1132,18 @@
                 }
               }
             },
-            "accuracy": 0.998426435877262,
+            "accuracy": 0.9954337899543378,
             "precision": 1.0,
             "recall": 0.9814814814814815,
             "f1": 0.9906542056074766,
-            "macro_f1": 0.9948975495391335,
-            "weighted_f1": 0.9984197587034905,
+            "macro_f1": 0.9938165287856114,
+            "weighted_f1": 0.9954193501224744,
             "per_class": {
               "negative": {
-                "precision": 0.9982832618025751,
+                "precision": 0.9939759036144579,
                 "recall": 1.0,
-                "f1-score": 0.9991408934707904,
-                "support": 1163.0
+                "f1-score": 0.9969788519637462,
+                "support": 330.0
               },
               "positive": {
                 "precision": 1.0,
@@ -1155,9 +1155,9 @@
           }
         },
         "MISMATCH": {
-          "studies": 38,
+          "studies": 870,
           "metrics": {
-            "evaluated": 38,
+            "evaluated": 870,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -1166,12 +1166,12 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 6,
+                  "predicted_false": 839,
                   "predicted_true": 0
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 32
+                  "predicted_true": 31
                 }
               }
             },
@@ -1186,21 +1186,21 @@
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 6.0
+                "support": 839.0
               },
               "positive": {
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 32.0
+                "support": 31.0
               }
             }
           }
         },
         "UNCERTAIN": {
-          "studies": 80,
+          "studies": 81,
           "metrics": {
-            "evaluated": 80,
+            "evaluated": 81,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -1214,7 +1214,7 @@
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 80
+                  "predicted_true": 81
                 }
               }
             },
@@ -1235,7 +1235,7 @@
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 80.0
+                "support": 81.0
               }
             }
           }

@@ -13,6 +13,7 @@ into evaluation/baseline/baseline_inferences_updated.jsonl and calculates perfor
 
 from pathlib import Path
 import json
+import hashlib
 from typing import Any
 
 from schemas.inference_schema import (
@@ -28,6 +29,8 @@ from src.nlp_parser import parse_liver_report
 
 MASTER_RECORDS_PATH = Path("data/processed/master_records.jsonl")
 OUTPUT_INFERENCE_PATH = Path("evaluation/baseline/baseline_inferences_updated.jsonl")
+OUTPUT_MANIFEST_PATH = Path("evaluation/baseline/baseline_manifest.json")
+BASELINE_VERSION = "rule-based-v1.0.0"
 
 def extract_liver_lesion_features(text: str | None) -> dict[str, Any]:
     """Extract liver targets while preserving unknown presence as ``None``."""
@@ -79,6 +82,7 @@ def run_baseline_inference(
     master_path: Path,
     output_path: Path,
     target_split_ids: set[str] | None = None,
+    manifest_path: Path | None = None,
 ) -> list[InferenceRecord]:
     """Run baseline on master records and write structured InferenceRecord JSONL."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -139,6 +143,24 @@ def run_baseline_inference(
                 print(f"Inferred {len(inferences):,} records...")
 
     print(f"[DONE] Saved {len(inferences):,} baseline inference records to: {output_path}")
+    if manifest_path is None:
+        manifest_path = (
+            OUTPUT_MANIFEST_PATH
+            if output_path == OUTPUT_INFERENCE_PATH
+            else output_path.with_name(f"{output_path.stem}_manifest.json")
+        )
+    manifest = {
+        "baseline_version": BASELINE_VERSION,
+        "input_field": "reports.narrative_clean",
+        "parser": "src.nlp_parser.parse_liver_report",
+        "parser_options": {"include_broad_attenuation_fallback": True},
+        "input_path": str(master_path),
+        "output_path": str(output_path),
+        "record_count": len(inferences),
+        "output_sha256": hashlib.sha256(output_path.read_bytes()).hexdigest(),
+    }
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    print(f"[DONE] Baseline manifest: {manifest_path}")
     return inferences
 
 

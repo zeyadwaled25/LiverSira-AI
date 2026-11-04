@@ -29,6 +29,8 @@ No new model was trained. Existing schemas, source data, and split IDs were not 
 | test | attenuation | 221 | 219 | 2 | 1169 | {'prediction_missing': 2} |
 
 ## Target/prediction definitions
+Every metric denominator is the number of paired records with both an applicable ground-truth value and a non-missing prediction. Presence uses evaluated non-abstaining predictions; lesion count, location, diameter, and attenuation use their respective field-level evaluated counts. Abstentions, missing targets, and non-applicable negative studies are excluded and reported separately.
+
 - Lesion count: `ground_truth.lesion_count` vs `liver_lesions.lesion_count`.
 - Location: `ground_truth.largest_lesion.location_segments` vs `liver_lesions.largest_lesion.location_segments`.
 - Diameter: `ground_truth.largest_lesion.source_diameter_cm` vs `liver_lesions.largest_lesion.derived_max_diameter_cm` (maximum reported dimension).
@@ -37,11 +39,11 @@ No new model was trained. Existing schemas, source data, and split IDs were not 
 ## Comparison-audit groups
 | Split | Audit group | Studies | Presence F1 | Diameter MAE (cm) |
 |---|---|---:|---:|---:|
-| validation | MATCH | 1271 | 1.0000 | 0.0000 |
-| validation | MISMATCH | 38 | 0.9143 | 2.2065 |
-| validation | UNCERTAIN | 80 | 1.0000 | 0.0000 |
-| test | MATCH | 1284 | 1.0000 | 0.0000 |
-| test | MISMATCH | 38 | 0.9275 | 1.6625 |
+| validation | MATCH | 438 | 1.0000 | 0.0000 |
+| validation | MISMATCH | 870 | 0.9118 | 2.2800 |
+| validation | UNCERTAIN | 81 | 1.0000 | 0.0000 |
+| test | MATCH | 420 | 1.0000 | 0.0000 |
+| test | MISMATCH | 902 | 0.9275 | 1.6625 |
 | test | UNCERTAIN | 68 | 1.0000 | 0.0000 |
 
 ## Readiness

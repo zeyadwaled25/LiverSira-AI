@@ -23,8 +23,10 @@ STEPS = [
     "src.data_prep.validate_targets",
     "src.data_prep.adjudicate_validation_sample",
     "src.data_prep.split_dataset",
+    "src.data_prep.create_benchmark_manifest",
     "src.baseline_extractor",
-    "evaluation.evaluate_baseline",
+    "evaluation.baseline.evaluate_baseline",
+    "evaluation.baseline.error_analysis",
 ]
 
 
