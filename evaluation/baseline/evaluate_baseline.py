@@ -13,11 +13,11 @@ from typing import Any
 import numpy as np
 
 GROUND_TRUTH_PATH = Path("data/processed/nlp/ground_truth.jsonl")
-INFERENCES_PATH = Path("evaluation/baseline/baseline_inferences_updated.jsonl")
+INFERENCES_PATH = Path("results/nlp/predictions/baseline_inferences_updated.jsonl")
 SPLITS_PATH = Path("data/processed/nlp/splits.json")
 AUDIT_PATH = Path("data/processed/nlp/target_consistency_audit.csv")
-METRICS_PATH = Path("evaluation/baseline/baseline_metrics_updated.json")
-REPORT_PATH = Path("evaluation/baseline/baseline_evaluation_report_updated.md")
+METRICS_PATH = Path("results/nlp/baseline/baseline_metrics_updated.json")
+REPORT_PATH = Path("results/nlp/baseline/baseline_evaluation_report_updated.md")
 
 FIELD_NAMES = (
     "has_lesion",

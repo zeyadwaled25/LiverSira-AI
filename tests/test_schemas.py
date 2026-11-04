@@ -3,7 +3,7 @@
 import pytest
 from pydantic import ValidationError
 
-from schemas.master_schema import (
+from liversira_ai.nlp.schemas.master_schema import (
     MasterMeta,
     MasterRecord,
     MasterReports,
@@ -11,7 +11,7 @@ from schemas.master_schema import (
     OrganFindings,
     PatientMeta,
 )
-from schemas.ground_truth_schema import (
+from liversira_ai.nlp.schemas.ground_truth_schema import (
     Attenuation,
     GroundTruthLabels,
     GroundTruthRecord,
@@ -19,7 +19,7 @@ from schemas.ground_truth_schema import (
     ValidationMetadata,
     ValidationStatus,
 )
-from schemas.inference_schema import (
+from liversira_ai.nlp.schemas.inference_schema import (
     EvidenceSpan,
     InferenceRecord,
     LargestLesionInference,
@@ -174,4 +174,3 @@ def test_master_record_serialization():
     json_str = rec.model_dump_json()
     assert "BDMAP_00000001" in json_str
     assert "raw_columns" in json_str
-

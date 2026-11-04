@@ -6,10 +6,10 @@ from pathlib import Path
 from typing import Any
 
 GROUND_TRUTH_PATH = Path("data/processed/nlp/ground_truth.jsonl")
-INFERENCES_PATH = Path("evaluation/baseline/baseline_inferences_updated.jsonl")
+INFERENCES_PATH = Path("results/nlp/predictions/baseline_inferences_updated.jsonl")
 SPLITS_PATH = Path("data/processed/nlp/splits.json")
-OUTPUT_JSON = Path("evaluation/baseline/baseline_error_analysis.json")
-OUTPUT_REPORT = Path("evaluation/baseline/baseline_error_analysis.md")
+OUTPUT_JSON = Path("results/nlp/baseline/baseline_error_analysis.json")
+OUTPUT_REPORT = Path("results/nlp/baseline/baseline_error_analysis.md")
 
 
 def _load(path: Path) -> dict[str, dict[str, Any]]:

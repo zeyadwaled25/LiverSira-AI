@@ -3,7 +3,7 @@
 from pathlib import Path
 import json
 
-from src.baseline_extractor import (
+from liversira_ai.nlp.baseline import (
     extract_liver_lesion_features,
     run_baseline_inference,
 )

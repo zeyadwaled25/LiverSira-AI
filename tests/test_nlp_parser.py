@@ -1,8 +1,8 @@
 import pytest
 
-from src.data_prep.audit_target_consistency import audit_single_record
-from src.baseline_extractor import extract_liver_lesion_features
-from src.nlp_parser import parse_liver_report
+from liversira_ai.nlp.data.audit import audit_single_record
+from liversira_ai.nlp.baseline import extract_liver_lesion_features
+from liversira_ai.nlp.parser import parse_liver_report
 
 
 @pytest.mark.parametrize(

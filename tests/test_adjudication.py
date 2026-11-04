@@ -6,14 +6,14 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from schemas.ground_truth_schema import (
+from liversira_ai.nlp.schemas.ground_truth_schema import (
     GroundTruthLabels,
     GroundTruthRecord,
     LargestLesionGT,
     ValidationMetadata,
     ValidationStatus,
 )
-from src.data_prep.adjudicate_validation_sample import adjudicate_cohort
+from liversira_ai.nlp.data.adjudication import adjudicate_cohort
 
 
 def _write_gt(path: Path, *, positive: bool = True) -> None:

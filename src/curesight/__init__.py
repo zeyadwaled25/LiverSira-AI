@@ -1,1 +1,0 @@
-"""CureSight shared application packages."""

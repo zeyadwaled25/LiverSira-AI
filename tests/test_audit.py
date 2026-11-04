@@ -1,6 +1,6 @@
 """Unit tests for the automated target consistency audit logic."""
 
-from src.data_prep.audit_target_consistency import (
+from liversira_ai.nlp.data.audit import (
     audit_single_record,
     split_sentences,
 )
