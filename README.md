@@ -68,6 +68,25 @@ Run tests:
 pytest
 ```
 
+The reusable PyTorch dataset and DataLoader are in
+`src/liversira_ai/cv/data/preprocessing.py`. Interactive CV and NLP workflows
+are in `notebooks/`; they display tables, figures, and metrics inline and do
+not generate reports or visualization files.
+
+Notebook workflow:
+
+- `notebooks/cv/04_image_preprocessing.ipynb` — CV image validation, resize
+  comparison, tensor/normalization checks, and DataLoader inspection.
+- `notebooks/cv/05_baseline_training.ipynb` — controlled ResNet18 transfer
+  learning at 512x512 and 224x224 with validation-only comparison; the Test
+  split is intentionally untouched.
+- `notebooks/nlp/01_dataset_audit_and_cleaning.ipynb` — raw AbdomenAtlas
+  inspection and pure text-cleaning checks.
+- `notebooks/nlp/02_rule_based_parser_and_inference.ipynb` — parser evidence,
+  uncertainty, and structured baseline inference inspection.
+- `notebooks/nlp/03_evaluation_and_error_analysis.ipynb` — existing baseline
+  and learned-presence metrics, split integrity, and inline error inspection.
+
 The active test suite is only `tests/`. Pytest is configured with
 `testpaths = ["tests"]`, so `evaluation/tests/` is not collected by default.
 The evaluation directory contains historical evaluation implementations and

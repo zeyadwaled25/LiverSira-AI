@@ -1,0 +1,9 @@
+# Phase 9 deterministic preprocessing configuration.
+dataset_root: data/processed/cv/SMC-LUD/patient_split_v1
+image_size: [512, 512]
+resize_mode: letterbox
+interpolation: bilinear
+padding_value: 0
+normalization: imagenet
+augmentation: none
+stats_source: not_applicable
