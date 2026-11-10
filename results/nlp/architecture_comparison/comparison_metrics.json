@@ -258,9 +258,9 @@
           }
         },
         "MISMATCH": {
-          "studies": 870,
+          "studies": 37,
           "metrics": {
-            "evaluated": 870,
+            "evaluated": 37,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -269,7 +269,7 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 839,
+                  "predicted_false": 6,
                   "predicted_true": 0
                 },
                 "true": {
@@ -289,7 +289,7 @@
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 839.0
+                "support": 6.0
               },
               "positive": {
                 "precision": 1.0,
@@ -301,9 +301,9 @@
           }
         },
         "UNCERTAIN": {
-          "studies": 81,
+          "studies": 914,
           "metrics": {
-            "evaluated": 81,
+            "evaluated": 914,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -312,7 +312,7 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 0,
+                  "predicted_false": 833,
                   "predicted_true": 0
                 },
                 "true": {
@@ -329,10 +329,10 @@
             "weighted_f1": 1.0,
             "per_class": {
               "negative": {
-                "precision": 0.0,
-                "recall": 0.0,
-                "f1-score": 0.0,
-                "support": 0.0
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 833.0
               },
               "positive": {
                 "precision": 1.0,
@@ -370,7 +370,7 @@
         }
       },
       "artifact": "evaluation\\architecture_comparison\\word_logistic_regression.joblib",
-      "validation_predictions": "evaluation\\architecture_comparison\\word_logistic_regression_validation_predictions.jsonl",
+      "validation_predictions": "results\\nlp\\predictions\\word_logistic_regression_validation_predictions.jsonl",
       "feature_configuration": {
         "views": [
           "word"
@@ -553,9 +553,9 @@
           }
         },
         "MISMATCH": {
-          "studies": 870,
+          "studies": 37,
           "metrics": {
-            "evaluated": 870,
+            "evaluated": 37,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -564,55 +564,12 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 838,
-                  "predicted_true": 1
-                },
-                "true": {
-                  "predicted_false": 0,
-                  "predicted_true": 31
-                }
-              }
-            },
-            "accuracy": 0.9988505747126437,
-            "precision": 0.96875,
-            "recall": 1.0,
-            "f1": 0.9841269841269841,
-            "macro_f1": 0.99176534060255,
-            "weighted_f1": 0.9988593544327306,
-            "per_class": {
-              "negative": {
-                "precision": 1.0,
-                "recall": 0.99880810488677,
-                "f1-score": 0.9994036970781157,
-                "support": 839.0
-              },
-              "positive": {
-                "precision": 0.96875,
-                "recall": 1.0,
-                "f1-score": 0.9841269841269841,
-                "support": 31.0
-              }
-            }
-          }
-        },
-        "UNCERTAIN": {
-          "studies": 81,
-          "metrics": {
-            "evaluated": 81,
-            "coverage": 1.0,
-            "confusion_matrix": {
-              "labels": [
-                false,
-                true
-              ],
-              "rows_true": {
-                "false": {
-                  "predicted_false": 0,
+                  "predicted_false": 6,
                   "predicted_true": 0
                 },
                 "true": {
                   "predicted_false": 0,
-                  "predicted_true": 81
+                  "predicted_true": 31
                 }
               }
             },
@@ -624,15 +581,58 @@
             "weighted_f1": 1.0,
             "per_class": {
               "negative": {
-                "precision": 0.0,
-                "recall": 0.0,
-                "f1-score": 0.0,
-                "support": 0.0
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 6.0
               },
               "positive": {
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
+                "support": 31.0
+              }
+            }
+          }
+        },
+        "UNCERTAIN": {
+          "studies": 914,
+          "metrics": {
+            "evaluated": 914,
+            "coverage": 1.0,
+            "confusion_matrix": {
+              "labels": [
+                false,
+                true
+              ],
+              "rows_true": {
+                "false": {
+                  "predicted_false": 832,
+                  "predicted_true": 1
+                },
+                "true": {
+                  "predicted_false": 0,
+                  "predicted_true": 81
+                }
+              }
+            },
+            "accuracy": 0.9989059080962801,
+            "precision": 0.9878048780487805,
+            "recall": 1.0,
+            "f1": 0.9938650306748467,
+            "macro_f1": 0.996632215037123,
+            "weighted_f1": 0.9989089356502869,
+            "per_class": {
+              "negative": {
+                "precision": 1.0,
+                "recall": 0.9987995198079231,
+                "f1-score": 0.9993993993993994,
+                "support": 833.0
+              },
+              "positive": {
+                "precision": 0.9878048780487805,
+                "recall": 1.0,
+                "f1-score": 0.9938650306748467,
                 "support": 81.0
               }
             }
@@ -648,8 +648,8 @@
           "text": "The patient underwent a non-contrast CT scan of the abdomen. The spleen is normal in size, measuring [NUM] cc in volume, with a mean Hounsfield Unit (HU) value of [NUM] +/- [NUM]. The liver is also normal in size, with a volume of [NUM] cc,"
         },
         {
-          "audit_group": "MISMATCH",
-          "category": "conflicting_source_label",
+          "audit_group": "UNCERTAIN",
+          "category": "other",
           "true": false,
           "prediction": true,
           "text": "The patient's spleen is of normal size, measuring [NUM] cc in volume, with a mean Hounsfield Unit (HU) value of [NUM] +/- [NUM]. The liver is also of normal size, with a volume of [NUM] cc and a mean HU value of [NUM] +/- [NUM]. The pancrea"
@@ -672,7 +672,7 @@
         }
       },
       "artifact": "evaluation\\architecture_comparison\\char_logistic_regression.joblib",
-      "validation_predictions": "evaluation\\architecture_comparison\\char_logistic_regression_validation_predictions.jsonl",
+      "validation_predictions": "results\\nlp\\predictions\\char_logistic_regression_validation_predictions.jsonl",
       "feature_configuration": {
         "views": [
           "char"
@@ -855,9 +855,9 @@
           }
         },
         "MISMATCH": {
-          "studies": 870,
+          "studies": 37,
           "metrics": {
-            "evaluated": 870,
+            "evaluated": 37,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -866,7 +866,7 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 839,
+                  "predicted_false": 6,
                   "predicted_true": 0
                 },
                 "true": {
@@ -886,7 +886,7 @@
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 839.0
+                "support": 6.0
               },
               "positive": {
                 "precision": 1.0,
@@ -898,9 +898,9 @@
           }
         },
         "UNCERTAIN": {
-          "studies": 81,
+          "studies": 914,
           "metrics": {
-            "evaluated": 81,
+            "evaluated": 914,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -909,7 +909,7 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 0,
+                  "predicted_false": 833,
                   "predicted_true": 0
                 },
                 "true": {
@@ -926,10 +926,10 @@
             "weighted_f1": 1.0,
             "per_class": {
               "negative": {
-                "precision": 0.0,
-                "recall": 0.0,
-                "f1-score": 0.0,
-                "support": 0.0
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 833.0
               },
               "positive": {
                 "precision": 1.0,
@@ -967,7 +967,7 @@
         }
       },
       "artifact": "evaluation\\architecture_comparison\\word_char_logistic_regression.joblib",
-      "validation_predictions": "evaluation\\architecture_comparison\\word_char_logistic_regression_validation_predictions.jsonl",
+      "validation_predictions": "results\\nlp\\predictions\\word_char_logistic_regression_validation_predictions.jsonl",
       "feature_configuration": {
         "views": [
           "word",
@@ -1155,9 +1155,9 @@
           }
         },
         "MISMATCH": {
-          "studies": 870,
+          "studies": 37,
           "metrics": {
-            "evaluated": 870,
+            "evaluated": 37,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -1166,7 +1166,7 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 839,
+                  "predicted_false": 6,
                   "predicted_true": 0
                 },
                 "true": {
@@ -1186,7 +1186,7 @@
                 "precision": 1.0,
                 "recall": 1.0,
                 "f1-score": 1.0,
-                "support": 839.0
+                "support": 6.0
               },
               "positive": {
                 "precision": 1.0,
@@ -1198,9 +1198,9 @@
           }
         },
         "UNCERTAIN": {
-          "studies": 81,
+          "studies": 914,
           "metrics": {
-            "evaluated": 81,
+            "evaluated": 914,
             "coverage": 1.0,
             "confusion_matrix": {
               "labels": [
@@ -1209,7 +1209,7 @@
               ],
               "rows_true": {
                 "false": {
-                  "predicted_false": 0,
+                  "predicted_false": 833,
                   "predicted_true": 0
                 },
                 "true": {
@@ -1226,10 +1226,10 @@
             "weighted_f1": 1.0,
             "per_class": {
               "negative": {
-                "precision": 0.0,
-                "recall": 0.0,
-                "f1-score": 0.0,
-                "support": 0.0
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 833.0
               },
               "positive": {
                 "precision": 1.0,
@@ -1274,7 +1274,7 @@
         }
       },
       "artifact": "evaluation\\architecture_comparison\\word_char_linear_svm.joblib",
-      "validation_predictions": "evaluation\\architecture_comparison\\word_char_linear_svm_validation_predictions.jsonl",
+      "validation_predictions": "results\\nlp\\predictions\\word_char_linear_svm_validation_predictions.jsonl",
       "feature_configuration": {
         "views": [
           "word",

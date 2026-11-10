@@ -37,8 +37,8 @@ These are text-vs-source-label audit groups, not clinical verification groups.
 | Group | Studies | Accuracy | F1 | Macro F1 |
 |---|---:|---:|---:|---:|
 | MATCH | 420 | 1.0000 | 1.0000 | 1.0000 |
-| MISMATCH | 902 | 1.0000 | 1.0000 | 1.0000 |
-| UNCERTAIN | 68 | 0.9853 | 0.9926 | 0.4963 |
+| MISMATCH | 37 | 1.0000 | 1.0000 | 1.0000 |
+| UNCERTAIN | 933 | 0.9989 | 0.9926 | 0.9960 |
 
 ## Error analysis
 Examples are redacted: IDs and numeric values are removed. Errors are relative to source labels.
