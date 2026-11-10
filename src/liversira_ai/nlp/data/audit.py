@@ -84,7 +84,9 @@ def audit_single_record(master: dict[str, Any], gt: dict[str, Any]) -> dict[str,
             att_status = "MATCH"
             disc = "GT has 0 lesions, but affirmative liver lesion found in text"
 
-        overall = "MATCH" if hl_status == "MATCH" else "MISMATCH"
+        # For negative labels every field follows the presence decision, so the
+        # study-level status is the presence status (UNCERTAIN stays UNCERTAIN).
+        overall = hl_status
         return {
             "id": rec_id,
             "has_lesion_gt": False,
@@ -247,6 +249,21 @@ def audit_single_record(master: dict[str, Any], gt: dict[str, Any]) -> dict[str,
     }
 
 
+def _load_records_by_id(path: Path) -> dict[str, dict[str, Any]]:
+    """Load JSONL records keyed by ``id``, rejecting duplicate IDs."""
+    records: dict[str, dict[str, Any]] = {}
+    with open(path, encoding="utf-8") as handle:
+        for line in handle:
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            rec_id = record["id"]
+            if rec_id in records:
+                raise ValueError(f"Duplicate ID {rec_id!r} in {path}")
+            records[rec_id] = record
+    return records
+
+
 def run_consistency_audit(
     master_path: Path, gt_path: Path, output_csv: Path
 ) -> pd.DataFrame:
@@ -257,17 +274,23 @@ def run_consistency_audit(
     print(f"Reading Master Records: {master_path}")
     print(f"Reading Ground Truth:   {gt_path}")
 
-    records: list[dict[str, Any]] = []
-    with open(master_path, encoding="utf-8") as f_m, open(
-        gt_path, encoding="utf-8"
-    ) as f_gt:
-        for idx, (line_m, line_gt) in enumerate(zip(f_m, f_gt), start=1):
-            master_rec = json.loads(line_m)
-            gt_rec = json.loads(line_gt)
-            records.append(audit_single_record(master_rec, gt_rec))
+    masters = _load_records_by_id(master_path)
+    ground_truth = _load_records_by_id(gt_path)
+    missing_gt = sorted(set(masters) - set(ground_truth))
+    missing_master = sorted(set(ground_truth) - set(masters))
+    if missing_gt or missing_master:
+        raise ValueError(
+            "Master and Ground Truth IDs differ: "
+            f"{len(missing_gt)} without Ground Truth (e.g. {missing_gt[:5]}), "
+            f"{len(missing_master)} without Master (e.g. {missing_master[:5]})"
+        )
 
-            if idx % 2000 == 0:
-                print(f"Audited {idx:,} / 9,262 records...")
+    records: list[dict[str, Any]] = []
+    for idx, (rec_id, master_rec) in enumerate(masters.items(), start=1):
+        records.append(audit_single_record(master_rec, ground_truth[rec_id]))
+
+        if idx % 2000 == 0:
+            print(f"Audited {idx:,} / {len(masters):,} records...")
 
     df_audit = pd.DataFrame(records)
     output_csv.parent.mkdir(parents=True, exist_ok=True)

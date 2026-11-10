@@ -153,8 +153,9 @@ def run_baseline_inference(
         "input_field": "reports.narrative_clean",
         "parser": "liversira_ai.nlp.parser.parse_liver_report",
         "parser_options": {"include_broad_attenuation_fallback": True},
-        "input_path": str(master_path),
-        "output_path": str(output_path),
+        "input_path": master_path.as_posix(),
+        "input_sha256": hashlib.sha256(master_path.read_bytes()).hexdigest(),
+        "output_path": output_path.as_posix(),
         "record_count": len(inferences),
         "output_sha256": hashlib.sha256(output_path.read_bytes()).hexdigest(),
     }
