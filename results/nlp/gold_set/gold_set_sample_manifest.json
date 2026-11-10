@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "seed": 42,
+  "allocation_per_split": {
+    "label_conflict": null,
+    "positive_multiple": 20,
+    "positive_single": 20,
+    "negative_not_stated": 25,
+    "negative_stated": 15
+  },
+  "strata_definitions": {
+    "label_conflict": "audit overall_status MISMATCH (either label)",
+    "positive_multiple": "source positive, count >= 2, no conflict",
+    "positive_single": "source positive, count == 1, no conflict",
+    "negative_not_stated": "source negative, report never states presence",
+    "negative_stated": "source negative, report states no liver lesion"
+  },
+  "counts": {
+    "val": {
+      "label_conflict": {
+        "population": 37,
+        "sampled": 37
+      },
+      "positive_multiple": {
+        "population": 86,
+        "sampled": 20
+      },
+      "positive_single": {
+        "population": 103,
+        "sampled": 20
+      },
+      "negative_not_stated": {
+        "population": 833,
+        "sampled": 25
+      },
+      "negative_stated": {
+        "population": 330,
+        "sampled": 15
+      }
+    },
+    "test": {
+      "label_conflict": {
+        "population": 37,
+        "sampled": 37
+      },
+      "positive_multiple": {
+        "population": 84,
+        "sampled": 20
+      },
+      "positive_single": {
+        "population": 105,
+        "sampled": 20
+      },
+      "negative_not_stated": {
+        "population": 865,
+        "sampled": 25
+      },
+      "negative_stated": {
+        "population": 299,
+        "sampled": 15
+      }
+    }
+  },
+  "total_sampled": 234,
+  "sample_ids_sha256": "101a2562858b67be494d323eb6773b96815ecb02a79129a875a034a3cc9a5855",
+  "inputs_sha256": {
+    "data/processed/nlp/master_records.jsonl": "57df8a04aea0fd230b5d0e28454c4371d923c96a6ce3b8cfaea4fb0bcf456559",
+    "data/processed/nlp/target_consistency_audit.csv": "b19e2880d366f22d1aa2d92dd7638096043ced025647ac5431c6e976cd94f23d",
+    "data/processed/nlp/splits.json": "02dbd266abb1f12977ddce91b489064f921b9cb43291cea2d3df0389fed79fc6"
+  },
+  "outputs": {
+    "annotation_sheets": [
+      "data/processed/nlp/gold_set/annotation_sheet_A.csv",
+      "data/processed/nlp/gold_set/annotation_sheet_B.csv"
+    ],
+    "key": "data/processed/nlp/gold_set/gold_set_key.csv"
+  },
+  "blinding": "Sheets contain BDMAP ID and report text only; strata and source labels are in the key."
+}
