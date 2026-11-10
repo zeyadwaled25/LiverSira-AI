@@ -2,7 +2,7 @@ import pytest
 
 from liversira_ai.nlp.data.audit import audit_single_record
 from liversira_ai.nlp.baseline import extract_liver_lesion_features
-from liversira_ai.nlp.parser import parse_liver_report
+from liversira_ai.nlp.parser_v1_0 import parse_liver_report
 
 
 @pytest.mark.parametrize(
@@ -151,7 +151,7 @@ def test_ambiguous_and_contradictory_evidence_is_retained_without_false_choice()
 def test_no_evidence_for_missing_or_unmentioned_text():
     assert extract_liver_lesion_features(None)["evidence"] == []
     assert extract_liver_lesion_features(
-        "The liver is normal in size and appearance."
+        "The liver is normal in size, with a volume of 1500.0 cc."
     )["evidence"] == []
 
 

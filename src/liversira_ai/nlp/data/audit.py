@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-from liversira_ai.nlp.parser import parse_liver_report, split_sentences
+from liversira_ai.nlp.parser_v1_0 import parse_liver_report, split_sentences
 
 MASTER_PATH = Path("data/processed/nlp/master_records.jsonl")
 GT_PATH = Path("data/processed/nlp/ground_truth.jsonl")

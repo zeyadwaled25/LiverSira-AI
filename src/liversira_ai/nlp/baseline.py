@@ -24,12 +24,14 @@ from liversira_ai.nlp.schemas.inference_schema import (
     MissingOrUnclearField,
     StudyMetadata,
 )
-from liversira_ai.nlp.parser import parse_liver_report
+from liversira_ai.nlp.parser import PARSER_VERSION, parse_liver_report
 
 MASTER_RECORDS_PATH = Path("data/processed/nlp/master_records.jsonl")
 OUTPUT_INFERENCE_PATH = Path("data/processed/nlp/baseline_inferences.jsonl")
 OUTPUT_MANIFEST_PATH = Path("data/processed/nlp/baseline_manifest.json")
-BASELINE_VERSION = "rule-based-v1.0.0"
+# v1.0.0 outputs (results/nlp/predictions/baseline_inferences_updated.jsonl) were
+# produced with the frozen liversira_ai.nlp.parser_v1_0.
+BASELINE_VERSION = "rule-based-v1.1.0"
 
 def extract_liver_lesion_features(text: str | None) -> dict[str, Any]:
     """Extract liver targets while preserving unknown presence as ``None``."""
@@ -63,16 +65,30 @@ def extract_liver_lesion_features(text: str | None) -> dict[str, Any]:
             "evidence": [item.__dict__ for item in parsed.evidence],
         }
 
+    # v1.1 never imputes: a field the report does not state stays None and is
+    # listed with its reason (v1.0 set an unstated count to 1).
+    missing = []
+    if parsed.lesion_count is None:
+        missing.append(
+            {"field": "liver_lesions.lesion_count", "reason": parsed.count_reason or "not_mentioned"}
+        )
+    for field, value in (
+        ("location_segments", parsed.location_segments),
+        ("reported_dimensions_cm", parsed.reported_dimensions_cm),
+        ("attenuation", parsed.attenuation),
+    ):
+        if value is None:
+            missing.append(
+                {"field": f"liver_lesions.largest_lesion.{field}", "reason": "not_mentioned"}
+            )
     return {
         "has_lesion": True,
-        "lesion_count": (
-            parsed.lesion_count if parsed.lesion_count is not None else 1
-        ),
+        "lesion_count": parsed.lesion_count,
         "location_segments": parsed.location_segments,
         "reported_dimensions_cm": parsed.reported_dimensions_cm,
         "derived_max_diameter_cm": parsed.derived_max_diameter_cm,
         "attenuation": parsed.attenuation,
-        "missing_or_unclear": [],
+        "missing_or_unclear": missing,
         "evidence": [item.__dict__ for item in parsed.evidence],
     }
 
@@ -152,6 +168,8 @@ def run_baseline_inference(
         "baseline_version": BASELINE_VERSION,
         "input_field": "reports.narrative_clean",
         "parser": "liversira_ai.nlp.parser.parse_liver_report",
+        "parser_version": PARSER_VERSION,
+        "split_filter": None if target_split_ids is None else f"{len(target_split_ids)} selected IDs",
         "parser_options": {"include_broad_attenuation_fallback": True},
         "input_path": master_path.as_posix(),
         "input_sha256": hashlib.sha256(master_path.read_bytes()).hexdigest(),
