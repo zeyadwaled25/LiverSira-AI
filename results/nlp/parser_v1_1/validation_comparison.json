@@ -1,0 +1,531 @@
+{
+  "schema_version": "1.0",
+  "split": "validation",
+  "test_policy": "Test reports were not parsed or scored.",
+  "versions": {
+    "v1.0": "rule-based-v1.0.0 (saved predictions)",
+    "v1.1": "rule-based-v1.1.0 / parser 1.1.0"
+  },
+  "inputs_sha256": {
+    "data/processed/nlp/ground_truth.jsonl": "e9cb2b5f73768c5030e6dfe7382d7f142351ea38522b8c5ea8dda3c077939cd2",
+    "data/processed/nlp/splits.json": "02dbd266abb1f12977ddce91b489064f921b9cb43291cea2d3df0389fed79fc6",
+    "results/nlp/predictions/baseline_inferences_updated.jsonl": "d52622fe7ee1d17e568493c27494c0c29a334ec92aae5f0fe12fd244cfd0dbb0",
+    "results/nlp/predictions/baseline_v1_1_validation_inferences.jsonl": "04a0e7e9ed0acb1c0f4585165cce5261793aa5fcc84d165059c7f03798c6d873"
+  },
+  "git_commit": "995c8f3f33df1c7f2027a6eb05607d76c6f53689",
+  "method": {
+    "interval": "percentile bootstrap over studies",
+    "n_resamples": 2000,
+    "seed": 42
+  },
+  "references": {
+    "source": {
+      "v1.0": {
+        "studies": 1389,
+        "presence": {
+          "studies": 1389,
+          "answered": 556,
+          "abstained": 833,
+          "positives": 220,
+          "coverage": {
+            "coverage": {
+              "estimate": 0.40028797696184304,
+              "ci_low": 0.3743520518358532,
+              "ci_high": 0.42620590352771776,
+              "n": 1389,
+              "valid_resamples": 2000
+            }
+          },
+          "selective": {
+            "accuracy": {
+              "estimate": 0.9892086330935251,
+              "ci_low": 0.9799251691131253,
+              "ci_high": 0.9964539007092199,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "precision": {
+              "estimate": 0.9734513274336283,
+              "ci_low": 0.9502477240354246,
+              "ci_high": 0.9913429243170622,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "recall": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "specificity": {
+              "estimate": 0.9821428571428571,
+              "ci_low": 0.9667673716012085,
+              "ci_high": 0.9941353260962769,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "f1": {
+              "estimate": 0.9865470852017937,
+              "ci_low": 0.9744892531480678,
+              "ci_high": 0.9956526444569923,
+              "n": 1389,
+              "valid_resamples": 2000
+            }
+          },
+          "end_to_end": {
+            "accuracy": {
+              "estimate": 0.3959683225341973,
+              "ci_low": 0.3693304535637149,
+              "ci_high": 0.421886249100072,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "recall": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "specificity": {
+              "estimate": 0.2822925577416595,
+              "ci_low": 0.2571416287925316,
+              "ci_high": 0.30900639549941,
+              "n": 1389,
+              "valid_resamples": 2000
+            }
+          },
+          "abstain_as_negative": {
+            "accuracy": {
+              "estimate": 0.9956803455723542,
+              "ci_low": 0.9920806335493161,
+              "ci_high": 0.9985601151907847,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "precision": {
+              "estimate": 0.9734513274336283,
+              "ci_low": 0.9502477240354246,
+              "ci_high": 0.9913429243170622,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "recall": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "specificity": {
+              "estimate": 0.9948674080410608,
+              "ci_low": 0.990516831933774,
+              "ci_high": 0.99830220713073,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "f1": {
+              "estimate": 0.9865470852017937,
+              "ci_low": 0.9744892531480678,
+              "ci_high": 0.9956526444569923,
+              "n": 1389,
+              "valid_resamples": 2000
+            }
+          }
+        },
+        "fields_on_reference_positives": {
+          "lesion_count_exact": {
+            "eligible": 220,
+            "evaluated": 220,
+            "coverage": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 220,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.7363636363636363,
+              "ci_low": 0.6772727272727272,
+              "ci_high": 0.7909090909090909,
+              "n": 220,
+              "valid_resamples": 2000
+            }
+          },
+          "lesion_count_abs_error": {
+            "eligible": 220,
+            "evaluated": 220,
+            "coverage": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 220,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 2.190909090909091,
+              "ci_low": 1.4636363636363636,
+              "ci_high": 3.0090909090909093,
+              "n": 220,
+              "valid_resamples": 2000
+            }
+          },
+          "location_exact": {
+            "eligible": 215,
+            "evaluated": 209,
+            "coverage": {
+              "estimate": 0.9720930232558139,
+              "ci_low": 0.9488372093023256,
+              "ci_high": 0.9906976744186047,
+              "n": 215,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.9856459330143541,
+              "ci_low": 0.966824644549763,
+              "ci_high": 1.0,
+              "n": 215,
+              "valid_resamples": 2000
+            }
+          },
+          "location_iou": {
+            "eligible": 215,
+            "evaluated": 209,
+            "coverage": {
+              "estimate": 0.9720930232558139,
+              "ci_low": 0.9488372093023256,
+              "ci_high": 0.9906976744186047,
+              "n": 215,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.9889952153110048,
+              "ci_low": 0.9752426028663893,
+              "ci_high": 1.0,
+              "n": 215,
+              "valid_resamples": 2000
+            }
+          },
+          "diameter_abs_error_cm": {
+            "eligible": 220,
+            "evaluated": 183,
+            "coverage": {
+              "estimate": 0.8318181818181818,
+              "ci_low": 0.7818181818181819,
+              "ci_high": 0.8818181818181818,
+              "n": 220,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.3737704918032787,
+              "ci_low": 0.18379815145222148,
+              "ci_high": 0.5989285714285713,
+              "n": 220,
+              "valid_resamples": 2000
+            }
+          },
+          "diameter_within_0.5_cm": {
+            "eligible": 220,
+            "evaluated": 183,
+            "coverage": {
+              "estimate": 0.8318181818181818,
+              "ci_low": 0.7818181818181819,
+              "ci_high": 0.8818181818181818,
+              "n": 220,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.8961748633879781,
+              "ci_low": 0.851063829787234,
+              "ci_high": 0.9395604395604396,
+              "n": 220,
+              "valid_resamples": 2000
+            }
+          },
+          "attenuation_exact": {
+            "eligible": 220,
+            "evaluated": 215,
+            "coverage": {
+              "estimate": 0.9772727272727273,
+              "ci_low": 0.9545454545454546,
+              "ci_high": 0.9954545454545455,
+              "n": 220,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.9627906976744186,
+              "ci_low": 0.9351776485788115,
+              "ci_high": 0.9861111111111112,
+              "n": 220,
+              "valid_resamples": 2000
+            }
+          }
+        }
+      },
+      "v1.1": {
+        "studies": 1389,
+        "presence": {
+          "studies": 1389,
+          "answered": 649,
+          "abstained": 740,
+          "positives": 220,
+          "coverage": {
+            "coverage": {
+              "estimate": 0.46724262059035276,
+              "ci_low": 0.44132469402447805,
+              "ci_high": 0.4931605471562275,
+              "n": 1389,
+              "valid_resamples": 2000
+            }
+          },
+          "selective": {
+            "accuracy": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "precision": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "recall": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "specificity": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "f1": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            }
+          },
+          "end_to_end": {
+            "accuracy": {
+              "estimate": 0.46724262059035276,
+              "ci_low": 0.44132469402447805,
+              "ci_high": 0.4931605471562275,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "recall": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "specificity": {
+              "estimate": 0.3669803250641574,
+              "ci_low": 0.34042366554684583,
+              "ci_high": 0.3952717315065931,
+              "n": 1389,
+              "valid_resamples": 2000
+            }
+          },
+          "abstain_as_negative": {
+            "accuracy": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "precision": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "recall": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "specificity": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "f1": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 1389,
+              "valid_resamples": 2000
+            }
+          }
+        },
+        "fields_on_reference_positives": {
+          "lesion_count_exact": {
+            "eligible": 220,
+            "evaluated": 199,
+            "coverage": {
+              "estimate": 0.9045454545454545,
+              "ci_low": 0.8636363636363636,
+              "ci_high": 0.9409090909090909,
+              "n": 220,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.9798994974874372,
+              "ci_low": 0.9589690721649485,
+              "ci_high": 0.9950744953153675,
+              "n": 220,
+              "valid_resamples": 2000
+            }
+          },
+          "lesion_count_abs_error": {
+            "eligible": 220,
+            "evaluated": 199,
+            "coverage": {
+              "estimate": 0.9045454545454545,
+              "ci_low": 0.8636363636363636,
+              "ci_high": 0.9409090909090909,
+              "n": 220,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.035175879396984924,
+              "ci_low": 0.0049504950495049506,
+              "ci_high": 0.0769329896907216,
+              "n": 220,
+              "valid_resamples": 2000
+            }
+          },
+          "location_exact": {
+            "eligible": 215,
+            "evaluated": 211,
+            "coverage": {
+              "estimate": 0.9813953488372092,
+              "ci_low": 0.958139534883721,
+              "ci_high": 0.9953488372093023,
+              "n": 215,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.995260663507109,
+              "ci_low": 0.9855769230769231,
+              "ci_high": 1.0,
+              "n": 215,
+              "valid_resamples": 2000
+            }
+          },
+          "location_iou": {
+            "eligible": 215,
+            "evaluated": 211,
+            "coverage": {
+              "estimate": 0.9813953488372092,
+              "ci_low": 0.958139534883721,
+              "ci_high": 0.9953488372093023,
+              "n": 215,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.9976303317535545,
+              "ci_low": 0.9927884615384616,
+              "ci_high": 1.0,
+              "n": 215,
+              "valid_resamples": 2000
+            }
+          },
+          "diameter_abs_error_cm": {
+            "eligible": 220,
+            "evaluated": 220,
+            "coverage": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 220,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.0,
+              "ci_low": 0.0,
+              "ci_high": 0.0,
+              "n": 220,
+              "valid_resamples": 2000
+            }
+          },
+          "diameter_within_0.5_cm": {
+            "eligible": 220,
+            "evaluated": 220,
+            "coverage": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 220,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 1.0,
+              "ci_low": 1.0,
+              "ci_high": 1.0,
+              "n": 220,
+              "valid_resamples": 2000
+            }
+          },
+          "attenuation_exact": {
+            "eligible": 220,
+            "evaluated": 218,
+            "coverage": {
+              "estimate": 0.990909090909091,
+              "ci_low": 0.9772727272727273,
+              "ci_high": 1.0,
+              "n": 220,
+              "valid_resamples": 2000
+            },
+            "mean": {
+              "estimate": 0.981651376146789,
+              "ci_low": 0.9631293736132447,
+              "ci_high": 0.9954337899543378,
+              "n": 220,
+              "valid_resamples": 2000
+            }
+          }
+        }
+      },
+      "paired_presence_v11_minus_v10_on_both_answered": {
+        "studies": 555,
+        "f1_difference": {
+          "estimate": 0.011235955056179803,
+          "ci_low": 0.002277904328018221,
+          "ci_high": 0.022128832174462713,
+          "n": 555,
+          "valid_resamples": 2000
+        },
+        "accuracy_difference": {
+          "estimate": 0.009009009009009028,
+          "ci_low": 0.0018018018018017834,
+          "ci_high": 0.018018018018018056,
+          "n": 555,
+          "valid_resamples": 2000
+        },
+        "first_correct_second_wrong": 5,
+        "second_correct_first_wrong": 0,
+        "mcnemar_exact_p": 0.0625
+      }
+    }
+  }
+}
