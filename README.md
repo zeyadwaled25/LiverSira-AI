@@ -62,6 +62,26 @@ $env:PYTHONPATH = "src"
 python scripts/nlp/prepare_dataset.py
 ```
 
+NLP reliability (bootstrap 95% CIs, coverage-adjusted presence metrics,
+paired learned-vs-rule-based comparison) from saved predictions:
+
+```powershell
+python scripts/nlp/reliability_report.py
+```
+
+Human gold set (two blinded annotators, agreement, clinician adjudication);
+see `docs/nlp/gold_set_annotation_guidelines.md`:
+
+```powershell
+python scripts/nlp/gold_set.py sample    # then annotators fill sheets A and B
+python scripts/nlp/gold_set.py agree     # then a clinician resolves disagreements
+python scripts/nlp/gold_set.py finalize
+python scripts/nlp/gold_set.py apply     # writes data/processed/nlp/gold_standard.jsonl
+```
+
+Once `gold_standard.jsonl` exists, the reliability report also scores both
+systems against it.
+
 Run tests:
 
 ```powershell
