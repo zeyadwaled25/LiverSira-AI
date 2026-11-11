@@ -1,0 +1,55 @@
+{
+  "val": {
+    "n": 1389,
+    "confusion": {
+      "tp": 220,
+      "fp": 0,
+      "tn": 1169,
+      "fn": 0
+    },
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "specificity": 1.0,
+    "f1": 1.0,
+    "brier": 0.0,
+    "ece_10_bins": 2.1e-05
+  },
+  "challenge": {
+    "hedged": {
+      "n": 150,
+      "accuracy": null,
+      "positive_rate": 0.006667
+    },
+    "liver_last": {
+      "n": 150,
+      "accuracy": 1.0,
+      "positive_rate": 0.5
+    },
+    "liver_removed": {
+      "n": 150,
+      "accuracy": 1.0,
+      "positive_rate": 0.0
+    },
+    "negation": {
+      "n": 150,
+      "accuracy": 0.986667,
+      "positive_rate": 0.013333
+    },
+    "ocr_noise": {
+      "n": 150,
+      "accuracy": 1.0,
+      "positive_rate": 0.5
+    },
+    "other_organ_lesion": {
+      "n": 150,
+      "accuracy": 1.0,
+      "positive_rate": 0.0
+    },
+    "paraphrase": {
+      "n": 150,
+      "accuracy": 1.0,
+      "positive_rate": 0.5
+    }
+  }
+}

@@ -1,0 +1,2708 @@
+{
+  "schema_version": "1.0",
+  "reference": "source-derived labels (not a clinical gold standard)",
+  "test_policy": "Test was not read.",
+  "method": {
+    "interval": "percentile bootstrap over studies",
+    "n_resamples": 2000,
+    "seed": 42,
+    "threshold": 0.5,
+    "seeds": [
+      13,
+      42,
+      87
+    ]
+  },
+  "lr_refit_check": {
+    "reference": "results/nlp/predictions/word_logistic_regression_validation_predictions.jsonl",
+    "records": 1389,
+    "prediction_mismatches": 0,
+    "max_abs_probability_difference": 0.0,
+    "passed": true
+  },
+  "parser_reproduces_saved_v1_1_validation": {
+    "mismatches": 0
+  },
+  "validation": {
+    "lr": {
+      "report": {
+        "studies": 1389,
+        "answered": 1389,
+        "abstained": 0,
+        "positives": 220,
+        "coverage": {
+          "coverage": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          }
+        },
+        "selective": {
+          "accuracy": {
+            "estimate": 0.9992800575953924,
+            "ci_low": 0.9978401727861771,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "precision": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "recall": {
+            "estimate": 0.9954545454545455,
+            "ci_low": 0.9851485148514851,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "specificity": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "f1": {
+            "estimate": 0.9977220956719818,
+            "ci_low": 0.9925187032418953,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          }
+        },
+        "end_to_end": {
+          "accuracy": {
+            "estimate": 0.9992800575953924,
+            "ci_low": 0.9978401727861771,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "recall": {
+            "estimate": 0.9954545454545455,
+            "ci_low": 0.9851485148514851,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "specificity": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          }
+        },
+        "abstain_as_negative": {
+          "accuracy": {
+            "estimate": 0.9992800575953924,
+            "ci_low": 0.9978401727861771,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "precision": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "recall": {
+            "estimate": 0.9954545454545455,
+            "ci_low": 0.9851485148514851,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "specificity": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "f1": {
+            "estimate": 0.9977220956719818,
+            "ci_low": 0.9925187032418953,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          }
+        }
+      },
+      "point": {
+        "accuracy": 0.9992800575953924,
+        "precision": 1.0,
+        "recall": 0.9954545454545455,
+        "specificity": 1.0,
+        "f1": 0.9977220956719818,
+        "fp": 0,
+        "fn": 1
+      },
+      "calibration": {
+        "brier": 0.0062454250578586,
+        "ece_10_bins": 0.04874508207344846
+      }
+    },
+    "parser": {
+      "report": {
+        "studies": 1389,
+        "answered": 649,
+        "abstained": 740,
+        "positives": 220,
+        "coverage": {
+          "coverage": {
+            "estimate": 0.46724262059035276,
+            "ci_low": 0.44132469402447805,
+            "ci_high": 0.4931605471562275,
+            "n": 1389,
+            "valid_resamples": 2000
+          }
+        },
+        "selective": {
+          "accuracy": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "precision": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "recall": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "specificity": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "f1": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          }
+        },
+        "end_to_end": {
+          "accuracy": {
+            "estimate": 0.46724262059035276,
+            "ci_low": 0.44132469402447805,
+            "ci_high": 0.4931605471562275,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "recall": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "specificity": {
+            "estimate": 0.3669803250641574,
+            "ci_low": 0.34042366554684583,
+            "ci_high": 0.3952717315065931,
+            "n": 1389,
+            "valid_resamples": 2000
+          }
+        },
+        "abstain_as_negative": {
+          "accuracy": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "precision": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "recall": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "specificity": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          },
+          "f1": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 1389,
+            "valid_resamples": 2000
+          }
+        }
+      },
+      "point": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "specificity": 1.0,
+        "f1": 1.0,
+        "fp": 0,
+        "fn": 0
+      }
+    },
+    "bert": {
+      "per_seed": {
+        "13": {
+          "report": {
+            "studies": 1389,
+            "answered": 1389,
+            "abstained": 0,
+            "positives": 220,
+            "coverage": {
+              "coverage": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "selective": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "end_to_end": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "abstain_as_negative": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            }
+          },
+          "point": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": {
+            "brier": 1.1106975548070601e-07,
+            "ece_10_bins": 6.575001439884701e-05
+          },
+          "vs_lr": {
+            "studies": 1389,
+            "f1_difference": {
+              "estimate": 0.002277904328018221,
+              "ci_low": 0.0,
+              "ci_high": 0.007481296758104716,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0007199424046075986,
+              "ci_low": 0.0,
+              "ci_high": 0.002159827213822907,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 1,
+            "second_correct_first_wrong": 0,
+            "mcnemar_exact_p": 1.0
+          }
+        },
+        "42": {
+          "report": {
+            "studies": 1389,
+            "answered": 1389,
+            "abstained": 0,
+            "positives": 220,
+            "coverage": {
+              "coverage": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "selective": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "end_to_end": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "abstain_as_negative": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            }
+          },
+          "point": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": {
+            "brier": 1.3008404947516255e-08,
+            "ece_10_bins": 7.30159755219524e-05
+          },
+          "vs_lr": {
+            "studies": 1389,
+            "f1_difference": {
+              "estimate": 0.002277904328018221,
+              "ci_low": 0.0,
+              "ci_high": 0.007481296758104716,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0007199424046075986,
+              "ci_low": 0.0,
+              "ci_high": 0.002159827213822907,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 1,
+            "second_correct_first_wrong": 0,
+            "mcnemar_exact_p": 1.0
+          }
+        },
+        "87": {
+          "report": {
+            "studies": 1389,
+            "answered": 1389,
+            "abstained": 0,
+            "positives": 220,
+            "coverage": {
+              "coverage": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "selective": {
+              "accuracy": {
+                "estimate": 0.9992800575953924,
+                "ci_low": 0.9978401727861771,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 0.9954545454545455,
+                "ci_low": 0.983781580493537,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 0.9977220956719818,
+                "ci_low": 0.9918244932999888,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "end_to_end": {
+              "accuracy": {
+                "estimate": 0.9992800575953924,
+                "ci_low": 0.9978401727861771,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 0.9954545454545455,
+                "ci_low": 0.983781580493537,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "abstain_as_negative": {
+              "accuracy": {
+                "estimate": 0.9992800575953924,
+                "ci_low": 0.9978401727861771,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 0.9954545454545455,
+                "ci_low": 0.983781580493537,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 0.9977220956719818,
+                "ci_low": 0.9918244932999888,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            }
+          },
+          "point": {
+            "accuracy": 0.9992800575953924,
+            "precision": 1.0,
+            "recall": 0.9954545454545455,
+            "specificity": 1.0,
+            "f1": 0.9977220956719818,
+            "fp": 0,
+            "fn": 1
+          },
+          "calibration": {
+            "brier": 0.0007193153107559313,
+            "ece_10_bins": 0.0006119835205183573
+          },
+          "vs_lr": {
+            "studies": 1389,
+            "f1_difference": {
+              "estimate": 0.0,
+              "ci_low": -0.006802721088435382,
+              "ci_high": 0.006623126275306839,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0,
+              "ci_low": -0.002159827213822907,
+              "ci_high": 0.002159827213822907,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 1,
+            "second_correct_first_wrong": 1,
+            "mcnemar_exact_p": 1.0
+          }
+        }
+      },
+      "summary": {
+        "accuracy": {
+          "mean": 0.999760019198464,
+          "sd": 0.00041565894110122355
+        },
+        "precision": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "recall": {
+          "mean": 0.9984848484848485,
+          "sd": 0.0026243194054073747
+        },
+        "specificity": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "f1": {
+          "mean": 0.9992406985573273,
+          "sd": 0.0013151486769695335
+        },
+        "fp": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "fn": {
+          "mean": 0.3333333333333333,
+          "sd": 0.5773502691896257
+        },
+        "brier": {
+          "mean": 0.0002398131296387865,
+          "sd": 0.00041526107291206754
+        },
+        "ece_10_bins": {
+          "mean": 0.00025024983681305225,
+          "sd": 0.0003132916245178251
+        }
+      }
+    },
+    "biobert": {
+      "per_seed": {
+        "13": {
+          "report": {
+            "studies": 1389,
+            "answered": 1389,
+            "abstained": 0,
+            "positives": 220,
+            "coverage": {
+              "coverage": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "selective": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "end_to_end": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "abstain_as_negative": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            }
+          },
+          "point": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": {
+            "brier": 2.4001395313174143e-09,
+            "ece_10_bins": 4.5486378689689474e-05
+          },
+          "vs_lr": {
+            "studies": 1389,
+            "f1_difference": {
+              "estimate": 0.002277904328018221,
+              "ci_low": 0.0,
+              "ci_high": 0.007481296758104716,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0007199424046075986,
+              "ci_low": 0.0,
+              "ci_high": 0.002159827213822907,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 1,
+            "second_correct_first_wrong": 0,
+            "mcnemar_exact_p": 1.0
+          }
+        },
+        "42": {
+          "report": {
+            "studies": 1389,
+            "answered": 1389,
+            "abstained": 0,
+            "positives": 220,
+            "coverage": {
+              "coverage": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "selective": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "end_to_end": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "abstain_as_negative": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            }
+          },
+          "point": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": {
+            "brier": 3.2895277544990627e-10,
+            "ece_10_bins": 1.781041756657812e-05
+          },
+          "vs_lr": {
+            "studies": 1389,
+            "f1_difference": {
+              "estimate": 0.002277904328018221,
+              "ci_low": 0.0,
+              "ci_high": 0.007481296758104716,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0007199424046075986,
+              "ci_low": 0.0,
+              "ci_high": 0.002159827213822907,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 1,
+            "second_correct_first_wrong": 0,
+            "mcnemar_exact_p": 1.0
+          }
+        },
+        "87": {
+          "report": {
+            "studies": 1389,
+            "answered": 1389,
+            "abstained": 0,
+            "positives": 220,
+            "coverage": {
+              "coverage": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "selective": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "end_to_end": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "abstain_as_negative": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            }
+          },
+          "point": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": {
+            "brier": 3.773235670265997e-10,
+            "ece_10_bins": 1.901621310295342e-05
+          },
+          "vs_lr": {
+            "studies": 1389,
+            "f1_difference": {
+              "estimate": 0.002277904328018221,
+              "ci_low": 0.0,
+              "ci_high": 0.007481296758104716,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0007199424046075986,
+              "ci_low": 0.0,
+              "ci_high": 0.002159827213822907,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 1,
+            "second_correct_first_wrong": 0,
+            "mcnemar_exact_p": 1.0
+          }
+        }
+      },
+      "summary": {
+        "accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "precision": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "recall": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "specificity": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "f1": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "fp": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "fn": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 1.0354719579313067e-09,
+          "sd": 1.1820842282841287e-09
+        },
+        "ece_10_bins": {
+          "mean": 2.7437669786407003e-05,
+          "sd": 1.56422634399711e-05
+        }
+      }
+    },
+    "clinicalbert": {
+      "per_seed": {
+        "13": {
+          "report": {
+            "studies": 1389,
+            "answered": 1389,
+            "abstained": 0,
+            "positives": 220,
+            "coverage": {
+              "coverage": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "selective": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "end_to_end": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "abstain_as_negative": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            }
+          },
+          "point": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": {
+            "brier": 3.3209033590352684e-09,
+            "ece_10_bins": 3.038380849528477e-05
+          },
+          "vs_lr": {
+            "studies": 1389,
+            "f1_difference": {
+              "estimate": 0.002277904328018221,
+              "ci_low": 0.0,
+              "ci_high": 0.007481296758104716,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0007199424046075986,
+              "ci_low": 0.0,
+              "ci_high": 0.002159827213822907,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 1,
+            "second_correct_first_wrong": 0,
+            "mcnemar_exact_p": 1.0
+          }
+        },
+        "42": {
+          "report": {
+            "studies": 1389,
+            "answered": 1389,
+            "abstained": 0,
+            "positives": 220,
+            "coverage": {
+              "coverage": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "selective": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "end_to_end": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "abstain_as_negative": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            }
+          },
+          "point": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": {
+            "brier": 7.867798263498698e-10,
+            "ece_10_bins": 2.421700503958115e-05
+          },
+          "vs_lr": {
+            "studies": 1389,
+            "f1_difference": {
+              "estimate": 0.002277904328018221,
+              "ci_low": 0.0,
+              "ci_high": 0.007481296758104716,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0007199424046075986,
+              "ci_low": 0.0,
+              "ci_high": 0.002159827213822907,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 1,
+            "second_correct_first_wrong": 0,
+            "mcnemar_exact_p": 1.0
+          }
+        },
+        "87": {
+          "report": {
+            "studies": 1389,
+            "answered": 1389,
+            "abstained": 0,
+            "positives": 220,
+            "coverage": {
+              "coverage": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "selective": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "end_to_end": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            },
+            "abstain_as_negative": {
+              "accuracy": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "precision": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "recall": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "specificity": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              },
+              "f1": {
+                "estimate": 1.0,
+                "ci_low": 1.0,
+                "ci_high": 1.0,
+                "n": 1389,
+                "valid_resamples": 2000
+              }
+            }
+          },
+          "point": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1": 1.0,
+            "fp": 0,
+            "fn": 0
+          },
+          "calibration": {
+            "brier": 7.24581772858424e-10,
+            "ece_10_bins": 2.0617717782595618e-05
+          },
+          "vs_lr": {
+            "studies": 1389,
+            "f1_difference": {
+              "estimate": 0.002277904328018221,
+              "ci_low": 0.0,
+              "ci_high": 0.007481296758104716,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0007199424046075986,
+              "ci_low": 0.0,
+              "ci_high": 0.002159827213822907,
+              "n": 1389,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 1,
+            "second_correct_first_wrong": 0,
+            "mcnemar_exact_p": 1.0
+          }
+        }
+      },
+      "summary": {
+        "accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "precision": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "recall": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "specificity": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "f1": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "fp": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "fn": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 1.6107549860811873e-09,
+          "sd": 1.4813584112572652e-09
+        },
+        "ece_10_bins": {
+          "mean": 2.507284377248718e-05,
+          "sd": 4.938975288931396e-06
+        }
+      }
+    }
+  },
+  "audit_groups": {
+    "lr": {
+      "MATCH": {
+        "n": 438,
+        "accuracy": 0.997716894977169
+      },
+      "MISMATCH": {
+        "n": 37,
+        "accuracy": 1.0
+      },
+      "UNCERTAIN": {
+        "n": 914,
+        "accuracy": 1.0
+      }
+    },
+    "parser": {
+      "MATCH": {
+        "n": 438,
+        "accuracy": 1.0
+      },
+      "MISMATCH": {
+        "n": 37,
+        "accuracy": 1.0
+      },
+      "UNCERTAIN": {
+        "n": 914,
+        "accuracy": 1.0
+      }
+    },
+    "bert": {
+      "MATCH": {
+        "n": 438,
+        "mean": 1.0,
+        "sd": 0.0
+      },
+      "MISMATCH": {
+        "n": 37,
+        "mean": 1.0,
+        "sd": 0.0
+      },
+      "UNCERTAIN": {
+        "n": 914,
+        "mean": 0.99963530269876,
+        "sd": 0.0006316742551308721
+      }
+    },
+    "biobert": {
+      "MATCH": {
+        "n": 438,
+        "mean": 1.0,
+        "sd": 0.0
+      },
+      "MISMATCH": {
+        "n": 37,
+        "mean": 1.0,
+        "sd": 0.0
+      },
+      "UNCERTAIN": {
+        "n": 914,
+        "mean": 1.0,
+        "sd": 0.0
+      }
+    },
+    "clinicalbert": {
+      "MATCH": {
+        "n": 438,
+        "mean": 1.0,
+        "sd": 0.0
+      },
+      "MISMATCH": {
+        "n": 37,
+        "mean": 1.0,
+        "sd": 0.0
+      },
+      "UNCERTAIN": {
+        "n": 914,
+        "mean": 1.0,
+        "sd": 0.0
+      }
+    }
+  },
+  "challenge": {
+    "lr": {
+      "hedged": {
+        "n": 150,
+        "accuracy": null,
+        "positive_rate": 0.09333333333333334
+      },
+      "liver_last": {
+        "n": 150,
+        "accuracy": 1.0,
+        "positive_rate": 0.5
+      },
+      "liver_removed": {
+        "n": 150,
+        "accuracy": 0.9733333333333334,
+        "positive_rate": 0.02666666666666667
+      },
+      "negation": {
+        "n": 150,
+        "accuracy": 0.9733333333333334,
+        "positive_rate": 0.02666666666666667
+      },
+      "ocr_noise": {
+        "n": 150,
+        "accuracy": 0.9933333333333333,
+        "positive_rate": 0.49333333333333335
+      },
+      "other_organ_lesion": {
+        "n": 150,
+        "accuracy": 1.0,
+        "positive_rate": 0.0
+      },
+      "paraphrase": {
+        "n": 150,
+        "accuracy": 0.9733333333333334,
+        "positive_rate": 0.47333333333333333
+      },
+      "all_scored": {
+        "n": 900,
+        "accuracy": 0.9855555555555555
+      }
+    },
+    "parser": {
+      "hedged": {
+        "n": 150,
+        "accuracy": null,
+        "positive_rate": 0.013333333333333334
+      },
+      "liver_last": {
+        "n": 150,
+        "accuracy": 0.9933333333333333,
+        "positive_rate": 0.5066666666666667
+      },
+      "liver_removed": {
+        "n": 150,
+        "accuracy": 1.0,
+        "positive_rate": 0.0
+      },
+      "negation": {
+        "n": 150,
+        "accuracy": 1.0,
+        "positive_rate": 0.0
+      },
+      "ocr_noise": {
+        "n": 150,
+        "accuracy": 1.0,
+        "positive_rate": 0.5
+      },
+      "other_organ_lesion": {
+        "n": 150,
+        "accuracy": 1.0,
+        "positive_rate": 0.0
+      },
+      "paraphrase": {
+        "n": 150,
+        "accuracy": 1.0,
+        "positive_rate": 0.5
+      },
+      "all_scored": {
+        "n": 900,
+        "accuracy": 0.9988888888888889
+      },
+      "abstained": 555,
+      "abstained_by_category": {
+        "hedged": 148,
+        "liver_last": 53,
+        "liver_removed": 150,
+        "negation": 2,
+        "ocr_noise": 49,
+        "other_organ_lesion": 139,
+        "paraphrase": 14
+      }
+    },
+    "bert": {
+      "per_seed": {
+        "13": {
+          "hedged": {
+            "n": 150,
+            "accuracy": null,
+            "positive_rate": 0.1
+          },
+          "liver_last": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "liver_removed": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "negation": {
+            "n": 150,
+            "accuracy": 0.9533333333333334,
+            "positive_rate": 0.04666666666666667
+          },
+          "ocr_noise": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "other_organ_lesion": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "paraphrase": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "all_scored": {
+            "n": 900,
+            "accuracy": 0.9922222222222222
+          },
+          "vs_lr": {
+            "studies": 900,
+            "f1_difference": {
+              "estimate": 0.01338028509185063,
+              "ci_low": -0.002218125034858475,
+              "ci_high": 0.030542833207444744,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.00666666666666671,
+              "ci_low": -0.0011111111111111738,
+              "ci_high": 0.015555555555555545,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 10,
+            "second_correct_first_wrong": 4,
+            "mcnemar_exact_p": 0.1795654296875
+          }
+        },
+        "42": {
+          "hedged": {
+            "n": 150,
+            "accuracy": null,
+            "positive_rate": 0.0
+          },
+          "liver_last": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "liver_removed": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "negation": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "ocr_noise": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "other_organ_lesion": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "paraphrase": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "all_scored": {
+            "n": 900,
+            "accuracy": 1.0
+          },
+          "vs_lr": {
+            "studies": 900,
+            "f1_difference": {
+              "estimate": 0.028697571743929395,
+              "ci_low": 0.014860424718223561,
+              "ci_high": 0.045669344444111346,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.014444444444444482,
+              "ci_low": 0.007777777777777772,
+              "ci_high": 0.022222222222222254,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 13,
+            "second_correct_first_wrong": 0,
+            "mcnemar_exact_p": 0.000244140625
+          }
+        },
+        "87": {
+          "hedged": {
+            "n": 150,
+            "accuracy": null,
+            "positive_rate": 0.12666666666666668
+          },
+          "liver_last": {
+            "n": 150,
+            "accuracy": 0.9933333333333333,
+            "positive_rate": 0.49333333333333335
+          },
+          "liver_removed": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "negation": {
+            "n": 150,
+            "accuracy": 0.9333333333333333,
+            "positive_rate": 0.06666666666666667
+          },
+          "ocr_noise": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "other_organ_lesion": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "paraphrase": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "all_scored": {
+            "n": 900,
+            "accuracy": 0.9877777777777778
+          },
+          "vs_lr": {
+            "studies": 900,
+            "f1_difference": {
+              "estimate": 0.004732430131728971,
+              "ci_low": -0.014841005509377407,
+              "ci_high": 0.025225104638601087,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0022222222222222365,
+              "ci_low": -0.007777777777777772,
+              "ci_high": 0.013333333333333308,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 12,
+            "second_correct_first_wrong": 10,
+            "mcnemar_exact_p": 0.8318119049072266
+          }
+        }
+      },
+      "summary": {
+        "hedged": {
+          "mean": 0.07555555555555556,
+          "sd": 0.06677768533918542
+        },
+        "liver_last": {
+          "mean": 0.9977777777777778,
+          "sd": 0.00384900179459753
+        },
+        "liver_removed": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "negation": {
+          "mean": 0.9622222222222222,
+          "sd": 0.03421067626297922
+        },
+        "ocr_noise": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "other_organ_lesion": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "paraphrase": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "all_scored": {
+          "mean": 0.9933333333333333,
+          "sd": 0.006186404847588923
+        }
+      }
+    },
+    "biobert": {
+      "per_seed": {
+        "13": {
+          "hedged": {
+            "n": 150,
+            "accuracy": null,
+            "positive_rate": 0.0
+          },
+          "liver_last": {
+            "n": 150,
+            "accuracy": 0.9933333333333333,
+            "positive_rate": 0.49333333333333335
+          },
+          "liver_removed": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "negation": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "ocr_noise": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "other_organ_lesion": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "paraphrase": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "all_scored": {
+            "n": 900,
+            "accuracy": 0.9988888888888889
+          },
+          "vs_lr": {
+            "studies": 900,
+            "f1_difference": {
+              "estimate": 0.026470400251724535,
+              "ci_low": 0.011396182569625619,
+              "ci_high": 0.04464020434149885,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.01333333333333342,
+              "ci_low": 0.005555555555555647,
+              "ci_high": 0.022222222222222254,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 13,
+            "second_correct_first_wrong": 1,
+            "mcnemar_exact_p": 0.0018310546875
+          }
+        },
+        "42": {
+          "hedged": {
+            "n": 150,
+            "accuracy": null,
+            "positive_rate": 0.18
+          },
+          "liver_last": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "liver_removed": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "negation": {
+            "n": 150,
+            "accuracy": 0.9266666666666666,
+            "positive_rate": 0.07333333333333333
+          },
+          "ocr_noise": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "other_organ_lesion": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "paraphrase": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "all_scored": {
+            "n": 900,
+            "accuracy": 0.9877777777777778
+          },
+          "vs_lr": {
+            "studies": 900,
+            "f1_difference": {
+              "estimate": 0.004836400377335015,
+              "ci_low": -0.012887959964572843,
+              "ci_high": 0.023211396189553583,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.0022222222222222365,
+              "ci_low": -0.00666666666666671,
+              "ci_high": 0.011111111111111183,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 10,
+            "second_correct_first_wrong": 8,
+            "mcnemar_exact_p": 0.8145294189453125
+          }
+        },
+        "87": {
+          "hedged": {
+            "n": 150,
+            "accuracy": null,
+            "positive_rate": 0.08666666666666667
+          },
+          "liver_last": {
+            "n": 150,
+            "accuracy": 0.9266666666666666,
+            "positive_rate": 0.4266666666666667
+          },
+          "liver_removed": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "negation": {
+            "n": 150,
+            "accuracy": 0.9733333333333334,
+            "positive_rate": 0.02666666666666667
+          },
+          "ocr_noise": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "other_organ_lesion": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "paraphrase": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "all_scored": {
+            "n": 900,
+            "accuracy": 0.9833333333333333
+          },
+          "vs_lr": {
+            "studies": 900,
+            "f1_difference": {
+              "estimate": -0.005162473402797518,
+              "ci_low": -0.02707390019151567,
+              "ci_high": 0.0165434827613988,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": -0.0022222222222222365,
+              "ci_low": -0.013333333333333308,
+              "ci_high": 0.008888888888888835,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 11,
+            "second_correct_first_wrong": 13,
+            "mcnemar_exact_p": 0.8388197422027588
+          }
+        }
+      },
+      "summary": {
+        "hedged": {
+          "mean": 0.08888888888888889,
+          "sd": 0.0900205737801293
+        },
+        "liver_last": {
+          "mean": 0.9733333333333333,
+          "sd": 0.04055175020198814
+        },
+        "liver_removed": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "negation": {
+          "mean": 0.9666666666666667,
+          "sd": 0.0371184290855335
+        },
+        "ocr_noise": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "other_organ_lesion": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "paraphrase": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "all_scored": {
+          "mean": 0.9899999999999999,
+          "sd": 0.008012336167697805
+        }
+      }
+    },
+    "clinicalbert": {
+      "per_seed": {
+        "13": {
+          "hedged": {
+            "n": 150,
+            "accuracy": null,
+            "positive_rate": 0.006666666666666667
+          },
+          "liver_last": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "liver_removed": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "negation": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "ocr_noise": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "other_organ_lesion": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "paraphrase": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "all_scored": {
+            "n": 900,
+            "accuracy": 1.0
+          },
+          "vs_lr": {
+            "studies": 900,
+            "f1_difference": {
+              "estimate": 0.028697571743929395,
+              "ci_low": 0.014860424718223561,
+              "ci_high": 0.045669344444111346,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.014444444444444482,
+              "ci_low": 0.007777777777777772,
+              "ci_high": 0.022222222222222254,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 13,
+            "second_correct_first_wrong": 0,
+            "mcnemar_exact_p": 0.000244140625
+          }
+        },
+        "42": {
+          "hedged": {
+            "n": 150,
+            "accuracy": null,
+            "positive_rate": 0.09333333333333334
+          },
+          "liver_last": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "liver_removed": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "negation": {
+            "n": 150,
+            "accuracy": 0.9666666666666667,
+            "positive_rate": 0.03333333333333333
+          },
+          "ocr_noise": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "other_organ_lesion": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "paraphrase": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "all_scored": {
+            "n": 900,
+            "accuracy": 0.9944444444444445
+          },
+          "vs_lr": {
+            "studies": 900,
+            "f1_difference": {
+              "estimate": 0.017708560754918445,
+              "ci_low": 0.004306797957485857,
+              "ci_high": 0.0341890701639556,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.008888888888888946,
+              "ci_low": 0.0022222222222221255,
+              "ci_high": 0.01666666666666672,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 10,
+            "second_correct_first_wrong": 2,
+            "mcnemar_exact_p": 0.03857421875
+          }
+        },
+        "87": {
+          "hedged": {
+            "n": 150,
+            "accuracy": null,
+            "positive_rate": 0.006666666666666667
+          },
+          "liver_last": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "liver_removed": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "negation": {
+            "n": 150,
+            "accuracy": 0.9866666666666667,
+            "positive_rate": 0.013333333333333334
+          },
+          "ocr_noise": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "other_organ_lesion": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.0
+          },
+          "paraphrase": {
+            "n": 150,
+            "accuracy": 1.0,
+            "positive_rate": 0.5
+          },
+          "all_scored": {
+            "n": 900,
+            "accuracy": 0.9977777777777778
+          },
+          "vs_lr": {
+            "studies": 900,
+            "f1_difference": {
+              "estimate": 0.02427279298286744,
+              "ci_low": 0.008616422265596094,
+              "ci_high": 0.0419920918549756,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "accuracy_difference": {
+              "estimate": 0.012222222222222245,
+              "ci_low": 0.004444444444444473,
+              "ci_high": 0.02111111111111119,
+              "n": 900,
+              "valid_resamples": 2000
+            },
+            "first_correct_second_wrong": 13,
+            "second_correct_first_wrong": 2,
+            "mcnemar_exact_p": 0.00738525390625
+          }
+        }
+      },
+      "summary": {
+        "hedged": {
+          "mean": 0.035555555555555556,
+          "sd": 0.05003702332976757
+        },
+        "liver_last": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "liver_removed": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "negation": {
+          "mean": 0.9844444444444443,
+          "sd": 0.016777409856157218
+        },
+        "ocr_noise": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "other_organ_lesion": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "paraphrase": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "all_scored": {
+          "mean": 0.9974074074074074,
+          "sd": 0.002796234976026192
+        }
+      }
+    }
+  },
+  "selective": {
+    "bert": {
+      "13": {
+        "0.5": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.9": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.99": {
+          "coverage": 1.0,
+          "errors": 0
+        }
+      },
+      "42": {
+        "0.5": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.9": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.99": {
+          "coverage": 1.0,
+          "errors": 0
+        }
+      },
+      "87": {
+        "0.5": {
+          "coverage": 1.0,
+          "errors": 1
+        },
+        "0.9": {
+          "coverage": 1.0,
+          "errors": 1
+        },
+        "0.99": {
+          "coverage": 1.0,
+          "errors": 1
+        }
+      }
+    },
+    "biobert": {
+      "13": {
+        "0.5": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.9": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.99": {
+          "coverage": 1.0,
+          "errors": 0
+        }
+      },
+      "42": {
+        "0.5": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.9": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.99": {
+          "coverage": 1.0,
+          "errors": 0
+        }
+      },
+      "87": {
+        "0.5": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.9": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.99": {
+          "coverage": 1.0,
+          "errors": 0
+        }
+      }
+    },
+    "clinicalbert": {
+      "13": {
+        "0.5": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.9": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.99": {
+          "coverage": 1.0,
+          "errors": 0
+        }
+      },
+      "42": {
+        "0.5": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.9": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.99": {
+          "coverage": 1.0,
+          "errors": 0
+        }
+      },
+      "87": {
+        "0.5": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.9": {
+          "coverage": 1.0,
+          "errors": 0
+        },
+        "0.99": {
+          "coverage": 1.0,
+          "errors": 0
+        }
+      }
+    }
+  },
+  "git_commit": "7c738955e210b83778dcf9afde415f09ae757c53",
+  "inputs_sha256": {
+    "data/processed/nlp/master_records.jsonl": "57df8a04aea0fd230b5d0e28454c4371d923c96a6ce3b8cfaea4fb0bcf456559",
+    "data/processed/nlp/ground_truth.jsonl": "e9cb2b5f73768c5030e6dfe7382d7f142351ea38522b8c5ea8dda3c077939cd2",
+    "data/processed/nlp/splits.json": "02dbd266abb1f12977ddce91b489064f921b9cb43291cea2d3df0389fed79fc6",
+    "data/processed/nlp/challenge/presence_challenge_v1.jsonl": "6d073d198634a7b820b6566c6d93424a38aad45307a08c387ebca78f601c4ced",
+    "results/nlp/predictions/word_logistic_regression_validation_predictions.jsonl": "1014320bbe71efb3ea839c6c952fc1c8db42160654c58f953e7aec63b898b948",
+    "results/nlp/predictions/baseline_v1_1_validation_inferences.jsonl": "04a0e7e9ed0acb1c0f4585165cce5261793aa5fcc84d165059c7f03798c6d873"
+  }
+}
