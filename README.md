@@ -184,18 +184,53 @@ Run tests:
 pytest
 ```
 
-The reusable PyTorch dataset and DataLoader are in
-`src/liversira_ai/cv/data/preprocessing.py`. Interactive CV and NLP workflows
-are in `notebooks/`; they display tables, figures, and metrics inline and do
-not generate reports or visualization files.
+Interactive CV and NLP workflows are in `notebooks/`; they display tables,
+figures, and metrics inline and do not generate reports or visualization
+files.
+
+### CV preprocessing
+
+Two preprocessing implementations are kept, under distinct names:
+
+- `src/liversira_ai/cv/data/preprocessing.py` is the canonical one: native
+  aspect ratio, shorter side resized to 224, a conservative trim of solid
+  near-black edge strips, no padding, no crop, no stretching
+  (`preprocess_image`, `NativeAspectUltrasoundDataset`). Notebooks 04 and 05
+  import it. **It has no recorded results yet**: no run of it has saved
+  metrics, cell outputs or a checkpoint in this repository.
+- `src/liversira_ai/cv/data/letterbox.py` is the earlier square letterbox
+  pipeline (`preprocess_image_letterbox`, `SMCLUDDataset`), kept for
+  reference. Its settings are recorded in
+  `docs/cv/legacy_letterbox_preprocessing_config.yaml`, which no code reads.
+
+What the existing CV numbers do and do not show:
+
+- The only ResNet18 numbers on record (the "Historical Letterbox baseline"
+  table in notebook 05) come from the letterbox pipeline. That pipeline has a
+  documented label shortcut: it added about 19.8% black padding to Hemangioma
+  images and none to HCC images, because every HCC image is square and no
+  Hemangioma image is. Those numbers are therefore not evidence that the
+  model learned lesion appearance.
+- That baseline table and the shortcut-audit table in notebook 04 were
+  entered by hand. The runs and code that produced them are not in this
+  repository, so they cannot be reproduced from it.
+- `results/cv/preprocessing_report.md` describes the letterbox pipeline and
+  was written by a script that has since been removed.
+- No model has been trained or evaluated on the CV Test split. Test images
+  were decoded and checksummed for inspection only, by an earlier committed
+  version of notebook 04 and by the removed report script. The current
+  notebooks 04 and 05 read Train and Validation only.
 
 Notebook workflow:
 
-- `notebooks/cv/04_image_preprocessing.ipynb` — CV image validation, resize
-  comparison, tensor/normalization checks, and DataLoader inspection.
-- `notebooks/cv/05_baseline_training.ipynb` — controlled ResNet18 transfer
-  learning at 512x512 and 224x224 with validation-only comparison; the Test
-  split is intentionally untouched.
+- `notebooks/cv/04_image_preprocessing.ipynb` — native-aspect preprocessing:
+  Train/Validation split checks, comparison with the old letterbox, and
+  tensor checks.
+- `notebooks/cv/05_baseline_training.ipynb` — ResNet18 baseline on the
+  native-aspect input (frozen backbone, patient-weighted loss, image-level
+  and patient-level Validation metrics). The training loop and model builder
+  are defined in the notebook; it saves the best checkpoint under
+  `models/cv/` (gitignored). The Test split is not read.
 - `notebooks/nlp/01_dataset_audit_and_cleaning.ipynb` — raw AbdomenAtlas
   inspection and pure text-cleaning checks.
 - `notebooks/nlp/02_rule_based_parser_and_inference.ipynb` — parser evidence,
@@ -220,7 +255,11 @@ python -m scripts.nlp.learned_presence.regenerate_audit_groups --check   # read-
 ```
 
 `final_evaluate_learned_presence` is the single-use Test evaluation of the
-frozen model. It has already been run; do not run it again. The rule-based
+frozen model. It has already been run; do not run it again. An untracked
+local copy of its predictions,
+`results/nlp/final_test/learned_presence_test_predictions.jsonl`, is dated
+10 November 2026; its predictions are identical to the tracked
+`results/nlp/predictions/learned_presence_test_predictions.jsonl`. The rule-based
 baseline scripts (`evaluate_baseline.py`, `error_analysis.py`,
 `create_benchmark_manifest.py`) are in `scripts/nlp/`. Their metrics, reports,
 predictions and configurations are preserved under `results/nlp/`.
