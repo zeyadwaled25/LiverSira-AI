@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "liversira-ai"
 version = "0.1.0"
@@ -7,7 +11,6 @@ dependencies = [
     "numpy==2.5.4",
     "pydantic==2.14.2",
     "scikit-learn==1.9.1",
-    "pytest==9.2.0",
     "Pillow==13.0.0",
     "torch==2.15.0",
     "torchvision==0.29.2",
@@ -15,8 +18,13 @@ dependencies = [
     "accelerate==1.15.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest==9.2.0",
+]
+
 [tool.pytest.ini_options]
-pythonpath = [".", "src"]
+pythonpath = ["."]
 testpaths = ["tests"]
 
 [tool.setuptools.packages.find]

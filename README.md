@@ -46,10 +46,46 @@ The CV manifest at
 `data/manifests/cv/SMC-LUD/patient_level_manifest.csv` is the source of truth
 for the physical split. The original images are never moved or modified.
 
+## Setup
+
+Create `.venv`, then install the project in editable mode together with the
+development tools. Dependencies are declared once, in `pyproject.toml`;
+`requirements.txt` only points at it.
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -e ".[dev]"
+Copy-Item .env.example .env
+```
+
+The editable install makes `liversira_ai` importable everywhere, so no
+`PYTHONPATH` is needed. Scripts use paths relative to the repository root, so
+run them from there.
+
+### Bytecode
+
+The project runs with `PYTHONDONTWRITEBYTECODE=1`, so Python writes no
+`__pycache__/` directories or `.pyc` files:
+
+- `.env` (copied from `.env.example`, gitignored) holds the variable.
+- VS Code: `.vscode/settings.json` sets `python.envFile` to that `.env` and
+  enables `python.terminal.useEnvFile`, so the Python extension applies it to
+  new terminals, test runs, debugging and Jupyter kernels. Reload the window
+  after creating `.env`.
+- Any other shell: set it once per session before running Python.
+
+  ```powershell
+  $env:PYTHONDONTWRITEBYTECODE = "1"
+  ```
+
+- Notebooks set `sys.dont_write_bytecode = True` in their first cell, which
+  also covers Colab.
+
+`__pycache__/` and `*.pyc` stay in `.gitignore` as a backstop.
+
 ## GPU setup
 
-The project runs in `.venv`. `pip install -r requirements.txt` on Windows
-installs the CPU-only PyTorch build. To train on an NVIDIA GPU, replace it with
+The editable install on Windows resolves to the CPU-only PyTorch build. To train on an NVIDIA GPU, replace it with
 the CUDA build of the same pinned versions (CUDA 13.2 wheels; the NVIDIA driver
 must support CUDA 13.2 or newer):
 
@@ -65,14 +101,12 @@ The check should print `2.15.0+cu132`, `True`, and the GPU name.
 Run the physical CV split from the repository root:
 
 ```powershell
-$env:PYTHONPATH = "src"
 python scripts/cv/materialize_cv_split.py
 ```
 
 Prepare the NLP dataset and frozen study-level splits:
 
 ```powershell
-$env:PYTHONPATH = "src"
 python scripts/nlp/prepare_dataset.py
 ```
 
@@ -120,6 +154,15 @@ are pinned in `models.py`; Test is never read. Presence uses one shared
 
 Weights go to `models/transformers/` (gitignored, safetensors, hashed in the
 run manifest); predictions and metrics go to `results/nlp/transformers/`.
+
+The frozen learned-presence model
+`results/nlp/final_test/learned_presence_word_logreg_final.joblib` is
+gitignored. Verify any copy against its SHA-256 before use (also recorded in
+`learned_presence_word_logreg_final_model_manifest.json` next to it):
+
+```text
+333d4e2aed0c93e3add9934e662b4461ae0db6bf6c8de49eb04f3a61f49ea19a
+```
 
 Run tests:
 
