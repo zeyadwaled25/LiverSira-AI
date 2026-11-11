@@ -114,6 +114,8 @@ are pinned in `models.py`; Test is never read. Presence uses one shared
 .venv\Scripts\python.exe experiments/transformers/token_lengths.py                  # truncation policy
 .venv\Scripts\python.exe experiments/transformers/presence/build_challenge_set.py   # from Validation only
 .venv\Scripts\python.exe experiments/transformers/presence/train.py --model bert --seed 42
+.venv\Scripts\python.exe experiments/transformers/presence/run_all.py               # all models x seeds, resumable
+.venv\Scripts\python.exe experiments/transformers/presence/compare_models.py        # vs LR and parser v1.1
 ```
 
 Weights go to `models/transformers/` (gitignored, safetensors, hashed in the

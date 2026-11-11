@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "task": "presence",
+  "model": "biobert",
+  "checkpoint": {
+    "repo_id": "dmis-lab/biobert-base-cased-v1.2",
+    "revision": "67c9c25b46986521ca33df05d8540da1210b3256",
+    "lowercase": false
+  },
+  "seed": 87,
+  "config": {
+    "task": "presence",
+    "label_source": "ground_truth.has_lesion (source-derived)",
+    "input_field": "narrative_clean",
+    "train_split": "train",
+    "selection_split": "val",
+    "models": [
+      "bert",
+      "biobert",
+      "clinicalbert"
+    ],
+    "seeds": [
+      13,
+      42,
+      87
+    ],
+    "max_length": 512,
+    "truncation": "head",
+    "epochs": 3,
+    "batch_size": 8,
+    "gradient_accumulation": 2,
+    "eval_batch_size": 32,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "max_grad_norm": 1.0,
+    "precision": "bf16",
+    "class_weight": "balanced",
+    "early_stopping": {
+      "metric": "val_loss",
+      "patience": 1
+    },
+    "threshold": 0.5,
+    "hyperparameter_search": "none: one fixed setting shared by every model, so no model gets a larger tuning budget"
+  },
+  "smoke_test_limit": null,
+  "data": {
+    "train": 6482,
+    "val": 1389,
+    "challenge": 1050,
+    "train_positive": 1029,
+    "test_policy": "Test was not read."
+  },
+  "best_epoch": 3,
+  "best_val_loss": 1.9e-05,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.111428,
+      "val_loss": 4.8e-05,
+      "val_f1": 1.0,
+      "val_accuracy": 1.0,
+      "elapsed_s": 140.8
+    },
+    {
+      "epoch": 2,
+      "train_loss": 5.7e-05,
+      "val_loss": 2.3e-05,
+      "val_f1": 1.0,
+      "val_accuracy": 1.0,
+      "elapsed_s": 283.9
+    },
+    {
+      "epoch": 3,
+      "train_loss": 3.8e-05,
+      "val_loss": 1.9e-05,
+      "val_f1": 1.0,
+      "val_accuracy": 1.0,
+      "elapsed_s": 430.3
+    }
+  ],
+  "weights": {
+    "path": "models/transformers/presence/biobert/seed87/model.safetensors",
+    "sha256": "c7357954f8f7aa9f38b21c3645948f328ab8108784507f095caea48b300eb396"
+  },
+  "inputs_sha256": {
+    "data/processed/nlp/master_records.jsonl": "57df8a04aea0fd230b5d0e28454c4371d923c96a6ce3b8cfaea4fb0bcf456559",
+    "data/processed/nlp/ground_truth.jsonl": "e9cb2b5f73768c5030e6dfe7382d7f142351ea38522b8c5ea8dda3c077939cd2",
+    "data/processed/nlp/splits.json": "02dbd266abb1f12977ddce91b489064f921b9cb43291cea2d3df0389fed79fc6",
+    "data/processed/nlp/challenge/presence_challenge_v1.jsonl": "6d073d198634a7b820b6566c6d93424a38aad45307a08c387ebca78f601c4ced"
+  },
+  "environment": {
+    "python": "3.14.4",
+    "torch": "2.15.0+cu132",
+    "cuda": "13.2",
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "peak_gpu_memory_gib": 3.45,
+    "transformers": "5.22.2",
+    "deterministic_note": "cuDNN deterministic mode is on; GPU kernels can still differ slightly between runs."
+  },
+  "git_commit": "7c738955e210b83778dcf9afde415f09ae757c53",
+  "train_seconds": 444.8
+}
