@@ -18,8 +18,12 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.pipeline import FeatureUnion, Pipeline
 from sklearn.svm import LinearSVC
 
-from evaluation.learned_presence.train_learned_presence import _metrics
-from evaluation.learned_presence.utils import load_audit, load_jsonl, snippet
+from liversira_ai.nlp.learned_presence import (
+    classification_metrics as _metrics,
+    load_audit,
+    load_jsonl,
+    snippet,
+)
 
 MASTER_PATH = Path("data/processed/nlp/master_records.jsonl")
 GT_PATH = Path("data/processed/nlp/ground_truth.jsonl")

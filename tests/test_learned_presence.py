@@ -1,5 +1,5 @@
-from evaluation.learned_presence.train_learned_presence import _metrics
-from evaluation.learned_presence.utils import snippet
+from scripts.nlp.learned_presence.train_learned_presence import _metrics
+from liversira_ai.nlp.learned_presence import snippet
 
 
 def test_learned_presence_metrics_include_balanced_views():

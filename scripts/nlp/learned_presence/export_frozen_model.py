@@ -11,7 +11,7 @@ against stored predictions only; no metric is recomputed and nothing is tuned.
 
 Usage (from the repository root):
 
-    python -m evaluation.learned_presence.export_frozen_model
+    python -m scripts.nlp.learned_presence.export_frozen_model
 """
 
 import json
@@ -25,9 +25,9 @@ import numpy as np
 import sklearn
 from sklearn.pipeline import Pipeline
 
-from evaluation.learned_presence import final_evaluate_learned_presence as final
-from evaluation.learned_presence.utils import load_jsonl
 from liversira_ai.common.provenance import git_commit, sha256_file
+from liversira_ai.nlp.learned_presence import load_jsonl
+from scripts.nlp.learned_presence import final_evaluate_learned_presence as final
 
 MODEL_PATH = final.MODEL_PATH
 MANIFEST_PATH = final.OUTPUT_DIR / "learned_presence_word_logreg_final_model_manifest.json"
@@ -98,7 +98,7 @@ def export() -> dict[str, Any]:
         },
         "git_commit": git_commit(),
         "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "created_by": "evaluation/learned_presence/export_frozen_model.py",
+        "created_by": "scripts/nlp/learned_presence/export_frozen_model.py",
         "note": (
             "Re-fitted from the frozen configuration because the original artifact "
             "was not kept. Binary model files are gitignored; verify any copy "

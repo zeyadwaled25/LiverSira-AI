@@ -15,7 +15,7 @@ compared with ``lr`` on the same studies (exact McNemar). Test is not read.
 
 Usage (from the repository root):
 
-    .venv\\Scripts\\python.exe experiments/transformers/presence/compare_models.py
+    .venv\\Scripts\\python.exe scripts/nlp/transformers/presence/compare_models.py
 """
 
 import json

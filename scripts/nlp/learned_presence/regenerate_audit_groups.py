@@ -8,8 +8,8 @@ is refitted and no new Test prediction is made.
 
 Usage (from the repository root):
 
-    python -m evaluation.regenerate_audit_groups            # write updated outputs
-    python -m evaluation.regenerate_audit_groups --check \
+    python -m scripts.nlp.learned_presence.regenerate_audit_groups            # write updated outputs
+    python -m scripts.nlp.learned_presence.regenerate_audit_groups --check \
         --audit <old_audit.csv>                              # verify against existing outputs
 """
 
@@ -22,11 +22,11 @@ from typing import Any
 
 import numpy as np
 
-from evaluation.baseline import evaluate_baseline
-from evaluation.learned_presence import compare_learned_presence as compare
-from evaluation.learned_presence import final_evaluate_learned_presence as final
-from evaluation.learned_presence import train_learned_presence as train
-from evaluation.learned_presence.utils import load_jsonl
+from liversira_ai.nlp.learned_presence import load_jsonl
+from scripts.nlp import evaluate_baseline
+from scripts.nlp.learned_presence import compare_learned_presence as compare
+from scripts.nlp.learned_presence import final_evaluate_learned_presence as final
+from scripts.nlp.learned_presence import train_learned_presence as train
 
 AUDIT_PATH = Path("data/processed/nlp/target_consistency_audit.csv")
 MASTER_PATH = Path("data/processed/nlp/master_records.jsonl")

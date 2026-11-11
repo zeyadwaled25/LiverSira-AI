@@ -25,7 +25,7 @@ training; Validation-based early stopping uses the original reports.
 
 Usage (from the repository root):
 
-    .venv\\Scripts\\python.exe experiments/transformers/presence/build_challenge_set.py
+    .venv\\Scripts\\python.exe scripts/nlp/transformers/presence/build_challenge_set.py
 """
 
 import json
@@ -290,7 +290,7 @@ def main() -> None:
         c = counts.get(name, {"positive": 0, "negative": 0, "unscored": 0})
         lines.append(f"| {name} | {rule} | {scored} | {c['positive']} | {c['negative']} | {c['unscored']} |")
     lines += ["", "Category definitions are in the docstring of "
-              "`experiments/transformers/presence/build_challenge_set.py`.", ""]
+              "`scripts/nlp/transformers/presence/build_challenge_set.py`.", ""]
     (out_dir / f"{VERSION}.md").write_text("\n".join(lines), encoding="utf-8")
     print("\n".join(lines))
 

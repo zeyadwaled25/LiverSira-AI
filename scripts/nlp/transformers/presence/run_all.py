@@ -5,7 +5,7 @@ failure stops only that run. Re-running this script resumes where it stopped.
 
 Usage (from the repository root):
 
-    .venv\\Scripts\\python.exe experiments/transformers/presence/run_all.py
+    .venv\\Scripts\\python.exe scripts/nlp/transformers/presence/run_all.py
 """
 
 import json

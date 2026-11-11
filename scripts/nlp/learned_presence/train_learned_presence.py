@@ -14,17 +14,10 @@ import joblib
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import (
-    accuracy_score,
-    classification_report,
-    confusion_matrix,
-    f1_score,
-    precision_score,
-    recall_score,
-)
 from sklearn.pipeline import FeatureUnion, Pipeline
 
-from evaluation.learned_presence.utils import (
+from liversira_ai.nlp.learned_presence import (
+    classification_metrics as _metrics,
     error_category,
     load_audit,
     load_jsonl,
@@ -43,50 +36,6 @@ PREDICTIONS_PATH = Path("results/nlp/predictions/learned_presence_validation_pre
 METRICS_PATH = Path("results/nlp/learned_presence_validation/learned_presence_validation_metrics.json")
 REPORT_PATH = Path("results/nlp/learned_presence_validation/learned_presence_validation_report.md")
 SEED = 42
-
-
-def _metrics(y_true: list[bool], y_pred: list[bool]) -> dict[str, Any]:
-    matrix = confusion_matrix(y_true, y_pred, labels=[False, True])
-    report = classification_report(
-        y_true,
-        y_pred,
-        labels=[False, True],
-        target_names=["negative", "positive"],
-        output_dict=True,
-        zero_division=0,
-    )
-    return {
-        "evaluated": len(y_true),
-        "coverage": 1.0 if y_true else 0.0,
-        "confusion_matrix": {
-            "labels": [False, True],
-            "rows_true": {
-                "false": {
-                    "predicted_false": int(matrix[0, 0]),
-                    "predicted_true": int(matrix[0, 1]),
-                },
-                "true": {
-                    "predicted_false": int(matrix[1, 0]),
-                    "predicted_true": int(matrix[1, 1]),
-                },
-            },
-        },
-        "accuracy": float(accuracy_score(y_true, y_pred)),
-        "precision": float(precision_score(y_true, y_pred, zero_division=0)),
-        "recall": float(recall_score(y_true, y_pred, zero_division=0)),
-        "f1": float(f1_score(y_true, y_pred, zero_division=0)),
-        "macro_f1": float(f1_score(y_true, y_pred, average="macro", zero_division=0)),
-        "weighted_f1": float(
-            f1_score(y_true, y_pred, average="weighted", zero_division=0)
-        ),
-        "per_class": {
-            label: {
-                metric: float(report[label][metric])
-                for metric in ("precision", "recall", "f1-score", "support")
-            }
-            for label in ("negative", "positive")
-        },
-    }
 
 
 def _write_predictions(

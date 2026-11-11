@@ -11,11 +11,11 @@ and threshold), so the comparison differs only in the pretrained checkpoint.
 
 Usage (from the repository root):
 
-    .venv\\Scripts\\python.exe experiments/transformers/presence/train.py --model bert --seed 42
+    .venv\\Scripts\\python.exe scripts/nlp/transformers/presence/train.py --model bert --seed 42
 
 Smoke test on a few examples, written outside ``results/``:
 
-    .venv\\Scripts\\python.exe experiments/transformers/presence/train.py --model bert --seed 42 \\
+    .venv\\Scripts\\python.exe scripts/nlp/transformers/presence/train.py --model bert --seed 42 \\
         --limit 64 --epochs 1 --output-root <scratch dir>
 """
 

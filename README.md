@@ -5,9 +5,9 @@ LiverSira AI contains two independent data pipelines:
 - **NLP:** prepares radiology reports and structured liver-lesion features.
 - **CV:** materializes the verified patient-level SMC-LUD ultrasound split.
 
-The repository does not include model training or redundant active modules.
-Historical evaluation code is kept under `evaluation/`, with its results under
-`results/`.
+Reusable code lives in the `liversira_ai` package under `src/`; complete
+workflows are run from `scripts/`; committed metrics, reports and predictions
+are under `results/`.
 
 ## Structure
 
@@ -29,9 +29,10 @@ LiverSira AI/
 │   │   └── nlp/
 ├── scripts/
 │   ├── cv/materialize_cv_split.py
-│   └── nlp/
-├── evaluation/
-│   └── tests/                 # Historical evaluation tests; not active pytest tests
+│   └── nlp/                   # data preparation, parser and baseline evaluation
+│       ├── learned_presence/  # classical presence model experiments
+│       └── transformers/      # transformer experiments
+├── notebooks/
 ├── results/
 ├── docs/
 └── tests/
@@ -140,16 +141,16 @@ comparison of the two versions:
 python scripts/nlp/validate_parser.py
 ```
 
-Transformer experiments (Phase 6) are in `experiments/transformers/`. Models
+Transformer experiments (Phase 6) are in `scripts/nlp/transformers/`. Models
 are pinned in `liversira_ai.nlp.transformer_models`; Test is never read. Presence uses one shared
 `presence/config.json` for BERT, BioBERT and ClinicalBERT:
 
 ```powershell
-.venv\Scripts\python.exe experiments/transformers/token_lengths.py                  # truncation policy
-.venv\Scripts\python.exe experiments/transformers/presence/build_challenge_set.py   # from Validation only
-.venv\Scripts\python.exe experiments/transformers/presence/train.py --model bert --seed 42
-.venv\Scripts\python.exe experiments/transformers/presence/run_all.py               # all models x seeds, resumable
-.venv\Scripts\python.exe experiments/transformers/presence/compare_models.py        # vs LR and parser v1.1
+.venv\Scripts\python.exe scripts/nlp/transformers/token_lengths.py                  # truncation policy
+.venv\Scripts\python.exe scripts/nlp/transformers/presence/build_challenge_set.py   # from Validation only
+.venv\Scripts\python.exe scripts/nlp/transformers/presence/train.py --model bert --seed 42
+.venv\Scripts\python.exe scripts/nlp/transformers/presence/run_all.py               # all models x seeds, resumable
+.venv\Scripts\python.exe scripts/nlp/transformers/presence/compare_models.py        # vs LR and parser v1.1
 ```
 
 Weights go to `models/transformers/` (gitignored, safetensors, hashed in the
@@ -202,15 +203,45 @@ Notebook workflow:
 - `notebooks/nlp/03_evaluation_and_error_analysis.ipynb` — existing baseline
   and learned-presence metrics, split integrity, and inline error inspection.
 
-The active test suite is only `tests/`. Pytest is configured with
-`testpaths = ["tests"]`, so `evaluation/tests/` is not collected by default.
-The evaluation directory contains historical evaluation implementations and
-tests; it does not represent a completed CV evaluation pipeline. CV evaluation
-will be added after the model is built.
+All tests are in `tests/` and run with `pytest`. There is no CV evaluation
+pipeline yet.
 
-Historical evaluation implementations are in `evaluation/`; their metrics,
-reports, predictions, and configurations are preserved under `results/nlp/`.
-The active runtime package is only `src/liversira_ai/`.
+### Learned presence scripts
+
+The classical presence experiments are in `scripts/nlp/learned_presence/`.
+These scripts import each other, so run them as modules from the repository
+root, not as files:
+
+```powershell
+python -m scripts.nlp.learned_presence.train_learned_presence
+python -m scripts.nlp.learned_presence.compare_learned_presence
+python -m scripts.nlp.learned_presence.export_frozen_model
+python -m scripts.nlp.learned_presence.regenerate_audit_groups --check   # read-only comparison with results/
+```
+
+`final_evaluate_learned_presence` is the single-use Test evaluation of the
+frozen model. It has already been run; do not run it again. The rule-based
+baseline scripts (`evaluate_baseline.py`, `error_analysis.py`,
+`create_benchmark_manifest.py`) are in `scripts/nlp/`. Their metrics, reports,
+predictions and configurations are preserved under `results/nlp/`.
+
+### Old script paths
+
+Scripts were reorganised after the committed results were produced. Result
+files are left unchanged, so some still name the old paths (for example a
+`created_by` field). Use this mapping:
+
+| Old path | Current path |
+|---|---|
+| `evaluation/baseline/*.py` | `scripts/nlp/*.py` |
+| `evaluation/learned_presence/*.py` | `scripts/nlp/learned_presence/*.py` |
+| `evaluation/learned_presence/utils.py` | `src/liversira_ai/nlp/learned_presence.py` |
+| `evaluation/regenerate_audit_groups.py` | `scripts/nlp/learned_presence/regenerate_audit_groups.py` |
+| `evaluation/tests/` | `tests/` |
+| `experiments/transformers/token_lengths.py` | `scripts/nlp/transformers/token_lengths.py` |
+| `experiments/transformers/presence/*` | `scripts/nlp/transformers/presence/*` |
+| `experiments/transformers/data.py` | `src/liversira_ai/nlp/transformer_data.py` |
+| `experiments/transformers/models.py` | `src/liversira_ai/nlp/transformer_models.py` |
 
 The materializer is idempotent. Existing files are accepted only when their
 checksums match the manifest; conflicting files fail instead of being silently

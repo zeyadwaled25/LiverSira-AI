@@ -10,7 +10,7 @@ mapped to token positions with the tokenizer's offsets. A truncation strategy
 
 Usage (from the repository root):
 
-    .venv\\Scripts\\python.exe experiments/transformers/token_lengths.py
+    .venv\\Scripts\\python.exe scripts/nlp/transformers/token_lengths.py
 """
 
 import json
@@ -215,14 +215,14 @@ def render(result: dict[str, Any]) -> str:
         "- **Extraction (6.2): overlapping chunks** (510 content tokens, stride 382; at most "
         f"{max(m['over_limit']['max_chunks'] for m in result['models'].values())} chunks per report). Head "
         "truncation changes a few extracted values, so extraction models must see the whole report.",
-        "- Both are set in `experiments/transformers/models.py`.",
+        "- Both are set in `src/liversira_ai/nlp/transformer_models.py`.",
         "",
         "## Notes",
         "- Liver mentions are found with the pattern "
         f"`{result['liver_pattern']}` and mapped to token positions with the tokenizer offsets.",
         "- \"Drops liver\" counts over-limit reports where at least one liver mention falls outside the "
         "kept tokens.",
-        "- Revisions are pinned in `experiments/transformers/models.py`.",
+        "- Revisions are pinned in `src/liversira_ai/nlp/transformer_models.py`.",
     ]
     return "\n".join(lines) + "\n"
 

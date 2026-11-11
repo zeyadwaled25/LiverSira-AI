@@ -11,14 +11,15 @@ from sklearn.metrics import (
 )
 from sklearn.pipeline import Pipeline
 
-from evaluation.learned_presence.train_learned_presence import _metrics
-from evaluation.learned_presence.utils import (
+from liversira_ai.nlp.learned_presence import (
+    SEED,
+    classification_metrics as _metrics,
     error_category,
+    frozen_model as _frozen_model,
     load_audit,
     load_jsonl,
     snippet,
 )
-from liversira_ai.nlp.learned_presence import SEED, frozen_model as _frozen_model
 
 MASTER_PATH = Path("data/processed/nlp/master_records.jsonl")
 GT_PATH = Path("data/processed/nlp/ground_truth.jsonl")
