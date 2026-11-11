@@ -31,7 +31,6 @@ Usage (from the repository root):
 import json
 import random
 import re
-import sys
 from pathlib import Path
 from typing import Any, Callable
 
@@ -234,12 +233,12 @@ def build(examples: list[dict[str, Any]], sha: Callable[[str], str]) -> list[dic
 
 
 def main() -> None:
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    import data
+    from liversira_ai.common.provenance import git_commit, sha256_file, sha256_text
+    from liversira_ai.nlp import transformer_data as data
 
     ids = data.load_split_ids(["val"])["val"]
     examples = data.load_examples(ids)
-    records = build(examples, data.sha256_text)
+    records = build(examples, sha256_text)
 
     data.CHALLENGE_PATH.parent.mkdir(parents=True, exist_ok=True)
     with data.CHALLENGE_PATH.open("w", encoding="utf-8", newline="\n") as handle:
@@ -266,11 +265,11 @@ def main() -> None:
         "counts": counts,
         "records": len(records),
         "output": data.CHALLENGE_PATH.as_posix(),
-        "output_sha256": data.sha256_file(data.CHALLENGE_PATH),
+        "output_sha256": sha256_file(data.CHALLENGE_PATH),
         "inputs_sha256": {
-            p.as_posix(): data.sha256_file(p) for p in (data.MASTER_PATH, data.GROUND_TRUTH_PATH, data.SPLITS_PATH)
+            p.as_posix(): sha256_file(p) for p in (data.MASTER_PATH, data.GROUND_TRUTH_PATH, data.SPLITS_PATH)
         },
-        "git_commit": data.git_commit(),
+        "git_commit": git_commit(),
         "items": [
             {k: r[k] for k in ("challenge_id", "base_id", "category", "label", "scored", "text_sha256")}
             for r in records

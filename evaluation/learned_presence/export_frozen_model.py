@@ -14,10 +14,8 @@ Usage (from the repository root):
     python -m evaluation.learned_presence.export_frozen_model
 """
 
-import hashlib
 import json
 import platform
-import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -29,6 +27,7 @@ from sklearn.pipeline import Pipeline
 
 from evaluation.learned_presence import final_evaluate_learned_presence as final
 from evaluation.learned_presence.utils import load_jsonl
+from liversira_ai.common.provenance import git_commit, sha256_file
 
 MODEL_PATH = final.MODEL_PATH
 MANIFEST_PATH = final.OUTPUT_DIR / "learned_presence_word_logreg_final_model_manifest.json"
@@ -36,23 +35,6 @@ STORED_TEST_PREDICTIONS = Path("results/nlp/predictions/learned_presence_test_pr
 SPLIT_METADATA_PATH = Path("data/processed/nlp/split_metadata.json")
 PROBABILITY_TOLERANCE = 1e-12
 THRESHOLD = 0.5  # Frozen decision threshold (see the final configuration).
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1 << 20), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def _git_commit() -> str | None:
-    try:
-        return subprocess.run(
-            ["git", "rev-parse", "HEAD"], capture_output=True, text=True, check=True
-        ).stdout.strip()
-    except (OSError, subprocess.CalledProcessError):
-        return None
 
 
 def _verify_against_stored_predictions(model: Pipeline) -> dict[str, Any]:
@@ -114,7 +96,7 @@ def export() -> dict[str, Any]:
             "numpy": np.__version__,
             "joblib": joblib.__version__,
         },
-        "git_commit": _git_commit(),
+        "git_commit": git_commit(),
         "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "created_by": "evaluation/learned_presence/export_frozen_model.py",
         "note": (

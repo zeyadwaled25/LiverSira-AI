@@ -141,7 +141,7 @@ python scripts/nlp/validate_parser.py
 ```
 
 Transformer experiments (Phase 6) are in `experiments/transformers/`. Models
-are pinned in `models.py`; Test is never read. Presence uses one shared
+are pinned in `liversira_ai.nlp.transformer_models`; Test is never read. Presence uses one shared
 `presence/config.json` for BERT, BioBERT and ClinicalBERT:
 
 ```powershell

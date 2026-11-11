@@ -6,8 +6,6 @@ from typing import Any
 
 import joblib
 import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     confusion_matrix,
 )
@@ -20,6 +18,7 @@ from evaluation.learned_presence.utils import (
     load_jsonl,
     snippet,
 )
+from liversira_ai.nlp.learned_presence import SEED, frozen_model as _frozen_model
 
 MASTER_PATH = Path("data/processed/nlp/master_records.jsonl")
 GT_PATH = Path("data/processed/nlp/ground_truth.jsonl")
@@ -32,33 +31,6 @@ CONFIG_PATH = OUTPUT_DIR / "learned_presence_word_logreg_final_config.json"
 PREDICTIONS_PATH = OUTPUT_DIR / "learned_presence_test_predictions.jsonl"
 METRICS_PATH = OUTPUT_DIR / "learned_presence_test_metrics.json"
 REPORT_PATH = OUTPUT_DIR / "learned_presence_test_report.md"
-SEED = 42
-
-
-def _frozen_model() -> Pipeline:
-    return Pipeline(
-        [
-            (
-                "features",
-                TfidfVectorizer(
-                    lowercase=True,
-                    ngram_range=(1, 2),
-                    min_df=2,
-                    max_features=80_000,
-                    sublinear_tf=True,
-                ),
-            ),
-            (
-                "classifier",
-                LogisticRegression(
-                    class_weight="balanced",
-                    max_iter=1000,
-                    random_state=SEED,
-                    solver="liblinear",
-                ),
-            ),
-        ]
-    )
 
 
 def _specificity(y_true: list[bool], y_pred: list[bool]) -> float | None:

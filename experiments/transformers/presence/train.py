@@ -25,7 +25,6 @@ import json
 import math
 import platform
 import random
-import sys
 import time
 from pathlib import Path
 from typing import Any
@@ -34,10 +33,9 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-
-import data  # noqa: E402
-from models import CHECKPOINTS, load_tokenizer  # noqa: E402
+from liversira_ai.common.provenance import git_commit, sha256_file
+from liversira_ai.nlp import transformer_data as data
+from liversira_ai.nlp.transformer_models import CHECKPOINTS, load_tokenizer
 
 CONFIG_PATH = Path(__file__).resolve().parent / "config.json"
 RESULTS_ROOT = Path("results/nlp/transformers/presence")
@@ -273,9 +271,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "best_epoch": best_epoch,
         "best_val_loss": round(best_loss, 6),
         "history": history,
-        "weights": {"path": weight_file.as_posix(), "sha256": data.sha256_file(weight_file)},
+        "weights": {"path": weight_file.as_posix(), "sha256": sha256_file(weight_file)},
         "inputs_sha256": {
-            p.as_posix(): data.sha256_file(p)
+            p.as_posix(): sha256_file(p)
             for p in (data.MASTER_PATH, data.GROUND_TRUTH_PATH, data.SPLITS_PATH, data.CHALLENGE_PATH)
         },
         "environment": {
@@ -287,7 +285,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "transformers": __import__("transformers").__version__,
             "deterministic_note": "cuDNN deterministic mode is on; GPU kernels can still differ slightly between runs.",
         },
-        "git_commit": data.git_commit(),
+        "git_commit": git_commit(),
         "train_seconds": round(time.time() - started, 1),
     }
     (out_dir / "run_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")

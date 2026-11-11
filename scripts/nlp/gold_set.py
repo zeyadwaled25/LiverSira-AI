@@ -15,13 +15,10 @@ See docs/nlp/gold_set_annotation_guidelines.md.
 
 import argparse
 import json
-import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-
-from liversira_ai.nlp.data.adjudication import adjudicate_cohort  # noqa: E402
-from liversira_ai.nlp.data.gold_set import (  # noqa: E402
+from liversira_ai.nlp.data.adjudication import adjudicate_cohort
+from liversira_ai.nlp.data.gold_set import (
     compare_annotations,
     create_sample,
     finalize,

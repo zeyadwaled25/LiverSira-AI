@@ -20,19 +20,16 @@ Usage (from the repository root):
 
 import json
 import statistics
-import sys
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[3]
-sys.path[:0] = [str(ROOT), str(ROOT / "src"), str(Path(__file__).resolve().parents[1])]
-
-import data  # noqa: E402
-from evaluation.learned_presence.final_evaluate_learned_presence import _frozen_model  # noqa: E402
-from liversira_ai.nlp.metrics import format_ci, paired_comparison, presence_report  # noqa: E402
-from liversira_ai.nlp.parser import parse_liver_report  # noqa: E402
+from liversira_ai.common.provenance import git_commit, sha256_file
+from liversira_ai.nlp import transformer_data as data
+from liversira_ai.nlp.learned_presence import frozen_model
+from liversira_ai.nlp.metrics import format_ci, paired_comparison, presence_report
+from liversira_ai.nlp.parser import parse_liver_report
 
 HERE = Path(__file__).resolve().parent
 RESULTS_ROOT = Path("results/nlp/transformers/presence")
@@ -82,7 +79,7 @@ def _selective(truth: list[bool], prob: list[float]) -> dict[str, dict[str, floa
 
 
 def _fit_lr(train: list[dict[str, Any]]):
-    model = _frozen_model()
+    model = frozen_model()
     model.fit([e["text"] for e in train], [int(e["label"]) for e in train])
     return model
 
@@ -230,8 +227,8 @@ def run() -> dict[str, Any]:
                                 else per_seed[s][c]["positive_rate"] for s in per_seed])
                    for c in categories + ["all_scored"]}
         result["challenge"][model] = {"per_seed": per_seed, "summary": summary}
-    result["git_commit"] = data.git_commit()
-    result["inputs_sha256"] = {p.as_posix(): data.sha256_file(p) for p in
+    result["git_commit"] = git_commit()
+    result["inputs_sha256"] = {p.as_posix(): sha256_file(p) for p in
                                (data.MASTER_PATH, data.GROUND_TRUTH_PATH, data.SPLITS_PATH, data.CHALLENGE_PATH,
                                 LR_VAL_PATH, PARSER_VAL_PATH)}
     return result

@@ -13,24 +13,16 @@ Usage (from the repository root):
     .venv\\Scripts\\python.exe experiments/transformers/token_lengths.py
 """
 
-import hashlib
 import json
 import re
 import statistics
-import subprocess
-import sys
 from pathlib import Path
 from typing import Any
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "scripts" / "nlp"))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-
-sys.path.insert(0, str(ROOT / "src"))
-
-import reliability_report as rr  # noqa: E402
-from liversira_ai.nlp.parser import parse_liver_report  # noqa: E402
-from models import CHECKPOINTS, MAX_LENGTH, load_tokenizer  # noqa: E402
+from liversira_ai.common.provenance import git_commit, sha256_file
+from liversira_ai.nlp.evaluation import GROUND_TRUTH_PATH, SPLITS_PATH, reference_labels
+from liversira_ai.nlp.parser import parse_liver_report
+from liversira_ai.nlp.transformer_models import CHECKPOINTS, MAX_LENGTH, load_tokenizer
 
 PARSER_FIELDS = {
     "has_lesion": "presence",
@@ -51,19 +43,6 @@ CONTENT = MAX_LENGTH - 2  # [CLS] and [SEP]
 HEAD_TAIL = (128, CONTENT - 128)
 ANCHOR_CONTEXT = 32  # tokens kept before the first liver mention
 CHUNK_STRIDE = 382  # windows of 510 content tokens overlapping by 128
-
-
-def _sha(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def _git_commit() -> str | None:
-    try:
-        return subprocess.run(
-            ["git", "rev-parse", "HEAD"], capture_output=True, text=True, check=True
-        ).stdout.strip()
-    except (OSError, subprocess.CalledProcessError):
-        return None
 
 
 def _load_reports(ids: set[str]) -> dict[str, str]:
@@ -164,12 +143,12 @@ def _analyze(key: str, reports: dict[str, str], split_of: dict[str, str], labels
 
 
 def run() -> dict[str, Any]:
-    splits = json.loads(rr.SPLITS_PATH.read_text(encoding="utf-8"))
+    splits = json.loads(SPLITS_PATH.read_text(encoding="utf-8"))
     split_of = {i: s for s in SPLITS for i in splits[s]}
     if set(split_of) & set(splits["test"]):
         raise ValueError("Train/Validation overlap with Test")
     reports = _load_reports(set(split_of))
-    labels = rr._reference_labels(rr.GROUND_TRUTH_PATH, "ground_truth")
+    labels = reference_labels(GROUND_TRUTH_PATH, "ground_truth")
     return {
         "schema_version": "1.0",
         "splits": list(SPLITS),
@@ -178,8 +157,8 @@ def run() -> dict[str, Any]:
         "max_length": MAX_LENGTH,
         "head_tail": {"head": HEAD_TAIL[0], "tail": HEAD_TAIL[1]},
         "liver_pattern": LIVER.pattern,
-        "inputs_sha256": {p.as_posix(): _sha(p) for p in (MASTER_PATH, rr.SPLITS_PATH, rr.GROUND_TRUTH_PATH)},
-        "git_commit": _git_commit(),
+        "inputs_sha256": {p.as_posix(): sha256_file(p) for p in (MASTER_PATH, SPLITS_PATH, GROUND_TRUTH_PATH)},
+        "git_commit": git_commit(),
         "models": {key: _analyze(key, reports, split_of, labels) for key in CHECKPOINTS},
     }
 
