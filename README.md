@@ -46,6 +46,20 @@ The CV manifest at
 `data/manifests/cv/SMC-LUD/patient_level_manifest.csv` is the source of truth
 for the physical split. The original images are never moved or modified.
 
+## GPU setup
+
+The project runs in `.venv`. `pip install -r requirements.txt` on Windows
+installs the CPU-only PyTorch build. To train on an NVIDIA GPU, replace it with
+the CUDA build of the same pinned versions (CUDA 13.2 wheels; the NVIDIA driver
+must support CUDA 13.2 or newer):
+
+```powershell
+.venv\Scripts\python.exe -m pip install --force-reinstall --no-deps torch==2.15.0 torchvision==0.29.2 --index-url https://download.pytorch.org/whl/cu132
+.venv\Scripts\python.exe -c "import torch; print(torch.__version__, torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+```
+
+The check should print `2.15.0+cu132`, `True`, and the GPU name.
+
 ## Commands
 
 Run the physical CV split from the repository root:
