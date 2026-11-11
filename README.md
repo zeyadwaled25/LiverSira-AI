@@ -106,6 +106,19 @@ comparison of the two versions:
 python scripts/nlp/validate_parser.py
 ```
 
+Transformer experiments (Phase 6) are in `experiments/transformers/`. Models
+are pinned in `models.py`; Test is never read. Presence uses one shared
+`presence/config.json` for BERT, BioBERT and ClinicalBERT:
+
+```powershell
+.venv\Scripts\python.exe experiments/transformers/token_lengths.py                  # truncation policy
+.venv\Scripts\python.exe experiments/transformers/presence/build_challenge_set.py   # from Validation only
+.venv\Scripts\python.exe experiments/transformers/presence/train.py --model bert --seed 42
+```
+
+Weights go to `models/transformers/` (gitignored, safetensors, hashed in the
+run manifest); predictions and metrics go to `results/nlp/transformers/`.
+
 Run tests:
 
 ```powershell
