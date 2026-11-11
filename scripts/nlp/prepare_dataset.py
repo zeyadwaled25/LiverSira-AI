@@ -1,10 +1,7 @@
 """Run the active NLP dataset preparation stages."""
 
-import sys
 import runpy
 from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 
 from liversira_ai.nlp.data.audit import main as audit_main
 

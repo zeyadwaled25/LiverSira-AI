@@ -19,7 +19,6 @@ Test-split gold labels are for final reporting only; parser and model
 development must use Validation gold labels.
 """
 
-import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -28,6 +27,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import cohen_kappa_score
 
+from liversira_ai.common.provenance import sha256_file, sha256_text
 from liversira_ai.nlp.data.adjudication import (
     NOT_APPLICABLE,
     UNDOCUMENTED,
@@ -68,14 +68,6 @@ DEFAULT_ALLOCATION: dict[str, int | None] = {
     "negative_stated": 15,
 }
 DIAMETER_AGREEMENT_CM = 0.1
-
-
-def _sha256_text(text: str) -> str:
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
-
-
-def _sha256_file(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def _refuse_overwrite(*paths: Path) -> None:
@@ -178,9 +170,9 @@ def create_sample(
         },
         "counts": counts,
         "total_sampled": len(key),
-        "sample_ids_sha256": _sha256_text("\n".join(key[ID])),
+        "sample_ids_sha256": sha256_text("\n".join(key[ID])),
         "inputs_sha256": {
-            path.as_posix(): _sha256_file(path) for path in (master_path, audit_path, splits_path)
+            path.as_posix(): sha256_file(path) for path in (master_path, audit_path, splits_path)
         },
         "outputs": {
             "annotation_sheets": [sheet_a.as_posix(), sheet_b.as_posix()],

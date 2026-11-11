@@ -17,26 +17,22 @@ Usage (from the repository root):
 import hashlib
 import json
 import subprocess
-import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-
-import reliability_report as rr  # noqa: E402
-import validate_parser as vp  # noqa: E402
-from liversira_ai.nlp.baseline import BASELINE_VERSION, run_baseline_inference  # noqa: E402
-from liversira_ai.nlp.metrics import format_ci  # noqa: E402
-from liversira_ai.nlp.parser import PARSER_VERSION  # noqa: E402
+from liversira_ai.common.provenance import sha256_file
+from liversira_ai.nlp import evaluation as ev
+from liversira_ai.nlp import parser_comparison as pc
+from liversira_ai.nlp.baseline import BASELINE_VERSION, run_baseline_inference
+from liversira_ai.nlp.metrics import format_ci
+from liversira_ai.nlp.parser import PARSER_VERSION
 
 FROZEN_CODE = [Path("src/liversira_ai/nlp/parser.py"), Path("src/liversira_ai/nlp/baseline.py")]
 V11_TEST_PATH = Path("results/nlp/predictions/baseline_v1_1_test_inferences.jsonl")
 V11_TEST_MANIFEST = Path("results/nlp/predictions/baseline_v1_1_test_manifest.json")
-METRICS_PATH = vp.OUTPUT_DIR / "test_evaluation.json"
-REPORT_PATH = vp.OUTPUT_DIR / "test_evaluation.md"
+METRICS_PATH = pc.OUTPUT_DIR / "test_evaluation.json"
+REPORT_PATH = pc.OUTPUT_DIR / "test_evaluation.md"
 
 
 def _git(*args: str) -> str:
@@ -66,35 +62,35 @@ def _freeze_record() -> dict[str, Any]:
 
 def run() -> dict[str, Any]:
     freeze = _freeze_record()
-    splits = json.loads(rr.SPLITS_PATH.read_text(encoding="utf-8"))
+    splits = json.loads(ev.SPLITS_PATH.read_text(encoding="utf-8"))
     test = list(splits["test"])
     run_baseline_inference(
-        rr.GROUND_TRUTH_PATH.parent / "master_records.jsonl", V11_TEST_PATH, set(test), V11_TEST_MANIFEST
+        ev.GROUND_TRUTH_PATH.parent / "master_records.jsonl", V11_TEST_PATH, set(test), V11_TEST_MANIFEST
     )
-    v11 = rr._load_jsonl(V11_TEST_PATH)
+    v11 = ev.load_jsonl(V11_TEST_PATH)
     if set(v11) != set(test):
         raise ValueError("v1.1 Test predictions must cover exactly the Test split")
-    v10 = {i: r for i, r in rr._load_jsonl(vp.V10_PATH).items() if i in set(test)}
-    reference = rr._reference_labels(rr.GROUND_TRUTH_PATH, "ground_truth")
+    v10 = {i: r for i, r in ev.load_jsonl(pc.V10_PATH).items() if i in set(test)}
+    reference = ev.reference_labels(ev.GROUND_TRUTH_PATH, "ground_truth")
     return {
         "schema_version": "1.0",
         "split": "test",
         "status": "single_use_frozen_evaluation",
         "freeze": freeze,
         "reference": "source-derived labels (not a clinical gold standard)",
-        "method": {"interval": "percentile bootstrap over studies", "n_resamples": vp.RESAMPLES, "seed": vp.SEED},
+        "method": {"interval": "percentile bootstrap over studies", "n_resamples": pc.RESAMPLES, "seed": pc.SEED},
         "inputs_sha256": {
-            p.as_posix(): vp._sha(p) for p in (rr.GROUND_TRUTH_PATH, rr.SPLITS_PATH, vp.V10_PATH, V11_TEST_PATH)
+            p.as_posix(): sha256_file(p) for p in (ev.GROUND_TRUTH_PATH, ev.SPLITS_PATH, pc.V10_PATH, V11_TEST_PATH)
         },
-        "v1.0": vp._score(test, reference, v10),
-        "v1.1": vp._score(test, reference, v11),
-        "paired_presence_v11_minus_v10_on_both_answered": vp._paired_presence(test, reference, v10, v11),
+        "v1.0": pc.score(test, reference, v10),
+        "v1.1": pc.score(test, reference, v11),
+        "paired_presence_v11_minus_v10_on_both_answered": pc.paired_presence(test, reference, v10, v11),
     }
 
 
 def render(result: dict[str, Any]) -> str:
     # Reuse the validation layout, then replace the framing text.
-    body = vp.render(
+    body = pc.render(
         {
             "versions": {"v1.0": "rule-based-v1.0.0 (saved predictions)", "v1.1": f"{BASELINE_VERSION} / parser {PARSER_VERSION}"},
             "method": result["method"],
@@ -129,7 +125,7 @@ def render(result: dict[str, Any]) -> str:
 
 def main() -> None:
     result = run()
-    vp.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    pc.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     METRICS_PATH.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     REPORT_PATH.write_text(render(result), encoding="utf-8")
     print(f"[DONE] {METRICS_PATH}\n[DONE] {REPORT_PATH}")

@@ -1,0 +1,22 @@
+# LEGACY RECORD - no code reads this file.
+#
+# Settings of the earlier square letterbox preprocessing
+# (src/liversira_ai/cv/data/letterbox.py), kept for reference. The canonical
+# pipeline is the native-aspect one in src/liversira_ai/cv/data/preprocessing.py.
+#
+# image_size was 224 when this file was created and was changed to 512 when
+# notebook 04 switched its working configuration. results/cv/preprocessing_report.md
+# still says "224 x 224" because that text was hard-coded in the script that
+# generated the report, and the report was not regenerated afterwards.
+#
+# Formerly configs/cv/preprocessing_config.yaml.
+#
+# Phase 9 deterministic preprocessing configuration.
+dataset_root: data/processed/cv/SMC-LUD/patient_split_v1
+image_size: [512, 512]
+resize_mode: letterbox
+interpolation: bilinear
+padding_value: 0
+normalization: imagenet
+augmentation: none
+stats_source: not_applicable

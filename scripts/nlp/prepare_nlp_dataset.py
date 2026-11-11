@@ -14,34 +14,22 @@ The original CSV is **never** modified.
 """
 
 from pathlib import Path
-import re
 
 import pandas as pd
 
-# -- paths and column-name constants ----------------------------
-INPUT_PATH = Path("data/raw/nlp/AbdomenAtlas3.0MiniWithMeta.csv")
-OUTPUT_PATH = Path("data/processed/nlp/liver_nlp_clean.csv")
-
-ID = "BDMAP ID"
-TEXT = "narrative report"
-COUNT = "number of liver lesion instances"
-LOCATION = "largest liver lesion location (1-8)"
-DIAMETER = "largest liver lesion diameter (cm)"
-ATTENUATION = (
-    "largest liver lesion attenuation "
-    "(hyperattenuating, isoattenuating, hypoattenuating)"
+from liversira_ai.nlp.data.raw_csv import (
+    ATTENUATION,
+    COUNT,
+    DIAMETER,
+    ID,
+    LOCATION,
+    TEXT,
+    clean_report,
 )
 
-
-def clean_report(value: object) -> str | pd.NA:
-    """Normalize whitespace and strip a single report string."""
-    if pd.isna(value):
-        return pd.NA
-
-    value = str(value).replace("\r\n", "\n").replace("\r", "\n")
-    value = re.sub(r"\s+", " ", value).strip()
-
-    return value if value else pd.NA
+# -- paths -------------------------------------------------------
+INPUT_PATH = Path("data/raw/nlp/AbdomenAtlas3.0MiniWithMeta.csv")
+OUTPUT_PATH = Path("data/processed/nlp/liver_nlp_clean.csv")
 
 
 def prepare_dataset(input_path: Path, output_path: Path) -> pd.DataFrame:

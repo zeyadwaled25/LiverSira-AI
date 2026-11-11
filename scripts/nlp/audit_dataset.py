@@ -14,29 +14,15 @@ from pathlib import Path
 
 import pandas as pd
 
-# -- column name constants --------------------------------------
-ID = "BDMAP ID"
-TEXT = "narrative report"
-COUNT = "number of liver lesion instances"
-LOCATION = "largest liver lesion location (1-8)"
-DIAMETER = "largest liver lesion diameter (cm)"
-ATTENUATION = (
-    "largest liver lesion attenuation "
-    "(hyperattenuating, isoattenuating, hypoattenuating)"
+from liversira_ai.nlp.data.raw_csv import (
+    ATTENUATION,
+    COUNT,
+    DIAMETER,
+    ID,
+    LOCATION,
+    TEXT,
+    load_and_validate,
 )
-
-
-def load_and_validate(csv_path: Path) -> pd.DataFrame:
-    """Load the CSV and ensure all required columns exist."""
-    df = pd.read_csv(csv_path)
-
-    required = [ID, TEXT, COUNT, LOCATION, DIAMETER, ATTENUATION]
-    missing_columns = [c for c in required if c not in df.columns]
-
-    if missing_columns:
-        raise ValueError(f"Missing required columns: {missing_columns}")
-
-    return df
 
 
 def print_overview(df: pd.DataFrame) -> None:

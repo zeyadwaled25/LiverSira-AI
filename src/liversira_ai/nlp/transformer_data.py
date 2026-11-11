@@ -5,9 +5,7 @@ Reads the frozen study-level split, ``narrative_clean`` and the source-derived
 explicitly allowed, so an experiment cannot read it by accident.
 """
 
-import hashlib
 import json
-import subprocess
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -15,23 +13,6 @@ MASTER_PATH = Path("data/processed/nlp/master_records.jsonl")
 GROUND_TRUTH_PATH = Path("data/processed/nlp/ground_truth.jsonl")
 SPLITS_PATH = Path("data/processed/nlp/splits.json")
 CHALLENGE_PATH = Path("data/processed/nlp/challenge/presence_challenge_v1.jsonl")
-
-
-def sha256_file(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def sha256_text(text: str) -> str:
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
-
-
-def git_commit() -> str | None:
-    try:
-        return subprocess.run(
-            ["git", "rev-parse", "HEAD"], capture_output=True, text=True, check=True
-        ).stdout.strip()
-    except (OSError, subprocess.CalledProcessError):
-        return None
 
 
 def load_split_ids(splits: Iterable[str], allow_test: bool = False) -> dict[str, list[str]]:

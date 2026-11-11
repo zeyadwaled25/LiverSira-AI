@@ -4,7 +4,7 @@ import random
 
 import pytest
 
-from experiments.transformers.presence import build_challenge_set as cs
+from scripts.nlp.transformers.presence import build_challenge_set as cs
 
 REPORT = (
     "The spleen is normal, measuring 134.9 cc in volume. "
@@ -93,7 +93,7 @@ def test_build_applies_label_rules_and_quotas():
 
 
 def test_class_weights_and_summary():
-    train = pytest.importorskip("experiments.transformers.presence.train")
+    train = pytest.importorskip("scripts.nlp.transformers.presence.train")
     weights = train.class_weights([True, False, False, False])
     assert weights.tolist() == pytest.approx([4 / 6, 2.0])
     summary = train.summarize([True, False, True, False], [0.9, 0.2, 0.4, 0.6], 0.5)

@@ -21,7 +21,8 @@ ENV/
 env/
 
 # ── IDE / editor settings ────────────────────────────────────
-.vscode/
+.vscode/*
+!.vscode/settings.json
 .idea/
 *.swp
 *.swo
@@ -70,6 +71,7 @@ data/manifests/
 # ── Environment variables ─────────────────────────────────────
 .env
 .env.*
+!.env.example
 
 # ── Model artifacts / weights ─────────────────────────────────
 *.h5
@@ -80,3 +82,6 @@ data/manifests/
 *.pkl
 *.joblib
 models/
+
+# ── Notebook-generated images that show dataset ultrasound frames ──
+results/cv/preprocessing_contact_sheet.png

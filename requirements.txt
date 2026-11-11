@@ -1,11 +1,8 @@
-pandas==3.1.0
-numpy==2.5.4
-pydantic==2.14.2
-scikit-learn==1.9.1
-pytest==9.2.0
-Pillow==13.0.0
-# On Windows these resolve to the CPU-only build; for the CUDA build see "GPU setup" in README.md.
-torch==2.15.0
-torchvision==0.29.2
-transformers==5.22.2
-accelerate==1.15.0
+# Dependencies are declared once, in pyproject.toml. This file installs the
+# project in editable mode with the development tools (pytest):
+#
+#     pip install -r requirements.txt      (same as: pip install -e ".[dev]")
+#
+# On Windows torch/torchvision resolve to the CPU-only build; for the CUDA
+# build see "GPU setup" in README.md.
+-e .[dev]

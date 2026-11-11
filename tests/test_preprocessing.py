@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 from PIL import Image
 
-from liversira_ai.cv.data.preprocessing import (
+from liversira_ai.cv.data.letterbox import (
     InvalidImageError,
     PreprocessingConfig,
     image_to_tensor,

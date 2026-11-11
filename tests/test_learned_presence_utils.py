@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from evaluation.learned_presence.final_evaluate_learned_presence import (
+from scripts.nlp.learned_presence.final_evaluate_learned_presence import (
     _metrics_with_specificity,
 )
-from evaluation.learned_presence.train_learned_presence import _metrics
-from evaluation.learned_presence.utils import error_category, load_audit, load_jsonl
+from scripts.nlp.learned_presence.train_learned_presence import _metrics
+from liversira_ai.nlp.learned_presence import error_category, load_audit, load_jsonl
 
 
 def test_load_jsonl_preserves_optional_all_records_and_selected_records(tmp_path: Path):
