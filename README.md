@@ -215,3 +215,23 @@ The active runtime package is only `src/liversira_ai/`.
 The materializer is idempotent. Existing files are accepted only when their
 checksums match the manifest; conflicting files fail instead of being silently
 overwritten.
+
+## Licence and data notice
+
+The source code in this repository is released under the MIT License (see
+`LICENSE`).
+
+The MIT License does not cover data. Some files under `results/nlp/`,
+`tests/fixtures/` and the saved outputs of `notebooks/nlp/` contain text
+excerpts and study identifiers (`BDMAP_…`) from the radiology reports of
+AbdomenAtlas 3.0 (Bassi et al., "RadGPT: Constructing 3D Image-Text Tumor
+Datasets", ICCV 2025), distributed as AbdomenAtlas 3.0 Mini under the Creative
+Commons Attribution-NonCommercial-ShareAlike 4.0 International licence
+(CC BY-NC-SA 4.0). Those excerpts, and any file that reproduces them, remain
+under CC BY-NC-SA 4.0: they may be shared and adapted for non-commercial
+purposes only, with attribution to the AbdomenAtlas authors, and under the
+same licence. Complete reports are not distributed, but result files contain
+many verbatim excerpts of the liver-related sentences.
+
+This repository does not include the SMC-LUD dataset itself; obtain it from
+its Figshare record and follow its terms.
