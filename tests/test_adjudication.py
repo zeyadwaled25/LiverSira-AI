@@ -125,6 +125,70 @@ def test_invalid_review_fields_are_rejected(tmp_path: Path, field: str, value: s
     assert _status(ground_truth)["status"] == "pending"
 
 
+def _gt_record(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8").splitlines()[0])
+
+
+def test_reviewed_values_that_differ_are_not_marked_verified(tmp_path: Path):
+    review = tmp_path / "review.csv"
+    ground_truth = tmp_path / "ground_truth.jsonl"
+    _write_review(review, reviewed_count="2", reviewed_diameter_cm="4.0")
+    _write_gt(ground_truth)
+
+    assert adjudicate_cohort(review, ground_truth) == 0
+    validation = _status(ground_truth)
+    assert validation["status"] == "partially_verified"
+    assert "lesion_count" in validation["unverified_fields"]
+    assert "largest_lesion.source_diameter_cm" in validation["unverified_fields"]
+    assert "largest_lesion.attenuation" in validation["verified_fields"]
+    # Source labels are never overwritten by review values.
+    assert _gt_record(ground_truth)["ground_truth"]["lesion_count"] == 1
+
+
+def test_presence_disagreement_needs_adjudication(tmp_path: Path):
+    review = tmp_path / "review.csv"
+    ground_truth = tmp_path / "ground_truth.jsonl"
+    _write_review(
+        review,
+        review_presence="NO",
+        reviewed_count="0",
+        reviewed_location="NOT_APPLICABLE",
+        reviewed_diameter_cm="NOT_APPLICABLE",
+        reviewed_attenuation="NOT_APPLICABLE",
+    )
+    _write_gt(ground_truth)
+
+    assert adjudicate_cohort(review, ground_truth) == 0
+    assert _status(ground_truth)["status"] == "needs_adjudication"
+
+
+def test_undocumented_fields_are_accepted_and_written_to_gold(tmp_path: Path):
+    review = tmp_path / "review.csv"
+    ground_truth = tmp_path / "ground_truth.jsonl"
+    gold = tmp_path / "gold.jsonl"
+    _write_review(
+        review,
+        reviewed_count="UNDOCUMENTED",
+        reviewed_diameter_cm="UNDOCUMENTED",
+        evidence_quote="A liver lesion is seen in segment 5.",
+    )
+    _write_gt(ground_truth)
+
+    adjudicate_cohort(review, ground_truth, gold)
+    record = json.loads(gold.read_text(encoding="utf-8").splitlines()[0])
+    assert record["gold"] == {
+        "has_lesion": True,
+        "lesion_count": None,
+        "largest_lesion": {
+            "location_segments": [5],
+            "diameter_cm": None,
+            "attenuation": "hypoattenuating",
+        },
+    }
+    assert record["provenance"]["method"] == "single_review"
+    assert record["provenance"]["evidence_quote"] == "A liver lesion is seen in segment 5."
+
+
 def test_source_columns_are_not_copied_into_review_fields(tmp_path: Path):
     review = tmp_path / "review.csv"
     ground_truth = tmp_path / "ground_truth.jsonl"

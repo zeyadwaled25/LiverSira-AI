@@ -1,0 +1,205 @@
+[
+  {
+    "id": "measures_verb",
+    "covers": "'measures' (v1.0 only read 'measuring')",
+    "text": "The liver contains a hypoattenuating lesion in hepatic segment 6, which measures 2.4 x 1.9 cm.",
+    "expected": {"presence": true, "lesion_count": 1, "location_segments": [6], "reported_dimensions_cm": [2.4, 1.9], "attenuation": "hypoattenuating"},
+    "evidence": {
+      "lesion_count": ["a hypoattenuating lesion"],
+      "location_segments": ["hepatic segment 6"],
+      "reported_dimensions_cm": ["2.4 x 1.9 cm"],
+      "attenuation": ["hypoattenuating"]
+    }
+  },
+  {
+    "id": "millimetres_roman_segment_size_before_noun",
+    "covers": "mm converted to cm, Roman numeral segment, size before the noun, 'hypodense'",
+    "text": "A 15 mm hypodense nodule is seen in liver segment VII.",
+    "expected": {"presence": true, "lesion_count": 1, "location_segments": [7], "reported_dimensions_cm": [1.5], "attenuation": "hypoattenuating"},
+    "evidence": {
+      "lesion_count": ["A 15 mm hypodense nodule"],
+      "location_segments": ["liver segment VII"],
+      "reported_dimensions_cm": ["15 mm"],
+      "attenuation": ["hypodense"]
+    }
+  },
+  {
+    "id": "centimeters_word",
+    "covers": "'centimeters' unit",
+    "text": "A large liver mass is located in hepatic segment 1, measuring 7.7 x 6.7 centimeters.",
+    "expected": {"presence": true, "lesion_count": 1, "location_segments": [1], "reported_dimensions_cm": [7.7, 6.7], "attenuation": null},
+    "evidence": {
+      "reported_dimensions_cm": ["7.7 x 6.7 centimeters"]
+    }
+  },
+  {
+    "id": "kidney_lesion_does_not_leak",
+    "covers": "organ scope: a following kidney lesion and its anaphor stay out of liver fields",
+    "text": "A liver lesion is present in hepatic segment 1, measuring 6.3 x 5.4 cm. This lesion is isoattenuating. Multiple kidney lesions are identified, with the largest one located in the right kidney, measuring 4.9 x 4.5 cm. This lesion is hypoattenuating.",
+    "expected": {"presence": true, "lesion_count": 1, "location_segments": [1], "reported_dimensions_cm": [6.3, 5.4], "attenuation": "isoattenuating"},
+    "evidence": {
+      "has_lesion": ["A liver lesion is present in hepatic segment 1, measuring 6.3 x 5.4 cm.", "This lesion is isoattenuating."],
+      "reported_dimensions_cm": ["6.3 x 5.4 cm"],
+      "attenuation": ["isoattenuating"]
+    }
+  },
+  {
+    "id": "hepatic_artery_is_not_liver",
+    "covers": "pancreatic tumor touching the common hepatic artery is not a liver lesion; normal appearance is negative",
+    "text": "A hypoattenuating mass is present in the pancreatic head, measuring 2.8 x 2.0 cm. The tumor does not contact the common hepatic artery or portal vein. The liver is normal in size and appearance.",
+    "expected": {"presence": false, "lesion_count": 0, "location_segments": null, "reported_dimensions_cm": null, "attenuation": null},
+    "evidence": {"has_lesion": ["The liver is normal in size and appearance."]}
+  },
+  {
+    "id": "organ_list_negation",
+    "covers": "negation over an organ list",
+    "text": "No evidence of tumor in the spleen, liver, pancreas, or kidneys.",
+    "expected": {"presence": false, "lesion_count": 0},
+    "evidence": {"has_lesion": ["No evidence of tumor in the spleen, liver, pancreas, or kidneys."]}
+  },
+  {
+    "id": "organ_list_within_normal_limits",
+    "covers": "'within normal limits in terms of size and appearance' is negative",
+    "text": "The spleen, liver, pancreas, and kidneys are all within normal limits in terms of size and appearance.",
+    "expected": {"presence": false, "lesion_count": 0}
+  },
+  {
+    "id": "size_only_is_not_negative",
+    "covers": "a size statement does not rule out a lesion",
+    "text": "The liver is normal in size, with a volume of 1500.2 cc and a mean HU value of 101.4 +/- 20.3.",
+    "expected": {"presence": null, "presence_reason": "not_mentioned", "lesion_count": null},
+    "evidence": {"has_lesion": []}
+  },
+  {
+    "id": "unremarkable_in_size_is_not_negative",
+    "covers": "'unremarkable in terms of size' with lesions described afterwards",
+    "text": "The liver is unremarkable in terms of size. However, there are multiple liver lesions, the largest in hepatic segment 3, measuring 4.8 x 2.9 cm.",
+    "expected": {"presence": true, "lesion_count": null, "count_reason": "unquantified", "location_segments": [3], "reported_dimensions_cm": [4.8, 2.9]},
+    "evidence": {
+      "has_lesion": ["However, there are multiple liver lesions, the largest in hepatic segment 3, measuring 4.8 x 2.9 cm."],
+      "lesion_count": []
+    }
+  },
+  {
+    "id": "uncertainty_scoped_to_its_clause",
+    "covers": "hedging about steatosis does not void a definite lesion (v1.0 abstained)",
+    "text": "A hypoattenuating liver lesion is seen in hepatic segment 4, measuring 1.2 x 1.0 cm; the liver otherwise shows possible mild steatosis.",
+    "expected": {"presence": true, "lesion_count": 1, "location_segments": [4], "reported_dimensions_cm": [1.2, 1.0]}
+  },
+  {
+    "id": "hedged_lesion_only",
+    "covers": "a hedged liver lesion alone is ambiguous",
+    "text": "A lesion in the liver cannot be excluded.",
+    "expected": {"presence": null, "presence_reason": "ambiguous", "lesion_count": null},
+    "evidence": {"has_lesion": ["A lesion in the liver cannot be excluded."]}
+  },
+  {
+    "id": "negation_and_hedge_conflict",
+    "covers": "negation plus a suspected mass is conflicting, with both clauses as evidence",
+    "text": "No focal liver lesions are identified. However, a hepatic mass is suspected in segment 4.",
+    "expected": {"presence": null, "presence_reason": "conflicting_terms"},
+    "evidence": {"has_lesion": ["No focal liver lesions are identified.", "However, a hepatic mass is suspected in segment 4."]}
+  },
+  {
+    "id": "negation_and_definite_lesion_conflict",
+    "covers": "explicit negative and definite lesion contradict",
+    "text": "No liver lesions are seen. A 2.0 cm liver lesion is present in hepatic segment 5.",
+    "expected": {"presence": null, "presence_reason": "conflicting_terms"}
+  },
+  {
+    "id": "no_other_lesions_is_not_negative",
+    "covers": "'no other lesions' does not negate the described lesion",
+    "text": "A 2.0 x 1.5 cm hypoattenuating liver lesion is present in hepatic segment 5. No other liver lesions are seen.",
+    "expected": {"presence": true, "lesion_count": 1, "location_segments": [5], "reported_dimensions_cm": [2.0, 1.5], "attenuation": "hypoattenuating"},
+    "evidence": {"has_lesion": ["A 2.0 x 1.5 cm hypoattenuating liver lesion is present in hepatic segment 5."]}
+  },
+  {
+    "id": "explicit_total_and_largest",
+    "covers": "explicit total; the largest lesion's size is used",
+    "text": "There are multiple liver lesions, with a total of 25 lesions present. The largest lesion is located in hepatic segment 2 and measures 3.1 x 1.6 cm.",
+    "expected": {"presence": true, "lesion_count": 25, "location_segments": [2], "reported_dimensions_cm": [3.1, 1.6]},
+    "evidence": {"lesion_count": ["total of 25"], "location_segments": ["hepatic segment 2"]}
+  },
+  {
+    "id": "additional_respectively_list",
+    "covers": "'additional ... respectively' list counts its sizes plus the largest; largest keeps its own segment",
+    "text": "The largest lesion, in hepatic segment 2, measures 2.4 x 1.9 cm. Additional liver lesions are identified in hepatic segments 1, 7, and 2/4, measuring 1.6 x 1.3 cm, 0.8 x 0.5 cm, and 0.7 x 0.4 cm, respectively.",
+    "expected": {"presence": true, "lesion_count": 4, "location_segments": [2], "reported_dimensions_cm": [2.4, 1.9]},
+    "evidence": {"lesion_count": ["1.6 x 1.3 cm, 0.8 x 0.5 cm, and 0.7 x 0.4 cm"], "location_segments": ["hepatic segment 2"]}
+  },
+  {
+    "id": "plain_count_plus_more_smaller",
+    "covers": "'two masses' + '18 smaller lesions' = 20, with both phrases as evidence",
+    "text": "There are two large hypoattenuating liver masses, the larger in hepatic segment 8, measuring 9.8 x 5.5 cm. Additionally, there are 18 smaller hypoattenuating liver lesions, ranging in size from 1.3 x 0.8 cm to 8.0 x 4.3 cm.",
+    "expected": {"presence": true, "lesion_count": 20, "location_segments": [8], "reported_dimensions_cm": [9.8, 5.5], "attenuation": "hypoattenuating"},
+    "evidence": {"lesion_count": ["two large hypoattenuating liver masses", "18 smaller hypoattenuating liver lesions"]}
+  },
+  {
+    "id": "plain_count_with_smaller_subset",
+    "covers": "'three lesions ... two smaller' stays 3; smaller lesions' attenuation is not borrowed",
+    "text": "There are three liver lesions. The largest lesion, in hepatic segment 7, measures 3.0 x 2.0 cm. Two smaller hypoattenuating liver lesions are also present.",
+    "expected": {"presence": true, "lesion_count": 3, "location_segments": [7], "reported_dimensions_cm": [3.0, 2.0], "attenuation": null},
+    "evidence": {"lesion_count": ["three liver lesions"], "attenuation": []}
+  },
+  {
+    "id": "bullet_list",
+    "covers": "bullet list counted; largest by size",
+    "text": "There are multiple liver lesions, including: * A 2.1 x 1.5 cm hypoattenuating lesion in hepatic segment 8 * A 1.5 x 0.8 cm hypoattenuating lesion in hepatic segment 3/4 * A 1.0 x 0.5 cm hypoattenuating lesion in hepatic segment 5.",
+    "expected": {"presence": true, "lesion_count": 3, "location_segments": [8], "reported_dimensions_cm": [2.1, 1.5], "attenuation": "hypoattenuating"},
+    "evidence": {
+      "lesion_count": ["A 2.1 x 1.5 cm hypoattenuating lesion in hepatic segment 8", "A 1.5 x 0.8 cm hypoattenuating lesion in hepatic segment 3/4", "A 1.0 x 0.5 cm hypoattenuating lesion in hepatic segment 5."],
+      "location_segments": ["hepatic segment 8"],
+      "reported_dimensions_cm": ["2.1 x 1.5 cm"]
+    }
+  },
+  {
+    "id": "one_and_another_in_one_clause",
+    "covers": "two lesions in one clause: each size pairs with the segment before it",
+    "text": "Two liver lesions are identified: one in hepatic segment 3, measuring 1.4 x 1.2 cm, and another in hepatic segment 6, measuring 2.2 x 1.8 cm.",
+    "expected": {"presence": true, "lesion_count": 2, "location_segments": [6], "reported_dimensions_cm": [2.2, 1.8]},
+    "evidence": {"location_segments": ["hepatic segment 6"], "reported_dimensions_cm": ["2.2 x 1.8 cm"]}
+  },
+  {
+    "id": "mixed_attenuation_not_assigned",
+    "covers": "mixed descriptors give no attenuation",
+    "text": "Multiple liver lesions are present, with the largest measuring 3.4 x 2.2 cm. These lesions are variably hypoattenuating, hyperattenuating, or isoattenuating.",
+    "expected": {"presence": true, "lesion_count": null, "reported_dimensions_cm": [3.4, 2.2], "attenuation": null}
+  },
+  {
+    "id": "singular_plus_additional_singular",
+    "covers": "'a liver mass' + 'additionally, a smaller lesion' = 2; the smaller lesion's attenuation is not borrowed",
+    "text": "There is a large liver mass in hepatic segments 1 and 4, measuring 5.1 x 4.0 cm. Additionally, a smaller hyperattenuating liver lesion is present in hepatic segment 5, measuring 0.6 x 0.5 cm.",
+    "expected": {"presence": true, "lesion_count": 2, "location_segments": [1, 4], "reported_dimensions_cm": [5.1, 4.0], "attenuation": null},
+    "evidence": {"lesion_count": ["a large liver mass", "a smaller hyperattenuating liver lesion"]}
+  },
+  {
+    "id": "impression_kidney_count_ignored",
+    "covers": "count from liver-only clauses, not the multi-organ impression",
+    "text": "A small hypoattenuating liver lesion is identified in hepatic segment 2, measuring 0.5 x 0.3 cm. IMPRESSION: A small liver mass in hepatic segment 2 and two small masses in the right kidney.",
+    "expected": {"presence": true, "lesion_count": 1, "location_segments": [2], "reported_dimensions_cm": [0.5, 0.3]}
+  },
+  {
+    "id": "total_of_zero",
+    "covers": "'a total of 0 lesions' is negative",
+    "text": "The liver has a total of 0 lesions.",
+    "expected": {"presence": false, "lesion_count": 0}
+  },
+  {
+    "id": "anaphor_chain_breaks_at_other_organ",
+    "covers": "'The mass is hyperattenuating' after a pancreas sentence is not the liver lesion",
+    "text": "A liver lesion is present in hepatic segment 2, measuring 2.0 x 1.0 cm. The pancreas is enlarged. The mass is hyperattenuating.",
+    "expected": {"presence": true, "lesion_count": 1, "reported_dimensions_cm": [2.0, 1.0], "attenuation": null}
+  },
+  {
+    "id": "numbered_impression",
+    "covers": "numbered impression items are split into clauses",
+    "text": "IMPRESSION: 1. A hypoattenuating liver mass in hepatic segment 3, measuring 0.6 x 0.5 cm. 2. Enlarged pancreas.",
+    "expected": {"presence": true, "lesion_count": 1, "location_segments": [3], "reported_dimensions_cm": [0.6, 0.5], "attenuation": "hypoattenuating"}
+  },
+  {
+    "id": "no_mass_effect_is_not_negation",
+    "covers": "'no mass effect' does not negate the lesion",
+    "text": "A 3.0 x 2.5 cm hyperattenuating liver lesion is present in hepatic segment 4a, with no mass effect.",
+    "expected": {"presence": true, "lesion_count": 1, "location_segments": [4], "reported_dimensions_cm": [3.0, 2.5], "attenuation": "hyperattenuating"}
+  }
+]

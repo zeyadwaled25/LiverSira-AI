@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "model": "learned_presence_word_logreg_final",
+  "task": "has_lesion",
+  "model_path": "results\\nlp\\final_test\\learned_presence_word_logreg_final.joblib",
+  "model_sha256": "333d4e2aed0c93e3add9934e662b4461ae0db6bf6c8de49eb04f3a61f49ea19a",
+  "model_size_bytes": 903824,
+  "threshold": 0.5,
+  "frozen_configuration": {
+    "architecture": "word_tfidf_logistic_regression",
+    "word_ngram_range": [
+      1,
+      2
+    ],
+    "min_df": 2,
+    "max_features": 80000,
+    "sublinear_tf": true,
+    "class_weight": "balanced",
+    "solver": "liblinear",
+    "max_iter": 1000,
+    "random_seed": 42,
+    "threshold": 0.5,
+    "input_field": "narrative_clean",
+    "label_source": "ground_truth.ground_truth.has_lesion",
+    "label_policy": "All non-empty Train and Validation source labels retained."
+  },
+  "training_data": {
+    "splits": [
+      "train",
+      "val"
+    ],
+    "records": 7871,
+    "split_ids_sha256": "eb778c8b87317503a84c79ed41287364a48ddb45e29fd46793419f28066e4c23",
+    "master_records_sha256": "57df8a04aea0fd230b5d0e28454c4371d923c96a6ce3b8cfaea4fb0bcf456559",
+    "ground_truth_sha256": "e9cb2b5f73768c5030e6dfe7382d7f142351ea38522b8c5ea8dda3c077939cd2"
+  },
+  "reproducibility_check": {
+    "reference": "results\\nlp\\predictions\\learned_presence_test_predictions.jsonl",
+    "reference_sha256": "de9e9dda36963e74ed228fcd9449f83babd027f300a0ac430e2a8cd4a4243e0f",
+    "records_compared": 1390,
+    "prediction_mismatches": 0,
+    "max_abs_probability_difference": 0.0,
+    "tolerance": 1e-12,
+    "passed": true
+  },
+  "environment": {
+    "python": "3.14.4",
+    "scikit_learn": "1.9.1",
+    "numpy": "2.5.4",
+    "joblib": "1.6.0"
+  },
+  "git_commit": "526faba100e186e233be947b1a48b5827975fb80",
+  "created_at": "2026-11-10T18:15:00+00:00",
+  "created_by": "evaluation/learned_presence/export_frozen_model.py",
+  "note": "Re-fitted from the frozen configuration because the original artifact was not kept. Binary model files are gitignored; verify any copy against model_sha256 before use."
+}

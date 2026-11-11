@@ -35,8 +35,8 @@ Comparison uses the 556 validation records where the baseline emitted a predicti
 | Group | Studies | Accuracy | F1 |
 |---|---:|---:|---:|
 | MATCH | 438 | 0.9977 | 0.9953 |
-| MISMATCH | 870 | 1.0000 | 1.0000 |
-| UNCERTAIN | 81 | 1.0000 | 1.0000 |
+| MISMATCH | 37 | 1.0000 | 1.0000 |
+| UNCERTAIN | 914 | 1.0000 | 1.0000 |
 
 ## Error analysis
 Examples below are redacted: IDs and numeric values are removed. They are source-label comparison errors, not clinical error adjudications.

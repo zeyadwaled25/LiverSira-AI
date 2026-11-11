@@ -1,0 +1,15 @@
+{
+  "baseline_version": "rule-based-v1.1.0",
+  "input_field": "reports.narrative_clean",
+  "parser": "liversira_ai.nlp.parser.parse_liver_report",
+  "parser_version": "1.1.0",
+  "split_filter": "1389 selected IDs",
+  "parser_options": {
+    "include_broad_attenuation_fallback": true
+  },
+  "input_path": "data/processed/nlp/master_records.jsonl",
+  "input_sha256": "57df8a04aea0fd230b5d0e28454c4371d923c96a6ce3b8cfaea4fb0bcf456559",
+  "output_path": "results/nlp/predictions/baseline_v1_1_validation_inferences.jsonl",
+  "record_count": 1389,
+  "output_sha256": "04a0e7e9ed0acb1c0f4585165cce5261793aa5fcc84d165059c7f03798c6d873"
+}

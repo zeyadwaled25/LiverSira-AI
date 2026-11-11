@@ -48,9 +48,10 @@ def test_baseline_positive_multi_lesions_multi_segments():
     assert features["attenuation"] == "hypoattenuating"
 
 
-def test_baseline_normal_description_is_unclear_not_negative():
+def test_baseline_size_only_description_is_unclear_not_negative():
+    """A size statement does not rule out a lesion (v1.1)."""
     features = extract_liver_lesion_features(
-        "The liver is normal in size and appearance."
+        "The liver is normal in size, with a volume of 1500.0 cc."
     )
 
     assert features["has_lesion"] is None
@@ -60,6 +61,29 @@ def test_baseline_normal_description_is_unclear_not_negative():
             "field": "liver_lesions.has_lesion",
             "reason": "not_mentioned",
         }
+    ]
+
+
+def test_baseline_normal_appearance_is_negative():
+    """v1.1: a normal-appearance statement is an explicit negative."""
+    features = extract_liver_lesion_features("The liver is normal in size and appearance.")
+
+    assert features["has_lesion"] is False
+    assert features["lesion_count"] == 0
+    assert features["evidence"][0]["text"] == "The liver is normal in size and appearance."
+
+
+def test_baseline_does_not_impute_unstated_count():
+    """v1.0 set "multiple lesions" to 1; v1.1 leaves it unquantified."""
+    features = extract_liver_lesion_features(
+        "There are multiple hypoattenuating liver lesions. The largest lesion is in "
+        "hepatic segment 2, measuring 3.0 x 2.0 cm."
+    )
+
+    assert features["has_lesion"] is True
+    assert features["lesion_count"] is None
+    assert {"field": "liver_lesions.lesion_count", "reason": "unquantified"} in features[
+        "missing_or_unclear"
     ]
 
 

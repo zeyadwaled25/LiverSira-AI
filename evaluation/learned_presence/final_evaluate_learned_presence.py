@@ -279,11 +279,15 @@ def _render_report(result: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def run_final_evaluation() -> dict[str, Any]:
+def fit_frozen_model() -> tuple[Pipeline, list[str], dict[str, Any], dict[str, Any]]:
+    """Fit the frozen configuration on non-empty Train + Validation reports only.
+
+    Returns the fitted model, the ordered training IDs, and the loaded Master and
+    Ground Truth records for those IDs. Test records are never loaded here.
+    """
     splits = json.loads(SPLITS_PATH.read_text(encoding="utf-8"))
     train_ids = list(splits["train"])
     validation_ids = list(splits["val"])
-    test_ids = list(splits["test"])
     train_validation_ids = set(train_ids) | set(validation_ids)
     master = load_jsonl(MASTER_PATH, train_validation_ids)
     ground_truth = load_jsonl(GT_PATH, train_validation_ids)
@@ -304,6 +308,13 @@ def run_final_evaluation() -> dict[str, Any]:
     ]
     model = _frozen_model()
     model.fit(train_texts, train_labels)
+    return model, train_validation_ids_ordered, master, ground_truth
+
+
+def run_final_evaluation() -> dict[str, Any]:
+    splits = json.loads(SPLITS_PATH.read_text(encoding="utf-8"))
+    test_ids = list(splits["test"])
+    model, train_validation_ids_ordered, master, ground_truth = fit_frozen_model()
 
     # Load Test only after the frozen model and its vectorizer have been fitted.
     test_master = load_jsonl(MASTER_PATH, set(test_ids))

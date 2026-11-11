@@ -201,9 +201,9 @@
       }
     },
     "MISMATCH": {
-      "studies": 902,
+      "studies": 37,
       "metrics": {
-        "evaluated": 902,
+        "evaluated": 37,
         "coverage": 1.0,
         "confusion_matrix": {
           "labels": [
@@ -212,7 +212,7 @@
           ],
           "rows_true": {
             "false": {
-              "predicted_false": 870,
+              "predicted_false": 5,
               "predicted_true": 0
             },
             "true": {
@@ -232,7 +232,7 @@
             "precision": 1.0,
             "recall": 1.0,
             "f1-score": 1.0,
-            "support": 870.0
+            "support": 5.0
           },
           "positive": {
             "precision": 1.0,
@@ -245,9 +245,9 @@
       }
     },
     "UNCERTAIN": {
-      "studies": 68,
+      "studies": 933,
       "metrics": {
-        "evaluated": 68,
+        "evaluated": 933,
         "coverage": 1.0,
         "confusion_matrix": {
           "labels": [
@@ -256,7 +256,7 @@
           ],
           "rows_true": {
             "false": {
-              "predicted_false": 0,
+              "predicted_false": 865,
               "predicted_true": 0
             },
             "true": {
@@ -265,18 +265,18 @@
             }
           }
         },
-        "accuracy": 0.9852941176470589,
+        "accuracy": 0.9989281886387996,
         "precision": 1.0,
         "recall": 0.9852941176470589,
         "f1": 0.9925925925925926,
-        "macro_f1": 0.4962962962962963,
-        "weighted_f1": 0.9925925925925926,
+        "macro_f1": 0.9960074459207908,
+        "weighted_f1": 0.9989245285602055,
         "per_class": {
           "negative": {
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1-score": 0.0,
-            "support": 0.0
+            "precision": 0.9988452655889145,
+            "recall": 1.0,
+            "f1-score": 0.9994222992489891,
+            "support": 865.0
           },
           "positive": {
             "precision": 1.0,
@@ -285,7 +285,7 @@
             "support": 68.0
           }
         },
-        "specificity": null
+        "specificity": 1.0
       }
     }
   },
@@ -305,10 +305,10 @@
     "No abstention mechanism; non-empty Test prediction coverage is 1.0."
   ],
   "artifacts": {
-    "model": "evaluation\\final_test\\learned_presence_word_logreg_final.joblib",
-    "configuration": "evaluation\\final_test\\learned_presence_word_logreg_final_config.json",
-    "predictions": "evaluation\\final_test\\learned_presence_test_predictions.jsonl",
-    "metrics": "evaluation\\final_test\\learned_presence_test_metrics.json",
-    "report": "evaluation\\final_test\\learned_presence_test_report.md"
+    "model": "results\\nlp\\final_test\\learned_presence_word_logreg_final.joblib",
+    "configuration": "results\\nlp\\final_test\\learned_presence_word_logreg_final_config.json",
+    "predictions": "results\\nlp\\predictions\\learned_presence_test_predictions.jsonl",
+    "metrics": "results\\nlp\\final_test\\learned_presence_test_metrics.json",
+    "report": "results\\nlp\\final_test\\learned_presence_test_report.md"
   }
 }

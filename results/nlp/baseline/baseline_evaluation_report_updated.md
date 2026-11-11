@@ -40,11 +40,11 @@ Every metric denominator is the number of paired records with both an applicable
 | Split | Audit group | Studies | Presence F1 | Diameter MAE (cm) |
 |---|---|---:|---:|---:|
 | validation | MATCH | 438 | 1.0000 | 0.0000 |
-| validation | MISMATCH | 870 | 0.9118 | 2.2800 |
-| validation | UNCERTAIN | 81 | 1.0000 | 0.0000 |
+| validation | MISMATCH | 37 | 0.9118 | 2.2800 |
+| validation | UNCERTAIN | 914 | 1.0000 | 0.0000 |
 | test | MATCH | 420 | 1.0000 | 0.0000 |
-| test | MISMATCH | 902 | 0.9275 | 1.6625 |
-| test | UNCERTAIN | 68 | 1.0000 | 0.0000 |
+| test | MISMATCH | 37 | 0.9275 | 1.6625 |
+| test | UNCERTAIN | 933 | 1.0000 | 0.0000 |
 
 ## Readiness
 **Not ready as a clinical validation benchmark.** It is usable as a transparent source-label reference only after documenting the reported exclusions, abstentions, and unresolved source-label inconsistencies. The 79 reviewed-sample records are not treated as clinical verification because the repository does not establish documented human-review provenance for these outputs.
