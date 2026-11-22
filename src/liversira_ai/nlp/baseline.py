@@ -1,14 +1,4 @@
-"""Rule-Based NLP Baseline Extraction Pipeline.
-
-Extracts structured liver findings from raw/cleaned radiology narrative reports:
-1. Liver Lesion Presence (has_lesion: bool)
-2. Number of Liver Lesions (lesion_count: int)
-3. Largest Lesion Location (location_segments: list[int] in Couinaud 1-8)
-4. Largest Lesion Dimensions/Diameter (reported_dimensions_cm and derived_max_diameter_cm)
-5. Largest Lesion Attenuation (hypo/iso/hyperattenuating)
-
-Outputs structured predictions following liversira_ai.nlp.schemas.InferenceRecord.
-"""
+"""Rule-based extraction: presence, count, and the largest lesion's segments, size and attenuation."""
 
 from pathlib import Path
 import json
@@ -24,7 +14,7 @@ from liversira_ai.nlp.schemas.inference_schema import (
     MissingOrUnclearField,
     StudyMetadata,
 )
-from liversira_ai.nlp.parser import PARSER_VERSION, parse_liver_report
+from liversira_ai.nlp.parser_v1_1 import PARSER_VERSION, parse_liver_report
 
 MASTER_RECORDS_PATH = Path("data/processed/nlp/master_records.jsonl")
 OUTPUT_INFERENCE_PATH = Path("data/processed/nlp/baseline_inferences.jsonl")
@@ -103,7 +93,6 @@ def run_baseline_inference(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     inferences: list[InferenceRecord] = []
 
-    print(f"Reading master records: {master_path}")
     with open(master_path, "r", encoding="utf-8") as f_in, open(
         output_path, "w", encoding="utf-8"
     ) as f_out:
@@ -167,7 +156,7 @@ def run_baseline_inference(
     manifest = {
         "baseline_version": BASELINE_VERSION,
         "input_field": "reports.narrative_clean",
-        "parser": "liversira_ai.nlp.parser.parse_liver_report",
+        "parser": "liversira_ai.nlp.parser_v1_1.parse_liver_report",
         "parser_version": PARSER_VERSION,
         "split_filter": None if target_split_ids is None else f"{len(target_split_ids)} selected IDs",
         "parser_options": {"include_broad_attenuation_fallback": True},

@@ -1,17 +1,6 @@
-"""Regenerate audit-group tables from saved predictions without refitting.
+"""Rebuild audit-group tables from saved predictions, without refitting.
 
-The MATCH / MISMATCH / UNCERTAIN groups come from the target-consistency audit.
-When the audit is corrected, the saved model predictions do not change; only
-their group labels, group metrics, and error-example categories do.  This
-script rebuilds those parts from the persisted prediction files, so no model
-is refitted and no new Test prediction is made.
-
-Usage (from the repository root):
-
-    python -m scripts.nlp.learned_presence.regenerate_audit_groups            # write updated outputs
-    python -m scripts.nlp.learned_presence.regenerate_audit_groups --check \
-        --audit <old_audit.csv>                              # verify against existing outputs
-"""
+Use --check --audit <old_audit.csv> to verify against the existing outputs."""
 
 import argparse
 import json

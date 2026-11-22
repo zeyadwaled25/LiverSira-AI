@@ -1,23 +1,7 @@
-"""Fine-tune one transformer for lesion presence (Phase 6.1), one seed per run.
+"""Fine-tune one transformer for lesion presence, one seed per run.
 
-All models share ``config.json`` (same hyperparameters, epochs, early stopping
-and threshold), so the comparison differs only in the pretrained checkpoint.
-
-* Trains on Train only. The best epoch is chosen by Validation loss.
-* Writes Validation and Challenge Set predictions; Test is never read.
-* Model weights go to ``models/transformers/presence/<model>/seed<seed>/``
-  (gitignored, safetensors); predictions, metrics and a run manifest with the
-  weight hash go to ``results/nlp/transformers/presence/<model>/seed<seed>/``.
-
-Usage (from the repository root):
-
-    .venv\\Scripts\\python.exe scripts/nlp/transformers/presence/train.py --model bert --seed 42
-
-Smoke test on a few examples, written outside ``results/``:
-
-    .venv\\Scripts\\python.exe scripts/nlp/transformers/presence/train.py --model bert --seed 42 \\
-        --limit 64 --epochs 1 --output-root <scratch dir>
-"""
+Trains on Train, keeps the epoch with the lowest Validation loss, never reads
+Test. Smoke test: --limit 64 --epochs 1 --output-root <scratch dir>."""
 
 import argparse
 import copy

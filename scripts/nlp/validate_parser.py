@@ -1,16 +1,4 @@
-"""Validation-only comparison of the rule-based parser v1.1 with frozen v1.0.
-
-* v1.1 is run on Validation studies only (``run_baseline_inference`` with the
-  Validation IDs); Test reports are never parsed or scored here.
-* v1.0 is read from its saved predictions, so it is exactly the frozen baseline.
-* Both are scored with the same bootstrap metrics as the reliability report,
-  against source-derived labels and, once it exists, the Validation part of the
-  human gold standard.
-
-Usage (from the repository root):
-
-    python scripts/nlp/validate_parser.py
-"""
+"""Compare parser v1.1 (run on Validation) with frozen v1.0 (saved predictions). Test is not read."""
 
 import json
 from pathlib import Path
@@ -25,7 +13,7 @@ from liversira_ai.nlp.evaluation import (
     load_jsonl,
     reference_labels,
 )
-from liversira_ai.nlp.parser import PARSER_VERSION
+from liversira_ai.nlp.parser_v1_1 import PARSER_VERSION
 from liversira_ai.nlp.parser_comparison import (
     OUTPUT_DIR,
     RESAMPLES,

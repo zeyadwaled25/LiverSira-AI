@@ -1,18 +1,6 @@
-"""Save, hash, and verify the frozen learned lesion-presence model.
+"""Re-fit, save and hash the frozen learned presence model.
 
-The final Test evaluation reported results for a model that was never kept on
-disk. This script re-fits the identical frozen configuration on the same
-Train + Validation reports, saves it, and records its SHA-256 together with the
-inputs and library versions in a manifest.
-
-Reproducibility check: the re-fitted model must reproduce the persisted Test
-predictions exactly (same labels, probabilities within 1e-12). This compares
-against stored predictions only; no metric is recomputed and nothing is tuned.
-
-Usage (from the repository root):
-
-    python -m scripts.nlp.learned_presence.export_frozen_model
-"""
+The re-fitted model must reproduce the saved Test predictions exactly."""
 
 import json
 import platform

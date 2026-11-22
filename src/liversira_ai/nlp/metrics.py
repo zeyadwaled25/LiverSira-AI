@@ -1,15 +1,7 @@
-"""Reliability metrics: study-level bootstrap CIs and coverage-adjusted views.
+"""Study-level bootstrap CIs and coverage-adjusted presence metrics.
 
-All confidence intervals use a non-parametric percentile bootstrap over
-studies (records are resampled with replacement), with a fixed seed so every
-report is reproducible. Abstentions (``None`` predictions) are never dropped
-silently: each presence report states coverage and three views of quality.
-
-* ``selective``: metrics on answered studies only (what earlier reports showed).
-* ``end_to_end``: every study counts; an abstention is treated as an error.
-* ``abstain_as_negative``: abstentions are read as "no lesion", the closed-world
-  policy a full abdominal report would imply.
-"""
+Abstentions are reported three ways: selective (answered only), end_to_end
+(abstention = error) and abstain_as_negative."""
 
 import warnings
 from collections.abc import Callable, Sequence
@@ -225,10 +217,8 @@ def field_report(
 ) -> dict[str, Any]:
     """Coverage and mean of a per-study score over eligible studies.
 
-    ``values`` holds one entry per eligible study: the score (1/0 for exact
-    match, an absolute error, an IoU) or ``None`` when no prediction was made.
-    The mean is computed over predicted studies only and is reported next to
-    its coverage, so missing predictions never inflate it silently.
+    ``values`` holds one score per eligible study, or ``None`` when nothing was
+    predicted; the mean covers predicted studies and is reported with coverage.
     """
     array = np.array([np.nan if value is None else float(value) for value in values])
 

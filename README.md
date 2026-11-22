@@ -165,7 +165,7 @@ systems against it.
 
 ### Rule-based parser
 
-`liversira_ai.nlp.parser` is v1.1 (organ-scoped clauses, largest-lesion
+`liversira_ai.nlp.parser_v1_1` is v1.1 (organ-scoped clauses, largest-lesion
 selection, no count imputation, value-level evidence spans);
 `liversira_ai.nlp.parser_v1_0` is the frozen v1.0 used by the audit and kept
 for reproducibility. Golden cases are in
@@ -305,7 +305,9 @@ pytest
 ## Results
 
 `results/` holds the metrics, reports, predictions and manifests of the
-experiments above. They are kept exactly as produced. Known limitations:
+experiments above. They are kept exactly as produced.
+[`results/nlp/README.md`](results/nlp/README.md) says what each NLP folder
+holds and which report to read first. Known limitations:
 
 - Scripts were reorganised after the results were produced, so some result
   files name old script paths (see [Old script paths](#old-script-paths)).

@@ -1,15 +1,4 @@
-"""Automated Target Consistency Audit Pipeline.
-
-Compares ground truth labels against cleaned narrative reports across all 9,262 records.
-Categorizes field-level and study-level agreement into:
-- MATCH: Clear text concordance with the source label.
-- MISMATCH: Apparent contradiction or conflicting measurement.
-- UNCERTAIN: Wording is unquantified, multi-focal, or ambiguous.
-
-Produces:
-- data/processed/nlp/target_consistency_audit.csv
-- Structured statistical audit report for clinical review.
-"""
+"""Target-consistency audit: labels each study MATCH, MISMATCH or UNCERTAIN against its report text."""
 
 from collections import Counter
 import json
@@ -268,11 +257,6 @@ def run_consistency_audit(
     master_path: Path, gt_path: Path, output_csv: Path
 ) -> pd.DataFrame:
     """Execute consistency audit across all paired records and output report."""
-    print("=" * 65)
-    print("STARTING AUTOMATED TARGET CONSISTENCY AUDIT")
-    print("=" * 65)
-    print(f"Reading Master Records: {master_path}")
-    print(f"Reading Ground Truth:   {gt_path}")
 
     masters = _load_records_by_id(master_path)
     ground_truth = _load_records_by_id(gt_path)
@@ -296,7 +280,6 @@ def run_consistency_audit(
     output_csv.parent.mkdir(parents=True, exist_ok=True)
     df_audit.to_csv(output_csv, index=False, encoding="utf-8-sig")
 
-    # Calculate statistics
     total = len(df_audit)
     c_overall = Counter(df_audit["overall_status"])
     c_hl = Counter(df_audit["has_lesion_status"])
@@ -307,7 +290,6 @@ def run_consistency_audit(
 
     print("\n" + "=" * 65)
     print("AUDIT RESULTS SUMMARY")
-    print("=" * 65)
     print(f"Total Studies Audited: {total:,}\n")
 
     print(
@@ -338,7 +320,6 @@ def run_consistency_audit(
     print(
         f"{'OVERALL STUDY STATUS':<22} | {om:>5} ({om/total*100:>5.1f}%) | {omm:>5} ({omm/total*100:>5.1f}%) | {ou:>5} ({ou/total*100:>5.1f}%)"
     )
-    print("=" * 65)
 
     print(f"\n[DONE] Detailed audit log saved to: {output_csv}")
     return df_audit

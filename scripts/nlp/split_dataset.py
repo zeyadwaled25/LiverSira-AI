@@ -31,10 +31,6 @@ def generate_splits(
     metadata_json_path: Path = OUTPUT_SPLIT_METADATA_JSON,
 ) -> dict[str, list[str]]:
     """Execute stratified 70/15/15 dataset split and persist partition mappings."""
-    print("=" * 60)
-    print("DATASET PARTITIONING (TRAIN / VAL / TEST)")
-    print("=" * 60)
-    print(f"Reading audit records from: {audit_csv_path}")
 
     df = pd.read_csv(audit_csv_path)
 
@@ -65,7 +61,6 @@ def generate_splits(
         "test": sorted(test_df["id"].tolist()),
     }
 
-    # Summary stats
     print("\n" + "-" * 60)
     print(f"{'Split':<12} | {'Count':<8} | {'Share (%)':<10} | {'Lesion Positive (%)':<20}")
     print("-" * 60)
@@ -76,12 +71,10 @@ def generate_splits(
         print(f"{name:<12} | {cnt:<8} | {share:>8.1f}% | {pos_rate:>18.2f}%")
     print("-" * 60)
 
-    # Save to JSON
     splits_json_path.parent.mkdir(parents=True, exist_ok=True)
     with open(splits_json_path, "w", encoding="utf-8") as f_json:
         json.dump(splits, f_json, indent=2)
 
-    # Save mapping CSV
     mapping_rows = []
     for split_name, ids in splits.items():
         for item_id in ids:
@@ -122,7 +115,6 @@ def generate_splits(
     print(f"\n[DONE] Partition IDs saved to:  {splits_json_path}")
     print(f"[DONE] Partition table saved to: {splits_csv_path}")
     print(f"[DONE] Split metadata saved to: {metadata_json_path}")
-    print("=" * 60)
 
     return splits
 

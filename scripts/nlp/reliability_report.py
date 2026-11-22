@@ -1,18 +1,7 @@
 """Reliability report: bootstrap CIs and coverage-adjusted metrics.
 
-Scores the saved predictions of the rule-based baseline and the frozen learned
-presence model; nothing is refitted and no new prediction is made.
-
-References:
-
-* ``source``: the source-derived labels in ``ground_truth.jsonl`` (all studies).
-* ``gold``: human-adjudicated labels in ``gold_standard.jsonl``, used
-  automatically once that file exists (only the studies it contains).
-
-Usage (from the repository root):
-
-    python scripts/nlp/reliability_report.py [--resamples 2000] [--seed 42]
-"""
+Scores saved predictions against source labels, and against gold labels once
+gold_standard.jsonl exists. Nothing is refitted."""
 
 import argparse
 import json

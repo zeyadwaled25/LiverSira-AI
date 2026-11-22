@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from liversira_ai.nlp.parser import PARSER_VERSION, parse_liver_report
+from liversira_ai.nlp.parser_v1_1 import PARSER_VERSION, parse_liver_report
 
 CASES = json.loads(
     (Path(__file__).parent / "fixtures" / "parser_v1_1_golden.json").read_text(encoding="utf-8")

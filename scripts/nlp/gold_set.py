@@ -1,17 +1,11 @@
-"""Command-line entry point for the two-annotator human gold set.
+"""Two-annotator human gold set, one step at a time.
 
-Run from the repository root, one step at a time:
+    python scripts/nlp/gold_set.py sample     # blinded sheets A and B
+    python scripts/nlp/gold_set.py agree      # agreement + clinician sheet
+    python scripts/nlp/gold_set.py finalize
+    python scripts/nlp/gold_set.py apply      # writes gold_standard.jsonl
 
-    python scripts/nlp/gold_set.py sample     # blinded sheets A and B + key
-    # ... annotators fill annotation_sheet_A.csv and annotation_sheet_B.csv ...
-    python scripts/nlp/gold_set.py agree      # agreement + adjudication sheet
-    # ... a clinician completes rows marked needs_clinician=YES ...
-    python scripts/nlp/gold_set.py finalize   # review CSV for adjudication
-    python scripts/nlp/gold_set.py apply      # gold_standard.jsonl + GT statuses
-    python scripts/nlp/reliability_report.py  # scores against the gold standard
-
-See docs/nlp/gold_set_annotation_guidelines.md.
-"""
+Guidelines: docs/nlp/gold_set_annotation_guidelines.md."""
 
 import argparse
 import json

@@ -1,7 +1,7 @@
 """Reusable NLP parsing and baseline extraction components."""
 
 from .baseline import extract_liver_lesion_features, run_baseline_inference
-from .parser import ParsedLiverReport, parse_liver_report, split_sentences
+from .parser_v1_1 import ParsedLiverReport, parse_liver_report, split_sentences
 
 __all__ = [
     "ParsedLiverReport",

@@ -1,17 +1,4 @@
-"""Token lengths of ``narrative_clean`` under each pinned tokenizer (Phase 6.0).
-
-Answers: how many reports exceed the 512-token limit, and would truncation drop
-the liver statements? Only Train and Validation reports are read; Test is
-excluded so that the truncation policy is not chosen by looking at Test.
-
-For each report the liver statements are located by a liver keyword pattern and
-mapped to token positions with the tokenizer's offsets. A truncation strategy
-"keeps the liver" when every liver mention lies inside the tokens it keeps.
-
-Usage (from the repository root):
-
-    .venv\\Scripts\\python.exe scripts/nlp/transformers/token_lengths.py
-"""
+"""Token lengths per tokenizer, and whether truncation drops the liver statements (Train and Validation only)."""
 
 import json
 import re
@@ -21,7 +8,7 @@ from typing import Any
 
 from liversira_ai.common.provenance import git_commit, sha256_file
 from liversira_ai.nlp.evaluation import GROUND_TRUTH_PATH, SPLITS_PATH, reference_labels
-from liversira_ai.nlp.parser import parse_liver_report
+from liversira_ai.nlp.parser_v1_1 import parse_liver_report
 from liversira_ai.nlp.transformer_models import CHECKPOINTS, MAX_LENGTH, load_tokenizer
 
 PARSER_FIELDS = {

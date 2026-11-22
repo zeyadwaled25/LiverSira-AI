@@ -1,22 +1,7 @@
-"""Compare presence systems on Validation and the Challenge Set (Phase 6.1).
+"""Compare presence systems on Validation and the Challenge Set.
 
-Systems:
-
-* ``lr``      the frozen word TF-IDF + logistic regression configuration, re-fitted
-              on Train only (the frozen final model saw Validation, which the
-              Challenge Set is built from). The refit must reproduce the saved
-              Validation predictions exactly, otherwise the script stops.
-* ``parser``  rule-based parser v1.1, abstentions counted as negative.
-* ``bert`` / ``biobert`` / ``clinicalbert``  the runs written by ``train.py``;
-              every seed in ``config.json`` must be present.
-
-Transformer results are reported as mean +/- SD over seeds, and every seed is
-compared with ``lr`` on the same studies (exact McNemar). Test is not read.
-
-Usage (from the repository root):
-
-    .venv\\Scripts\\python.exe scripts/nlp/transformers/presence/compare_models.py
-"""
+Systems: the transformer runs (mean +/- SD over seeds), LR re-fitted on Train
+only, and parser v1.1 with abstentions as negative. Test is not read."""
 
 import json
 import statistics
@@ -29,7 +14,7 @@ from liversira_ai.common.provenance import git_commit, sha256_file
 from liversira_ai.nlp import transformer_data as data
 from liversira_ai.nlp.learned_presence import frozen_model
 from liversira_ai.nlp.metrics import format_ci, paired_comparison, presence_report
-from liversira_ai.nlp.parser import parse_liver_report
+from liversira_ai.nlp.parser_v1_1 import parse_liver_report
 
 HERE = Path(__file__).resolve().parent
 RESULTS_ROOT = Path("results/nlp/transformers/presence")

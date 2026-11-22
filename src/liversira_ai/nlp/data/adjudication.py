@@ -1,18 +1,6 @@
-"""Apply documented human adjudication to the validation cohort.
+"""Apply completed human review to ground-truth status and write gold labels.
 
-The review CSV is an input artifact owned by the reviewer. This workflow never
-fills or rewrites it. Only rows with complete review values and attributable,
-parseable provenance change a Ground Truth record's validation status, and the
-status reflects whether the reviewed values *agree* with the source label:
-
-* every reviewed field equals the source label -> ``verified``
-* presence agrees but some fields differ or are undocumented -> ``partially_verified``
-* presence disagrees -> ``needs_adjudication``
-
-Source labels themselves are never overwritten. The reviewed values are written
-separately as human gold labels (``GoldStandardRecord``) when ``gold_jsonl`` is
-given.
-"""
+Source labels are never overwritten."""
 
 from dataclasses import dataclass
 from datetime import datetime
@@ -36,10 +24,6 @@ from liversira_ai.nlp.schemas.gold_standard_schema import (
     GoldProvenance,
     GoldStandardRecord,
 )
-
-REVIEW_CSV = Path("data/processed/nlp/target_validation_review.csv")
-GT_JSONL = Path("data/processed/nlp/ground_truth.jsonl")
-GOLD_JSONL = Path("data/processed/nlp/gold_standard.jsonl")
 
 REQUIRED_REVIEW_COLUMNS = (
     "BDMAP ID",
@@ -292,11 +276,8 @@ def _write_jsonl_atomic(path: Path, records: list[BaseModel]) -> None:
 def adjudicate_cohort(review_csv: Path, gt_jsonl: Path, gold_jsonl: Path | None = None) -> int:
     """Apply complete, attributable human reviews; return the number fully verified.
 
-    Rows without reviewer provenance are explicitly marked
-    ``needs_adjudication`` and are never promoted. Review fields are consumed
-    as entered by a reviewer; Source Label columns are never copied into them.
-    When ``gold_jsonl`` is given, every attributable review is also written as
-    a human gold label (the file is rebuilt from this CSV on each run).
+    Rows without reviewer provenance are marked ``needs_adjudication``. With
+    ``gold_jsonl``, attributable reviews are also written as gold labels.
     """
     df_review = pd.read_csv(review_csv, dtype=object, keep_default_na=False)
     missing_columns = [
@@ -372,12 +353,3 @@ def adjudicate_cohort(review_csv: Path, gt_jsonl: Path, gold_jsonl: Path | None 
     if gold_jsonl is not None:
         _write_jsonl_atomic(gold_jsonl, gold_records)
     return verified_count
-
-
-def main() -> None:
-    """Execute the human adjudication workflow."""
-    adjudicate_cohort(REVIEW_CSV, GT_JSONL, GOLD_JSONL)
-
-
-if __name__ == "__main__":
-    main()
