@@ -21,6 +21,8 @@ standard.
 | How does the parser do on the liver-only Challenge Set (v2)? | `transformers/extraction/parser_challenge_v2_liver.md` |
 | What will the 6.2 extraction model train on? | `transformers/extraction/extraction_train_v1.md` |
 | Does the 6.2 extraction model beat the parser? | `transformers/extraction/runs/comparison.md` |
+| What does the held-out Challenge Set v3 test, and how does the parser do? | `transformers/challenge/extraction_challenge_v3.md`, `transformers/extraction/parser_challenge_v3.md` |
+| Does the per-lesion model fix order and counting? | `transformers/extraction/runs_lesion/comparison.md` |
 
 ## Folders
 

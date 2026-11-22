@@ -255,7 +255,9 @@ def main() -> None:
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--liver-only", action="store_true", help="run the parser on the liver-only text of v1")
     mode.add_argument("--v2-liver", action="store_true", help="score extraction_challenge_v2_liver (liver-only items)")
+    mode.add_argument("--v3", action="store_true", help="score extraction_challenge_v3 on the liver-only filter output")
     args = parser.parse_args()
+    filtered = args.liver_only or args.v3
 
     from liversira_ai.common.provenance import git_commit, sha256_file
     from liversira_ai.nlp.baseline import BASELINE_VERSION, extract_liver_lesion_features
@@ -268,7 +270,7 @@ def main() -> None:
         challenge_path,
     )
 
-    version = LIVER_VERSION if args.v2_liver else VERSION
+    version = LIVER_VERSION if args.v2_liver else ("extraction_challenge_v3" if args.v3 else VERSION)
     path = challenge_path(version)
     manifest = json.loads((CS_DIR / f"{version}_manifest.json").read_text(encoding="utf-8"))
     if sha256_file(path) != manifest["output_sha256"]:
@@ -276,10 +278,10 @@ def main() -> None:
     with path.open(encoding="utf-8") as handle:
         records = [json.loads(line) for line in handle if line.strip()]
 
-    suffix = "_liver_only" if args.liver_only else ("_v2_liver" if args.v2_liver else "")
+    suffix = "_liver_only" if args.liver_only else ("_v2_liver" if args.v2_liver else ("_v3" if args.v3 else ""))
     predictions = {}
     for r in records:
-        text = extract_liver_text(r["text"]).text if args.liver_only else r["text"]
+        text = extract_liver_text(r["text"]).text if filtered else r["text"]
         features = extract_liver_lesion_features(text)
         predictions[r["challenge_id"]] = {k: features[k] for k in ("has_lesion", *FIELDS)}
     rows = score(records, predictions)

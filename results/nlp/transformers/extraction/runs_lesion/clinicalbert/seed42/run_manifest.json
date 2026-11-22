@@ -1,0 +1,210 @@
+{
+  "schema_version": "1.0",
+  "task": "extraction-per-lesion",
+  "model": "clinicalbert",
+  "checkpoint": {
+    "repo_id": "emilyalsentzer/Bio_ClinicalBERT",
+    "revision": "d5892b39a4adaed74b92212a44081509db72f87b",
+    "lowercase": false
+  },
+  "seed": 42,
+  "config": {
+    "task": "extraction-per-lesion",
+    "registered": "2026-11-23, after extraction_challenge_v3 was frozen and before the per-lesion training data, model or any run",
+    "train_data": "data/processed/nlp/extraction/extraction_train_lesion_v1.jsonl",
+    "selection_data": "data/processed/nlp/extraction/extraction_val_lesion_v1.jsonl",
+    "input": "liver-only text (liversira_ai.nlp.liver_text)",
+    "design": {
+      "token_heads": "BIO tags for every liver-lesion size phrase, and for the stated lesion count",
+      "span_heads": "on each lesion size span (mean of its tokens): segments (8 + stated), attenuation (3 + unstated), repeat of an earlier mention, largest lesion (amendment 1)",
+      "document_head": "count source: none (no lesion) / number (read the tagged count) / enumerated (count distinct lesions) / unstated",
+      "decoding": "largest lesion = the tagged span with the highest 'largest' probability (amendment 1); diameter, segments and attenuation come from that span; count from the count source. No rule reads the report text except to parse tagged numbers."
+    },
+    "amendments": [
+      {
+        "date": "2026-11-23",
+        "when": "after registration, before the per-lesion training data, model code or any run",
+        "change": "added a per-span 'largest' head whose input also has two features computed from the tagged spans' parsed dimensions (is the longest dimension among spans; dimension / longest dimension). Decoding takes the span with the highest 'largest' probability instead of the longest dimension.",
+        "reason": "source labels name the largest lesion by segmentation volume; in 47 of 1,029 lesion-positive Train reports (6 of 220 in Validation) that lesion does not have the longest written dimension, so the registered rule would have failed those by construction."
+      }
+    ],
+    "models": [
+      "clinicalbert"
+    ],
+    "seeds": [
+      13,
+      42,
+      87
+    ],
+    "max_length": 512,
+    "epochs": 6,
+    "epochs_note": "raised from 4 because the Validation loss of every 4-epoch run was still falling at epoch 4",
+    "batch_size": 16,
+    "gradient_accumulation": 1,
+    "eval_batch_size": 64,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "max_grad_norm": 1.0,
+    "precision": "bf16",
+    "loss": "sum of the head losses, unweighted; span heads are trained on the gold spans",
+    "early_stopping": {
+      "metric": "val_loss",
+      "patience": 1
+    },
+    "selection_criteria": {
+      "fixed_before": "the per-lesion training data, model code and first run",
+      "model_selection": "epoch with the lowest Validation loss; Challenge Sets are never used to choose an epoch, seed or setting",
+      "primary_v3": "on extraction_challenge_v3 (held out), for every field and every seed: pooled accuracy over the subtypes that target the field is at least the parser's and at least the first model's (same seed) minus 0.01; and for count, segments and diameter it is higher than the first model's (same seed) with exact McNemar p < 0.05",
+      "no_regression_v2": "on extraction_challenge_v2_liver, for every field and every seed, pooled targeted accuracy is at least the first model's (same seed) minus 0.01",
+      "no_regression_val": "on lesion-positive Validation studies, accuracy against the extraction targets is at least the parser's minus 0.01 and the first model's (same seed) minus 0.01, per field and seed",
+      "no_hidden_regression": "across extraction_challenge_v2_liver and extraction_challenge_v3, no subtype where the parser scores at least 0.95 on a targeted field has a mean model accuracy (over seeds) below 0.95 on that field",
+      "verdict": "model-only candidate if all four hold; otherwise report which fail and keep the hybrid for Phase 8",
+      "test": "not read; the system chosen in Phase 8 is evaluated on Test once"
+    }
+  },
+  "smoke_test_limit": null,
+  "data": {
+    "train": 11482,
+    "val": 1389,
+    "challenge_v2_liver": 1600,
+    "challenge_v1_distractor": 200,
+    "challenge_v3": 900,
+    "train_spans_dropped_by_truncation": 1,
+    "val_spans_dropped_by_truncation": 11,
+    "test_policy": "Test was not read."
+  },
+  "best_epoch": 5,
+  "best_val_loss": 0.261415,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": {
+        "size_tag": 0.172352,
+        "count_tag": 0.097913,
+        "source": 0.217462,
+        "span": 1.266534
+      },
+      "val_loss": 0.894524,
+      "val_positive_accuracy": {
+        "n": 220,
+        "count": 0.986364,
+        "segments": 0.222727,
+        "attenuation": 0.995455,
+        "diameter_cm": 1.0
+      },
+      "elapsed_s": 164.1
+    },
+    {
+      "epoch": 2,
+      "train_loss": {
+        "size_tag": 0.005661,
+        "count_tag": 0.002274,
+        "source": 0.00588,
+        "span": 0.278948
+      },
+      "val_loss": 0.369565,
+      "val_positive_accuracy": {
+        "n": 220,
+        "count": 0.990909,
+        "segments": 0.968182,
+        "attenuation": 0.995455,
+        "diameter_cm": 1.0
+      },
+      "elapsed_s": 330.5
+    },
+    {
+      "epoch": 3,
+      "train_loss": {
+        "size_tag": 0.002178,
+        "count_tag": 0.000839,
+        "source": 0.001308,
+        "span": 0.102605
+      },
+      "val_loss": 0.378686,
+      "val_positive_accuracy": {
+        "n": 220,
+        "count": 0.995455,
+        "segments": 0.968182,
+        "attenuation": 0.990909,
+        "diameter_cm": 0.995455
+      },
+      "elapsed_s": 492.4
+    },
+    {
+      "epoch": 4,
+      "train_loss": {
+        "size_tag": 0.001346,
+        "count_tag": 0.000498,
+        "source": 0.000144,
+        "span": 0.062442
+      },
+      "val_loss": 0.286571,
+      "val_positive_accuracy": {
+        "n": 220,
+        "count": 0.995455,
+        "segments": 0.972727,
+        "attenuation": 0.995455,
+        "diameter_cm": 1.0
+      },
+      "elapsed_s": 659.4
+    },
+    {
+      "epoch": 5,
+      "train_loss": {
+        "size_tag": 0.000958,
+        "count_tag": 0.000352,
+        "source": 8.3e-05,
+        "span": 0.041308
+      },
+      "val_loss": 0.261415,
+      "val_positive_accuracy": {
+        "n": 220,
+        "count": 0.995455,
+        "segments": 0.972727,
+        "attenuation": 0.995455,
+        "diameter_cm": 1.0
+      },
+      "elapsed_s": 822.2
+    },
+    {
+      "epoch": 6,
+      "train_loss": {
+        "size_tag": 0.000771,
+        "count_tag": 0.000302,
+        "source": 6.8e-05,
+        "span": 0.030458
+      },
+      "val_loss": 0.308382,
+      "val_positive_accuracy": {
+        "n": 220,
+        "count": 0.995455,
+        "segments": 0.972727,
+        "attenuation": 0.995455,
+        "diameter_cm": 1.0
+      },
+      "elapsed_s": 986.2
+    }
+  ],
+  "weights": {
+    "path": "models/transformers/extraction_lesion/clinicalbert/seed42/model.safetensors",
+    "sha256": "8710280c447ea893e1b21f03860231a8db906e2ea36970044669f1377ace78b7"
+  },
+  "inputs_sha256": {
+    "data/processed/nlp/extraction/extraction_train_lesion_v1.jsonl": "23e4e8755aace28572601d1c148403d04b36a104bf072726918dd892d1824bab",
+    "data/processed/nlp/extraction/extraction_val_lesion_v1.jsonl": "4114ca5319dcf7af299a16a446c8a4de0bba4f5a7ed6fb126168878d098eec32",
+    "data/processed/nlp/challenge/extraction_challenge_v2_liver.jsonl": "851b257c460b11576784cf89d41a467b8c76633b78d311913fb0b09be29e672b",
+    "data/processed/nlp/challenge/extraction_challenge_v1.jsonl": "1e836f2e1a67755f93ec7df9b1481f8426cf15c6edb5707b834a707cc12bb9af",
+    "data/processed/nlp/challenge/extraction_challenge_v3.jsonl": "28c9e5cbc6f5d627621e6bf6a6a25562dd8a9782681f3128437070977bab9f2c"
+  },
+  "environment": {
+    "python": "3.14.4",
+    "torch": "2.15.0+cu132",
+    "cuda": "13.2",
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "peak_gpu_memory_gib": 4.66,
+    "transformers": "5.22.2"
+  },
+  "git_commit": "24cfacb99443ec0aa1a9d42aedf95cc8c7a6c094",
+  "train_seconds": 1063.7
+}
