@@ -15,6 +15,7 @@ standard.
 | How good is the learned (TF-IDF + LR) model? | `final_test/learned_presence_test_report.md` |
 | How certain are those numbers? | `reliability/reliability_report.md` |
 | Do transformers beat LR and the parser? | `transformers/presence/comparison.md` |
+| Which extraction fields does the parser fail on (the 6.2 gate)? | `transformers/extraction/parser_challenge.md` |
 
 ## Folders
 
@@ -28,7 +29,7 @@ standard.
 | `predictions/` | Per-study predictions that the reports above are computed from | the scripts above |
 | `reliability/` | Bootstrap 95% CIs and coverage-adjusted metrics for the parser and LR | `reliability_report.py` |
 | `gold_set/` | IDs and hashes of the gold-set sample (no report text) | `gold_set.py sample` |
-| `transformers/` | Token lengths, the Challenge Set manifest, and the BERT / BioBERT / ClinicalBERT runs and comparison | `scripts/nlp/transformers/` |
+| `transformers/` | Token lengths, the presence and extraction Challenge Set manifests, the BERT / BioBERT / ClinicalBERT presence runs and comparison, and parser v1.1 on the extraction Challenge Set | `scripts/nlp/transformers/` |
 
 `baseline_manifest.json` records the input and output hashes of
 `predictions/baseline_inferences_updated.jsonl` (parser v1.0).
