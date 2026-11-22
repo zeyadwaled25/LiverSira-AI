@@ -1,14 +1,4 @@
-"""Generate Master Medical Records JSONL.
-
-Transforms the full AbdomenAtlas 3.0 Mini dataset (all 37 columns, all 9,262 rows)
-into validated MasterRecord objects and streams them to data/processed/nlp/master_records.jsonl.
-
-Guarantees:
-- 0 rows excluded (preserves all records regardless of missing narrative text).
-- Preserves raw columns verbatim under source.raw_columns.
-- Organizes findings for Liver, Spleen, Pancreas, and Kidneys.
-- Isolates structured reports from narrative text to protect downstream NLP inputs.
-"""
+"""Build master_records.jsonl: all 9,262 rows and 37 columns of the CSV as MasterRecord objects."""
 
 from pathlib import Path
 import re
@@ -52,7 +42,6 @@ def clean_text(val: object) -> str | None:
 
 def generate_master_records(input_path: Path, output_path: Path) -> int:
     """Read CSV, build MasterRecord for each row, and write JSONL."""
-    print(f"Reading source CSV: {input_path}...")
     df = pd.read_csv(input_path)
     total_rows = len(df)
     print(f"Total source rows to process: {total_rows:,}")
@@ -174,7 +163,6 @@ def generate_master_records(input_path: Path, output_path: Path) -> int:
                 },
             )
 
-            # Dump as a single JSON line
             f_out.write(record.model_dump_json() + "\n")
             written_count += 1
 

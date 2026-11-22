@@ -1,27 +1,8 @@
-"""Rule-based parsing of liver findings in radiology reports (v1.1).
+"""Rule-based parser for liver findings, v1.1.
 
-Changes from v1.0 (frozen in ``parser_v1_0``):
-
-* **Organ scope.** Every clause is assigned the organ it is about. A clause
-  that names no organ ("This lesion is hyperattenuating") inherits the organ of
-  the previous clause, so kidney and pancreas lesions no longer leak into liver
-  fields, and "common hepatic artery" is not a liver mention.
-* **Negation.** Explicit negations ("no evidence of tumor in the spleen, liver
-  ..."), and normal-appearance statements ("unremarkable", "within normal limits
-  in terms of size and appearance") are negative. Size-only statements ("the
-  liver is normal in size") are not: they do not rule out a lesion.
-* **Uncertainty scope.** Hedging only affects the clause it appears in.
-* **Largest lesion.** Each liver lesion mention carries its own size, segments
-  and attenuation. The largest lesion is the one the report calls largest, or
-  else the one with the largest stated dimension. "measures", "centimeters",
-  "mm", sizes before the noun, ranges and "respectively" lists are supported.
-* **Count.** Stated totals, "N additional lesions", bullet lists and
-  "respectively" lists are counted. "Multiple lesions" without a number is left
-  unquantified instead of being set to 1.
-* **Evidence provenance.** Every evidence span is the exact text that produced
-  the value: the deciding clause for presence, the count phrase, and the size,
-  segment and attenuation phrases of the selected largest lesion.
-"""
+Changes from v1.0: organ-scoped clauses, clause-level negation and hedging,
+per-lesion size, segments and attenuation with largest-lesion selection, no
+count imputation, and evidence spans for each value."""
 
 from dataclasses import dataclass, field
 import re
@@ -489,18 +470,9 @@ def _count(
     """Stated lesion count with its evidence spans, in priority order.
 
     Returns ``(count, spans, reason)``; ``count`` is ``None`` when not stated.
-
-    1. An explicit total ("a total of 25 lesions", "totaling 16").
-    2. A plain count ("three liver lesions") combined with "N smaller /
-       additional / remaining" lesions: a smaller additional number is read as a
-       subset of the plain count, a larger or equal one as extra lesions
-       ("two large masses ... 18 smaller lesions" = 20).
-    3. A bullet list of lesions.
-    4. "N additional lesions" alone: N plus the lesion already described.
-    5. A "respectively" list of sizes, plus one if it lists additional lesions.
-    6. Singular mentions ("a liver mass", then "additionally, a smaller lesion"),
-       counted in the findings before the impression.
-    "Multiple lesions" with no number is reported as unquantified.
+    Priority: explicit total, plain count plus "N additional/smaller" lesions,
+    bullet list, "N additional" alone (+1), "respectively" size list, singular
+    mentions before the impression. "Multiple lesions" stays unquantified.
     """
 
     def first(pattern: re.Pattern[str]) -> tuple[int, _Span] | None:

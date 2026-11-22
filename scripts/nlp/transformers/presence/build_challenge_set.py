@@ -1,32 +1,7 @@
-"""Build the presence Challenge Set (v1) from Validation reports only.
+"""Build the presence Challenge Set v1 from Validation reports only.
 
-The Validation and Test splits are saturated (the TF-IDF model makes 1-2 errors
-per ~1,390 studies), so they cannot separate the models. This set changes the
-report text in controlled ways where the correct presence answer is known by
-construction, and adds natural hard negatives:
-
-* ``negation``           negative report, liver sentences replaced by an explicit
-                         negated lesion statement -> False
-* ``other_organ_lesion`` unmodified negative report that describes a lesion in
-                         another organ -> False
-* ``liver_removed``      positive report with every liver sentence removed; the
-                         report no longer states anything about the liver -> False
-* ``paraphrase``         lesion vocabulary in liver sentences replaced by synonyms
-                         -> label unchanged
-* ``ocr_noise``          character-level typos / OCR confusions -> label unchanged
-* ``liver_last``         liver sentences moved to the end of the report -> label
-                         unchanged (reports of at most 300 words)
-* ``hedged``             negative report, liver sentences replaced by a hedged
-                         statement -> no correct label; only the positive rate is
-                         reported (``scored`` is false)
-
-Only Train is used for training, so no model sees these reports during
-training; Validation-based early stopping uses the original reports.
-
-Usage (from the repository root):
-
-    .venv\\Scripts\\python.exe scripts/nlp/transformers/presence/build_challenge_set.py
-"""
+Categories and expected label: negation, other_organ_lesion and liver_removed
+(False); paraphrase, ocr_noise and liver_last (unchanged); hedged (unscored)."""
 
 import json
 import random

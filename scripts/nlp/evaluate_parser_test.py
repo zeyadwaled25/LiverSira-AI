@@ -1,18 +1,7 @@
-"""Single-use Test evaluation of the frozen rule-based parser v1.1.
+"""Single-use Test evaluation of the frozen parser v1.1.
 
-Safeguards:
-
-* Refuses to run if the parser or baseline code has uncommitted changes, so
-  the evaluated code is exactly the recorded commit.
-* Refuses to run if Test outputs already exist: the parser is evaluated on Test
-  once. Any later parser change must be judged on Validation or the gold set,
-  never by re-running this script.
-* Records the commit and the parser file hash before any Test report is read.
-
-Usage (from the repository root):
-
-    python scripts/nlp/evaluate_parser_test.py
-"""
+Refuses to run if the parser or baseline code has uncommitted changes, or if
+Test outputs already exist."""
 
 import hashlib
 import json

@@ -1,12 +1,4 @@
-"""Run every model x seed in ``config.json``, skipping runs that already finished.
-
-Each run is a separate process, so GPU memory is released between runs and a
-failure stops only that run. Re-running this script resumes where it stopped.
-
-Usage (from the repository root):
-
-    .venv\\Scripts\\python.exe scripts/nlp/transformers/presence/run_all.py
-"""
+"""Run every model x seed in config.json, one process per run; finished runs are skipped."""
 
 import json
 import subprocess

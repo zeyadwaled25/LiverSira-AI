@@ -305,7 +305,9 @@ pytest
 ## Results
 
 `results/` holds the metrics, reports, predictions and manifests of the
-experiments above. They are kept exactly as produced. Known limitations:
+experiments above. They are kept exactly as produced.
+[`results/nlp/README.md`](results/nlp/README.md) says what each NLP folder
+holds and which report to read first. Known limitations:
 
 - Scripts were reorganised after the results were produced, so some result
   files name old script paths (see [Old script paths](#old-script-paths)).

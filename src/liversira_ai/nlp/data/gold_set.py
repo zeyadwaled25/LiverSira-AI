@@ -1,23 +1,7 @@
-"""Two-annotator human gold set for the liver lesion extraction task.
+"""Two-annotator gold set: blinded sample, agreement, and the review CSV.
 
-Workflow (each step refuses to overwrite files that may hold human work):
-
-1. ``create_sample``: stratified, seeded sample of Validation and Test studies.
-   Writes two identical *blinded* annotation sheets (report text only, no
-   source labels or strata) and a separate key with strata and inclusion
-   probabilities for weighted estimates.
-2. Two annotators fill their sheets independently (see
-   ``docs/nlp/gold_set_annotation_guidelines.md``).
-3. ``compare_annotations``: inter-annotator agreement (Cohen's kappa, exact
-   agreement) and an adjudication sheet. Rows where both annotators agree on
-   every field are pre-filled as consensus; the rest are left for a clinician.
-4. ``finalize``: converts the completed adjudication sheet into the review CSV
-   consumed by ``adjudication.adjudicate_cohort``, which writes the gold
-   standard and updates source-label validation status.
-
-Test-split gold labels are for final reporting only; parser and model
-development must use Validation gold labels.
-"""
+No step overwrites files that may hold human work. Develop on Validation gold
+labels only; Test gold labels are for final reporting."""
 
 import json
 from pathlib import Path

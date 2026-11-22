@@ -1,16 +1,4 @@
-"""Generate Source-Derived Ground Truth Benchmark JSONL.
-
-Constructs initial GroundTruthRecord objects from the AbdomenAtlas 3.0 Mini CSV labels.
-Initial status is strictly marked as PENDING verification, acknowledging that
-source-derived labels must undergo consistency validation against narrative reports
-before serving as an adjudicated clinical benchmark.
-
-Guarantees:
-- 9,262 records matching Master Record IDs 1:1.
-- Strict consistency: has_lesion == False <==> lesion_count == 0 & largest_lesion is None.
-- Preserves missing anatomical locations as None without inventing segments.
-- Tracks unverified field paths for auditing.
-"""
+"""Build ground_truth.jsonl: source-derived labels for all 9,262 studies, status PENDING."""
 
 from pathlib import Path
 import re
@@ -30,7 +18,6 @@ OUTPUT_JSONL = Path("data/processed/nlp/ground_truth.jsonl")
 
 def generate_ground_truth_records(input_path: Path, output_path: Path) -> int:
     """Read CSV, build GroundTruthRecord for each row, and write JSONL."""
-    print(f"Reading source CSV: {input_path}...")
     df = pd.read_csv(input_path)
     total_rows = len(df)
     print(f"Total source rows to process: {total_rows:,}")
@@ -45,17 +32,14 @@ def generate_ground_truth_records(input_path: Path, output_path: Path) -> int:
             has_lesion = count > 0
 
             if has_lesion:
-                # Location segments
                 loc_raw = row["largest liver lesion location (1-8)"]
                 if pd.notna(loc_raw):
                     segs = [int(x) for x in re.findall(r"\d+", str(loc_raw))]
                 else:
                     segs = None
 
-                # Diameter
                 diam = float(row["largest liver lesion diameter (cm)"])
 
-                # Attenuation
                 att_raw = row[
                     "largest liver lesion attenuation "
                     "(hyperattenuating, isoattenuating, hypoattenuating)"

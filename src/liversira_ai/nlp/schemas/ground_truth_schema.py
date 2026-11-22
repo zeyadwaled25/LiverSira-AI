@@ -1,12 +1,4 @@
-"""Ground Truth / Benchmark Schema.
-
-Defines the reference target labels for training and evaluating clinical NLP models.
-Enforces strict medical consistency constraints:
-- has_lesion == False <==> lesion_count == 0 and largest_lesion is None
-- has_lesion == True <==> lesion_count > 0 and largest_lesion is present
-- location_segments Couinaud numbers must be in [1..8]
-- attenuation must be one of the three verified radiological classes
-"""
+"""Source-derived reference labels with consistency checks (no lesion <=> count 0, segments 1-8)."""
 
 from enum import Enum
 from typing import Optional

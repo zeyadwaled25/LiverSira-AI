@@ -1,17 +1,4 @@
-"""Prepare a clean NLP-ready dataset from the AbdomenAtlas CSV.
-
-Pipeline steps
---------------
-1. Load the raw CSV and validate required columns.
-2. Clean narrative-report text (normalize whitespace, strip blanks).
-3. Exclude records without usable report text.
-4. Standardize missing liver-lesion target values with explicit
-   placeholders (``NO_LESION``, ``NOT_APPLICABLE``, ``UNKNOWN``).
-5. Select only the columns needed for downstream NLP tasks.
-6. Save the result to ``data/processed/liver_nlp_clean.csv``.
-
-The original CSV is **never** modified.
-"""
+"""Clean the AbdomenAtlas CSV into data/processed/nlp/liver_nlp_clean.csv (the raw CSV is not modified)."""
 
 from pathlib import Path
 
@@ -27,7 +14,6 @@ from liversira_ai.nlp.data.raw_csv import (
     clean_report,
 )
 
-# -- paths -------------------------------------------------------
 INPUT_PATH = Path("data/raw/nlp/AbdomenAtlas3.0MiniWithMeta.csv")
 OUTPUT_PATH = Path("data/processed/nlp/liver_nlp_clean.csv")
 
@@ -86,14 +72,11 @@ def prepare_dataset(input_path: Path, output_path: Path) -> pd.DataFrame:
 
     nlp_df = df[output_columns].copy()
 
-    # 6. Save
     output_path.parent.mkdir(parents=True, exist_ok=True)
     nlp_df.to_csv(output_path, index=False, encoding="utf-8-sig")
 
-    # 7. Print summary
     print("\n" + "=" * 60)
     print("LIVER NLP DATASET SUMMARY")
-    print("=" * 60)
 
     print(f"Original rows: {original_rows:,}")
     print(f"Rows excluded due to missing report: {len(excluded_ids)}")
@@ -114,7 +97,6 @@ def prepare_dataset(input_path: Path, output_path: Path) -> pd.DataFrame:
 
     print(f"\nSaved to: {output_path}")
     print("Original CSV was not modified.")
-    print("=" * 60)
 
     return nlp_df
 
