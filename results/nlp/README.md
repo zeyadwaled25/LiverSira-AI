@@ -18,6 +18,7 @@ standard.
 | Which extraction fields does the parser fail on (the 6.2 gate)? | `transformers/extraction/parser_challenge.md` |
 | What does the liver-only text keep and drop? | `liver_text/liver_only_report.md` |
 | Does the liver-only text change the 6.2 gate? | `transformers/extraction/parser_challenge_liver_only.md` |
+| How does the parser do on the liver-only Challenge Set (v2)? | `transformers/extraction/parser_challenge_v2_liver.md` |
 
 ## Folders
 

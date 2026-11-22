@@ -12,7 +12,8 @@ about the liver:
 A unit that names the liver and another organ is split at commas and
 semicolons when the next piece starts with its own organ ("..., and the largest
 kidney mass measures 1.3 cm"). Reference organs in comparisons ("relative to
-the kidney") do not count. Kept text is copied verbatim; ``spans`` gives its
+the kidney") do not count. Kept text is copied verbatim, joined by spaces, and a
+clause without final punctuation gets a closing period; ``spans`` gives its
 offsets in the input, so evidence found in the liver text can be mapped back.
 """
 
@@ -21,7 +22,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 import re
 
-LIVER_TEXT_VERSION = "1.0.0"
+# 1.0.1: a kept clause without final punctuation ends with "." (was: only between clauses).
+LIVER_TEXT_VERSION = "1.0.1"
 
 _LIVER = re.compile(
     r"\bliver\b|\b(?:intra|extra)?hepat(?:ic|o\w*)\b(?!\s+(?:arter|flexure))|\bcouinaud\b",
@@ -220,9 +222,7 @@ def extract_liver_text(text: str | None) -> LiverText:
             kept.append(header)
         kept.extend(section_kept)
 
-    pieces = []
-    for start, end in kept:
-        if pieces:
-            pieces.append(" " if _SENTENCE_END.search(pieces[-1]) else ". ")
-        pieces.append(text[start:end])
-    return LiverText("".join(pieces), kept)
+    # A clause cut from a longer sentence gets a closing period, so the next
+    # sentence (or text inserted after it) does not run on.
+    pieces = [text[s:e] if _SENTENCE_END.search(text[s:e]) else text[s:e] + "." for s, e in kept]
+    return LiverText(" ".join(pieces), kept)

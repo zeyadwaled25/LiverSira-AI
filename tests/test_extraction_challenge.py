@@ -103,6 +103,21 @@ def test_build_quota_and_labels(monkeypatch):
     assert len(set(counts)) == len(cs.CATEGORIES["count_format"])
 
 
+def test_liver_only_build_pairs_with_v1(monkeypatch):
+    monkeypatch.setattr(cs, "PER_CATEGORY", 12)
+    examples = [{"id": f"S{i:03d}", "text": BASE, "label": False} for i in range(20)]
+    liver_texts = {e["id"]: "The liver is also normal in size, with a volume of 2860.9 cc." for e in examples}
+    v1 = {r["challenge_id"]: r for r in cs.build(examples, lambda t: str(len(t)))}
+    v2 = cs.build(examples, lambda t: str(len(t)), liver_texts)
+    assert len(v2) == 12 * (len(cs.CATEGORIES) - len(cs.LIVER_EXCLUDED))
+    assert not any(r["category"] in cs.LIVER_EXCLUDED for r in v2)
+    for r in v2:
+        paired = v1[r["challenge_id"]]
+        assert r["inserted_text"] == paired["inserted_text"] and r["expected"] == paired["expected"]
+        assert r["text"] == liver_texts[r["base_id"]] + " " + r["inserted_text"]
+        assert "spleen" not in r["text"] and "kidneys" not in r["text"]
+
+
 def test_build_refuses_small_pool(monkeypatch):
     monkeypatch.setattr(cs, "PER_CATEGORY", 50)
     with pytest.raises(ValueError):

@@ -23,8 +23,14 @@ Categories (each varies one aspect; the rest uses the dataset's own phrasing):
   liver parenchyma, and attenuation in a separate sentence.
 - ocr_noise: the control description with letter-level OCR errors (numbers kept).
 - paraphrase: other sentence structures and lesion nouns.
+
+``--liver-only`` builds extraction_challenge_v2_liver: the same base reports,
+seeds and generated descriptions, but each base is its liver-only text
+(``liver_nlp_liver_only.csv``) and the distractor category is left out, since
+other-organ text is removed before the parser runs. Distractors stay in v1.
 """
 
+import argparse
 import json
 import random
 import re
@@ -33,10 +39,19 @@ from pathlib import Path
 from typing import Any, Callable
 
 VERSION = "extraction_challenge_v1"
+LIVER_VERSION = "extraction_challenge_v2_liver"
+LIVER_EXCLUDED = ("distractor",)
+LIVER_ONLY_CSV = Path("data/processed/nlp/liver_nlp_liver_only.csv")
 SEED = 42
 PER_CATEGORY = 200
-CHALLENGE_PATH = Path(f"data/processed/nlp/challenge/{VERSION}.jsonl")
 OUT_DIR = Path("results/nlp/transformers/challenge")
+
+
+def challenge_path(version: str) -> Path:
+    return Path(f"data/processed/nlp/challenge/{version}.jsonl")
+
+
+CHALLENGE_PATH = challenge_path(VERSION)
 
 ATTENUATIONS = ("hypoattenuating", "hyperattenuating", "isoattenuating")
 ATTENUATION_WEIGHTS = (0.5, 0.3, 0.2)
@@ -622,10 +637,19 @@ def insert_after_liver(text: str, block: str) -> str:
     return " ".join(sentences[: first + 1] + [block] + sentences[first + 1:])
 
 
-def build(examples: list[dict[str, Any]], sha: Callable[[str], str]) -> list[dict[str, Any]]:
+def build(
+    examples: list[dict[str, Any]],
+    sha: Callable[[str], str],
+    liver_texts: dict[str, str] | None = None,
+) -> list[dict[str, Any]]:
+    """Build the items. With ``liver_texts`` (id -> liver-only text) each base is its
+    liver-only text and LIVER_EXCLUDED categories are skipped; eligibility, seeds and
+    generated descriptions stay those of v1, so items pair with v1 by ID."""
     bases = sorted((e for e in examples if e["label"] is False and is_eligible_base(e["text"])), key=lambda e: e["id"])
     records = []
     for category, subtypes in CATEGORIES.items():
+        if liver_texts is not None and category in LIVER_EXCLUDED:
+            continue
         pool = list(bases)
         random.Random(f"{SEED}:{category}").shuffle(pool)
         if len(pool) < PER_CATEGORY:
@@ -636,7 +660,8 @@ def build(examples: list[dict[str, Any]], sha: Callable[[str], str]) -> list[dic
             rng = random.Random(f"{SEED}:{category}:{subtype}:{base['id']}")
             block, expected, targets = subtypes[subtype](rng)
             block = fix_articles(block)
-            text = insert_after_liver(base["text"], block)
+            base_text = base["text"] if liver_texts is None else liver_texts[base["id"]]
+            text = insert_after_liver(base_text, block)
             records.append(
                 {
                     "challenge_id": f"{category}:{subtype}:{base['id']}",
@@ -647,24 +672,62 @@ def build(examples: list[dict[str, Any]], sha: Callable[[str], str]) -> list[dic
                     "expected": {"has_lesion": True, **expected},
                     "inserted_text": block,
                     "text": text,
-                    "base_text_sha256": sha(base["text"]),
+                    "base_text_sha256": sha(base_text),
                     "text_sha256": sha(text),
                 }
             )
     return records
 
 
+def load_liver_texts(examples: list[dict[str, Any]]) -> dict[str, str]:
+    """Liver-only base texts from LIVER_ONLY_CSV, checked against the frozen filter."""
+    import pandas as pd
+
+    from liversira_ai.nlp.liver_text import extract_liver_text
+
+    table = pd.read_csv(LIVER_ONLY_CSV, dtype=str, keep_default_na=False).set_index("BDMAP ID")
+    texts = {}
+    for e in examples:
+        row = table.loc[e["id"]]
+        if row["narrative_full_clean"] != e["text"]:
+            raise SystemExit(f"{e['id']}: {LIVER_ONLY_CSV.name} does not match master_records.jsonl")
+        if row["narrative_clean"] != extract_liver_text(e["text"]).text:
+            raise SystemExit(f"{e['id']}: {LIVER_ONLY_CSV.name} is out of date with liver_text; rebuild it")
+        texts[e["id"]] = row["narrative_clean"]
+    return texts
+
+
+def matches_filtered_v1(records: list[dict[str, Any]], examples: list[dict[str, Any]]) -> int:
+    """Items whose text equals the liver-only filter applied to the paired v1 item."""
+    from liversira_ai.nlp.liver_text import extract_liver_text
+
+    full = {e["id"]: e["text"] for e in examples}
+    return sum(
+        extract_liver_text(insert_after_liver(full[r["base_id"]], r["inserted_text"])).text == r["text"]
+        for r in records
+    )
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Build the extraction Challenge Set.")
+    parser.add_argument("--liver-only", action="store_true", help=f"build {LIVER_VERSION} on liver-only text")
+    args = parser.parse_args()
+
     from liversira_ai.common.provenance import git_commit, sha256_file, sha256_text
     from liversira_ai.nlp import transformer_data as data
+    from liversira_ai.nlp.liver_text import LIVER_TEXT_VERSION
 
+    version = LIVER_VERSION if args.liver_only else VERSION
+    path = challenge_path(version)
     ids = data.load_split_ids(["val"])["val"]
     examples = data.load_examples(ids)
     eligible = sum(1 for e in examples if e["label"] is False and is_eligible_base(e["text"]))
-    records = build(examples, sha256_text)
+    liver_texts = load_liver_texts(examples) if args.liver_only else None
+    records = build(examples, sha256_text, liver_texts)
+    paired = matches_filtered_v1(records, examples) if args.liver_only else None
 
-    CHALLENGE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with CHALLENGE_PATH.open("w", encoding="utf-8", newline="\n") as handle:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
         for record in records:
             handle.write(json.dumps(record, ensure_ascii=False) + "\n")
 
@@ -673,9 +736,16 @@ def main() -> None:
         counts.setdefault(r["category"], {}).setdefault(r["subtype"], 0)
         counts[r["category"]][r["subtype"]] += 1
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    inputs = [data.MASTER_PATH, data.GROUND_TRUTH_PATH, data.SPLITS_PATH]
+    if args.liver_only:
+        inputs.append(LIVER_ONLY_CSV)
     manifest = {
         "schema_version": "1.0",
-        "version": VERSION,
+        "version": version,
+        "base_text": "liver-only" if args.liver_only else "full",
+        "liver_text_version": LIVER_TEXT_VERSION if args.liver_only else None,
+        "excluded_categories": list(LIVER_EXCLUDED) if args.liver_only else [],
+        "items_equal_to_filtered_v1": paired,
         "source_split": "val",
         "test_policy": "Built from Validation only; Test reports were not read.",
         "label_policy": "Expected values are set by construction from sampled lesions, "
@@ -686,28 +756,42 @@ def main() -> None:
         "unique_base_reports": len({r["base_id"] for r in records}),
         "counts": counts,
         "records": len(records),
-        "output": CHALLENGE_PATH.as_posix(),
-        "output_sha256": sha256_file(CHALLENGE_PATH),
-        "inputs_sha256": {
-            p.as_posix(): sha256_file(p) for p in (data.MASTER_PATH, data.GROUND_TRUTH_PATH, data.SPLITS_PATH)
-        },
+        "output": path.as_posix(),
+        "output_sha256": sha256_file(path),
+        "inputs_sha256": {p.as_posix(): sha256_file(p) for p in inputs},
         "git_commit": git_commit(),
         "items": [
             {k: r[k] for k in ("challenge_id", "base_id", "category", "subtype", "targets", "expected", "text_sha256")}
             for r in records
         ],
     }
-    (OUT_DIR / f"{VERSION}_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    (OUT_DIR / f"{version}_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
+    base = "a lesion-free Validation report"
+    if args.liver_only:
+        base = (
+            f"the liver-only text of a lesion-free Validation report (`{LIVER_ONLY_CSV.name}`, "
+            f"`liver_text` v{LIVER_TEXT_VERSION})"
+        )
     lines = [
-        f"# Extraction Challenge Set ({VERSION})",
+        f"# Extraction Challenge Set ({version})",
         "",
-        f"Built from Validation reports only (seed {SEED}); Test was not read. Each item is a lesion-free "
-        f"Validation report ({eligible} eligible) with a generated liver-lesion description inserted after "
+        f"Built from Validation reports only (seed {SEED}); Test was not read. Each item is {base} "
+        f"({eligible} eligible) with a generated liver-lesion description inserted after "
         "its first liver sentence. Expected values are set by construction, not taken from source labels "
-        f"or a parser. The text is in `{CHALLENGE_PATH.as_posix()}` (gitignored); hashes, IDs and expected "
+        f"or a parser. The text is in `{path.as_posix()}` (gitignored); hashes, IDs and expected "
         "values are in the manifest.",
         "",
+    ]
+    if args.liver_only:
+        lines += [
+            f"Same base reports, seeds and generated descriptions as `{VERSION}`, so items pair with it by ID. "
+            f"Left out: {', '.join(f'`{c}`' for c in LIVER_EXCLUDED)}, because other-organ text is removed "
+            f"before the parser runs; that case stays in `{VERSION}`. {paired} of {len(records)} items equal "
+            f"the liver-only filter applied to the paired `{VERSION}` item.",
+            "",
+        ]
+    lines += [
         "| Category | Subtype | Items | Target fields |",
         "|---|---|---|---|",
     ]
@@ -726,7 +810,7 @@ def main() -> None:
         "`scripts/nlp/transformers/extraction/build_challenge_set.py`.",
         "",
     ]
-    (OUT_DIR / f"{VERSION}.md").write_text("\n".join(lines), encoding="utf-8")
+    (OUT_DIR / f"{version}.md").write_text("\n".join(lines), encoding="utf-8")
     print("\n".join(lines))
 
 

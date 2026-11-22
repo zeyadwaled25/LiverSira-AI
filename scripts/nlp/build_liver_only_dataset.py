@@ -235,7 +235,8 @@ def write_report(summary: dict) -> None:
         "- The filter is rule-based: a clause that never names an organ inherits the organ of the clause before it.",
         "- Organ lists that include the liver are kept whole, so other organ names remain in them, sometimes with "
         "their volumes or HU values (\"volumes of 1500 cc and 150 cc, respectively\"); no lesion size is left.",
-        "- Joining kept spans inserts \". \" after a span without final punctuation; offsets ignore these separators.",
+        "- Kept spans are joined by spaces, and a span without final punctuation gets a closing \".\"; "
+        "offsets cover the source text only.",
         "",
     ]
     (REPORT_DIR / "liver_only_report.md").write_text("\n".join(lines), encoding="utf-8")

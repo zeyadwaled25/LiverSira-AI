@@ -1,12 +1,12 @@
 # Liver-only report text
 
-`data/processed/nlp/liver_nlp_liver_only.csv` (gitignored) is `liver_nlp_clean.csv` with `narrative_clean` reduced to the liver-related text by `liversira_ai.nlp.liver_text` v1.0.0. Kept text is verbatim; `liver_spans` gives its offsets in `narrative_full_clean`. Checks use train + val (7871 studies); Test was not read.
+`data/processed/nlp/liver_nlp_liver_only.csv` (gitignored) is `liver_nlp_clean.csv` with `narrative_clean` reduced to the liver-related text by `liversira_ai.nlp.liver_text` v1.0.1. Kept text is verbatim; `liver_spans` gives its offsets in `narrative_full_clean`. Checks use train + val (7871 studies); Test was not read.
 
 ## Output
 
 - Studies: 9261; empty liver text: 0 (0 lesion-positive).
 - Characters kept: 26.2% of the full text.
-- Input SHA-256 `7bc231b1c2e05044…`, output SHA-256 `420151a7bb3c635f…`.
+- Input SHA-256 `7bc231b1c2e05044…`, output SHA-256 `c12bbc587d9c2698…`.
 
 ## Retention (lesion-positive studies)
 
@@ -40,4 +40,4 @@ Against source labels. Cells: correct / abstained / wrong. Count, segments, diam
 
 - The filter is rule-based: a clause that never names an organ inherits the organ of the clause before it.
 - Organ lists that include the liver are kept whole, so other organ names remain in them, sometimes with their volumes or HU values ("volumes of 1500 cc and 150 cc, respectively"); no lesion size is left.
-- Joining kept spans inserts ". " after a span without final punctuation; offsets ignore these separators.
+- Kept spans are joined by spaces, and a span without final punctuation gets a closing "."; offsets cover the source text only.

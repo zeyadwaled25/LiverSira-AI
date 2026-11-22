@@ -64,7 +64,7 @@ def test_splits_volume_list_by_organ():
         "The spleen measures 150.0 cc in volume, the liver measures 1216.0 cc, "
         "the pancreas measures 70.0 cc, and the combined kidney volume is 300.0 cc."
     )
-    assert liver(text) == "the liver measures 1216.0 cc"
+    assert liver(text) == "the liver measures 1216.0 cc."
 
 
 @pytest.mark.parametrize(
@@ -77,17 +77,27 @@ def test_splits_volume_list_by_organ():
         ),
         (
             "The largest liver mass measures 3.6 x 3.2 cm, and the largest kidney mass measures 1.3 x 1.1 cm.",
-            "The largest liver mass measures 3.6 x 3.2 cm",
+            "The largest liver mass measures 3.6 x 3.2 cm.",
         ),
         (
             "IMPRESSION: The patient has an enlarged spleen, multiple liver masses, with the largest one measuring "
             "1.0 x 0.7 cm in hepatic segment 2, an enlarged pancreas, and enlarged kidneys.",
-            "IMPRESSION: multiple liver masses, with the largest one measuring 1.0 x 0.7 cm in hepatic segment 2",
+            "IMPRESSION: multiple liver masses, with the largest one measuring 1.0 x 0.7 cm in hepatic segment 2.",
         ),
     ],
 )
 def test_splits_liver_clause_from_other_organs(text, expected):
     assert liver(text) == expected
+
+
+def test_clause_fragments_end_with_a_period():
+    text = (
+        "The spleen and liver are normal. The spleen measures 150.0 cc, "
+        "and the liver has a mean HU value of 77.4 +/- 18.8"
+    )
+    result = extract_liver_text(text)
+    assert result.text == "The spleen and liver are normal. the liver has a mean HU value of 77.4 +/- 18.8."
+    assert text[slice(*result.spans[-1])] == "the liver has a mean HU value of 77.4 +/- 18.8"
 
 
 def test_keeps_organ_lists_whole_and_their_follow_up():

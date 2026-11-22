@@ -126,10 +126,14 @@ def render(summary: dict[str, Any], records: list[dict[str, Any]], predictions: 
             f"Parser: frozen v1.1 configuration, run on the liver-only text of each item "
             f"(`liversira_ai.nlp.liver_text` v{liver_only}, frozen before this run). "
         )
+    bases = "lesion-free Validation reports"
+    if manifest.get("base_text") == "liver-only":
+        title = f"Parser v1.1 on {manifest['version']}"
+        bases = "the liver-only text of lesion-free Validation reports"
     lines = [
         f"# {title}",
         "",
-        f"`{manifest['version']}`: {manifest['records']} generated items on lesion-free Validation reports; "
+        f"`{manifest['version']}`: {manifest['records']} generated items on {bases}; "
         "Test was not read. Expected values are set by construction, not by source labels. "
         + system +
         f"Accuracy counts abstentions as errors; diameter is correct within {DIAMETER_TOLERANCE_CM} cm. "
@@ -199,12 +203,21 @@ def render(summary: dict[str, Any], records: list[dict[str, Any]], predictions: 
     return "\n".join(lines)
 
 
-def render_comparison(summary: dict[str, Any], plain: dict[str, Any]) -> str:
-    """Plain run vs liver-only run: gate per field and every accuracy that changed."""
-    lines = [
-        "## Compared with the plain run (`parser_challenge.md`)",
-        "",
-        "| Field | Pooled, plain | Pooled, liver-only | Needs a model, plain | Needs a model, liver-only |",
+def render_comparison(
+    summary: dict[str, Any],
+    plain: dict[str, Any],
+    heading: str = "Compared with the plain run (`parser_challenge.md`)",
+    before_name: str = "plain",
+    after_name: str = "liver-only",
+    note: str = "",
+) -> str:
+    """Two runs side by side: gate per field and every subtype accuracy that changed."""
+    lines = [f"## {heading}", ""]
+    if note:
+        lines += [note, ""]
+    lines += [
+        f"| Field | Pooled, {before_name} | Pooled, {after_name} | Needs a model, {before_name} "
+        f"| Needs a model, {after_name} |",
         "|---|---|---|---|---|",
     ]
     for field, g in summary["gate"].items():
@@ -218,7 +231,7 @@ def render_comparison(summary: dict[str, Any], plain: dict[str, Any]) -> str:
         "",
         "Accuracies that changed (bold = a field the subtype targets):",
         "",
-        "| Category | Subtype | Field | Plain | Liver-only |",
+        f"| Category | Subtype | Field | {before_name.capitalize()} | {after_name.capitalize()} |",
         "|---|---|---|---|---|",
     ]
     by_key = {(s["category"], s["subtype"]): s for s in plain["subtypes"]}
@@ -239,22 +252,31 @@ def render_comparison(summary: dict[str, Any], plain: dict[str, Any]) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Score parser v1.1 on the extraction Challenge Set.")
-    parser.add_argument("--liver-only", action="store_true", help="run the parser on the liver-only text")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--liver-only", action="store_true", help="run the parser on the liver-only text of v1")
+    mode.add_argument("--v2-liver", action="store_true", help="score extraction_challenge_v2_liver (liver-only items)")
     args = parser.parse_args()
 
     from liversira_ai.common.provenance import git_commit, sha256_file
     from liversira_ai.nlp.baseline import BASELINE_VERSION, extract_liver_lesion_features
     from liversira_ai.nlp.liver_text import LIVER_TEXT_VERSION, extract_liver_text
     from liversira_ai.nlp.parser_v1_1 import PARSER_VERSION
-    from scripts.nlp.transformers.extraction.build_challenge_set import CHALLENGE_PATH, OUT_DIR as CS_DIR, VERSION
+    from scripts.nlp.transformers.extraction.build_challenge_set import (
+        LIVER_VERSION,
+        OUT_DIR as CS_DIR,
+        VERSION,
+        challenge_path,
+    )
 
-    manifest = json.loads((CS_DIR / f"{VERSION}_manifest.json").read_text(encoding="utf-8"))
-    if sha256_file(CHALLENGE_PATH) != manifest["output_sha256"]:
+    version = LIVER_VERSION if args.v2_liver else VERSION
+    path = challenge_path(version)
+    manifest = json.loads((CS_DIR / f"{version}_manifest.json").read_text(encoding="utf-8"))
+    if sha256_file(path) != manifest["output_sha256"]:
         raise SystemExit("Challenge Set file does not match its manifest hash; rebuild it.")
-    with CHALLENGE_PATH.open(encoding="utf-8") as handle:
+    with path.open(encoding="utf-8") as handle:
         records = [json.loads(line) for line in handle if line.strip()]
 
-    suffix = "_liver_only" if args.liver_only else ""
+    suffix = "_liver_only" if args.liver_only else ("_v2_liver" if args.v2_liver else "")
     predictions = {}
     for r in records:
         text = extract_liver_text(r["text"]).text if args.liver_only else r["text"]
@@ -271,8 +293,8 @@ def main() -> None:
         "schema_version": "1.0",
         "system": BASELINE_VERSION,
         "parser_version": PARSER_VERSION,
-        "liver_text_version": LIVER_TEXT_VERSION if args.liver_only else None,
-        "challenge_set": VERSION,
+        "liver_text_version": LIVER_TEXT_VERSION if args.liver_only else manifest.get("liver_text_version"),
+        "challenge_set": version,
         "challenge_set_sha256": manifest["output_sha256"],
         "gate_accuracy": GATE_ACCURACY,
         "diameter_tolerance_cm": DIAMETER_TOLERANCE_CM,
@@ -285,6 +307,19 @@ def main() -> None:
         plain = json.loads((OUT_DIR / "parser_challenge.json").read_text(encoding="utf-8"))
         head, rest = report.split("\n## Examples of failures", 1)
         report = head + "\n" + render_comparison(summary, plain) + "\n## Examples of failures" + rest
+    if args.v2_liver:
+        paired = json.loads((OUT_DIR / "parser_challenge_liver_only.json").read_text(encoding="utf-8"))
+        note = (
+            f"Items pair with `{VERSION}` by ID; {manifest['items_equal_to_filtered_v1']} of {manifest['records']} "
+            f"are identical to the filtered `{VERSION}` item. The `{VERSION}` pooled values include the "
+            "distractor subtypes, which this set leaves out."
+        )
+        comparison = render_comparison(
+            summary, paired, f"Compared with `{VERSION}` + filter (`parser_challenge_liver_only.md`)",
+            "v1 + filter", "v2", note,
+        )
+        head, rest = report.split("\n## Examples of failures", 1)
+        report = head + "\n" + comparison + "\n## Examples of failures" + rest
     (OUT_DIR / f"parser_challenge{suffix}.md").write_text(report, encoding="utf-8")
     print(report)
 

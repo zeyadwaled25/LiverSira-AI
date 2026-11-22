@@ -1,6 +1,6 @@
 # Parser v1.1 on the liver-only extraction Challenge Set
 
-`extraction_challenge_v1`: 1800 generated items on lesion-free Validation reports; Test was not read. Expected values are set by construction, not by source labels. Parser: frozen v1.1 configuration, run on the liver-only text of each item (`liversira_ai.nlp.liver_text` v1.0.0, frozen before this run). Accuracy counts abstentions as errors; diameter is correct within 0.05 cm. 95% bootstrap intervals over items (2000 resamples, seed 42).
+`extraction_challenge_v1`: 1800 generated items on lesion-free Validation reports; Test was not read. Expected values are set by construction, not by source labels. Parser: frozen v1.1 configuration, run on the liver-only text of each item (`liversira_ai.nlp.liver_text` v1.0.1, frozen before this run). Accuracy counts abstentions as errors; diameter is correct within 0.05 cm. 95% bootstrap intervals over items (2000 resamples, seed 42).
 
 ## Gate for 6.2
 

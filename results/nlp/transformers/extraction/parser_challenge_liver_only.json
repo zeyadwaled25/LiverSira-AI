@@ -2,12 +2,12 @@
   "schema_version": "1.0",
   "system": "rule-based-v1.1.0",
   "parser_version": "1.1.0",
-  "liver_text_version": "1.0.0",
+  "liver_text_version": "1.0.1",
   "challenge_set": "extraction_challenge_v1",
   "challenge_set_sha256": "1e836f2e1a67755f93ec7df9b1481f8426cf15c6edb5707b834a707cc12bb9af",
   "gate_accuracy": 0.9,
   "diameter_tolerance_cm": 0.05,
-  "git_commit": "c7d54ce8734d9e9daaab55c867d70b6d31b654c9",
+  "git_commit": "84d4d847e2ef4c5d28e049ac423315e0ff708b10",
   "subtypes": [
     {
       "category": "control",
