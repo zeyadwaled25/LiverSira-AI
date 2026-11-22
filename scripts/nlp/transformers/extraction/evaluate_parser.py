@@ -4,8 +4,13 @@ Uses the frozen v1.1 configuration (``baseline.extract_liver_lesion_features``).
 A field goes on to 6.2 modelling only if the parser falls below GATE_ACCURACY
 on at least one subtype that targets it. The threshold was set before the
 parser was run on this set.
+
+``--liver-only`` runs the same parser on the liver-only text
+(``liversira_ai.nlp.liver_text``, frozen before this run) and writes
+``parser_challenge_liver_only.*`` with a comparison to the plain run.
 """
 
+import argparse
 import json
 from pathlib import Path
 from typing import Any
@@ -110,15 +115,23 @@ def _short(value: Any) -> str:
 
 
 def render(summary: dict[str, Any], records: list[dict[str, Any]], predictions: dict[str, dict[str, Any]],
-           rows: list[dict[str, Any]], manifest: dict[str, Any]) -> str:
+           rows: list[dict[str, Any]], manifest: dict[str, Any], liver_only: str | None = None) -> str:
     from liversira_ai.nlp.metrics import format_ci
 
+    title = "Parser v1.1 on the extraction Challenge Set"
+    system = "Parser: frozen v1.1 configuration (`baseline.extract_liver_lesion_features`). "
+    if liver_only:
+        title = "Parser v1.1 on the liver-only extraction Challenge Set"
+        system = (
+            f"Parser: frozen v1.1 configuration, run on the liver-only text of each item "
+            f"(`liversira_ai.nlp.liver_text` v{liver_only}, frozen before this run). "
+        )
     lines = [
-        "# Parser v1.1 on the extraction Challenge Set",
+        f"# {title}",
         "",
         f"`{manifest['version']}`: {manifest['records']} generated items on lesion-free Validation reports; "
         "Test was not read. Expected values are set by construction, not by source labels. "
-        "Parser: frozen v1.1 configuration (`baseline.extract_liver_lesion_features`). "
+        + system +
         f"Accuracy counts abstentions as errors; diameter is correct within {DIAMETER_TOLERANCE_CM} cm. "
         "95% bootstrap intervals over items (2000 resamples, seed 42).",
         "",
@@ -186,9 +199,52 @@ def render(summary: dict[str, Any], records: list[dict[str, Any]], predictions: 
     return "\n".join(lines)
 
 
+def render_comparison(summary: dict[str, Any], plain: dict[str, Any]) -> str:
+    """Plain run vs liver-only run: gate per field and every accuracy that changed."""
+    lines = [
+        "## Compared with the plain run (`parser_challenge.md`)",
+        "",
+        "| Field | Pooled, plain | Pooled, liver-only | Needs a model, plain | Needs a model, liver-only |",
+        "|---|---|---|---|---|",
+    ]
+    for field, g in summary["gate"].items():
+        b = plain["gate"][field]
+        lines.append(
+            f"| {field} | {_pct(b['pooled_targeted_accuracy']['estimate'])} "
+            f"| {_pct(g['pooled_targeted_accuracy']['estimate'])} "
+            f"| {'yes' if b['needs_model'] else 'no'} | {'yes' if g['needs_model'] else 'no'} |"
+        )
+    lines += [
+        "",
+        "Accuracies that changed (bold = a field the subtype targets):",
+        "",
+        "| Category | Subtype | Field | Plain | Liver-only |",
+        "|---|---|---|---|---|",
+    ]
+    by_key = {(s["category"], s["subtype"]): s for s in plain["subtypes"]}
+    changed = 0
+    for s in summary["subtypes"]:
+        b = by_key[(s["category"], s["subtype"])]
+        for field in FIELDS:
+            before, after = b["fields"][field]["estimate"], s["fields"][field]["estimate"]
+            if before != after:
+                changed += 1
+                name = f"**{field}**" if field in s["targets"] and len(s["targets"]) < len(FIELDS) else field
+                lines.append(f"| {s['category']} | {s['subtype']} | {name} | {_pct(before)} | {_pct(after)} |")
+    if not changed:
+        lines.append("| — | — | — | — | — |")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Score parser v1.1 on the extraction Challenge Set.")
+    parser.add_argument("--liver-only", action="store_true", help="run the parser on the liver-only text")
+    args = parser.parse_args()
+
     from liversira_ai.common.provenance import git_commit, sha256_file
     from liversira_ai.nlp.baseline import BASELINE_VERSION, extract_liver_lesion_features
+    from liversira_ai.nlp.liver_text import LIVER_TEXT_VERSION, extract_liver_text
     from liversira_ai.nlp.parser_v1_1 import PARSER_VERSION
     from scripts.nlp.transformers.extraction.build_challenge_set import CHALLENGE_PATH, OUT_DIR as CS_DIR, VERSION
 
@@ -198,21 +254,24 @@ def main() -> None:
     with CHALLENGE_PATH.open(encoding="utf-8") as handle:
         records = [json.loads(line) for line in handle if line.strip()]
 
+    suffix = "_liver_only" if args.liver_only else ""
     predictions = {}
     for r in records:
-        features = extract_liver_lesion_features(r["text"])
+        text = extract_liver_text(r["text"]).text if args.liver_only else r["text"]
+        features = extract_liver_lesion_features(text)
         predictions[r["challenge_id"]] = {k: features[k] for k in ("has_lesion", *FIELDS)}
     rows = score(records, predictions)
     summary = summarize(rows)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    with (OUT_DIR / "parser_challenge_predictions.jsonl").open("w", encoding="utf-8", newline="\n") as handle:
+    with (OUT_DIR / f"parser_challenge{suffix}_predictions.jsonl").open("w", encoding="utf-8", newline="\n") as handle:
         for row in rows:
             handle.write(json.dumps({**row, "predicted": predictions[row["challenge_id"]]}) + "\n")
     metrics = {
         "schema_version": "1.0",
         "system": BASELINE_VERSION,
         "parser_version": PARSER_VERSION,
+        "liver_text_version": LIVER_TEXT_VERSION if args.liver_only else None,
         "challenge_set": VERSION,
         "challenge_set_sha256": manifest["output_sha256"],
         "gate_accuracy": GATE_ACCURACY,
@@ -220,9 +279,13 @@ def main() -> None:
         "git_commit": git_commit(),
         **summary,
     }
-    (OUT_DIR / "parser_challenge.json").write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
-    report = render(summary, records, predictions, rows, manifest)
-    (OUT_DIR / "parser_challenge.md").write_text(report, encoding="utf-8")
+    (OUT_DIR / f"parser_challenge{suffix}.json").write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
+    report = render(summary, records, predictions, rows, manifest, LIVER_TEXT_VERSION if args.liver_only else None)
+    if args.liver_only:
+        plain = json.loads((OUT_DIR / "parser_challenge.json").read_text(encoding="utf-8"))
+        head, rest = report.split("\n## Examples of failures", 1)
+        report = head + "\n" + render_comparison(summary, plain) + "\n## Examples of failures" + rest
+    (OUT_DIR / f"parser_challenge{suffix}.md").write_text(report, encoding="utf-8")
     print(report)
 
 

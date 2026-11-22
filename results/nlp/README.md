@@ -16,6 +16,8 @@ standard.
 | How certain are those numbers? | `reliability/reliability_report.md` |
 | Do transformers beat LR and the parser? | `transformers/presence/comparison.md` |
 | Which extraction fields does the parser fail on (the 6.2 gate)? | `transformers/extraction/parser_challenge.md` |
+| What does the liver-only text keep and drop? | `liver_text/liver_only_report.md` |
+| Does the liver-only text change the 6.2 gate? | `transformers/extraction/parser_challenge_liver_only.md` |
 
 ## Folders
 
@@ -29,6 +31,7 @@ standard.
 | `predictions/` | Per-study predictions that the reports above are computed from | the scripts above |
 | `reliability/` | Bootstrap 95% CIs and coverage-adjusted metrics for the parser and LR | `reliability_report.py` |
 | `gold_set/` | IDs and hashes of the gold-set sample (no report text) | `gold_set.py sample` |
+| `liver_text/` | Checks of the liver-only copy of the cleaned CSV: values kept, other organs left, parser v1.1 on full vs liver-only text | `build_liver_only_dataset.py` |
 | `transformers/` | Token lengths, the presence and extraction Challenge Set manifests, the BERT / BioBERT / ClinicalBERT presence runs and comparison, and parser v1.1 on the extraction Challenge Set | `scripts/nlp/transformers/` |
 
 `baseline_manifest.json` records the input and output hashes of

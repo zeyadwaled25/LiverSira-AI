@@ -39,6 +39,14 @@ data/
    the target-consistency audit and the frozen study-level split
    (`splits.json`). See [NLP workflows](../README.md#nlp-workflows).
 
+5. Optionally, write the liver-only copy of the cleaned CSV
+   (`liver_nlp_liver_only.csv`, where `narrative_clean` keeps only the
+   liver-related text):
+
+   ```powershell
+   python -m scripts.nlp.build_liver_only_dataset
+   ```
+
 The result manifests under `results/nlp/` record SHA-256 values of these
 input files, so a regenerated copy can be checked against them (note the
 line-ending caveat in the main README).

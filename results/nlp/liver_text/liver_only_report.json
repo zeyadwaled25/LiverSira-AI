@@ -1,0 +1,121 @@
+{
+  "liver_text_version": "1.0.0",
+  "parser_version": "1.1.0",
+  "input_sha256": "7bc231b1c2e0504445c83975a914666d1ef1d5754d51d55632df3ba514893c5a",
+  "output_sha256": "420151a7bb3c635ffdc149454cd75d3e3e0d6c1de89ec157627f761a262eb39f",
+  "studies": 9261,
+  "checked_studies": 7871,
+  "empty": {
+    "total": 0,
+    "positive": 0
+  },
+  "chars_kept_share": 0.26153789049926784,
+  "retention": {
+    "diameter": {
+      "stated_in_full": 1223,
+      "lost_in_liver": 0,
+      "lost_ids": []
+    },
+    "segments": {
+      "stated_in_full": 1139,
+      "lost_in_liver": 0,
+      "lost_ids": []
+    },
+    "attenuation": {
+      "stated_in_full": 1240,
+      "lost_in_liver": 0,
+      "lost_ids": []
+    },
+    "count": {
+      "stated_in_full": 406,
+      "lost_in_liver": 0,
+      "lost_ids": []
+    }
+  },
+  "leakage": {
+    "spans_naming_other_organ": 5167,
+    "of_which_with_size": 0,
+    "examples": []
+  },
+  "parser_comparison": {
+    "tallies": {
+      "full": {
+        "presence": {
+          "correct": 649,
+          "abstained": 740,
+          "wrong": 0
+        },
+        "count": {
+          "correct": 195,
+          "abstained": 21,
+          "wrong": 4
+        },
+        "segments": {
+          "correct": 210,
+          "abstained": 4,
+          "wrong": 1
+        },
+        "diameter": {
+          "correct": 220,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "attenuation": {
+          "correct": 214,
+          "abstained": 2,
+          "wrong": 4
+        }
+      },
+      "liver": {
+        "presence": {
+          "correct": 649,
+          "abstained": 740,
+          "wrong": 0
+        },
+        "count": {
+          "correct": 195,
+          "abstained": 21,
+          "wrong": 4
+        },
+        "segments": {
+          "correct": 210,
+          "abstained": 4,
+          "wrong": 1
+        },
+        "diameter": {
+          "correct": 220,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "attenuation": {
+          "correct": 214,
+          "abstained": 2,
+          "wrong": 4
+        }
+      }
+    },
+    "changed": {
+      "presence": {
+        "fixed": 0,
+        "broken": 0
+      },
+      "count": {
+        "fixed": 0,
+        "broken": 0
+      },
+      "segments": {
+        "fixed": 0,
+        "broken": 0
+      },
+      "diameter": {
+        "fixed": 0,
+        "broken": 0
+      },
+      "attenuation": {
+        "fixed": 0,
+        "broken": 0
+      }
+    },
+    "broken_examples": []
+  }
+}
