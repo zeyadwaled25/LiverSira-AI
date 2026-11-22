@@ -24,7 +24,7 @@ from liversira_ai.nlp.schemas.inference_schema import (
     MissingOrUnclearField,
     StudyMetadata,
 )
-from liversira_ai.nlp.parser import PARSER_VERSION, parse_liver_report
+from liversira_ai.nlp.parser_v1_1 import PARSER_VERSION, parse_liver_report
 
 MASTER_RECORDS_PATH = Path("data/processed/nlp/master_records.jsonl")
 OUTPUT_INFERENCE_PATH = Path("data/processed/nlp/baseline_inferences.jsonl")
@@ -167,7 +167,7 @@ def run_baseline_inference(
     manifest = {
         "baseline_version": BASELINE_VERSION,
         "input_field": "reports.narrative_clean",
-        "parser": "liversira_ai.nlp.parser.parse_liver_report",
+        "parser": "liversira_ai.nlp.parser_v1_1.parse_liver_report",
         "parser_version": PARSER_VERSION,
         "split_filter": None if target_split_ids is None else f"{len(target_split_ids)} selected IDs",
         "parser_options": {"include_broad_attenuation_fallback": True},

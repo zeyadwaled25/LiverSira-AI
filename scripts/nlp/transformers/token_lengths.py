@@ -21,7 +21,7 @@ from typing import Any
 
 from liversira_ai.common.provenance import git_commit, sha256_file
 from liversira_ai.nlp.evaluation import GROUND_TRUTH_PATH, SPLITS_PATH, reference_labels
-from liversira_ai.nlp.parser import parse_liver_report
+from liversira_ai.nlp.parser_v1_1 import parse_liver_report
 from liversira_ai.nlp.transformer_models import CHECKPOINTS, MAX_LENGTH, load_tokenizer
 
 PARSER_FIELDS = {

@@ -25,7 +25,7 @@ from liversira_ai.nlp.evaluation import (
     load_jsonl,
     reference_labels,
 )
-from liversira_ai.nlp.parser import PARSER_VERSION
+from liversira_ai.nlp.parser_v1_1 import PARSER_VERSION
 from liversira_ai.nlp.parser_comparison import (
     OUTPUT_DIR,
     RESAMPLES,

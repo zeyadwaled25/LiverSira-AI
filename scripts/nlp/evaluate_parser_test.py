@@ -26,9 +26,9 @@ from liversira_ai.nlp import evaluation as ev
 from liversira_ai.nlp import parser_comparison as pc
 from liversira_ai.nlp.baseline import BASELINE_VERSION, run_baseline_inference
 from liversira_ai.nlp.metrics import format_ci
-from liversira_ai.nlp.parser import PARSER_VERSION
+from liversira_ai.nlp.parser_v1_1 import PARSER_VERSION
 
-FROZEN_CODE = [Path("src/liversira_ai/nlp/parser.py"), Path("src/liversira_ai/nlp/baseline.py")]
+FROZEN_CODE = [Path("src/liversira_ai/nlp/parser_v1_1.py"), Path("src/liversira_ai/nlp/baseline.py")]
 V11_TEST_PATH = Path("results/nlp/predictions/baseline_v1_1_test_inferences.jsonl")
 V11_TEST_MANIFEST = Path("results/nlp/predictions/baseline_v1_1_test_manifest.json")
 METRICS_PATH = pc.OUTPUT_DIR / "test_evaluation.json"

@@ -29,7 +29,7 @@ from liversira_ai.common.provenance import git_commit, sha256_file
 from liversira_ai.nlp import transformer_data as data
 from liversira_ai.nlp.learned_presence import frozen_model
 from liversira_ai.nlp.metrics import format_ci, paired_comparison, presence_report
-from liversira_ai.nlp.parser import parse_liver_report
+from liversira_ai.nlp.parser_v1_1 import parse_liver_report
 
 HERE = Path(__file__).resolve().parent
 RESULTS_ROOT = Path("results/nlp/transformers/presence")

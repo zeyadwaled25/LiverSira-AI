@@ -165,7 +165,7 @@ systems against it.
 
 ### Rule-based parser
 
-`liversira_ai.nlp.parser` is v1.1 (organ-scoped clauses, largest-lesion
+`liversira_ai.nlp.parser_v1_1` is v1.1 (organ-scoped clauses, largest-lesion
 selection, no count imputation, value-level evidence spans);
 `liversira_ai.nlp.parser_v1_0` is the frozen v1.0 used by the audit and kept
 for reproducibility. Golden cases are in
