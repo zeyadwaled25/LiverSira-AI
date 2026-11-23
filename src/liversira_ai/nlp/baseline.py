@@ -15,6 +15,7 @@ from liversira_ai.nlp.schemas.inference_schema import (
     StudyMetadata,
 )
 from liversira_ai.nlp.parser_v1_1 import PARSER_VERSION, parse_liver_report
+from liversira_ai.nlp import parser_v1_2
 
 MASTER_RECORDS_PATH = Path("data/processed/nlp/master_records.jsonl")
 OUTPUT_INFERENCE_PATH = Path("data/processed/nlp/baseline_inferences.jsonl")
@@ -23,9 +24,11 @@ OUTPUT_MANIFEST_PATH = Path("data/processed/nlp/baseline_manifest.json")
 # produced with the frozen liversira_ai.nlp.parser_v1_0.
 BASELINE_VERSION = "rule-based-v1.1.0"
 
-def extract_liver_lesion_features(text: str | None) -> dict[str, Any]:
-    """Extract liver targets while preserving unknown presence as ``None``."""
-    parsed = parse_liver_report(text, include_broad_attenuation_fallback=True)
+def extract_liver_lesion_features(text: str | None, parse=parse_liver_report) -> dict[str, Any]:
+    """Extract liver targets while preserving unknown presence as ``None``.
+
+    ``parse`` defaults to the frozen parser v1.1; see ``extract_liver_lesion_features_v1_2``."""
+    parsed = parse(text, include_broad_attenuation_fallback=True)
     if parsed.presence is False:
         return {
             "has_lesion": False,
@@ -81,6 +84,11 @@ def extract_liver_lesion_features(text: str | None) -> dict[str, Any]:
         "missing_or_unclear": missing,
         "evidence": [item.__dict__ for item in parsed.evidence],
     }
+
+
+def extract_liver_lesion_features_v1_2(text: str | None) -> dict[str, Any]:
+    """Parser v1.2 (rules tuned on 6.2 Train-aug only) in the same output form."""
+    return extract_liver_lesion_features(text, parse=parser_v1_2.parse_liver_report)
 
 
 def run_baseline_inference(
