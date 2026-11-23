@@ -3,12 +3,10 @@
 Both take parser features (``baseline.extract_liver_lesion_features_v1_2``) and
 the model's output in the same field form (``extraction_model.to_parser_fields``).
 
-- ``hybrid_h`` (C5, the primary hybrid): a field the parser leaves empty is
-  taken from the model, whatever the reason it is empty. It ignores the status.
-- ``hybrid_h2`` (C6, exploratory, Amendment 1; never eligible for the Phase 8
-  decision): a field the parser leaves empty is taken from the model only when
-  the parser's status for it is ``unparsed``; ``not_mentioned`` stays empty.
-  On Train-aug it was worse than H (613 vs 934 of 938 fields where they differ).
+- ``hybrid_h`` (C5, the hybrid): a field the parser leaves empty is taken from
+  the model, whatever the reason it is empty. It ignores the parser's status.
+- ``hybrid_h2``: retired by Amendment 3 (it lost to H on Train-aug, 613 vs 934 of
+  938 fields where they differ). Kept only so Amendment 1 can be reproduced.
 
 No thresholds, no averaging: values pass through unchanged.
 """

@@ -20,7 +20,8 @@ standard.
 | Does the liver-only text change the 6.2 gate? | `transformers/extraction/parser_challenge_liver_only.md` |
 | How does the parser do on the liver-only Challenge Set (v2)? | `transformers/extraction/parser_challenge_v2_liver.md` |
 | What will the 6.2 extraction model train on? | `transformers/extraction/extraction_train_v1.md` |
-| Does the 6.2 extraction model beat the parser? | `transformers/extraction/runs/comparison.md` |
+| Does the 6.2 extraction model beat the parser? | `transformers/extraction/runs/comparison.md` (its Validation column uses the old scoring rule; see the next row) |
+| What are the Validation numbers when only verifiable fields are scored (Amendment 3)? | `phase8/validation_rescored.md` |
 | What does the held-out Challenge Set v3 test, and how does the parser do? | `transformers/challenge/extraction_challenge_v3.md`, `transformers/extraction/parser_challenge_v3.md` |
 | Does the per-lesion model fix order and counting? | `transformers/extraction/runs_lesion/comparison.md` |
 | What does parser v1.2 add, and which Train-aug item justifies each rule? | `parser_v1_2/train_aug_report.md` |

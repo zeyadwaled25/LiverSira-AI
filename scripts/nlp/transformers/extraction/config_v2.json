@@ -1,0 +1,42 @@
+{
+  "task": "extraction (Amendment 3: unverifiable fields masked)",
+  "train_data": "data/processed/nlp/extraction/extraction_train_v1.jsonl",
+  "selection_data": "data/processed/nlp/extraction/extraction_val_v1.jsonl",
+  "input": "liver-only text (liversira_ai.nlp.liver_text)",
+  "models": [
+    "clinicalbert"
+  ],
+  "seeds": [
+    13,
+    42,
+    87
+  ],
+  "max_length": 512,
+  "truncation": "head (5 of 11,871 Train + Validation texts exceed 512 tokens)",
+  "epochs": 4,
+  "batch_size": 16,
+  "gradient_accumulation": 1,
+  "eval_batch_size": 64,
+  "learning_rate": 2e-05,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "max_grad_norm": 1.0,
+  "precision": "bf16",
+  "loss": "sum of the four head losses, unweighted",
+  "early_stopping": {
+    "metric": "val_loss",
+    "patience": 1
+  },
+  "hyperparameter_search": "none: the 6.1 setting with batch 16 and up to 4 epochs, fixed before any run",
+  "selection_criteria": {
+    "fixed_before": "the first run of this config (Phase 8 plan, Amendment 3)",
+    "change_from_config_json": "only the loss mask: on real reports with a lesion, a field whose target is null (source value not found in the text) gets no loss, instead of being taught 'unstated'. Data, model, seeds and every other setting are identical.",
+    "model_selection": "epoch with the lowest Validation loss (masked the same way); Challenge Sets are never used to choose",
+    "validation_scoring": "verifiable fields only (train.target_accuracy)",
+    "decision": "none here: the model is a Phase 8 candidate (C3); the 6.2 'adds value' rule on Challenge-A no longer applies",
+    "test": "not read"
+  },
+  "mask_unverifiable": true,
+  "results_root": "results/nlp/transformers/extraction/runs_v2",
+  "models_root": "models/transformers/extraction_v2"
+}

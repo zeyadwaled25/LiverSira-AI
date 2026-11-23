@@ -29,24 +29,32 @@ IGNORE = -100
 
 # ── Encoding ────────────────────────────────────────────────────────────────
 def encode_item(tokenizer, text: str, targets: dict[str, Any], max_length: int) -> dict[str, Any]:
-    """Token ids plus head labels for one item; ``truncated_span`` flags a size span cut off by truncation."""
+    """Token ids plus head labels for one item; ``truncated_span`` flags a size span cut off by truncation.
+
+    Fields listed in ``targets["unverifiable"]`` (Amendment 3) get no label: their
+    loss is masked, so the model is not taught "unstated" where the text may state it.
+    """
+    masked = set(targets.get("unverifiable", ()))
     enc = tokenizer(text, truncation=True, max_length=max_length, return_offsets_mapping=True)
     spans = [tuple(s) for s in targets["diameter_spans"]]
     tags = []
     for start, end in enc["offset_mapping"]:
-        if start == end:  # special token
+        if start == end or "diameter_cm" in masked:  # special token, or no verified size
             tags.append(IGNORE)
         else:
             tags.append(int(any(start < e and end > s for s, e in spans)))
     segments = targets["segments"]
+    count = COUNT_LABELS.index(targets["count"] if targets["count"] is not None else UNSTATED)
+    attenuation = ATTENUATION_LABELS.index(targets["attenuation"] or UNSTATED)
     return {
         "input_ids": enc["input_ids"],
         "attention_mask": enc["attention_mask"],
         "offsets": [tuple(o) for o in enc["offset_mapping"]],
-        "count": COUNT_LABELS.index(targets["count"] if targets["count"] is not None else UNSTATED),
+        "count": IGNORE if "count" in masked else count,
         "segments_stated": float(segments is not None),
+        "segments_mask": 0.0 if "segments" in masked else 1.0,
         "segments": [float(segments is not None and k + 1 in segments) for k in range(N_SEGMENTS)],
-        "attenuation": ATTENUATION_LABELS.index(targets["attenuation"] or UNSTATED),
+        "attenuation": IGNORE if "attenuation" in masked else attenuation,
         "diameter_tags": tags,
         "truncated_span": bool(spans) and 1 not in tags,
     }
@@ -63,6 +71,7 @@ def collate(batch: list[dict[str, Any]], pad_id: int) -> dict[str, torch.Tensor]
         "attention_mask": pad("attention_mask", 0),
         "count": torch.tensor([b["count"] for b in batch]),
         "segments_stated": torch.tensor([b["segments_stated"] for b in batch]),
+        "segments_mask": torch.tensor([b.get("segments_mask", 1.0) for b in batch]),
         "segments": torch.tensor([b["segments"] for b in batch]),
         "attenuation": torch.tensor([b["attenuation"] for b in batch]),
         "diameter_tags": pad("diameter_tags", IGNORE),
@@ -99,18 +108,31 @@ class ExtractionModel(nn.Module):
         }
 
 
+def _ce(logits: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
+    """Cross-entropy over labelled rows; zero (not NaN) when every row is masked."""
+    if not bool((labels != IGNORE).any()):
+        return logits.float().sum() * 0.0
+    return nn.functional.cross_entropy(logits.float(), labels, ignore_index=IGNORE)
+
+
 def losses(outputs: dict[str, torch.Tensor], batch: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
-    """One loss per head; segment bits are scored only where segments are stated."""
-    ce = nn.functional.cross_entropy
+    """One loss per head; segment bits are scored only where segments are stated.
+
+    Masked (unverifiable) fields carry IGNORE labels or a zero segments mask. With no
+    mask the losses are the same as before Amendment 3.
+    """
     bce = nn.functional.binary_cross_entropy_with_logits
     seg_logits = outputs["segments"].float()
     stated = batch["segments_stated"]
+    mask = batch.get("segments_mask", torch.ones_like(stated))
     bits = bce(seg_logits[:, :N_SEGMENTS], batch["segments"], reduction="none").mean(dim=1)
+    stated_loss = bce(seg_logits[:, N_SEGMENTS], stated, reduction="none")
+    used = stated * mask
     return {
-        "count": ce(outputs["count"].float(), batch["count"]),
-        "segments": bce(seg_logits[:, N_SEGMENTS], stated) + (bits * stated).sum() / stated.sum().clamp(min=1),
-        "attenuation": ce(outputs["attenuation"].float(), batch["attenuation"]),
-        "diameter": ce(outputs["diameter"].float().reshape(-1, 2), batch["diameter_tags"].reshape(-1), ignore_index=IGNORE),
+        "count": _ce(outputs["count"], batch["count"]),
+        "segments": (stated_loss * mask).sum() / mask.sum().clamp(min=1) + (bits * used).sum() / used.sum().clamp(min=1),
+        "attenuation": _ce(outputs["attenuation"], batch["attenuation"]),
+        "diameter": _ce(outputs["diameter"].reshape(-1, 2), batch["diameter_tags"].reshape(-1)),
     }
 
 

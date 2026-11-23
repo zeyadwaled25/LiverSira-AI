@@ -14,10 +14,10 @@ Every candidate reads the liver-only text `extract_liver_text(text).text` (liver
 |---|---|---|
 | C1 | Parser v1.1 | `parser_v1_1.py` (frozen since Phase 5) |
 | C2 | Parser v1.2 | `parser_v1_2.py` + `parser_v1_2_rules.py`: 14 rules, each justified by a Train-aug item (`results/nlp/parser_v1_2/train_aug_report.md`) |
-| C3 | First extraction model, ClinicalBERT, seeds 13 / 42 / 87, trained with unverifiable fields masked (Amendment 3) | `config_v2.json`, `models/transformers/extraction_v2/clinicalbert/seed*/model.safetensors` |
+| C3 | First extraction model (6.2), ClinicalBERT, seeds 13 / 42 / 87 | `config.json`, `models/transformers/extraction/clinicalbert/seed*/model.safetensors` |
 | C5 | Hybrid H = C2 + C3 (rule in §4), one run per C3 seed. **The hybrid.** | `hybrid.py` (`hybrid_h`) |
 
-Retired by Amendment 3, to keep the comparison simple: C4 (per-lesion model; it failed its own registered rule) and C6 (hybrid H2; it lost to H on Train-aug). The 6.2 first model trained without the mask is superseded by C3 above. Their results stay in the repository; they are not run in Phase 8.
+Retired by Amendment 3, to keep the comparison simple: C4 (per-lesion model; it failed its own registered rule) and C6 (hybrid H2; it lost to H on Train-aug). The masked retraining of C3 (Amendment 3) did not meet its condition and is reported only. Their results stay in the repository; they are not run in Phase 8.
 
 Phase 7 (LLM extraction) candidates may join this list only by an amendment. The amendment must freeze their prompt, model id and settings the same way, and it must be made before the Phase 8 run starts (`freeze_candidates` refuses once `results/nlp/phase8/run_started.json` exists). Nobody who develops a candidate reads Challenge-B, so Challenge-B may be frozen before or after that amendment. After the run starts, the list is closed.
 
@@ -178,3 +178,15 @@ The evidence is from Train and Validation only. Challenge-A, Challenge-B and Tes
 6. **Presence.** Registered in §8.
 
 **Timing.** Made before Challenge-B was written, and before any candidate read Test.
+
+**Outcome of change 2 (recorded after the masked runs).** The condition was not met. On Validation (verifiable fields, lesion-positive), the masked model beside the 6.2 model was:
+
+| Seed | count | segments | attenuation | diameter |
+|---|---|---|---|---|
+| 13 | 1.000 vs 1.000 | 0.995 vs 0.974 | 1.000 vs 1.000 | 1.000 vs 1.000 |
+| 42 | 0.994 vs 1.000 | 0.995 vs 0.974 | 0.995 vs 1.000 | 1.000 vs 1.000 |
+| 87 | **0.977** vs 1.000 | 0.985 vs 0.974 | 1.000 vs 1.000 | 1.000 vs 1.000 |
+
+Seed 87 is below 0.990 on count: it reads "five liver lesions" as 4. Masking removes about 15% of the real count labels from training. As registered, **C3 stays the 6.2 model**. The masked model (`config_v2.json`, `runs_v2/`) is reported only, and it is not a candidate.
+
+Hybrid H gives the same Validation accuracy with either model (count 1.000, segments 0.995, attenuation 0.986, diameter 1.000), because H takes the parser's value whenever the parser reads one. The decision was taken by the rule alone.

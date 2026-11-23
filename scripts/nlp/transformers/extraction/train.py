@@ -32,6 +32,7 @@ from liversira_ai.nlp.extraction_model import (
     losses,
     to_parser_fields,
 )
+from liversira_ai.nlp.extraction_targets import unverifiable_fields
 from liversira_ai.nlp.liver_text import extract_liver_text
 from liversira_ai.nlp.transformer_models import CHECKPOINTS, load_tokenizer
 from scripts.nlp.transformers.extraction import build_challenge_set as cs
@@ -70,14 +71,22 @@ def field_correct(field: str, predicted: Any, target: Any) -> bool:
 
 
 def target_accuracy(items: list[dict[str, Any]], predictions: list[dict[str, Any]]) -> dict[str, Any]:
-    """Accuracy per field on all items and on lesion-positive items (target count is not "0")."""
+    """Accuracy per field on all items and on lesion-positive items (target count is not "0").
+
+    A field is scored only where its target is verifiable (Amendment 3): on a real report
+    with a lesion, a null target means "not checked against the text", so it is left out
+    and counted under ``unverifiable``. ``n_<field>`` is the number of items scored.
+    """
     out: dict[str, Any] = {}
     for subset, keep in (("all", lambda t: True), ("positive", lambda t: t["count"] != "0")):
         idx = [i for i, item in enumerate(items) if keep(item["targets"])]
-        out[subset] = {"n": len(idx)}
+        out[subset] = {"n": len(idx), "unverifiable": {}}
         for field in TARGET_FIELDS:
-            correct = [field_correct(field, predictions[i][field], items[i]["targets"][field]) for i in idx]
-            out[subset][field] = round(float(np.mean(correct)), 6) if idx else None
+            scored = [i for i in idx if field not in unverifiable_fields(items[i])]
+            correct = [field_correct(field, predictions[i][field], items[i]["targets"][field]) for i in scored]
+            out[subset][field] = round(float(np.mean(correct)), 6) if scored else None
+            out[subset][f"n_{field}"] = len(scored)
+            out[subset]["unverifiable"][field] = len(idx) - len(scored)
     return out
 
 
@@ -132,15 +141,26 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
             handle.write(json.dumps(row) + "\n")
 
 
+def with_mask(item: dict[str, Any], mask: bool) -> dict[str, Any]:
+    """Targets for encoding; with ``mask`` the unverifiable fields are listed so their loss is masked."""
+    if not mask:
+        return item["targets"]
+    return {**item["targets"], "unverifiable": unverifiable_fields(item)}
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
-    config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    config_path = Path(args.config) if getattr(args, "config", None) else CONFIG_PATH
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    mask = bool(config.get("mask_unverifiable", False))
     if args.epochs:
         config["epochs"] = args.epochs
     checkpoint = CHECKPOINTS[args.model]
     if args.limit and not args.output_root:
         raise SystemExit("--limit is for smoke tests; pass --output-root so results/ is not touched")
-    results_root = Path(args.output_root) / "results" if args.output_root else RESULTS_ROOT
-    models_root = Path(args.output_root) / "models" if args.output_root else MODELS_ROOT
+    default_results = Path(config.get("results_root", RESULTS_ROOT))
+    default_models = Path(config.get("models_root", MODELS_ROOT))
+    results_root = Path(args.output_root) / "results" if args.output_root else default_results
+    models_root = Path(args.output_root) / "models" if args.output_root else default_models
     out_dir = results_root / args.model / f"seed{args.seed}"
     weights_dir = models_root / args.model / f"seed{args.seed}"
     if (out_dir / "run_manifest.json").exists() and not args.overwrite:
@@ -162,8 +182,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     max_length = config["max_length"]
     encode = partial(encode_item, tokenizer, max_length=max_length)
     empty = {"count": None, "segments": None, "attenuation": None, "diameter_cm": None, "diameter_spans": []}
-    train_enc = [encode(i["text"], i["targets"]) for i in train]
-    val_enc = [encode(i["text"], i["targets"]) for i in val]
+    train_enc = [encode(i["text"], with_mask(i, mask)) for i in train]
+    val_enc = [encode(i["text"], with_mask(i, mask)) for i in val]
     v2_enc = [encode(r["text"], empty) for r in v2]
     distractor_enc = [encode(r["text"], empty) for r in distractors]
 
@@ -257,10 +277,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "model": args.model,
         "checkpoint": {"repo_id": checkpoint.repo_id, "revision": checkpoint.revision, "lowercase": checkpoint.lowercase},
         "seed": args.seed,
+        "config_path": config_path.as_posix(),
         "config": config,
         "smoke_test_limit": args.limit,
         "data": {
             "train": len(train), "val": len(val), "challenge_v2_liver": len(v2), "challenge_v1_distractor": len(distractors),
+            "masked_unverifiable_fields": {"train": sum(len(unverifiable_fields(i)) for i in train) if mask else 0,
+                                           "val": sum(len(unverifiable_fields(i)) for i in val) if mask else 0},
             "train_truncated_spans": sum(e["truncated_span"] for e in train_enc),
             "val_truncated_spans": sum(e["truncated_span"] for e in val_enc),
             "test_policy": "Test was not read.",
@@ -298,6 +321,7 @@ def main() -> None:
     parser.add_argument("--limit", type=int, help="subsample each set (smoke tests only)")
     parser.add_argument("--output-root", help="write results/ and models/ under this directory instead")
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--config", help="config file (default: config.json); config_v2.json masks unverifiable fields")
     print(json.dumps(run(parser.parse_args()), indent=2))
 
 

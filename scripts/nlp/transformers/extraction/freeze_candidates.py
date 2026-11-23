@@ -13,7 +13,7 @@ Hashes: text files are hashed after normalizing CRLF to LF, so checkouts with
 core.autocrlf do not change them; binary files (weights) are hashed as raw
 bytes. The original freeze (commit 9b088a8) hashed raw bytes for every file.
 A re-freeze needs a matching amendment in the analysis plan and refuses to run
-once Challenge-B has been frozen.
+once the Phase 8 run has started (results/nlp/phase8/run_started.json).
 
 The Phase 8 run must call ``check()`` first and stop on any mismatch.
 """
@@ -30,6 +30,8 @@ from liversira_ai.common.provenance import git_commit, sha256_file
 
 FREEZE_PATH = Path("results/nlp/phase8/candidates_freeze.json")
 CHALLENGE_B_FREEZE = Path("results/nlp/phase8/challenge_b_freeze.json")
+# Written by the Phase 8 run when it starts; after that the candidate list is closed (plan §2, Amendment 3).
+PHASE8_RUN_MARKER = Path("results/nlp/phase8/run_started.json")
 TEXT_SUFFIXES = {".py", ".md", ".json", ".jsonl", ".txt", ".csv", ".toml", ".yaml", ".yml", ".cfg", ".ini"}
 HASH_METHOD = "sha256; text files (by suffix) after CRLF->LF normalization, other files raw bytes"
 ORIGINAL_FREEZE = {"commit": "9b088a8", "hash_method": "sha256 of raw bytes for every file (before .gitattributes)"}
@@ -52,19 +54,24 @@ CANDIDATES: dict[str, dict[str, Any]] = {
     "C2": {"name": "parser v1.2", "files": ["src/liversira_ai/nlp/parser_v1_2.py",
                                             "src/liversira_ai/nlp/parser_v1_2_rules.py",
                                             "results/nlp/parser_v1_2/train_aug_report.json"]},
-    "C3": {"name": "first extraction model (ClinicalBERT)", "config": "scripts/nlp/transformers/extraction/config.json",
+    "C3": {"name": "first extraction model (ClinicalBERT, 6.2); the masked retraining did not meet its "
+                   "Amendment 3 condition", "config": "scripts/nlp/transformers/extraction/config.json",
            "code": ["src/liversira_ai/nlp/extraction_model.py"],
            "weights": "models/transformers/extraction/clinicalbert/seed{seed}",
            "run": "results/nlp/transformers/extraction/runs/clinicalbert/seed{seed}/run_manifest.json"},
-    "C4": {"name": "per-lesion model (ClinicalBERT)", "config": "scripts/nlp/transformers/extraction/config_lesion.json",
-           "code": ["src/liversira_ai/nlp/lesion_model.py", "src/liversira_ai/nlp/lesion_targets.py"],
-           "weights": "models/transformers/extraction_lesion/clinicalbert/seed{seed}",
-           "run": "results/nlp/transformers/extraction/runs_lesion/clinicalbert/seed{seed}/run_manifest.json"},
-    "C5": {"name": "hybrid H = C2, falling back to C3 per field (analysis plan §4); the primary hybrid",
+    "C5": {"name": "hybrid H = C2, falling back to C3 per field (analysis plan §4)",
            "files": ["src/liversira_ai/nlp/hybrid.py"], "uses": ["C2", "C3"]},
-    "C6": {"name": "hybrid H2, exploratory (Amendment 1); appendix only, never eligible",
-           "files": ["src/liversira_ai/nlp/hybrid.py", "results/nlp/phase8/amendment1_train_aug.json"],
-           "uses": ["C2", "C3"]},
+    "P1": {"name": "presence: TF-IDF + LR, frozen Phase 5 model (default)",
+           "files": ["src/liversira_ai/nlp/learned_presence.py",
+                     "results/nlp/final_test/learned_presence_word_logreg_final.joblib",
+                     "results/nlp/final_test/learned_presence_word_logreg_final_config.json",
+                     "results/nlp/final_test/learned_presence_word_logreg_final_model_manifest.json",
+                     "results/nlp/predictions/learned_presence_test_predictions.jsonl"]},
+    "P2": {"name": "presence: ClinicalBERT", "config": "scripts/nlp/transformers/presence/config.json",
+           "code": ["scripts/nlp/transformers/presence/train.py", "src/liversira_ai/nlp/transformer_models.py"],
+           "weights": "models/transformers/presence/clinicalbert/seed{seed}",
+           "weight_files": ("model.safetensors", "config.json", "tokenizer.json", "tokenizer_config.json"),
+           "run": "results/nlp/transformers/presence/clinicalbert/seed{seed}/run_manifest.json"},
 }
 WEIGHT_FILES = ("model.safetensors", "tokenizer.json", "tokenizer_config.json")
 
@@ -98,7 +105,7 @@ def collect() -> dict[str, Any]:
             entry["seeds"] = {}
             for seed in SEEDS:
                 folder = Path(spec["weights"].format(seed=seed))
-                weights = [(folder / f).as_posix() for f in WEIGHT_FILES]
+                weights = [(folder / f).as_posix() for f in spec.get("weight_files", WEIGHT_FILES)]
                 run = json.loads(Path(spec["run"].format(seed=seed)).read_text(encoding="utf-8"))
                 weight_hash = sha256_file(folder / "model.safetensors")
                 if weight_hash != run["weights"]["sha256"]:
@@ -131,8 +138,8 @@ def main() -> None:
     if FREEZE_PATH.exists():
         if args.amend is None:
             raise SystemExit(f"{FREEZE_PATH} exists; re-freeze only with --amend N after amending the plan")
-        if CHALLENGE_B_FREEZE.exists():
-            raise SystemExit("Challenge-B is frozen; the candidates can no longer be re-frozen")
+        if PHASE8_RUN_MARKER.exists():
+            raise SystemExit("the Phase 8 run has started; the candidate list is closed")
         if not args.reason or f"### Amendment {args.amend} " not in PLAN.read_text(encoding="utf-8"):
             raise SystemExit(f"--reason is required and the plan must contain '### Amendment {args.amend} '")
         old = json.loads(FREEZE_PATH.read_text(encoding="utf-8"))

@@ -114,8 +114,17 @@ def test_field_correct_and_accuracy():
     preds = [{"count": "0", "segments": None, "attenuation": None, "diameter_cm": None},
              {"count": "2", "segments": [5], "attenuation": "hypoattenuating", "diameter_cm": 3.1}]
     acc = target_accuracy(items, preds)
-    assert acc["all"]["segments"] == 0.5 and acc["positive"] == {
+    assert acc["all"]["segments"] == 0.5
+    assert {k: acc["positive"][k] for k in ("n", "count", "segments", "attenuation", "diameter_cm")} == {
         "n": 1, "count": 1.0, "segments": 0.0, "attenuation": 1.0, "diameter_cm": 1.0}
+    # A real report with a lesion and a null count target: the count is unverifiable and not scored.
+    items.append({"category": "real", "targets": {"count": None, "segments": [4], "attenuation": None,
+                                                  "diameter_cm": 2.0}})
+    preds.append({"count": "7", "segments": [4], "attenuation": "hypoattenuating", "diameter_cm": 2.0})
+    acc = target_accuracy(items, preds)
+    assert acc["positive"]["n_count"] == 1 and acc["positive"]["unverifiable"] == {
+        "count": 1, "segments": 0, "attenuation": 1, "diameter_cm": 0}
+    assert acc["positive"]["count"] == 1.0 and acc["positive"]["n_segments"] == 2
 
 
 def test_parser_targets_mapping():
@@ -125,3 +134,68 @@ def test_parser_targets_mapping():
     t = parser_targets({"has_lesion": True, "lesion_count": 12, "location_segments": [7, 6],
                         "attenuation": "hypoattenuating", "derived_max_diameter_cm": 2.0})
     assert t == {"count": "10+", "segments": [6, 7], "attenuation": "hypoattenuating", "diameter_cm": 2.0}
+
+
+# ── Amendment 3: unverifiable fields ────────────────────────────────────────
+def test_unverifiable_fields_only_for_real_reports_with_a_lesion():
+    from liversira_ai.nlp.extraction_targets import unverifiable_fields
+
+    targets = {"count": None, "segments": [5], "attenuation": None, "diameter_cm": 3.1, "diameter_spans": []}
+    assert unverifiable_fields({"category": "real", "subtype": "real", "targets": targets}) == ["count", "attenuation"]
+    assert unverifiable_fields({"category": "ocr", "subtype": "real", "targets": targets}) == ["count", "attenuation"]
+    assert unverifiable_fields({"category": "count", "subtype": "vague", "targets": targets}) == []  # by construction
+    assert unverifiable_fields({"category": "ocr", "subtype": "count/vague", "targets": targets}) == []
+    negative = {**targets, "count": "0", "segments": None, "diameter_cm": None}
+    assert unverifiable_fields({"category": "real", "targets": negative}) == []
+
+
+def test_masked_fields_carry_no_label_and_no_loss():
+    import torch
+
+    from liversira_ai.nlp import extraction_model as em
+
+    class Tok:
+        pad_token_id = 0
+
+        def __call__(self, text, truncation=True, max_length=512, return_offsets_mapping=True):
+            import re
+            pieces = [(m.start(), m.end()) for m in re.finditer(r"\S+", text)]
+            offsets = [(0, 0), *pieces, (0, 0)]
+            return {"input_ids": list(range(1, len(offsets) + 1)), "attention_mask": [1] * len(offsets),
+                    "offset_mapping": offsets}
+
+    text = "A large mass of 9.6 x 6.8 cm and six smaller lesions."
+    targets = {"count": None, "segments": None, "attenuation": None, "diameter_cm": None, "diameter_spans": []}
+    masked = em.encode_item(Tok(), text, {**targets, "unverifiable": ["count", "segments", "attenuation", "diameter_cm"]}, 64)
+    plain = em.encode_item(Tok(), text, targets, 64)
+    assert masked["count"] == em.IGNORE and masked["attenuation"] == em.IGNORE and masked["segments_mask"] == 0.0
+    assert set(masked["diameter_tags"]) == {em.IGNORE}
+    assert plain["count"] == em.COUNT_LABELS.index(em.UNSTATED) and plain["segments_mask"] == 1.0
+
+    batch = em.collate([masked], pad_id=0)
+    width = batch["input_ids"].shape[1]
+    out = {"count": torch.randn(1, len(em.COUNT_LABELS), requires_grad=True), "segments": torch.randn(1, 9),
+           "attenuation": torch.randn(1, len(em.ATTENUATION_LABELS)), "diameter": torch.randn(1, width, 2)}
+    parts = em.losses(out, batch)
+    assert all(torch.isfinite(v) and float(v) == 0.0 for v in parts.values())
+
+
+def test_losses_without_mask_are_unchanged():
+    import torch
+
+    from liversira_ai.nlp import extraction_model as em
+
+    torch.manual_seed(0)
+    batch = {"count": torch.tensor([1, 3]), "attenuation": torch.tensor([0, 3]),
+             "segments_stated": torch.tensor([1.0, 0.0]), "segments": torch.rand(2, 8).round(),
+             "diameter_tags": torch.tensor([[em.IGNORE, 1, 0], [em.IGNORE, 0, 0]])}
+    out = {"count": torch.randn(2, len(em.COUNT_LABELS)), "segments": torch.randn(2, 9),
+           "attenuation": torch.randn(2, len(em.ATTENUATION_LABELS)), "diameter": torch.randn(2, 3, 2)}
+    ce, bce = torch.nn.functional.cross_entropy, torch.nn.functional.binary_cross_entropy_with_logits
+    bits = bce(out["segments"][:, :8], batch["segments"], reduction="none").mean(dim=1)
+    expected = {"count": ce(out["count"], batch["count"]), "attenuation": ce(out["attenuation"], batch["attenuation"]),
+                "segments": bce(out["segments"][:, 8], batch["segments_stated"]) + bits[0],
+                "diameter": ce(out["diameter"].reshape(-1, 2), batch["diameter_tags"].reshape(-1), ignore_index=em.IGNORE)}
+    parts = em.losses(out, batch)
+    for k, v in expected.items():
+        assert torch.allclose(parts[k], v), k

@@ -1,0 +1,1754 @@
+{
+  "val": {
+    "all": {
+      "n": 1389,
+      "unverifiable": {
+        "count": 46,
+        "segments": 24,
+        "attenuation": 1,
+        "diameter_cm": 0
+      },
+      "count": 0.997022,
+      "n_count": 1343,
+      "segments": 0.997802,
+      "n_segments": 1365,
+      "attenuation": 1.0,
+      "n_attenuation": 1388,
+      "diameter_cm": 1.0,
+      "n_diameter_cm": 1389
+    },
+    "positive": {
+      "n": 220,
+      "unverifiable": {
+        "count": 46,
+        "segments": 24,
+        "attenuation": 1,
+        "diameter_cm": 0
+      },
+      "count": 0.977011,
+      "n_count": 174,
+      "segments": 0.984694,
+      "n_segments": 196,
+      "attenuation": 1.0,
+      "n_attenuation": 219,
+      "diameter_cm": 1.0,
+      "n_diameter_cm": 220
+    }
+  },
+  "challenge_v2_liver": {
+    "subtypes": [
+      {
+        "category": "control",
+        "subtype": "canonical",
+        "n": 200,
+        "targets": [
+          "lesion_count",
+          "location_segments",
+          "derived_max_diameter_cm",
+          "attenuation"
+        ],
+        "presence_detected": 200,
+        "fields": {
+          "lesion_count": {
+            "estimate": 0.905,
+            "ci_low": 0.86,
+            "ci_high": 0.945,
+            "n": 200,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 19
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 200,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 200,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 200,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 0.905
+      },
+      {
+        "category": "count_format",
+        "subtype": "digits",
+        "n": 40,
+        "targets": [
+          "lesion_count"
+        ],
+        "presence_detected": 40,
+        "fields": {
+          "lesion_count": {
+            "estimate": 0.85,
+            "ci_low": 0.725,
+            "ci_high": 0.95,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 6
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 0.85
+      },
+      {
+        "category": "count_format",
+        "subtype": "total_of",
+        "n": 40,
+        "targets": [
+          "lesion_count"
+        ],
+        "presence_detected": 40,
+        "fields": {
+          "lesion_count": {
+            "estimate": 0.475,
+            "ci_low": 0.325,
+            "ci_high": 0.625,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 21
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 0.475
+      },
+      {
+        "category": "count_format",
+        "subtype": "enumerated",
+        "n": 40,
+        "targets": [
+          "lesion_count"
+        ],
+        "presence_detected": 40,
+        "fields": {
+          "lesion_count": {
+            "estimate": 0.55,
+            "ci_low": 0.4,
+            "ci_high": 0.7,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 18
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 0.55
+      },
+      {
+        "category": "count_format",
+        "subtype": "solitary",
+        "n": 40,
+        "targets": [
+          "lesion_count"
+        ],
+        "presence_detected": 40,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "count_format",
+        "subtype": "unquantified",
+        "n": 40,
+        "targets": [
+          "lesion_count"
+        ],
+        "presence_detected": 40,
+        "fields": {
+          "lesion_count": {
+            "estimate": 0.025,
+            "ci_low": 0.0,
+            "ci_high": 0.075,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 39
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 40,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 0.025
+      },
+      {
+        "category": "size_format",
+        "subtype": "mm",
+        "n": 34,
+        "targets": [
+          "derived_max_diameter_cm"
+        ],
+        "presence_detected": 34,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "size_format",
+        "subtype": "by",
+        "n": 34,
+        "targets": [
+          "derived_max_diameter_cm"
+        ],
+        "presence_detected": 34,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "size_format",
+        "subtype": "single_dimension",
+        "n": 33,
+        "targets": [
+          "derived_max_diameter_cm"
+        ],
+        "presence_detected": 33,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "size_format",
+        "subtype": "three_dimensions",
+        "n": 33,
+        "targets": [
+          "derived_max_diameter_cm"
+        ],
+        "presence_detected": 33,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "size_format",
+        "subtype": "centimeters",
+        "n": 33,
+        "targets": [
+          "derived_max_diameter_cm"
+        ],
+        "presence_detected": 33,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "size_format",
+        "subtype": "up_to",
+        "n": 33,
+        "targets": [
+          "derived_max_diameter_cm"
+        ],
+        "presence_detected": 33,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "largest_order",
+        "subtype": "last_keyword",
+        "n": 67,
+        "targets": [
+          "location_segments",
+          "derived_max_diameter_cm",
+          "attenuation"
+        ],
+        "presence_detected": 67,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 0.6716417910447762,
+            "ci_low": 0.5522388059701493,
+            "ci_high": 0.7761194029850746,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 22
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 0.9552238805970149,
+            "ci_low": 0.8955223880597015,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 3
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 0.6567164179104478
+      },
+      {
+        "category": "largest_order",
+        "subtype": "last_implicit",
+        "n": 67,
+        "targets": [
+          "location_segments",
+          "derived_max_diameter_cm",
+          "attenuation"
+        ],
+        "presence_detected": 67,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 0.835820895522388,
+            "ci_low": 0.746268656716418,
+            "ci_high": 0.9253731343283582,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 11
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 0.9402985074626866,
+            "ci_low": 0.8805970149253731,
+            "ci_high": 0.9850746268656716,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 4
+          },
+          "attenuation": {
+            "estimate": 0.8805970149253731,
+            "ci_low": 0.8059701492537313,
+            "ci_high": 0.9552238805970149,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 8
+          }
+        },
+        "all_fields_correct": 0.746268656716418
+      },
+      {
+        "category": "largest_order",
+        "subtype": "middle_implicit",
+        "n": 66,
+        "targets": [
+          "location_segments",
+          "derived_max_diameter_cm",
+          "attenuation"
+        ],
+        "presence_detected": 66,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 66,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 0.9696969696969697,
+            "ci_low": 0.9242424242424242,
+            "ci_high": 1.0,
+            "n": 66,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 2
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 66,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 0.696969696969697,
+            "ci_low": 0.5909090909090909,
+            "ci_high": 0.803030303030303,
+            "n": 66,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 20
+          }
+        },
+        "all_fields_correct": 0.6666666666666666
+      },
+      {
+        "category": "segment_format",
+        "subtype": "roman",
+        "n": 34,
+        "targets": [
+          "location_segments"
+        ],
+        "presence_detected": 34,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 0.9705882352941176,
+            "ci_low": 0.9117647058823529,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 1
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 0.9705882352941176
+      },
+      {
+        "category": "segment_format",
+        "subtype": "subsegment",
+        "n": 34,
+        "targets": [
+          "location_segments"
+        ],
+        "presence_detected": 34,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 34,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "segment_format",
+        "subtype": "couinaud",
+        "n": 33,
+        "targets": [
+          "location_segments"
+        ],
+        "presence_detected": 33,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "segment_format",
+        "subtype": "ordinal",
+        "n": 33,
+        "targets": [
+          "location_segments"
+        ],
+        "presence_detected": 33,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "segment_format",
+        "subtype": "hyphen",
+        "n": 33,
+        "targets": [
+          "location_segments"
+        ],
+        "presence_detected": 33,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "segment_format",
+        "subtype": "lobe_only",
+        "n": 33,
+        "targets": [
+          "location_segments"
+        ],
+        "presence_detected": 33,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 33,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "attenuation_format",
+        "subtype": "dense",
+        "n": 50,
+        "targets": [
+          "attenuation"
+        ],
+        "presence_detected": 50,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "attenuation_format",
+        "subtype": "low_high",
+        "n": 50,
+        "targets": [
+          "attenuation"
+        ],
+        "presence_detected": 50,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "attenuation_format",
+        "subtype": "comparative",
+        "n": 50,
+        "targets": [
+          "attenuation"
+        ],
+        "presence_detected": 50,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "attenuation_format",
+        "subtype": "separate_sentence",
+        "n": 50,
+        "targets": [
+          "attenuation"
+        ],
+        "presence_detected": 50,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 50,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "ocr_noise",
+        "subtype": "canonical",
+        "n": 200,
+        "targets": [
+          "lesion_count",
+          "location_segments",
+          "derived_max_diameter_cm",
+          "attenuation"
+        ],
+        "presence_detected": 200,
+        "fields": {
+          "lesion_count": {
+            "estimate": 0.84,
+            "ci_low": 0.79,
+            "ci_high": 0.89,
+            "n": 200,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 32
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 200,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 200,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 0.98,
+            "ci_low": 0.96,
+            "ci_high": 0.995,
+            "n": 200,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 4
+          }
+        },
+        "all_fields_correct": 0.825
+      },
+      {
+        "category": "paraphrase",
+        "subtype": "single",
+        "n": 100,
+        "targets": [
+          "lesion_count",
+          "location_segments",
+          "derived_max_diameter_cm",
+          "attenuation"
+        ],
+        "presence_detected": 100,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 100,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 100,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 100,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 100,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "paraphrase",
+        "subtype": "multiple",
+        "n": 100,
+        "targets": [
+          "lesion_count",
+          "location_segments",
+          "derived_max_diameter_cm",
+          "attenuation"
+        ],
+        "presence_detected": 100,
+        "fields": {
+          "lesion_count": {
+            "estimate": 0.86,
+            "ci_low": 0.79,
+            "ci_high": 0.92,
+            "n": 100,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 14
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 100,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 100,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 100,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 0.86
+      }
+    ],
+    "gate": {
+      "lesion_count": {
+        "pooled_targeted_accuracy": {
+          "estimate": 0.7833333333333333,
+          "ci_low": 0.75,
+          "ci_high": 0.815,
+          "n": 600,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 130
+        },
+        "control_accuracy": {
+          "estimate": 0.905,
+          "ci_low": 0.86,
+          "ci_high": 0.945,
+          "n": 200,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 19
+        },
+        "failing_subtypes": [
+          "count_format/digits",
+          "count_format/total_of",
+          "count_format/enumerated",
+          "count_format/unquantified",
+          "ocr_noise/canonical",
+          "paraphrase/multiple"
+        ],
+        "needs_model": true
+      },
+      "location_segments": {
+        "pooled_targeted_accuracy": {
+          "estimate": 0.955,
+          "ci_low": 0.94,
+          "ci_high": 0.96875,
+          "n": 800,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 36
+        },
+        "control_accuracy": {
+          "estimate": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0,
+          "n": 200,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "failing_subtypes": [
+          "largest_order/last_keyword",
+          "largest_order/last_implicit"
+        ],
+        "needs_model": true
+      },
+      "derived_max_diameter_cm": {
+        "pooled_targeted_accuracy": {
+          "estimate": 0.99125,
+          "ci_low": 0.98375,
+          "ci_high": 0.9975,
+          "n": 800,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 7
+        },
+        "control_accuracy": {
+          "estimate": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0,
+          "n": 200,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "failing_subtypes": [],
+        "needs_model": false
+      },
+      "attenuation": {
+        "pooled_targeted_accuracy": {
+          "estimate": 0.96,
+          "ci_low": 0.94625,
+          "ci_high": 0.97375,
+          "n": 800,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 32
+        },
+        "control_accuracy": {
+          "estimate": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0,
+          "n": 200,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "failing_subtypes": [
+          "largest_order/last_implicit",
+          "largest_order/middle_implicit"
+        ],
+        "needs_model": true
+      }
+    }
+  },
+  "challenge_v1_distractor_liver_only": {
+    "subtypes": [
+      {
+        "category": "distractor",
+        "subtype": "same_sentence",
+        "n": 67,
+        "targets": [
+          "lesion_count",
+          "derived_max_diameter_cm",
+          "location_segments"
+        ],
+        "presence_detected": 67,
+        "fields": {
+          "lesion_count": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 1.0
+      },
+      {
+        "category": "distractor",
+        "subtype": "preceding_sentence",
+        "n": 67,
+        "targets": [
+          "lesion_count",
+          "derived_max_diameter_cm"
+        ],
+        "presence_detected": 67,
+        "fields": {
+          "lesion_count": {
+            "estimate": 0.8955223880597015,
+            "ci_low": 0.8208955223880597,
+            "ci_high": 0.9552238805970149,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 7
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 67,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 0.8955223880597015
+      },
+      {
+        "category": "distractor",
+        "subtype": "lymph_node",
+        "n": 66,
+        "targets": [
+          "lesion_count",
+          "derived_max_diameter_cm"
+        ],
+        "presence_detected": 66,
+        "fields": {
+          "lesion_count": {
+            "estimate": 0.8333333333333334,
+            "ci_low": 0.7424242424242424,
+            "ci_high": 0.9242424242424242,
+            "n": 66,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 11
+          },
+          "location_segments": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 66,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          },
+          "derived_max_diameter_cm": {
+            "estimate": 0.6515151515151515,
+            "ci_low": 0.5303030303030303,
+            "ci_high": 0.7575757575757576,
+            "n": 66,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 23
+          },
+          "attenuation": {
+            "estimate": 1.0,
+            "ci_low": 1.0,
+            "ci_high": 1.0,
+            "n": 66,
+            "valid_resamples": 2000,
+            "abstained": 0,
+            "wrong": 0
+          }
+        },
+        "all_fields_correct": 0.5
+      }
+    ],
+    "gate": {
+      "lesion_count": {
+        "pooled_targeted_accuracy": {
+          "estimate": 0.91,
+          "ci_low": 0.87,
+          "ci_high": 0.945,
+          "n": 200,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 18
+        },
+        "control_accuracy": {
+          "estimate": null,
+          "ci_low": null,
+          "ci_high": null,
+          "n": 0,
+          "valid_resamples": 0,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "failing_subtypes": [
+          "distractor/preceding_sentence",
+          "distractor/lymph_node"
+        ],
+        "needs_model": true
+      },
+      "location_segments": {
+        "pooled_targeted_accuracy": {
+          "estimate": 1.0,
+          "ci_low": 1.0,
+          "ci_high": 1.0,
+          "n": 67,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "control_accuracy": {
+          "estimate": null,
+          "ci_low": null,
+          "ci_high": null,
+          "n": 0,
+          "valid_resamples": 0,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "failing_subtypes": [],
+        "needs_model": false
+      },
+      "derived_max_diameter_cm": {
+        "pooled_targeted_accuracy": {
+          "estimate": 0.885,
+          "ci_low": 0.84,
+          "ci_high": 0.925,
+          "n": 200,
+          "valid_resamples": 2000,
+          "abstained": 0,
+          "wrong": 23
+        },
+        "control_accuracy": {
+          "estimate": null,
+          "ci_low": null,
+          "ci_high": null,
+          "n": 0,
+          "valid_resamples": 0,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "failing_subtypes": [
+          "distractor/lymph_node"
+        ],
+        "needs_model": true
+      },
+      "attenuation": {
+        "pooled_targeted_accuracy": {
+          "estimate": null,
+          "ci_low": null,
+          "ci_high": null,
+          "n": 0,
+          "valid_resamples": 0,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "control_accuracy": {
+          "estimate": null,
+          "ci_low": null,
+          "ci_high": null,
+          "n": 0,
+          "valid_resamples": 0,
+          "abstained": 0,
+          "wrong": 0
+        },
+        "failing_subtypes": [],
+        "needs_model": false
+      }
+    }
+  }
+}

@@ -124,3 +124,24 @@ def targets_from_expected(expected: dict[str, Any], diameter_spans: list[tuple[i
         "diameter_cm": expected.get("derived_max_diameter_cm") if diameter_spans else None,
         "diameter_spans": diameter_spans,
     }
+
+
+TARGET_FIELDS = ("count", "segments", "attenuation", "diameter_cm")
+
+
+def unverifiable_fields(item: dict[str, Any]) -> list[str]:
+    """Fields that cannot be scored or trained on automatically (Phase 8 plan, Amendment 3).
+
+    For a real report (or its OCR copy) that has a lesion, a null target means the
+    source value was not found in the text, or the source has no usable value. It
+    does not mean the text leaves the field unstated: "a large mass ... six smaller
+    lesions" states 7 lesions, yet its count target is null when the source says 8.
+    Generated items and lesion-free reports have nulls by construction, so they are
+    verified and kept.
+    """
+    category = item.get("category", "real")
+    real = category == "real" or (category == "ocr" and item.get("subtype") == "real")
+    targets = item["targets"]
+    if not real or targets["count"] == "0":
+        return []
+    return [f for f in TARGET_FIELDS if targets[f] is None]
