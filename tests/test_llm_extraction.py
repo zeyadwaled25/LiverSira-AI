@@ -181,8 +181,15 @@ class _FakeOpenAI:
             self.base_url = base_url
             self.chat = self
             self.completions = self
+            self.with_raw_response = self
 
         def create(self, **kwargs):
+            from types import SimpleNamespace as NS
+
+            parsed = self._parsed(**kwargs)
+            return NS(headers={"x-ratelimit-limit-requests": "1000", "date": "x"}, parse=lambda: parsed)
+
+        def _parsed(self, **kwargs):
             from types import SimpleNamespace as NS
 
             _FakeOpenAI.last_kwargs = kwargs
@@ -205,6 +212,7 @@ def test_openai_compatible_client_request_and_usage(monkeypatch, tmp_path):
     assert sent["response_format"]["type"] == "json_schema" and "temperature" not in sent
     assert result.status == "ok" and result.calls[0].cache_read_tokens == 200 and result.calls[0].input_tokens == 1000
     assert json.loads((tmp_path / "groq.json").read_text())["requests"] == 1
+    assert client.last_limits == {"x-ratelimit-limit-requests": "1000"}
 
 
 def test_missing_key_fails_clearly(monkeypatch):
@@ -250,3 +258,115 @@ def test_subsample_is_fixed_and_never_from_test():
     assert len(val_ids) == len(set(val_ids)) == sub["counts"]["validation"]
     assert not set(val_ids) & test_ids
     assert sub["counts"]["total"] == sum(v for k, v in sub["counts"].items() if k != "total")
+
+
+def test_few_shot_examples_load_and_pass_their_own_checks():
+    from pathlib import Path
+
+    if not Path("data/processed/nlp/liver_nlp_liver_only.csv").exists():
+        pytest.skip("liver-only CSV not built")
+    from scripts.nlp.llm.few_shot import load_examples
+
+    examples = load_examples()
+    config = json.loads(Path("scripts/nlp/llm/config.json").read_text(encoding="utf-8"))
+    assert [e["id"] for e in examples] == config["few_shot"]["ids"]
+    assert len(examples) <= config["few_shot"]["max_examples"]
+    for e in examples:
+        verified = le.verify(le.LLMOutput.model_validate(e["output"]), e["text"])
+        assert verified.rejected == []
+
+
+def test_runner_end_to_end_with_a_fake_client_and_resume(monkeypatch, tmp_path):
+    from pathlib import Path
+
+    if not Path("results/nlp/llm/dev_set_v1.json").exists() or not Path("data/processed/nlp/liver_nlp_liver_only.csv").exists():
+        pytest.skip("dev set or data not built")
+    from scripts.nlp.llm import run_llm_extraction as rl
+
+    config = json.loads(Path("scripts/nlp/llm/config.json").read_text(encoding="utf-8"))
+    config.update(results_root=str(tmp_path / "results"), cache_dir=str(tmp_path / "cache"), state_dir=str(tmp_path / "s"))
+    cfg = tmp_path / "config.json"
+    cfg.write_text(json.dumps(config), encoding="utf-8")
+    monkeypatch.setattr(rl, "CONFIG", cfg)
+    neg = {"has_lesion": answer("unclear", None), "lesion_count": answer(None, None),
+           "location_segments": answer(None, None), "reported_dimensions_cm": answer(None, None),
+           "attenuation": answer(None, None)}
+    fake = FakeClient([neg] * 10)
+    monkeypatch.setattr(rl, "make_client", lambda *a: fake)
+    rl.run("groq", "dev", limit=3)
+    out = tmp_path / "results" / "groq" / rl.model_slug(config["providers"]["groq"]["model"]) / f"dev_{rl.current_prompt()['version']}"
+    assert len((out / "predictions.jsonl").read_text().splitlines()) == 3
+    metrics = json.loads((out / "metrics.json").read_text())
+    assert metrics["items"] == 3 and metrics["presence"]["abstained"] == 3
+    manifest = json.loads((out / "run_manifest.json").read_text())
+    assert manifest["prompt_hash"] and manifest["items_done"] == 3
+    rl.run("groq", "dev", limit=4)  # resumes: only the 4th item is new
+    assert len(fake.calls) == 4
+    monkeypatch.setattr(rl, "FREEZE", tmp_path / "no_freeze.json")
+    with pytest.raises(SystemExit, match="frozen"):
+        rl.run("groq", "validation", limit=1)  # evaluation sets wait for the frozen prompt
+    monkeypatch.setattr(rl, "FREEZE", Path("results/nlp/llm/prompt_freeze.json"))
+    rows = [json.loads(line) for line in (out / "predictions.jsonl").read_text().splitlines()]
+    rows[0]["model"] = "another-model"
+    (out / "predictions.jsonl").write_text("\n".join(json.dumps(r) for r in rows) + "\n")
+    with pytest.raises(SystemExit, match="refusing to mix models"):
+        rl.run("groq", "dev", limit=5)
+
+
+# ── Prompt v2 and the evidence-check changes ──────────────────────────────
+def test_v1_stays_reproducible_and_v2_differs():
+    assert le.PROMPT_VERSION == "v2" and le.SYSTEM_PROMPT == le.SYSTEM_PROMPTS["v2"]
+    assert le.SYSTEM_PROMPTS["v2"].startswith(le.SYSTEM_PROMPTS["v1"])
+    assert le.prompt_hash(le.SYSTEM_PROMPTS["v1"], [], le.OUTPUT_SCHEMA) != le.prompt_hash(le.SYSTEM_PROMPTS["v2"], [], le.OUTPUT_SCHEMA)
+
+
+def test_quote_matching_ignores_capitals_but_keeps_report_text():
+    text = "A small mass. The larger of the two lies in segment 4."
+    found = le.locate("the larger of the two", text)
+    assert found and text[found.start:found.end] == "The larger of the two"
+    out = le.LLMOutput.model_validate(output(lesion_count=answer(2, "the larger of the two"),
+                                             has_lesion=answer("yes", "a small mass"),
+                                             location_segments=answer(None, None),
+                                             reported_dimensions_cm=answer(None, None), attenuation=answer(None, None)))
+    record = le.to_inference_record("S9", text, le.verify(out, text), {})
+    assert record.liver_lesions.lesion_count == 2
+    assert all(text[s.start:s.end] == s.text for s in record.evidence_spans)
+
+
+def test_singular_lesion_noun_is_evidence_for_one():
+    assert le.value_in_quote("lesion_count", 1, "large hypoattenuating liver mass in segment 2")
+    assert not le.value_in_quote("lesion_count", 1, "multiple hypoattenuating liver lesions")
+    assert not le.value_in_quote("lesion_count", 1, "several masses")
+
+
+def test_evaluation_sets_score_with_a_fake_client(monkeypatch, tmp_path):
+    from pathlib import Path
+
+    needed = ["results/nlp/llm/prompt_freeze.json", "data/processed/nlp/challenge/presence_challenge_v1.jsonl",
+              "data/processed/nlp/extraction/extraction_val_v1.jsonl"]
+    if not all(Path(n).exists() for n in needed):
+        pytest.skip("freeze or data not built")
+    from scripts.nlp.llm import run_llm_extraction as rl
+
+    config = json.loads(Path("scripts/nlp/llm/config.json").read_text(encoding="utf-8"))
+    config.update(results_root=str(tmp_path / "results"), cache_dir=str(tmp_path / "cache"), state_dir=str(tmp_path / "s"))
+    cfg = tmp_path / "config.json"
+    cfg.write_text(json.dumps(config), encoding="utf-8")
+    monkeypatch.setattr(rl, "CONFIG", cfg)
+    unclear = {"has_lesion": answer("unclear", None), "lesion_count": answer(None, None),
+               "location_segments": answer(None, None), "reported_dimensions_cm": answer(None, None),
+               "attenuation": answer(None, None)}
+    fake = FakeClient([unclear] * 20)
+    monkeypatch.setattr(rl, "make_client", lambda *a: fake)
+    slug = rl.model_slug(config["providers"]["gemini"]["model"])
+    rl.run("gemini", "presence_challenge_v1", limit=3)
+    metrics = json.loads((tmp_path / "results" / "gemini" / slug / "presence_challenge_v1_v2" / "metrics.json").read_text())
+    assert metrics["items"] == 3 and sum(c["unclear"] for c in metrics["by_category"].values()) == 3
+    rl.run("gemini", "validation", limit=2)
+    rl.run("gemini", "repeat", limit=2)  # the repeat run calls again (own cache)
+    repeat = json.loads((tmp_path / "results" / "gemini" / slug / "repeat_v2" / "metrics.json").read_text())
+    assert "field_agreement" in repeat
+    config["providers"]["gemini"]["model"] = "some-other-model"
+    cfg.write_text(json.dumps(config), encoding="utf-8")
+    with pytest.raises(SystemExit, match="not the frozen"):
+        rl.run("gemini", "validation", limit=1)

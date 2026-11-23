@@ -1,0 +1,134 @@
+{
+  "report": "The liver is normal in size and spans 16.2 cm craniocaudally. A hypoattenuating lesion in hepatic segment 6 measures 2.4 x 1.8 cm. No other liver lesions are seen.",
+  "expected": {
+    "has_lesion": true,
+    "lesion_count": 1,
+    "location_segments": [
+      6
+    ],
+    "reported_dimensions_cm": [
+      2.4,
+      1.8
+    ],
+    "attenuation": "hypoattenuating"
+  },
+  "groq": {
+    "model": "openai/gpt-oss-120b",
+    "structured": "json_schema",
+    "status": "ok",
+    "calls": 1,
+    "values": {
+      "has_lesion": true,
+      "lesion_count": 1,
+      "location_segments": [
+        6
+      ],
+      "reported_dimensions_cm": [
+        2.4,
+        1.8
+      ],
+      "attenuation": "hypoattenuating"
+    },
+    "matches_expected": {
+      "has_lesion": true,
+      "lesion_count": true,
+      "location_segments": true,
+      "reported_dimensions_cm": true,
+      "attenuation": true
+    },
+    "rejected_as_unsupported": [],
+    "served_by": "openai/gpt-oss-120b",
+    "finish_reason": "stop",
+    "tokens": {
+      "input": 988,
+      "cached": 0,
+      "output": 520
+    },
+    "latency_ms": [
+      1517.3
+    ],
+    "rate_limit_headers": {
+      "x-ratelimit-limit-requests": "1000",
+      "x-ratelimit-limit-tokens": "8000",
+      "x-ratelimit-remaining-requests": "999",
+      "x-ratelimit-remaining-tokens": "6719",
+      "x-ratelimit-reset-requests": "1m26.4s",
+      "x-ratelimit-reset-tokens": "9.607s"
+    },
+    "at": "2026-11-23T19:14:17+00:00"
+  },
+  "nvidia": {
+    "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "structured": "json_schema",
+    "status": "ok",
+    "calls": 1,
+    "values": {
+      "has_lesion": true,
+      "lesion_count": 1,
+      "location_segments": null,
+      "reported_dimensions_cm": null,
+      "attenuation": "hypoattenuating"
+    },
+    "matches_expected": {
+      "has_lesion": true,
+      "lesion_count": true,
+      "location_segments": false,
+      "reported_dimensions_cm": false,
+      "attenuation": true
+    },
+    "rejected_as_unsupported": [
+      "location_segments",
+      "reported_dimensions_cm"
+    ],
+    "served_by": "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "finish_reason": "stop",
+    "tokens": {
+      "input": 594,
+      "cached": 0,
+      "output": 191
+    },
+    "latency_ms": [
+      1312.3
+    ],
+    "rate_limit_headers": {},
+    "at": "2026-11-23T19:14:18+00:00"
+  },
+  "gemini": {
+    "model": "gemini-3.5-flash-lite",
+    "structured": "json_schema",
+    "status": "ok",
+    "calls": 1,
+    "values": {
+      "has_lesion": true,
+      "lesion_count": 1,
+      "location_segments": [
+        6
+      ],
+      "reported_dimensions_cm": [
+        2.4,
+        1.8
+      ],
+      "attenuation": "hypoattenuating"
+    },
+    "matches_expected": {
+      "has_lesion": true,
+      "lesion_count": true,
+      "location_segments": true,
+      "reported_dimensions_cm": true,
+      "attenuation": true
+    },
+    "rejected_as_unsupported": [],
+    "served_by": "gemini-3.5-flash-lite",
+    "finish_reason": "stop",
+    "tokens": {
+      "input": 651,
+      "cached": 0,
+      "output": 191
+    },
+    "latency_ms": [
+      1589.9
+    ],
+    "rate_limit_headers": {},
+    "at": "2026-11-23T21:35:53+00:00"
+  }
+}

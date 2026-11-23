@@ -44,7 +44,7 @@ from liversira_ai.nlp.schemas.inference_schema import (
     MissingOrUnclearField,
 )
 
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v2"
 FIELDS = ("has_lesion", "lesion_count", "location_segments", "reported_dimensions_cm", "attenuation")
 TARGET = {  # InferenceRecord paths, as the parser writes them
     "has_lesion": "liver_lesions.has_lesion",
@@ -120,7 +120,7 @@ OUTPUT_SCHEMA: dict[str, Any] = {
 
 
 # ── 2. The prompt ───────────────────────────────────────────────────────────
-SYSTEM_PROMPT = """You extract findings about the liver from the liver part of a CT report. Read only what the report states; never infer from medical knowledge.
+SYSTEM_PROMPT_V1 = """You extract findings about the liver from the liver part of a CT report. Read only what the report states; never infer from medical knowledge.
 
 Return one JSON object with five fields. Each field has a "value" and a "quote". The quote is copied character for character from the report: the shortest phrase that shows the value. Do not paraphrase, fix typos, or join separate sentences. When the value is null, the quote is null.
 
@@ -131,6 +131,17 @@ Return one JSON object with five fields. Each field has a "value" and a "quote".
 - attenuation: the attenuation of the largest liver lesion in any wording ("hypodense", "low attenuation" and "darker than the liver" are hypoattenuating). Null if not stated for the largest lesion.
 
 The largest lesion is the one the report says is largest; if it does not say, the one with the longest stated dimension. When has_lesion is "no" or "unclear", every other value is null except lesion_count, which is 0 for "no"."""
+
+# v2 (development round 2, Train only): two rules about quotes, after v1 lost correct counts to
+# quotes without the word that gives the number and to quotes with changed capital letters.
+SYSTEM_PROMPT_V2 = SYSTEM_PROMPT_V1 + """
+
+Quotes:
+- Copy each quote exactly as written, with the same capital and small letters and punctuation.
+- The lesion_count quote must contain the word or words that give the number: "a", "an", "one", "single", "solitary", a number, or the words you counted from (for example "a large mass ... four smaller lesions")."""
+
+SYSTEM_PROMPTS = {"v1": SYSTEM_PROMPT_V1, "v2": SYSTEM_PROMPT_V2}
+SYSTEM_PROMPT = SYSTEM_PROMPTS[PROMPT_VERSION]
 
 
 def render_example(text: str, output: dict[str, Any]) -> list[dict[str, str]]:
@@ -168,14 +179,23 @@ class Located:
 
 
 def locate(quote: str | None, text: str) -> Located | None:
-    """First verbatim occurrence of the quote. Several occurrences carry the same words, so
-    the first is used and the number of occurrences is kept for the report."""
+    """First occurrence of the quote. Several occurrences carry the same words, so the first is
+    used and the number of occurrences is kept for the report.
+
+    An exact match is tried first; then a match that ignores capital letters only (v2). The
+    evidence stored is always the report's own characters at the found offsets, so it stays
+    verbatim from the report.
+    """
     if not quote or not quote.strip():
         return None
     start = text.find(quote)
+    if start >= 0:
+        return Located(start, start + len(quote), text.count(quote))
+    lowered, q = text.lower(), quote.lower()
+    start = lowered.find(q)
     if start < 0:
         return None
-    return Located(start, start + len(quote), text.count(quote))
+    return Located(start, start + len(quote), lowered.count(q))
 
 
 def _numbers(quote: str) -> set[float]:
@@ -201,6 +221,9 @@ def value_in_quote(name: str, value: Any, quote: str) -> bool:
         words = {w for w, n in _WORDS.items() if n == value}
         if value == 1:
             words |= {"a", "an", "single", "solitary", "one", "lone", "only"}
+            # v2: a singular lesion noun states one lesion ("large hypoattenuating liver mass")
+            if re.search(r"\b(?:lesion|mass|nodule|tumou?r|focus|cyst|metastasis)\b", lowered):
+                return True
         if float(value) in _numbers(quote) or any(re.search(rf"\b{w}\b", lowered) for w in words):
             return True
         # counted from listed lesions ("a large mass ... six smaller lesions"): numbers must be written
@@ -239,7 +262,7 @@ def verify(output: LLMOutput, text: str) -> Verified:
             values[name] = 0  # follows from the negation; its evidence is the presence quote
             continue
         found = locate(answer.quote, text)
-        if found is None or not value_in_quote(name, value, answer.quote):
+        if found is None or not value_in_quote(name, value, text[found.start:found.end]):
             rejected.append(name)
             values[name] = None if name != "has_lesion" else "unclear"
             continue
@@ -412,8 +435,11 @@ class OpenAICompatibleClient:
         if self.extra:
             kwargs["extra_body"] = self.extra
         started = time.perf_counter()
-        response = self._client.chat.completions.create(**kwargs)
+        raw = self._client.chat.completions.with_raw_response.create(**kwargs)
         latency = (time.perf_counter() - started) * 1000
+        # Providers report their limits in response headers; keep them for the run manifest.
+        self.last_limits = {k: v for k, v in raw.headers.items() if "ratelimit" in k.lower()}
+        response = raw.parse()
         choice = response.choices[0]
         usage = response.usage
         details = getattr(usage, "prompt_tokens_details", None)

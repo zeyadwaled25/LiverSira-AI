@@ -1,0 +1,43 @@
+{
+  "frozen_on": "2026-11-24",
+  "prompt_version": "v2",
+  "prompt_hash": "337a2921ba519b5b77b9ae48d3daf9dbc09148b980b61dc68d1f549779c4ec74",
+  "models": {
+    "groq": "openai/gpt-oss-120b",
+    "nvidia": "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "gemini": "gemini-3.5-flash-lite"
+  },
+  "settings": {
+    "groq": {
+      "structured": "json_schema",
+      "max_tokens": 1500,
+      "extra": {}
+    },
+    "nvidia": {
+      "structured": "json_schema",
+      "max_tokens": 4000,
+      "extra": {
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      }
+    },
+    "gemini": {
+      "structured": "json_schema",
+      "max_tokens": 4000,
+      "extra": {}
+    }
+  },
+  "files_sha256": {
+    "src/liversira_ai/nlp/llm_extraction.py": "e312ee97be384c699ac3195ce08ec1d0953f6d251690370b517ea5664f0b1055",
+    "src/liversira_ai/nlp/liver_text.py": "1bc06aee86ddeb8e499dd378589aac97468bfa37cb09b281f1711b3e019b0cd5",
+    "scripts/nlp/llm/few_shot_v1.json": "6c41b6547cd8daf6c0355526d1594a18f6e9877e3823ff604a848b71163f7053",
+    "scripts/nlp/llm/few_shot.py": "292985821a998f74c98e22ed52637e0cd654f3eb3efabcf500abdc58ae26dbff",
+    "scripts/nlp/llm/eval_sets.py": "db5760d9cd1dc5e3e6fd2f6de667a35383795318750504eaa3bc183db6ff3e98",
+    "scripts/nlp/llm/run_llm_extraction.py": "4c52851b6f8d6c13f56461c0fb8839d572b3dbb9e8db37fc06a8ffe06710edfe",
+    "results/nlp/llm/subsample_v1.json": "7fb4f4ffcb984b9b3ecca961d6780467b03b0c74ebee6588ec535774f8ed218c"
+  },
+  "decision": "v2 chosen on the Train development set (Phase 7 plan \u00a75): higher field accuracy than v1 for every model and field; v3 not used.",
+  "note": "Rate limits (rpm, rpd, tpd) may still change in the config: they pace calls and do not change outputs.",
+  "test_policy": "Test was not read."
+}

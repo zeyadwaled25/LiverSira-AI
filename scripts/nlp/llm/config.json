@@ -8,55 +8,103 @@
       "api_key_env": "GROQ_API_KEY",
       "model": "openai/gpt-oss-120b",
       "structured": "json_schema",
-      "max_tokens": 4000,
+      "max_tokens": 1500,
       "extra": {},
-      "limits": {"rpm": 30, "rpd": 1000, "tpd": 200000},
-      "data_terms": "ZDR available; a no-training clause is reported by a third party, not verified on Groq's site"
+      "limits": {
+        "rpm": 2,
+        "rpd": 1000,
+        "tpd": 190000,
+        "reported": "Groq on 2026-11-23/24 (headers and 429 messages): 1,000 requests per day, 8,000 tokens per minute, and 200,000 tokens per day (rolling 24 h). A call with the few-shot examples is about 2,000-2,300 tokens, so about 90 calls per day. rpm 2, max_tokens 1,500, client-side tpd 190,000 so a run stops cleanly before the cap."
+      },
+      "data_terms": "ZDR available; a no-training clause is reported by a third party, not verified on Groq's site",
+      "model_choice": "openai/gpt-oss-120b: listed by the provider on 2026-11-23 (OpenAI open-weight family)",
+      "max_retries": 6
     },
     "nvidia": {
       "client": "openai_compatible",
       "base_url": "https://integrate.api.nvidia.com/v1",
       "api_key_env": "NVIDIA_API_KEY",
-      "model": "TO_CONFIRM_FROM_CATALOG",
-      "structured": "json_object",
+      "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "structured": "json_schema",
       "max_tokens": 4000,
-      "extra": {},
-      "limits": {"rpm": 40, "rpd": null, "tpd": null, "trial_credits": 1000},
-      "data_terms": "trial terms: content not stored or used after the session, with exceptions; training not addressed"
+      "extra": {
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "limits": {
+        "rpm": 40,
+        "rpd": null,
+        "tpd": null,
+        "trial_credits": 1000,
+        "reported": "no rate-limit headers returned; trial credits per public guides"
+      },
+      "data_terms": "trial terms: content not stored or used after the session, with exceptions; training not addressed",
+      "model_choice": "nvidia/nemotron-3.5-lightning-30b-a3b (Nemotron family, as the plan suggested), thinking off. Smoke tests 2026-11-23: mistral-large-4 and glm-5.3-flash timed out (300 s, 180 s); Nemotron with thinking on used all 4,000-16,000 tokens before answering; with thinking off and the JSON schema it answered in about 1 s."
     },
     "gemini": {
       "client": "openai_compatible",
       "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
       "api_key_env": "GEMINI_API_KEY",
-      "model": "TO_CONFIRM_IN_AI_STUDIO",
+      "model": "gemini-3.5-flash-lite",
       "structured": "json_schema",
       "max_tokens": 4000,
       "extra": {},
-      "limits": {"rpm": 10, "rpd": null, "tpd": null},
-      "data_terms": "free tier: Google may use inputs and outputs to improve its products and human reviewers may read them (accepted by the team, Phase 7 Amendment 1)"
+      "limits": {
+        "rpm": 10,
+        "rpd": null,
+        "tpd": null,
+        "reported": "to confirm: the free daily limit shows only in a 429 or in AI Studio (ai.dev/rate-limit)"
+      },
+      "data_terms": "free tier: Google may use inputs and outputs to improve its products and human reviewers may read them (accepted by the team, Phase 7 Amendment 1)",
+      "model_choice": "gemini-3.5-flash: fixed version, not a preview or 'latest' alias. Smoke test 2026-11-23: gemini-3.8-flash returned 503 twice; gemini-3.5-flash answered all five fields correctly. Later the same day gemini-3.5-flash returned 503 'high demand' (temporary, per Google) while gemini-3.5-flash-lite and gemini-2.5-flash answered correctly. Kept gemini-3.5-flash: the SDK retries 503 with backoff and the run resumes from the cache; it can still be changed before the prompt is frozen, never during a run. Dev round 1 (prompt v1, 2026-11-23): gemini-3.5-flash finished 14 of 100 items (86 failed with 503 'high demand' or timeouts; median latency 31 s), so the model was switched to gemini-2.5-flash (answered correctly in the smoke test) before any freeze. Dev round 2: gemini-2.5-flash allows only 20 free requests per day (429, quota metric generate_content_free_tier_requests), so the model was switched to gemini-3.5-flash-lite (same family, answered correctly in the smoke test) before any freeze.",
+      "max_retries": 6
     },
     "claude": {
       "client": "anthropic",
       "base_url": "https://api.anthropic.com",
-      "models": {"primary": "claude-opus-5-5", "small": "claude-haiku-5-5"},
+      "models": {
+        "primary": "claude-opus-5-5",
+        "small": "claude-haiku-5-5"
+      },
       "effort": "low",
       "max_tokens": 16000,
       "status": "not used yet (paid); kept for a later run"
     }
   },
-  "limits_note": "Free-tier limits are taken from public guides and differ between them; confirm each in the provider's console at setup and update here before any run.",
+  "limits_note": "Limits confirmed where the provider reports them (smoke test 2026-11-23, results/nlp/llm/smoke_test.json).",
   "temperature_note": "Not set for any provider, so every model runs with its own default; run-to-run agreement is measured instead.",
   "prices_usd_per_million_tokens": {
     "source": "free tiers cost 0; Claude prices from the Claude API skill model table (cached 2026-11-03)",
-    "free": {"input": 0.0, "output": 0.0, "cache_read": 0.0, "cache_write": 0.0},
-    "claude-opus-5-5": {"input": 4.0, "output": 20.0, "cache_read": 0.2, "cache_write": 5.0},
-    "claude-haiku-5-5": {"input": 0.1, "output": 0.5, "cache_read": 0.01, "cache_write": 0.125}
+    "free": {
+      "input": 0.0,
+      "output": 0.0,
+      "cache_read": 0.0,
+      "cache_write": 0.0
+    },
+    "claude-opus-5-5": {
+      "input": 4.0,
+      "output": 20.0,
+      "cache_read": 0.2,
+      "cache_write": 5.0
+    },
+    "claude-haiku-5-5": {
+      "input": 0.1,
+      "output": 0.5,
+      "cache_read": 0.01,
+      "cache_write": 0.125
+    }
   },
   "few_shot": {
     "source_split": "train",
-    "ids": [],
+    "ids": [
+      "BDMAP_00000201",
+      "BDMAP_00000230",
+      "BDMAP_00000171"
+    ],
     "max_examples": 3,
-    "note": "Filled in step 3 from Train only, short examples to fit free-tier token caps; asserted against data/processed/nlp/splits.json."
+    "note": "Train only, checked on every load (scripts/nlp/llm/few_shot.py): Train IDs, evidence passes, values agree with the source labels. No hedged example: Train has no hedged report (the 18 matches for hedging words are negations such as 'no suspicious lesions'); hedging is covered by the prompt rules.",
+    "file": "scripts/nlp/llm/few_shot_v1.json"
   },
   "prompt_development": {
     "data": "Train only: real Train reports and Train-aug items; never Validation, Challenge Sets or Test",

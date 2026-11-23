@@ -157,3 +157,54 @@ The repeat-run subset is 50 Validation reports. Validation numbers from the subs
 **Cost.** $0 for the free tiers. Tokens and latency are still logged per call.
 
 **Phase 8.** Unchanged. API models are references, not eligible candidates.
+
+### Amendment 2 (24 November 2026): development record and the freeze
+
+**Models, as set up and changed during development (all before the freeze):**
+
+| Provider | Model frozen | Changes on the way, and why |
+|---|---|---|
+| Groq | `openai/gpt-oss-120b` | none |
+| NVIDIA NIM | `nvidia/nemotron-3.5-lightning-30b-a3b`, thinking off, JSON schema | Mistral Large 4 and GLM 5.3 Flash timed out on the free endpoint. Nemotron with thinking on used every token before answering. |
+| Gemini | `gemini-3.5-flash-lite` | `gemini-3.8-flash` and `gemini-3.5-flash` returned 503 ("high demand"); `gemini-3.5-flash` finished 14 of 100 development items. `gemini-2.5-flash` allows 20 free requests per day. |
+
+**Limits measured** (from headers and 429 messages):
+
+- **Groq:** 8,000 tokens per minute; the requested `max_tokens` counts toward it, so it was set to 1,500. 200,000 tokens per day, which is about 90 calls.
+- **Gemini 3.5 Flash-Lite:** completed 100 calls in one day with no 429.
+- **NVIDIA:** trial credits. About 210 were used in development, and its balance is checked on build.nvidia.com.
+
+**Prompt versions** (`results/nlp/llm/prompts.json`), on the 100-item Train development set (`dev_set_v1.json`):
+
+- **v1:** Groq count 0.934, and all 5 of its evidence rejections were correct values. NVIDIA had 19 correct values among 29 rejections.
+- **v2:** two quote rules in the prompt, and two general evidence-check changes in the pipeline:
+  - a match that differs only in capital letters is accepted, and the stored evidence is the report's own characters;
+  - for a count of 1, a singular lesion noun in the quote counts as evidence.
+
+  Scores per model:
+  - Groq: 1.000 on all four fields, over 49 items; it then reached its daily token cap.
+  - NVIDIA: count 0.987, segments 0.897, attenuation 1.000, diameter 0.963.
+  - Flash-Lite: count 0.987; segments, attenuation and diameter 1.000.
+
+  No model gave a wrong presence answer. Every "unclear" was a report that never mentions a liver lesion.
+- **v3:** not used.
+
+**Freeze.** By the rule in §5, v2 was chosen and frozen (`results/nlp/llm/prompt_freeze.json`). The record holds:
+
+- the prompt hash `337a2921…`;
+- the frozen model and settings per provider;
+- the hashes of the pipeline, few-shot, evaluation and subsample files.
+
+The runner refuses an evaluation set if the prompt, a model, or any of these files differs from the freeze. Rate limits can still change, because they pace calls and do not change outputs.
+
+**Output folders.** Results are stored per model (`results/nlp/llm/<provider>/<model>/<set>_<prompt>/`), and the runner refuses to mix models in one file. Before this was fixed, one development file held 23 `gemini-2.5-flash` rows and 1 `gemini-3.5-flash-lite` row; they were split by the model that served each row.
+
+**Evaluation order:**
+
+1. `validation`
+2. `extraction_challenge_v3`
+3. `presence_challenge_v1`
+4. `repeat`
+
+Each set runs once per model. Groq, at about 90 calls per day, needs about 10 days, and the runner resumes from the cache.
+

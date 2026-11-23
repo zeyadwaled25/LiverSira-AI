@@ -1,0 +1,27 @@
+{
+  "rule": "At most 3 prompt versions, developed on Train only (Phase 7 plan \u00a75, Amendment 1). Every version is logged here, the rejected ones included. The hash covers the system prompt, the few-shot examples and the JSON schema.",
+  "versions": [
+    {
+      "version": "v1",
+      "hash": "776f13c68034191264fcf983ddafe4215c57927b83f499e1e2ebd60e68ba1f36",
+      "created": "2026-11-23",
+      "system_prompt": "liversira_ai.nlp.llm_extraction.SYSTEM_PROMPTS['v1']",
+      "few_shot": "scripts/nlp/llm/few_shot_v1.json",
+      "schema": "llm_extraction.OUTPUT_SCHEMA",
+      "status": "rejected after dev round 1 (Train, 100 items): Groq gpt-oss-120b count 0.934, segments/attenuation/diameter 1.000; all 5 of its evidence rejections were correct values (count quotes without the word giving the number; one quote with a changed capital letter). NVIDIA Nemotron: 19 of 29 rejections were correct values. Results: results/nlp/llm/<provider>/dev_v1/."
+    },
+    {
+      "version": "v2",
+      "hash": "337a2921ba519b5b77b9ae48d3daf9dbc09148b980b61dc68d1f549779c4ec74",
+      "created": "2026-11-23",
+      "system_prompt": "liversira_ai.nlp.llm_extraction.SYSTEM_PROMPTS['v2']",
+      "few_shot": "scripts/nlp/llm/few_shot_v1.json",
+      "schema": "llm_extraction.OUTPUT_SCHEMA",
+      "changes": [
+        "prompt: two rules on quotes (exact capitalisation; the count quote contains the word giving the number)",
+        "pipeline (evidence check, general, not prompt): a quote that differs from the report only in capital letters is found, and the stored evidence is the report's own characters; for a count of 1, a singular lesion noun in the quote is evidence"
+      ],
+      "status": "frozen on 2026-11-24. Dev round 2 (Train): Groq gpt-oss-120b (49 items, then its daily token cap) 1.000 on all four fields; NVIDIA Nemotron count 0.987, segments 0.897, attenuation 1.000, diameter 0.963; Gemini 3.5 Flash-Lite count 0.987, others 1.000; no wrong presence answer."
+    }
+  ]
+}
