@@ -1,0 +1,74 @@
+{
+  "task": "Phase 7: LLM extraction of liver findings (docs/nlp/phase7_llm_plan.md)",
+  "input": "liver-only text (liversira_ai.nlp.liver_text), as for every Phase 8 extraction candidate",
+  "providers": {
+    "groq": {
+      "client": "openai_compatible",
+      "base_url": "https://api.groq.com/openai/v1",
+      "api_key_env": "GROQ_API_KEY",
+      "model": "openai/gpt-oss-120b",
+      "structured": "json_schema",
+      "max_tokens": 4000,
+      "extra": {},
+      "limits": {"rpm": 30, "rpd": 1000, "tpd": 200000},
+      "data_terms": "ZDR available; a no-training clause is reported by a third party, not verified on Groq's site"
+    },
+    "nvidia": {
+      "client": "openai_compatible",
+      "base_url": "https://integrate.api.nvidia.com/v1",
+      "api_key_env": "NVIDIA_API_KEY",
+      "model": "TO_CONFIRM_FROM_CATALOG",
+      "structured": "json_object",
+      "max_tokens": 4000,
+      "extra": {},
+      "limits": {"rpm": 40, "rpd": null, "tpd": null, "trial_credits": 1000},
+      "data_terms": "trial terms: content not stored or used after the session, with exceptions; training not addressed"
+    },
+    "gemini": {
+      "client": "openai_compatible",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+      "api_key_env": "GEMINI_API_KEY",
+      "model": "TO_CONFIRM_IN_AI_STUDIO",
+      "structured": "json_schema",
+      "max_tokens": 4000,
+      "extra": {},
+      "limits": {"rpm": 10, "rpd": null, "tpd": null},
+      "data_terms": "free tier: Google may use inputs and outputs to improve its products and human reviewers may read them (accepted by the team, Phase 7 Amendment 1)"
+    },
+    "claude": {
+      "client": "anthropic",
+      "base_url": "https://api.anthropic.com",
+      "models": {"primary": "claude-opus-5-5", "small": "claude-haiku-5-5"},
+      "effort": "low",
+      "max_tokens": 16000,
+      "status": "not used yet (paid); kept for a later run"
+    }
+  },
+  "limits_note": "Free-tier limits are taken from public guides and differ between them; confirm each in the provider's console at setup and update here before any run.",
+  "temperature_note": "Not set for any provider, so every model runs with its own default; run-to-run agreement is measured instead.",
+  "prices_usd_per_million_tokens": {
+    "source": "free tiers cost 0; Claude prices from the Claude API skill model table (cached 2026-11-03)",
+    "free": {"input": 0.0, "output": 0.0, "cache_read": 0.0, "cache_write": 0.0},
+    "claude-opus-5-5": {"input": 4.0, "output": 20.0, "cache_read": 0.2, "cache_write": 5.0},
+    "claude-haiku-5-5": {"input": 0.1, "output": 0.5, "cache_read": 0.01, "cache_write": 0.125}
+  },
+  "few_shot": {
+    "source_split": "train",
+    "ids": [],
+    "max_examples": 3,
+    "note": "Filled in step 3 from Train only, short examples to fit free-tier token caps; asserted against data/processed/nlp/splits.json."
+  },
+  "prompt_development": {
+    "data": "Train only: real Train reports and Train-aug items; never Validation, Challenge Sets or Test",
+    "max_prompt_versions": 3,
+    "dev_reports": 100
+  },
+  "evaluation": {
+    "subsample": "results/nlp/llm/subsample_v1.json (fixed before any run; Phase 7 Amendment 1)",
+    "repeat_subset": 50,
+    "test": "not read"
+  },
+  "cache_dir": "data/processed/nlp/llm_cache",
+  "state_dir": "data/processed/nlp/llm_state",
+  "results_root": "results/nlp/llm"
+}
