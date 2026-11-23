@@ -1,4 +1,4 @@
-# Phase 8 analysis plan: the single final evaluation of extraction
+# Phase 8 analysis plan: the single final evaluation of extraction and presence
 
 Status: **registered**. This plan was written before Challenge-B existed and before any candidate was run on Test. It is frozen together with the candidates; `results/nlp/phase8/candidates_freeze.json` records the hash of this file. Any later change must be an amendment, appended at the end with its date and reason. Any amendment made after a result has been seen must be labelled post hoc, and the original analysis must be reported too.
 
@@ -14,12 +14,12 @@ Every candidate reads the liver-only text `extract_liver_text(text).text` (liver
 |---|---|---|
 | C1 | Parser v1.1 | `parser_v1_1.py` (frozen since Phase 5) |
 | C2 | Parser v1.2 | `parser_v1_2.py` + `parser_v1_2_rules.py`: 14 rules, each justified by a Train-aug item (`results/nlp/parser_v1_2/train_aug_report.md`) |
-| C3 | First extraction model, ClinicalBERT, seeds 13 / 42 / 87 | `config.json`, `models/transformers/extraction/clinicalbert/seed*/model.safetensors` |
-| C4 | Per-lesion model, ClinicalBERT, seeds 13 / 42 / 87 | `config_lesion.json`, `models/transformers/extraction_lesion/clinicalbert/seed*/model.safetensors` |
-| C5 | Hybrid H = C2 + C3 (rule in §4), one run per C3 seed. **The primary hybrid.** | `hybrid.py` (`hybrid_h`) |
-| C6 | Hybrid H2, exploratory (Amendment 1). **Appendix only. Not eligible for the decision rule; it cannot be selected or become the primary hybrid, even if it wins on Challenge-B.** | `hybrid.py` (`hybrid_h2`) |
+| C3 | First extraction model, ClinicalBERT, seeds 13 / 42 / 87, trained with unverifiable fields masked (Amendment 3) | `config_v2.json`, `models/transformers/extraction_v2/clinicalbert/seed*/model.safetensors` |
+| C5 | Hybrid H = C2 + C3 (rule in §4), one run per C3 seed. **The hybrid.** | `hybrid.py` (`hybrid_h`) |
 
-Phase 7 (LLM extraction) candidates may join this list only by an amendment. The amendment must freeze their prompt, model id and settings the same way, and it must be made before any candidate is run on Challenge-B. After that, the list is closed.
+Retired by Amendment 3, to keep the comparison simple: C4 (per-lesion model; it failed its own registered rule) and C6 (hybrid H2; it lost to H on Train-aug). The 6.2 first model trained without the mask is superseded by C3 above. Their results stay in the repository; they are not run in Phase 8.
+
+Phase 7 (LLM extraction) candidates may join this list only by an amendment. The amendment must freeze their prompt, model id and settings the same way, and it must be made before the Phase 8 run starts (`freeze_candidates` refuses once `results/nlp/phase8/run_started.json` exists). Nobody who develops a candidate reads Challenge-B, so Challenge-B may be frozen before or after that amendment. After the run starts, the list is closed.
 
 ## 3. Evaluation sets
 
@@ -34,7 +34,7 @@ The Gold Set must be finalized before the run, as the roadmap requires. E4 is th
 
 Challenge-B is used only once both of its hashes are recorded: the items hash, and the coverage hash (each item marked as a Train-aug family or `new`). Both are checked by `validate_challenge_b.py`. If the files do not match the recorded hashes, the run stops.
 
-E3 uses the same scoring as the 6.2 Validation comparisons. Parser v1.1 (C1) is scored on it here under that scoring. Its earlier Test results (`results/nlp/parser_v1_1/test_evaluation.*`) stay as they are and are not replaced.
+E3 scores verifiable fields only (§5, Amendment 3): a field whose source value is not found in the report text is left out, and the number left out is reported. Parser v1.1 (C1) is scored on it here under that scoring. Its earlier Test results (`results/nlp/parser_v1_1/test_evaluation.*`) stay as they are and are not replaced.
 
 ## 4. Hybrid rule H (fixed now)
 
@@ -44,15 +44,7 @@ For each study and each field:
 - Otherwise, H takes parser v1.2's value for the field when it is not empty, and the first model's value (C3, same seed) when it is.
 - Count classes, segment lists, attenuation labels and diameters pass through unchanged. There is no averaging and no thresholds.
 
-**H2 (exploratory, Amendment 1).** Same as H, except a field that parser v1.2 leaves empty is taken from the model only when the parser's status for it is `unparsed`. When the status is `not_mentioned`, the field stays empty. H does not use the status at all.
-
-The parser's field status (`field_status`) is:
-
-- **`stated`:** a value was read.
-- **`not_mentioned`:** for count, the report states the count as unquantified. For segments, attenuation and diameter, the lesion statements contain no cue for the field.
-- **`unparsed`:** a cue is present but no value was read, or presence is unknown.
-
-The semantics are verified for **count only**. For segments and attenuation they are weak: the cue is searched only in the affirmative lesion clauses, so statements such as "It is hypoattenuating" or "all are hypoattenuating relative to the liver" are missed, and so are OCR-damaged words (Amendment 1).
+H does not use the parser's `field_status` (added by Amendment 1, verified for count only). H2, which used it, was retired by Amendment 3.
 
 Why H: parser v1.2 is deterministic and gives evidence spans for every value it outputs. The model fills only the fields the parser leaves empty. C3, not C4, is the fallback because C4 failed its registered rule in 6.2 (`runs_lesion/comparison.md`: it tags non-lesion sizes as lesions).
 
@@ -64,9 +56,10 @@ Fields: `count` (classes `0`–`9`, `10+`, or unstated), `segments` (set of Coui
   - Segments are compared as sets.
   - A diameter must be within 0.05 cm.
   - An empty prediction is correct only when the target is unstated, and wrong otherwise.
+  - **Real reports (E3, and Validation during development):** on a report with a lesion, a field whose source value is not found in the text has no verified target. It is not scored, and the count of such fields is reported (`extraction_targets.unverifiable_fields`, Amendment 3). Challenge-B and the Gold Set have human labels, so every field there is scored.
 - **Per field.** Accuracy over the items that target the field, with a Wilson 95% interval and n. On E1 the pooled targeted accuracy is the primary metric.
 - **Per subtype.** Accuracy with a Wilson 95% interval and n for every Challenge-B category × subtype, and for every coverage group (Train-aug family / `new`).
-- **Seeds.** Model-based candidates (C3, C4, C5, C6) are reported per seed, plus the mean ± SD.
+- **Seeds.** Model-based candidates (C3, C5) are reported per seed, plus the mean ± SD.
 - **Paired tests.** On the items of each field, every candidate is compared with C2 using an exact McNemar test, per seed.
 - **Descriptive only.** The following are reported but do not decide anything:
   - Accuracy on `new` items vs Train-aug-family items, per candidate.
@@ -76,12 +69,11 @@ Fields: `count` (classes `0`–`9`, `10+`, or unstated), `segments` (set of Coui
 
 ## 6. Decision rule (per field)
 
-For each field, a candidate is **eligible** only if both of these hold:
+For each field, a candidate is **eligible** only if all of these hold:
 
 1. **Control.** E2 accuracy ≥ 0.98 for every model seed.
 2. **Clean data.** E3 accuracy ≥ (C1's E3 accuracy − 0.01) for every model seed.
-
-C6 (H2) is never eligible: it is reported in an appendix, with the same metrics, for transparency only.
+3. **Deployable (Amendment 3).** It can run on patient reports under the Phase 9 data policy: it runs locally, or the project has a data agreement that allows the reports to be sent to its provider. A candidate that is not deployable is reported as a reference only.
 
 Among eligible candidates, the one with the highest E1 accuracy wins (mean over seeds for model-based candidates). It replaces C2 only if all three of these hold:
 
@@ -106,7 +98,22 @@ None of the following may change after the freeze:
 
 If a bug is found in the scoring code, the fix is recorded as an amendment. If it is found after results were seen, both versions are reported.
 
-## 8. Known limitations (written before Challenge-B)
+## 8. Presence (Amendment 3)
+
+Phase 6.1 left the presence decision to Phase 8; it is registered here the same way.
+
+| Id | Candidate | Frozen as |
+|---|---|---|
+| P1 | TF-IDF + LR, the frozen Phase 5 model. **The default.** | `results/nlp/final_test/learned_presence_word_logreg_final.joblib` |
+| P2 | ClinicalBERT presence model, seeds 13 / 42 / 87 | `scripts/nlp/transformers/presence/config.json`, `models/transformers/presence/clinicalbert/seed*/model.safetensors` |
+
+ClinicalBERT is the only transformer candidate because every extraction model uses the same encoder, not because of its 6.1 Challenge result. Parser v1.1 presence is reported for reference: it abstains on reports that never mention a lesion, so it cannot serve as the presence system.
+
+- **Sets.** Challenge-B (every item: `negative` = no lesion, the others = lesion), all 1,390 Test studies (source label), and the Gold Set Test half (descriptive).
+- **Rule.** P2 replaces P1 only if, for every seed: its Challenge-B accuracy is higher with an exact McNemar p < 0.05, its Test accuracy is ≥ P1's − 0.01, and it is deployable (§6). Otherwise P1 stays.
+- **Test.** P1's Test predictions already exist (Phase 5); they are re-scored, not re-run.
+
+## 9. Known limitations (written before Challenge-B)
 
 - **H and unquantified counts.** When a report states the count as unquantified ("Countless lesions", "A cluster of lesions"), parser v1.2 correctly leaves the count empty. H cannot tell this apart from a count the parser failed to read, so it takes the first model's count instead. On Challenge-A (v3 `count/unquantified`, 50 items) the parser scores 1.00 and H scores 0.43, which is the first model's own accuracy there. If Challenge-B contains such items, this weakness is expected to show in H's count accuracy. It is stated here before Challenge-B is written. H2 was the attempted fix; see Amendment 1.
 
@@ -149,3 +156,25 @@ If a bug is found in the scoring code, the fix is recorded as an amendment. If i
 **Note on the original freeze.** The freeze in commit `9b088a8` hashed raw bytes for every file. Its hashes are kept in git history, and the new freeze file records the old method under `original_freeze` and `supersedes`.
 
 **Timing.** Like Amendment 1, this was made before Challenge-B was written.
+
+### Amendment 3 (23 November 2026): verifiable targets, a masked C3, simpler candidates, presence, deployability
+
+**Reason.** A check on Train only, before any new run, showed that the reference for real reports was wrong. `targets_from_source` sets a field to null when the source value is not found literally in the text, and the scoring then demanded a null prediction. A null therefore meant "not checked", not "not stated". Example: a report with "a large mass ... six smaller lesions" states 7 lesions, and the parser reads 7, but its target was null.
+
+- On the 1,029 real Train reports with a lesion, 158 count targets and 86 segment targets were such nulls.
+- On Validation (220 lesion-positive reports), the same held for 46 counts and 24 segments.
+- This produced almost all of the parser's Validation count and segment "errors": count 0.886 under the old rule, 1.000 when only verifiable fields are scored (`results/nlp/phase8/validation_rescored.md`).
+- The 6.2 first model was trained to output null on these reports.
+
+The evidence is from Train and Validation only. Challenge-A, Challenge-B and Test were not used.
+
+**Changes.**
+
+1. **Scoring.** On real reports with a lesion, unverifiable fields (`unverifiable_fields`) are not scored. This applies to Validation and E3 (§3, §5).
+2. **C3.** Retrained with the loss of unverifiable fields masked (`config_v2.json`). Data, model, seeds and every other setting are identical. Before its results were seen, this condition was fixed: C3 becomes the masked model if, for every seed, its Validation accuracy (verifiable fields, lesion-positive) on each field is at least the 6.2 model's − 0.01. Otherwise C3 stays the 6.2 model and the masked model is reported only. The outcome is recorded below.
+3. **Simpler list.** C4 and C6 are retired (§2).
+4. **Timing.** The candidate list closes when the Phase 8 run starts, not when Challenge-B is frozen (§2). The freeze tool enforces this.
+5. **Deployability.** A new eligibility condition (§6).
+6. **Presence.** Registered in §8.
+
+**Timing.** Made before Challenge-B was written, and before any candidate read Test.
