@@ -6,12 +6,20 @@ plan, the Train-aug taxonomy and the parser v1.2 evidence report. Model weights
 are also checked against the hash their training run recorded.
 
     python -m scripts.nlp.transformers.extraction.freeze_candidates          # write (refuses to overwrite)
+    python -m scripts.nlp.transformers.extraction.freeze_candidates --amend 1 --reason "..."  # re-freeze
     python -m scripts.nlp.transformers.extraction.freeze_candidates --check  # verify nothing changed
+
+Hashes: text files are hashed after normalizing CRLF to LF, so checkouts with
+core.autocrlf do not change them; binary files (weights) are hashed as raw
+bytes. The original freeze (commit 9b088a8) hashed raw bytes for every file.
+A re-freeze needs a matching amendment in the analysis plan and refuses to run
+once Challenge-B has been frozen.
 
 The Phase 8 run must call ``check()`` first and stop on any mismatch.
 """
 
 import argparse
+import hashlib
 import json
 import sys
 from datetime import date
@@ -21,6 +29,10 @@ from typing import Any
 from liversira_ai.common.provenance import git_commit, sha256_file
 
 FREEZE_PATH = Path("results/nlp/phase8/candidates_freeze.json")
+CHALLENGE_B_FREEZE = Path("results/nlp/phase8/challenge_b_freeze.json")
+TEXT_SUFFIXES = {".py", ".md", ".json", ".jsonl", ".txt", ".csv", ".toml", ".yaml", ".yml", ".cfg", ".ini"}
+HASH_METHOD = "sha256; text files (by suffix) after CRLF->LF normalization, other files raw bytes"
+ORIGINAL_FREEZE = {"commit": "9b088a8", "hash_method": "sha256 of raw bytes for every file (before .gitattributes)"}
 PLAN = Path("docs/nlp/phase8_analysis_plan.md")
 SEEDS = (13, 42, 87)
 SHARED = [
@@ -57,11 +69,19 @@ CANDIDATES: dict[str, dict[str, Any]] = {
 WEIGHT_FILES = ("model.safetensors", "tokenizer.json", "tokenizer_config.json")
 
 
+def freeze_hash(path: Path) -> str:
+    """SHA-256 used by the freeze: LF-normalized for text files, raw bytes otherwise."""
+    data = path.read_bytes()
+    if path.suffix.lower() in TEXT_SUFFIXES:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
+
+
 def _hashes(paths: list[str]) -> dict[str, str]:
     missing = [p for p in paths if not Path(p).exists()]
     if missing:
         raise SystemExit(f"missing files: {missing}")
-    return {p: sha256_file(Path(p)) for p in paths}
+    return {p: freeze_hash(Path(p)) for p in paths}
 
 
 def collect() -> dict[str, Any]:
@@ -94,19 +114,32 @@ def collect() -> dict[str, Any]:
 def check() -> list[str]:
     """Paths whose hash no longer matches the freeze (empty list = unchanged)."""
     frozen = json.loads(FREEZE_PATH.read_text(encoding="utf-8"))
-    return [p for p, h in frozen["sha256"].items() if not Path(p).exists() or sha256_file(Path(p)) != h]
+    return [p for p, h in frozen["sha256"].items() if not Path(p).exists() or freeze_hash(Path(p)) != h]
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--amend", type=int, help="amendment number in the analysis plan that this re-freeze follows")
+    parser.add_argument("--reason", help="one line, required with --amend")
     args = parser.parse_args()
     if args.check:
         changed = check()
         print("unchanged" if not changed else f"CHANGED: {changed}")
         sys.exit(1 if changed else 0)
+    previous = None
     if FREEZE_PATH.exists():
-        raise SystemExit(f"{FREEZE_PATH} exists; a freeze is not overwritten (amend the plan instead)")
+        if args.amend is None:
+            raise SystemExit(f"{FREEZE_PATH} exists; re-freeze only with --amend N after amending the plan")
+        if CHALLENGE_B_FREEZE.exists():
+            raise SystemExit("Challenge-B is frozen; the candidates can no longer be re-frozen")
+        if not args.reason or f"### Amendment {args.amend} " not in PLAN.read_text(encoding="utf-8"):
+            raise SystemExit(f"--reason is required and the plan must contain '### Amendment {args.amend} '")
+        old = json.loads(FREEZE_PATH.read_text(encoding="utf-8"))
+        previous = {"freeze_file_sha256": hashlib.sha256(FREEZE_PATH.read_bytes()).hexdigest(),
+                    "frozen_on": old["frozen_on"], "git_commit_at_freeze": old["git_commit_at_freeze"],
+                    "amendment": old.get("amendment", 0),
+                    "hash_method": old.get("hash_method", ORIGINAL_FREEZE["hash_method"])}
     record = {
         "schema_version": "1.0",
         "frozen_on": date.today().isoformat(),
@@ -114,6 +147,12 @@ def main() -> None:
         "note": "The hashes are the freeze. git_commit_at_freeze is HEAD when this was written; the frozen "
                 "files may have been uncommitted at that moment. No candidate had read Test or Challenge-B.",
         "analysis_plan": PLAN.as_posix(),
+        "amendment": args.amend or 0,
+        "amendment_reason": args.reason,
+        "challenge_b_frozen_at_this_freeze": CHALLENGE_B_FREEZE.exists(),
+        "hash_method": HASH_METHOD,
+        "original_freeze": ORIGINAL_FREEZE,
+        "supersedes": previous,
         **collect(),
     }
     FREEZE_PATH.parent.mkdir(parents=True, exist_ok=True)

@@ -52,7 +52,8 @@ SUBTYPE_RE = re.compile(r"^[a-z][a-z0-9_]{1,40}$")
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    """SHA-256 of the file after CRLF->LF normalization (all files here are text)."""
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def read_jsonl(path: Path) -> tuple[list[dict[str, Any]], list[str]]:

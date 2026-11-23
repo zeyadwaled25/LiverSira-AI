@@ -134,4 +134,18 @@ If a bug is found in the scoring code, the fix is recorded as an amendment. If i
 - **Field status is kept.** Its semantics are documented as verified for count only (§4).
 - **Known limitation recorded** in §8.
 
-**Timing.** This amendment was made before Challenge-B was written: no `results/nlp/phase8/challenge_b_freeze.json` exists, and no candidate has read Challenge-B or Test. The candidates were re-frozen afterwards (`candidates_freeze.json`, `amendment` = 1).
+**Timing.** This amendment was made before Challenge-B was written: no `results/nlp/phase8/challenge_b_freeze.json` exists, and no candidate has read Challenge-B or Test. The candidates were re-frozen once, after Amendment 2 (`candidates_freeze.json`, `amendment` = 2).
+
+### Amendment 2 (23 November 2026): line endings in the freeze hashes (tooling only)
+
+**Reason.** On Windows with `core.autocrlf`, git may check text files out with CRLF. A raw-byte hash would then change even though the content did not, and `freeze --check` would fail for no real reason.
+
+**Change.**
+
+- A new `.gitattributes` stores and checks out text files with LF. Weights and other binaries are marked `binary`.
+- The freeze hashes text files after normalizing CRLF to LF, and hashes binaries as raw bytes (`freeze_candidates.freeze_hash`). The Challenge-B validator normalizes the same way.
+- No analysis, candidate or rule changed.
+
+**Note on the original freeze.** The freeze in commit `9b088a8` hashed raw bytes for every file. Its hashes are kept in git history, and the new freeze file records the old method under `original_freeze` and `supersedes`.
+
+**Timing.** Like Amendment 1, this was made before Challenge-B was written.
