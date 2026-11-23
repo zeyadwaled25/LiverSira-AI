@@ -21,17 +21,32 @@
 
 ## What is frozen
 
-`results/nlp/phase8/candidates_freeze.json` holds the hashes of 43 files. `freeze_candidates --check` and `tests/test_phase8_freeze.py` fail on any change.
+`results/nlp/phase8/candidates_freeze.json` (amendment 3) holds the hashes of 52 files. `freeze_candidates --check` and `tests/test_phase8_freeze.py` fail on any change.
 
 | Id | Candidate |
 |---|---|
 | C1 | Parser v1.1 |
 | C2 | Parser v1.2 |
-| C3 | First extraction model, seeds 13 / 42 / 87 |
-| C4 | Per-lesion model, seeds 13 / 42 / 87 (failed its own registered rule; kept as a candidate for completeness) |
+| C3 | First extraction model (6.2), seeds 13 / 42 / 87 |
 | C5 | Hybrid H: parser v1.2, with C3 filling empty fields |
+| P1 | Presence: frozen TF-IDF + LR (default) |
+| P2 | Presence: ClinicalBERT, seeds 13 / 42 / 87 |
 
-The analysis plan, the taxonomy, the Challenge-B brief and validator, the liver-only filter and the scoring code are frozen with them. The plan gained the Gold Set (Test half, descriptive only, finalized before the run, as the roadmap requires) before the freeze was committed. No candidate had read Challenge-B or Test at that point.
+C4 (per-lesion) and C6 (H2) were retired by Amendment 3 to keep the comparison simple. The plan, the taxonomy, the Challenge-B brief and validator, the liver-only filter and the scoring code are frozen with them. The candidate list closes when the Phase 8 run starts.
+
+## Amendment 3: the reference for real reports was wrong
+
+On a real report with a lesion, a null target meant "the source value was not found in the text", but it was scored as "the text does not state it". A system that read the text correctly was marked wrong whenever the source label disagreed with the text. For example, "a large mass ... six smaller lesions" states 7 lesions, but its count target was null.
+
+| Validation, lesion-positive | count | segments | attenuation | diameter |
+|---|---|---|---|---|
+| Parser v1.2, old rule | 0.882 | 0.918 | 0.973 | 1.000 |
+| Parser v1.2, verifiable fields only | **1.000** | **0.990** | 0.977 | 1.000 |
+| First model (C3), verifiable fields only | 1.000 | 0.974 | 1.000 | 1.000 |
+| Hybrid H, verifiable fields only | 1.000 | 0.995 | 0.986 | 1.000 |
+
+- **What the 6.2 comparison got wrong.** The parser's 6.2 "weakness" on real Validation counts and segments came from the reference, not from the parser. Real reports are now scored on verifiable fields only, which applies to Validation and to Test in Phase 8 (`results/nlp/phase8/validation_rescored.md`).
+- **The masked C3 retraining.** C3 was retrained with the loss of unverifiable fields masked. A condition was registered before its results (commit `77d1dc7`), and the model did not meet it: seed 87 scored 0.977 on count. So C3 stays the 6.2 model, and the masked model is reported only. H scores the same either way.
 
 ## What the diagnostics show (Challenge-A, not part of any decision)
 
@@ -44,4 +59,6 @@ The analysis plan, the taxonomy, the Challenge-B brief and validator, the liver-
 1. **Challenge-B:** a team member writes it from the brief and freezes it in two steps.
 2. **Gold Set:** annotation, agreement, clinician adjudication, finalize.
 3. **Phase 7 (LLM extraction):** its candidates join the frozen list by amendment, before the Phase 8 run.
-4. ~~Decision on H~~ **decided (Amendment 1).** H2 was tried once on Train-aug and lost (613 vs 934 of 938 fields), with no Train-aug item to justify it. H stays the primary hybrid. H2 is an exploratory appendix candidate that can never be selected. The H limitation on unquantified counts is written into the plan before Challenge-B. See `docs/nlp/phase8_analysis_plan.md` §8 and Amendments.
+4. ~~Decision on H~~ **decided (Amendment 1).** H stays the hybrid. H2 lost on Train-aug (613 vs 934 of 938 fields) and was retired by Amendment 3. The H limitation on unquantified counts is written into the plan before Challenge-B.
+5. ~~Presence plan, deployability, freeze timing~~ **done (Amendment 3).**
+6. **Before Challenge-B is written:** push the branch, so the registration can be checked by others.
