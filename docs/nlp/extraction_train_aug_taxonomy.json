@@ -1,0 +1,332 @@
+{
+  "version": "extraction_train_aug_taxonomy_v1",
+  "scope": "6.2 Train-aug only. No Challenge Set family is listed or reserved.",
+  "families": {
+    "count/present": {
+      "fields": "count, segments, size",
+      "construction": "\"<N> <att> lesions are present in the liver.\" then a separate \"The largest, in <seg>, measures <size>.\" (N as digits or a word).",
+      "examples": [
+        "Seven hypoattenuating lesions are present in the liver. The largest, in segment 6, measures 6.3 x 3.3 cm.",
+        "3 hypoattenuating lesions are present in the liver. The largest, in segments 3/5, measures 8.3 x 5.0 cm."
+      ],
+      "extraction_train_v1": 84,
+      "extraction_train_lesion_v1": 84
+    },
+    "count/in_total": {
+      "fields": "count",
+      "construction": "\"... lesions, <N> in total; the largest lies in <seg> with a size of <size>.\"",
+      "examples": [
+        "The liver shows hypoattenuating lesions, 6 in total; the largest lies in segment 1 with a size of 4.1 x 3.6 cm.",
+        "The liver shows hypoattenuating lesions, 4 in total; the largest lies in segment 5 with a size of 5.1 x 4.4 cm."
+      ],
+      "extraction_train_v1": 84,
+      "extraction_train_lesion_v1": 84
+    },
+    "count/listed": {
+      "fields": "count, order",
+      "construction": "Labelled list \"Lesion 1: <seg>, <size>, <att>. Lesion 2: ...\" (2-5 lesions, shuffled; count = number of labels).",
+      "examples": [
+        "Lesion 1: segment 3, 0.9 x 0.7 cm, hyperattenuating. Lesion 2: segment 6, 2.9 x 2.5 cm, hypoattenuating. Lesion 3: segments 2/8, 6.1 x 5.4 cm, hypoattenuating. Lesion 4: segment 6, 4.5 x 3.6 cm, hypoattenuating. Lesion 5: segment 4, 2.5 x 2.1 cm, hyperattenuating.",
+        "Lesion 1: segment 2, 2.5 x 2.1 cm, hypoattenuating. Lesion 2: segment 4, 1.6 x 1.2 cm, hypoattenuating."
+      ],
+      "extraction_train_v1": 83,
+      "extraction_train_lesion_v1": 83
+    },
+    "count/another": {
+      "fields": "count",
+      "construction": "\"One <att> lesion is present in <seg> (<size>). Another lesion ... A further lesion ... Yet another lesion ...\" (2-4 lesions; count = number of sentences).",
+      "examples": [
+        "One hypoattenuating lesion is present in segment 6 (4.0 x 3.0 cm). Another lesion is present in segment 1 (2.0 x 1.0 cm). A further lesion is present in segment 4 (1.5 x 0.9 cm).",
+        "One hyperattenuating lesion is present in segments 2/7 (4.4 x 3.8 cm). Another lesion is present in segment 5 (1.2 x 0.6 cm)."
+      ],
+      "extraction_train_v1": 83,
+      "extraction_train_lesion_v1": 83
+    },
+    "count/only_one": {
+      "fields": "count",
+      "construction": "\"Only one <att> lesion is present ...\" or \"There is a lone <att> lesion ...\".",
+      "examples": [
+        "There is a lone hypoattenuating lesion in segment 7 of 7.7 x 6.3 cm.",
+        "There is a lone hyperattenuating lesion in segment 1 of 8.7 x 4.6 cm."
+      ],
+      "extraction_train_v1": 83,
+      "extraction_train_lesion_v1": 83
+    },
+    "count/vague": {
+      "fields": "count (unstated)",
+      "construction": "\"Innumerable / A few / Scattered / Various <att> lesions are present throughout the liver; the largest, in <seg>, has a size of <size>.\" Count is unstated.",
+      "examples": [
+        "Various hyperattenuating lesions are present throughout the liver; the largest, in segments 4/8, has a size of 3.3 x 2.9 cm.",
+        "A few isoattenuating lesions are present throughout the liver; the largest, in segment 2, has a size of 5.8 x 3.7 cm."
+      ],
+      "extraction_train_v1": 83,
+      "extraction_train_lesion_v1": 83
+    },
+    "size/single_mm": {
+      "fields": "size",
+      "construction": "One dimension in millimetres: \"A <att> lesion of <NN> mm lies in <seg>.\"",
+      "examples": [
+        "A hypoattenuating lesion of 48 mm lies in segment 5.",
+        "An isoattenuating lesion of 80 mm lies in segments 2/6."
+      ],
+      "extraction_train_v1": 100,
+      "extraction_train_lesion_v1": 100
+    },
+    "size/cm_by_cm": {
+      "fields": "size",
+      "construction": "\"<a> cm by <b> cm\".",
+      "examples": [
+        "An isoattenuating lesion of 2.9 cm by 2.0 cm is present in segment 7.",
+        "A hypoattenuating lesion of 2.6 cm by 1.5 cm is present in segments 3/4."
+      ],
+      "extraction_train_v1": 100,
+      "extraction_train_lesion_v1": 100
+    },
+    "size/greatest_diameter": {
+      "fields": "size",
+      "construction": "\"... has a greatest diameter of <a> cm.\"",
+      "examples": [
+        "A hypoattenuating lesion located at segment 4 has a greatest diameter of 3.2 cm.",
+        "A hypoattenuating lesion located at segment 8 has a greatest diameter of 6.7 cm."
+      ],
+      "extraction_train_v1": 100,
+      "extraction_train_lesion_v1": 100
+    },
+    "size/three_in_size": {
+      "fields": "size",
+      "construction": "Three dimensions with the unit after each: \"<a> cm x <b> cm x <c> cm in size\".",
+      "examples": [
+        "There is a hyperattenuating lesion at segment 2, 6.6 cm x 4.7 cm x 2.0 cm in size.",
+        "There is a hypoattenuating lesion at segment 2, 4.9 cm x 4.4 cm x 1.9 cm in size."
+      ],
+      "extraction_train_v1": 100,
+      "extraction_train_lesion_v1": 100
+    },
+    "size/reaching": {
+      "fields": "size",
+      "construction": "\"..., reaching <a> cm, ...\" or \"as large as <a> cm\".",
+      "examples": [
+        "A hyperattenuating lesion at segments 1/8, reaching 8.3 cm, is present.",
+        "A hyperattenuating lesion at segment 2, reaching 3.7 cm, is present."
+      ],
+      "extraction_train_v1": 100,
+      "extraction_train_lesion_v1": 100
+    },
+    "segment/roman": {
+      "fields": "segments",
+      "construction": "Roman numerals: \"in liver segment VI\", \"(segment VI)\".",
+      "examples": [
+        "A hyperattenuating lesion of 4.2 x 3.8 cm is present in liver segment II.",
+        "A hypoattenuating lesion of 7.7 x 6.8 cm is present (segment I)."
+      ],
+      "extraction_train_v1": 84,
+      "extraction_train_lesion_v1": 84
+    },
+    "segment/subsegment": {
+      "fields": "segments",
+      "construction": "\"segment 4A/4B\", \"subsegment IVa/IVb\" (= segment 4).",
+      "examples": [
+        "A hypoattenuating lesion of 3.6 x 2.0 cm is present in subsegment IVa.",
+        "A hypoattenuating lesion of 4.0 x 2.9 cm is present in subsegment IVa."
+      ],
+      "extraction_train_v1": 84,
+      "extraction_train_lesion_v1": 84
+    },
+    "segment/couinaud": {
+      "fields": "segments",
+      "construction": "\"in segment <n> according to Couinaud\".",
+      "examples": [
+        "A hypoattenuating lesion of 4.0 x 2.2 cm is present in segment 2 according to Couinaud.",
+        "An isoattenuating lesion of 3.0 x 1.7 cm is present in segment 4 according to Couinaud."
+      ],
+      "extraction_train_v1": 83,
+      "extraction_train_lesion_v1": 83
+    },
+    "segment/ordinal": {
+      "fields": "segments",
+      "construction": "\"in the 5th segment of the liver\", \"within segment five\", \"in the fifth segment of the liver\".",
+      "examples": [
+        "A hyperattenuating lesion of 2.3 x 2.0 cm is present within segment eight.",
+        "A hypoattenuating lesion of 8.0 x 4.0 cm is present in the 1st segment of the liver."
+      ],
+      "extraction_train_v1": 83,
+      "extraction_train_lesion_v1": 83
+    },
+    "segment/range": {
+      "fields": "segments",
+      "construction": "\"extending from segment <n> into segment <n+1>\", \"spanning segments <n> to <n+1>\".",
+      "examples": [
+        "A hyperattenuating lesion of 7.3 x 4.0 cm is present extending from segment 3 into segment 4.",
+        "A hyperattenuating lesion of 3.0 x 2.6 cm is present extending from segment 6 into segment 7."
+      ],
+      "extraction_train_v1": 83,
+      "extraction_train_lesion_v1": 83
+    },
+    "segment/lobe": {
+      "fields": "segments (unstated)",
+      "construction": "Lobe only: \"in the right/left liver lobe\", \"within the right/left lobe\". Segments are unstated.",
+      "examples": [
+        "A hypoattenuating lesion of 8.4 x 5.2 cm is present within the left lobe.",
+        "A hypoattenuating lesion of 9.0 x 6.8 cm is present in the right liver lobe."
+      ],
+      "extraction_train_v1": 83,
+      "extraction_train_lesion_v1": 83
+    },
+    "attenuation/appearing": {
+      "fields": "attenuation",
+      "construction": "\"hypodense / hyperdense / isodense\": \"A lesion appearing hypodense ...\", \"<Seg> contains a hypodense focus of <size>.\"",
+      "examples": [
+        "A lesion appearing isodense is present in segments 1/5, with a size of 4.1 x 3.1 cm.",
+        "Segments 4/5 contains a hyperdense focus of 4.9 x 2.7 cm."
+      ],
+      "extraction_train_v1": 125,
+      "extraction_train_lesion_v1": 125
+    },
+    "attenuation/of_density": {
+      "fields": "attenuation",
+      "construction": "\"of low/high/equal density\", \"with low/high/equal attenuation\".",
+      "examples": [
+        "A lesion of equal density is present in segment 6, with a size of 3.4 x 2.3 cm.",
+        "A lesion of high density is present in segments 1/7, with a size of 2.1 x 1.4 cm."
+      ],
+      "extraction_train_v1": 125,
+      "extraction_train_lesion_v1": 125
+    },
+    "attenuation/relative": {
+      "fields": "attenuation",
+      "construction": "Comparison with the liver: \"darker/brighter than the adjacent hepatic tissue\", \"less dense than / denser than background liver\", \"as dense as ...\", \"indistinguishable in density from background liver\".",
+      "examples": [
+        "In segment 3 there is a 5.0 x 3.6 cm lesion, less dense than background liver.",
+        "In segment 5 there is a 3.8 x 2.5 cm lesion, brighter than the adjacent hepatic tissue."
+      ],
+      "extraction_train_v1": 125,
+      "extraction_train_lesion_v1": 125
+    },
+    "attenuation/separate": {
+      "fields": "attenuation",
+      "construction": "In its own sentence after the lesion: \"It appears hypoattenuating.\", \"Its attenuation is low/high.\", \"Its attenuation matches the liver.\"",
+      "examples": [
+        "There is a lesion in segments 3/6 with a size of 5.3 x 4.5 cm. It appears hyperattenuating.",
+        "There is a lesion in segment 4 with a size of 2.7 x 2.1 cm. Its attenuation is low."
+      ],
+      "extraction_train_v1": 125,
+      "extraction_train_lesion_v1": 125
+    },
+    "order/size_list": {
+      "fields": "order, count",
+      "construction": "One sentence listing \"<seg> (<size>)\" for 2-4 lesions, ascending or shuffled: \"<Att> lesions are seen in segment 1 (...) and segments 3/6 (...).\"",
+      "examples": [
+        "Hypoattenuating lesions are seen in segment 1 (1.3 x 1.1 cm) and segments 3/6 (2.3 x 1.6 cm).",
+        "Hypoattenuating lesions are seen in segment 4 (1.9 x 1.0 cm), segment 3 (3.3 x 2.0 cm), and segment 7 (1.1 x 0.8 cm)."
+      ],
+      "extraction_train_v1": 167,
+      "extraction_train_lesion_v1": 167
+    },
+    "order/larger_of_two": {
+      "fields": "order, count",
+      "construction": "Smaller lesion first, then \"The larger of the two, <att>, lies in <seg> with a size of <size>.\"",
+      "examples": [
+        "An isoattenuating lesion of 3.3 x 2.6 cm lies in segment 8. The larger of the two, hyperattenuating, lies in segment 4 with a size of 5.8 x 3.7 cm.",
+        "A hypoattenuating lesion of 4.7 x 2.6 cm lies in segment 4. The larger of the two, isoattenuating, lies in segment 5 with a size of 5.9 x 3.2 cm."
+      ],
+      "extraction_train_v1": 167,
+      "extraction_train_lesion_v1": 167
+    },
+    "order/there_is": {
+      "fields": "order, count",
+      "construction": "\"There are lesions in <seg>, a <size> <att> lesion; in <seg>, a <size> <att> lesion; ...\" (2-4, shuffled).",
+      "examples": [
+        "There are lesions in segments 2/4, a 7.1 x 3.7 cm hypoattenuating lesion; in segment 1, a 2.4 x 2.0 cm hyperattenuating lesion; in segment 2, a 5.3 x 3.0 cm hyperattenuating lesion.",
+        "There are lesions in segment 5, a 0.4 x 0.3 cm hyperattenuating lesion; in segment 5, a 1.6 x 0.9 cm hypoattenuating lesion."
+      ],
+      "extraction_train_v1": 166,
+      "extraction_train_lesion_v1": 166
+    },
+    "paraphrase/single": {
+      "fields": "all",
+      "construction": "Other nouns and verbs for one lesion: \"<Seg> is the site of a <size> <att> focus / tumor / space-occupying lesion.\", \"A <att> <noun> sits in <seg>; size <size>.\"",
+      "examples": [
+        "A hyperattenuating space-occupying lesion sits in segments 2/7; size 8.2 x 6.8 cm.",
+        "A hypoattenuating focus sits in segment 2; size 7.2 x 5.9 cm."
+      ],
+      "extraction_train_v1": 250,
+      "extraction_train_lesion_v1": 250
+    },
+    "paraphrase/multiple": {
+      "fields": "all",
+      "construction": "\"The liver holds <N> <att> foci/tumors. The most prominent / greatest / principal of these sits in <seg>, sized <size>; the others are under <x> cm.\"",
+      "examples": [
+        "The liver holds two hyperattenuating foci. The most prominent of these sits in segment 6, sized 7.6 x 6.1 cm; the others are under 7.2 cm.",
+        "The liver holds four isoattenuating tumors. The greatest of these sits in segments 2/8, sized 5.7 x 3.4 cm; the others are under 5.3 cm."
+      ],
+      "extraction_train_v1": 250,
+      "extraction_train_lesion_v1": 250
+    },
+    "repeat/single": {
+      "fields": "count, size",
+      "construction": "One lesion, restated in a tail: \"There is a <att> lesion of <size> at <seg>. IMPRESSION: <att> lesion, <seg>, <size>.\" (count stays 1).",
+      "examples": [
+        "There is a hyperattenuating lesion of 8.3 x 5.2 cm at segment 2. IMPRESSION: hyperattenuating lesion, segment 2, 8.3 x 5.2 cm.",
+        "There is a hypoattenuating lesion of 8.9 x 4.5 cm at segment 5. IMPRESSION: hypoattenuating lesion, segment 5, 8.9 x 4.5 cm."
+      ],
+      "extraction_train_v1": 0,
+      "extraction_train_lesion_v1": 250
+    },
+    "repeat/multiple": {
+      "fields": "count, size",
+      "construction": "Listed lesions, then \"IMPRESSION: <N> lesions, of which the largest is <size>, <seg>.\"",
+      "examples": [
+        "Hypoattenuating lesions are seen in segments 3/6 (3.2 x 2.3 cm) and segment 1 (2.0 x 1.6 cm). IMPRESSION: 2 lesions, of which the largest is 3.2 x 2.3 cm, segments 3/6.",
+        "Hyperattenuating lesions are seen in segments 5/6 (2.5 x 1.7 cm), segment 1 (2.0 x 1.0 cm), segment 7 (1.2 x 1.0 cm), and segment 5 (0.4 x 0.3 cm). IMPRESSION: 4 lesions, of which the largest is 2.5 x 1.7 cm, segments 5/6."
+      ],
+      "extraction_train_v1": 0,
+      "extraction_train_lesion_v1": 250
+    },
+    "non_lesion/length": {
+      "fields": "count, size",
+      "construction": "A liver length beside one lesion: \"Liver length is <x> cm.\" (not a lesion size).",
+      "examples": [
+        "Liver length is 17.3 cm. Segment 8 contains a hyperattenuating lesion of 3.7 x 2.9 cm.",
+        "Liver length is 18.5 cm. Segment 6 contains a hypoattenuating lesion of 3.0 x 1.5 cm."
+      ],
+      "extraction_train_v1": 0,
+      "extraction_train_lesion_v1": 167
+    },
+    "non_lesion/duct": {
+      "fields": "count, size",
+      "construction": "\"The common hepatic duct measures <x> cm.\" beside one lesion.",
+      "examples": [
+        "Segment 7 contains a hypoattenuating lesion of 3.4 x 2.2 cm. The common hepatic duct measures 0.9 cm.",
+        "Segments 3/7 contains a hyperattenuating lesion of 6.7 x 5.4 cm. The common hepatic duct measures 0.9 cm."
+      ],
+      "extraction_train_v1": 0,
+      "extraction_train_lesion_v1": 167
+    },
+    "non_lesion/node": {
+      "fields": "count, size",
+      "construction": "\"Near the liver, a lymph node of <x> cm is noted.\" beside one lesion.",
+      "examples": [
+        "Near the liver, a lymph node of 13.7 cm is noted. Segment 3 contains an isoattenuating lesion of 8.8 x 7.4 cm.",
+        "Near the liver, a lymph node of 6.1 cm is noted. Segments 4/8 contains a hyperattenuating lesion of 3.6 x 2.8 cm."
+      ],
+      "extraction_train_v1": 0,
+      "extraction_train_lesion_v1": 166
+    }
+  },
+  "special": {
+    "real": {
+      "description": "Real Train reports (liver-only text), unchanged; targets come from the source labels.",
+      "extraction_train_v1": 6482,
+      "extraction_train_lesion_v1": 6482
+    },
+    "ocr": {
+      "description": "Character noise (swapped, dropped or replaced letters, digit/letter confusions) applied to real Train reports and to generated items of the families above (`ocr` subtype = the family it was applied to).",
+      "extraction_train_v1": 1000,
+      "extraction_train_lesion_v1": 1000
+    }
+  },
+  "inputs_sha256": {
+    "data/processed/nlp/extraction/extraction_train_v1.jsonl": "d794e543934e3bbd49e337886aeb9118ddbb825702607053df4fbed86d4f2be5",
+    "data/processed/nlp/extraction/extraction_train_lesion_v1.jsonl": "23e4e8755aace28572601d1c148403d04b36a104bf072726918dd892d1824bab"
+  }
+}

@@ -1,0 +1,257 @@
+{
+  "amendment": 1,
+  "data_policy": "Train-aug only; one attempt; Challenge Sets, Validation and Test not read.",
+  "parser_values_changed": 0,
+  "status_counts": {
+    "attenuation:not_mentioned": 4044,
+    "attenuation:stated": 10391,
+    "attenuation:unparsed": 7529,
+    "derived_max_diameter_cm:not_mentioned": 3965,
+    "derived_max_diameter_cm:stated": 10603,
+    "derived_max_diameter_cm:unparsed": 7396,
+    "lesion_count:not_mentioned": 424,
+    "lesion_count:stated": 14119,
+    "lesion_count:unparsed": 7421,
+    "location_segments:not_mentioned": 4307,
+    "location_segments:stated": 10182,
+    "location_segments:unparsed": 7475
+  },
+  "affected_items": 871,
+  "per_seed": {
+    "13": [
+      {
+        "family": "count/vague",
+        "field": "lesion_count",
+        "n": 166,
+        "h_correct": 166,
+        "h2_correct": 166
+      },
+      {
+        "family": "ocr",
+        "field": "attenuation",
+        "n": 100,
+        "h_correct": 100,
+        "h2_correct": 1
+      },
+      {
+        "family": "ocr",
+        "field": "derived_max_diameter_cm",
+        "n": 31,
+        "h_correct": 30,
+        "h2_correct": 1
+      },
+      {
+        "family": "ocr",
+        "field": "lesion_count",
+        "n": 132,
+        "h_correct": 130,
+        "h2_correct": 94
+      },
+      {
+        "family": "ocr",
+        "field": "location_segments",
+        "n": 191,
+        "h_correct": 190,
+        "h2_correct": 43
+      },
+      {
+        "family": "real",
+        "field": "attenuation",
+        "n": 6,
+        "h_correct": 6,
+        "h2_correct": 0
+      },
+      {
+        "family": "real",
+        "field": "lesion_count",
+        "n": 126,
+        "h_correct": 126,
+        "h2_correct": 126
+      },
+      {
+        "family": "real",
+        "field": "location_segments",
+        "n": 20,
+        "h_correct": 20,
+        "h2_correct": 20
+      },
+      {
+        "family": "repeat/multiple",
+        "field": "attenuation",
+        "n": 4,
+        "h_correct": 4,
+        "h2_correct": 0
+      },
+      {
+        "family": "segment/lobe",
+        "field": "location_segments",
+        "n": 162,
+        "h_correct": 162,
+        "h2_correct": 162
+      }
+    ],
+    "42": [
+      {
+        "family": "count/vague",
+        "field": "lesion_count",
+        "n": 166,
+        "h_correct": 166,
+        "h2_correct": 166
+      },
+      {
+        "family": "ocr",
+        "field": "attenuation",
+        "n": 100,
+        "h_correct": 100,
+        "h2_correct": 1
+      },
+      {
+        "family": "ocr",
+        "field": "derived_max_diameter_cm",
+        "n": 31,
+        "h_correct": 30,
+        "h2_correct": 1
+      },
+      {
+        "family": "ocr",
+        "field": "lesion_count",
+        "n": 132,
+        "h_correct": 131,
+        "h2_correct": 94
+      },
+      {
+        "family": "ocr",
+        "field": "location_segments",
+        "n": 191,
+        "h_correct": 190,
+        "h2_correct": 43
+      },
+      {
+        "family": "real",
+        "field": "attenuation",
+        "n": 6,
+        "h_correct": 6,
+        "h2_correct": 0
+      },
+      {
+        "family": "real",
+        "field": "lesion_count",
+        "n": 126,
+        "h_correct": 126,
+        "h2_correct": 126
+      },
+      {
+        "family": "real",
+        "field": "location_segments",
+        "n": 20,
+        "h_correct": 20,
+        "h2_correct": 20
+      },
+      {
+        "family": "repeat/multiple",
+        "field": "attenuation",
+        "n": 4,
+        "h_correct": 4,
+        "h2_correct": 0
+      },
+      {
+        "family": "segment/lobe",
+        "field": "location_segments",
+        "n": 162,
+        "h_correct": 162,
+        "h2_correct": 162
+      }
+    ],
+    "87": [
+      {
+        "family": "count/vague",
+        "field": "lesion_count",
+        "n": 166,
+        "h_correct": 166,
+        "h2_correct": 166
+      },
+      {
+        "family": "ocr",
+        "field": "attenuation",
+        "n": 100,
+        "h_correct": 99,
+        "h2_correct": 1
+      },
+      {
+        "family": "ocr",
+        "field": "derived_max_diameter_cm",
+        "n": 31,
+        "h_correct": 30,
+        "h2_correct": 1
+      },
+      {
+        "family": "ocr",
+        "field": "lesion_count",
+        "n": 132,
+        "h_correct": 130,
+        "h2_correct": 94
+      },
+      {
+        "family": "ocr",
+        "field": "location_segments",
+        "n": 191,
+        "h_correct": 191,
+        "h2_correct": 43
+      },
+      {
+        "family": "real",
+        "field": "attenuation",
+        "n": 6,
+        "h_correct": 6,
+        "h2_correct": 0
+      },
+      {
+        "family": "real",
+        "field": "lesion_count",
+        "n": 126,
+        "h_correct": 126,
+        "h2_correct": 126
+      },
+      {
+        "family": "real",
+        "field": "location_segments",
+        "n": 20,
+        "h_correct": 20,
+        "h2_correct": 20
+      },
+      {
+        "family": "repeat/multiple",
+        "field": "attenuation",
+        "n": 4,
+        "h_correct": 4,
+        "h2_correct": 0
+      },
+      {
+        "family": "segment/lobe",
+        "field": "location_segments",
+        "n": 162,
+        "h_correct": 162,
+        "h2_correct": 162
+      }
+    ]
+  },
+  "totals": {
+    "13": {
+      "n": 938,
+      "h_correct": 934,
+      "h2_correct": 613
+    },
+    "42": {
+      "n": 938,
+      "h_correct": 935,
+      "h2_correct": 613
+    },
+    "87": {
+      "n": 938,
+      "h_correct": 934,
+      "h2_correct": 613
+    }
+  },
+  "evidence": [],
+  "justified_by_train_aug": false
+}

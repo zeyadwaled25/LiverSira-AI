@@ -15,6 +15,20 @@ standard.
 | How good is the learned (TF-IDF + LR) model? | `final_test/learned_presence_test_report.md` |
 | How certain are those numbers? | `reliability/reliability_report.md` |
 | Do transformers beat LR and the parser? | `transformers/presence/comparison.md` |
+| Which extraction fields does the parser fail on (the 6.2 gate)? | `transformers/extraction/parser_challenge.md` |
+| What does the liver-only text keep and drop? | `liver_text/liver_only_report.md` |
+| Does the liver-only text change the 6.2 gate? | `transformers/extraction/parser_challenge_liver_only.md` |
+| How does the parser do on the liver-only Challenge Set (v2)? | `transformers/extraction/parser_challenge_v2_liver.md` |
+| What will the 6.2 extraction model train on? | `transformers/extraction/extraction_train_v1.md` |
+| Does the 6.2 extraction model beat the parser? | `transformers/extraction/runs/comparison.md` (its Validation column uses the old scoring rule; see the next row) |
+| What are the Validation numbers when only verifiable fields are scored (Amendment 3)? | `phase8/validation_rescored.md` |
+| What does the held-out Challenge Set v3 test, and how does the parser do? | `transformers/challenge/extraction_challenge_v3.md`, `transformers/extraction/parser_challenge_v3.md` |
+| Does the per-lesion model fix order and counting? | `transformers/extraction/runs_lesion/comparison.md` |
+| What does parser v1.2 add, and which Train-aug item justifies each rule? | `parser_v1_2/train_aug_report.md` |
+| What is frozen for the Phase 8 final evaluation? | `phase8/candidates_freeze.json` (plan: `docs/nlp/phase8_analysis_plan.md`) |
+| How do all frozen candidates do per subtype on the seen Challenge Sets (diagnosis only)? | `phase8/challenge_a_diagnostics.md` |
+| Did hybrid H2 (Amendment 1) beat H on Train-aug? | `phase8/amendment1_train_aug.md` |
+| Where does 6.2 stand? | `docs/nlp/phase6_2_status.md` |
 
 ## Folders
 
@@ -28,7 +42,10 @@ standard.
 | `predictions/` | Per-study predictions that the reports above are computed from | the scripts above |
 | `reliability/` | Bootstrap 95% CIs and coverage-adjusted metrics for the parser and LR | `reliability_report.py` |
 | `gold_set/` | IDs and hashes of the gold-set sample (no report text) | `gold_set.py sample` |
-| `transformers/` | Token lengths, the Challenge Set manifest, and the BERT / BioBERT / ClinicalBERT runs and comparison | `scripts/nlp/transformers/` |
+| `liver_text/` | Checks of the liver-only copy of the cleaned CSV: values kept, other organs left, parser v1.1 on full vs liver-only text | `build_liver_only_dataset.py` |
+| `parser_v1_2/` | Parser v1.2 vs v1.1 on 6.2 Train-aug, and the ablation evidence for each v1.2 rule | `transformers/extraction/parser_v1_2_report.py` |
+| `phase8/` | Hashes of every frozen Phase 8 candidate and the Challenge-A diagnostics (Challenge-B's freeze record goes here too) | `freeze_candidates.py`, `challenge_a_diagnostics.py`, `validate_challenge_b.py` |
+| `transformers/` | Token lengths, the presence and extraction Challenge Set manifests, the BERT / BioBERT / ClinicalBERT presence runs and comparison, and parser v1.1 on the extraction Challenge Set | `scripts/nlp/transformers/` |
 
 `baseline_manifest.json` records the input and output hashes of
 `predictions/baseline_inferences_updated.jsonl` (parser v1.0).

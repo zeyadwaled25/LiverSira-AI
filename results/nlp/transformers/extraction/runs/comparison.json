@@ -1,0 +1,190 @@
+{
+  "criteria": {
+    "fixed_before": "the first training run",
+    "model_selection": "epoch with the lowest Validation loss; the Challenge Sets are never used to choose an epoch, seed or setting",
+    "adds_value_on_field": "on extraction_challenge_v2_liver, pooled accuracy over the subtypes that target the field is higher than parser v1.1 for every seed, and the exact McNemar test on the pooled items gives p < 0.05 for every seed",
+    "no_regression": "on lesion-positive Validation studies, accuracy against the extraction targets (a stated value, or null where the text does not state it) is not lower than parser v1.1 by more than 0.01 for the field (every seed)",
+    "distractor_check": "extraction_challenge_v1 distractor subtypes, scored on the liver-only text, are reported but not part of the decision",
+    "test": "not read; the system chosen in Phase 8 is evaluated on Test once"
+  },
+  "fields": {
+    "count": {
+      "challenge_items": 600,
+      "parser_challenge_accuracy": 0.911667,
+      "parser_val_positive_accuracy": 0.886364,
+      "seeds": [
+        {
+          "seed": 13,
+          "challenge_accuracy": 0.955,
+          "model_right_parser_wrong": 36,
+          "parser_right_model_wrong": 10,
+          "mcnemar_p": 0.00015641720852954677,
+          "val_positive_accuracy": 0.990909,
+          "challenge_pass": true,
+          "val_pass": true
+        },
+        {
+          "seed": 42,
+          "challenge_accuracy": 0.935,
+          "model_right_parser_wrong": 32,
+          "parser_right_model_wrong": 18,
+          "mcnemar_p": 0.06490864707227217,
+          "val_positive_accuracy": 0.995455,
+          "challenge_pass": false,
+          "val_pass": true
+        },
+        {
+          "seed": 87,
+          "challenge_accuracy": 0.928333,
+          "model_right_parser_wrong": 32,
+          "parser_right_model_wrong": 22,
+          "mcnemar_p": 0.22032849417661093,
+          "val_positive_accuracy": 0.995455,
+          "challenge_pass": false,
+          "val_pass": true
+        }
+      ],
+      "adds_value": false
+    },
+    "segments": {
+      "challenge_items": 800,
+      "parser_challenge_accuracy": 0.8175,
+      "parser_val_positive_accuracy": 0.918182,
+      "seeds": [
+        {
+          "seed": 13,
+          "challenge_accuracy": 0.96125,
+          "model_right_parser_wrong": 146,
+          "parser_right_model_wrong": 31,
+          "mcnemar_p": 4.78387266540234e-19,
+          "val_positive_accuracy": 0.968182,
+          "challenge_pass": true,
+          "val_pass": true
+        },
+        {
+          "seed": 42,
+          "challenge_accuracy": 0.97625,
+          "model_right_parser_wrong": 146,
+          "parser_right_model_wrong": 19,
+          "mcnemar_p": 1.8613009251278727e-25,
+          "val_positive_accuracy": 0.972727,
+          "challenge_pass": true,
+          "val_pass": true
+        },
+        {
+          "seed": 87,
+          "challenge_accuracy": 0.94625,
+          "model_right_parser_wrong": 145,
+          "parser_right_model_wrong": 42,
+          "mcnemar_p": 1.806437610887183e-14,
+          "val_positive_accuracy": 0.972727,
+          "challenge_pass": true,
+          "val_pass": true
+        }
+      ],
+      "adds_value": true
+    },
+    "attenuation": {
+      "challenge_items": 800,
+      "parser_challenge_accuracy": 0.8025,
+      "parser_val_positive_accuracy": 0.972727,
+      "seeds": [
+        {
+          "seed": 13,
+          "challenge_accuracy": 0.95625,
+          "model_right_parser_wrong": 152,
+          "parser_right_model_wrong": 29,
+          "mcnemar_p": 2.5195628210499657e-21,
+          "val_positive_accuracy": 0.995455,
+          "challenge_pass": true,
+          "val_pass": true
+        },
+        {
+          "seed": 42,
+          "challenge_accuracy": 0.94875,
+          "model_right_parser_wrong": 139,
+          "parser_right_model_wrong": 22,
+          "mcnemar_p": 5.691305713073813e-22,
+          "val_positive_accuracy": 0.995455,
+          "challenge_pass": true,
+          "val_pass": true
+        },
+        {
+          "seed": 87,
+          "challenge_accuracy": 0.94875,
+          "model_right_parser_wrong": 153,
+          "parser_right_model_wrong": 36,
+          "mcnemar_p": 2.263920579308478e-18,
+          "val_positive_accuracy": 0.995455,
+          "challenge_pass": true,
+          "val_pass": true
+        }
+      ],
+      "adds_value": true
+    },
+    "diameter_cm": {
+      "challenge_items": 800,
+      "parser_challenge_accuracy": 0.90875,
+      "parser_val_positive_accuracy": 1.0,
+      "seeds": [
+        {
+          "seed": 13,
+          "challenge_accuracy": 0.99375,
+          "model_right_parser_wrong": 73,
+          "parser_right_model_wrong": 5,
+          "mcnemar_p": 1.4966458740841218e-16,
+          "val_positive_accuracy": 1.0,
+          "challenge_pass": true,
+          "val_pass": true
+        },
+        {
+          "seed": 42,
+          "challenge_accuracy": 0.99,
+          "model_right_parser_wrong": 73,
+          "parser_right_model_wrong": 8,
+          "mcnemar_p": 2.977302970952647e-14,
+          "val_positive_accuracy": 1.0,
+          "challenge_pass": true,
+          "val_pass": true
+        },
+        {
+          "seed": 87,
+          "challenge_accuracy": 0.99125,
+          "model_right_parser_wrong": 73,
+          "parser_right_model_wrong": 7,
+          "mcnemar_p": 5.79510097338583e-15,
+          "val_positive_accuracy": 1.0,
+          "challenge_pass": true,
+          "val_pass": true
+        }
+      ],
+      "adds_value": true
+    }
+  },
+  "runs": [
+    {
+      "model": "clinicalbert",
+      "seed": 13,
+      "best_epoch": 4,
+      "best_val_loss": 0.082529,
+      "train_seconds": 746.1,
+      "weights_sha256": "4c79074aa33e7432f079983797030a2c77d989704e88f962f0260d71ea18f866"
+    },
+    {
+      "model": "clinicalbert",
+      "seed": 42,
+      "best_epoch": 4,
+      "best_val_loss": 0.062997,
+      "train_seconds": 769.4,
+      "weights_sha256": "8145de7fcecfc01202b15947c0cd143c171dde14ea1f8430c92ef0768f944b3c"
+    },
+    {
+      "model": "clinicalbert",
+      "seed": 87,
+      "best_epoch": 4,
+      "best_val_loss": 0.065092,
+      "train_seconds": 814.4,
+      "weights_sha256": "5a2df393dc7161b57cd2760f5af44e97350e2f9394a72a80cc397f562918ec18"
+    }
+  ]
+}

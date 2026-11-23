@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>LiverSira AI · Phase 6 Report</title>
+<style>
+  @page { size: A4; margin: 15mm 14mm 16mm 14mm; }
+  :root {
+    --ink: #1d2433; --muted: #5b6475; --line: #d9dee7; --soft: #f4f6fa;
+    --accent: #1f5fae; --accent-soft: #e8f0fb; --ok: #1d7a4d; --ok-soft: #e6f4ec;
+    --warn: #a35a00; --warn-soft: #fdf1e1; --bad: #b3261e; --bad-soft: #fbe9e7;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0; color: var(--ink); background: #fff;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: 10.2pt; line-height: 1.75; direction: rtl; text-align: right;
+  }
+  /* LTR islands inside RTL text: English terms, numbers with punctuation, paths. */
+  bdi, .ltr { direction: ltr; unicode-bidi: isolate; }
+  code {
+    direction: ltr; unicode-bidi: isolate; font-family: Consolas, "Courier New", monospace;
+    font-size: 0.86em; background: var(--soft); border: 1px solid var(--line);
+    border-radius: 3px; padding: 0 4px; white-space: nowrap;
+  }
+  .num { direction: ltr; unicode-bidi: isolate; font-variant-numeric: tabular-nums; font-weight: 600; }
+
+  header.cover {
+    border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-bottom: 14px;
+  }
+  .kicker { color: var(--accent); font-weight: 600; font-size: 9pt; letter-spacing: .3px; }
+  h1 { font-size: 21pt; line-height: 1.35; margin: 2px 0 6px; }
+  .meta { color: var(--muted); font-size: 9pt; display: flex; gap: 18px; flex-wrap: wrap; }
+  .lead {
+    background: var(--accent-soft); border-inline-start: 4px solid var(--accent);
+    padding: 9px 12px; border-radius: 4px; margin: 0 0 12px;
+  }
+  h2 {
+    font-size: 14pt; margin: 18px 0 8px; padding-bottom: 4px;
+    border-bottom: 1px solid var(--line); color: var(--accent);
+    break-after: avoid;
+  }
+  h2 .tag {
+    display: inline-block; font-size: 9pt; color: #fff; background: var(--accent);
+    border-radius: 3px; padding: 0 7px; margin-inline-end: 6px; vertical-align: 2px;
+  }
+  h3 { font-size: 11pt; margin: 12px 0 4px; break-after: avoid; }
+  p { margin: 4px 0 8px; }
+  ul, ol { margin: 4px 0 8px; padding-inline-start: 22px; padding-inline-end: 0; }
+  li { margin: 2px 0; }
+  li > ul { margin: 2px 0; }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 10px 0 4px; }
+  .kpi { border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; background: #fff; }
+  .kpi .v { font-size: 15pt; font-weight: 700; direction: ltr; unicode-bidi: isolate; display: block; text-align: right; }
+  .kpi .l { color: var(--muted); font-size: 8.6pt; line-height: 1.45; }
+
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 9.3pt; }
+  th, td { border: 1px solid var(--line); padding: 5px 7px; vertical-align: top; text-align: right; }
+  th { background: var(--soft); font-weight: 600; }
+  tr { break-inside: avoid; }
+  td.n, th.n { text-align: center; direction: ltr; unicode-bidi: isolate; white-space: nowrap; }
+  .problems td:first-child { width: 47%; }
+  .problems td:first-child::before { content: "!"; display: inline-block; width: 15px; height: 15px; line-height: 15px;
+    text-align: center; border-radius: 50%; background: var(--warn-soft); color: var(--warn); font-weight: 700;
+    font-size: 8pt; margin-inline-end: 6px; }
+
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 6px 0; }
+  .steps > li { counter-increment: s; position: relative; padding: 6px 40px 6px 10px; margin: 0 0 6px;
+    border: 1px solid var(--line); border-radius: 6px; break-inside: avoid; }
+  .steps > li::before { content: counter(s); position: absolute; right: 9px; top: 7px; width: 22px; height: 22px;
+    border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; text-align: center; line-height: 22px;
+    font-size: 9pt; }
+  .steps > li > b:first-child { display: block; }
+
+  .badge { display: inline-block; border-radius: 3px; padding: 0 6px; font-size: 8.6pt; font-weight: 600; }
+  .b-ok { background: var(--ok-soft); color: var(--ok); }
+  .b-bad { background: var(--bad-soft); color: var(--bad); }
+  .b-warn { background: var(--warn-soft); color: var(--warn); }
+
+  .callout { border-radius: 6px; padding: 8px 12px; margin: 8px 0; break-inside: avoid; }
+  .callout.warn { background: var(--warn-soft); border-inline-start: 4px solid var(--warn); }
+  .callout.ok { background: var(--ok-soft); border-inline-start: 4px solid var(--ok); }
+  .callout b.t { display: block; margin-bottom: 2px; }
+
+  .open li { margin-bottom: 4px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; break-inside: avoid; }
+  .card h3 { margin-top: 0; }
+  footer.end { margin-top: 16px; padding-top: 8px; border-top: 1px solid var(--line); color: var(--muted); font-size: 8.6pt; }
+  .page-break { break-before: page; }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="kicker"><bdi>LiverSira AI · NLP</bdi> · تقرير مرحلة</div>
+  <h1><bdi>Phase 6</bdi>: الـ <bdi>Transformers</bdi> على تقارير الكبد<br>اللي اتعمل، والمشاكل، واللي لسه مفتوح</h1>
+  <div class="meta">
+    <span>الداتا: <bdi>AbdomenAtlas 3.0 Mini</bdi></span>
+    <span>التاريخ: 23 نوفمبر 2026</span>
+    <span>الـ Branch: <code>feat/nlp-liver-only-text</code></span>
+    <span>آخر commit: <code>2f76c90</code></span>
+  </div>
+</header>
+
+<p class="lead">
+  Phase 6 كانت بتجاوب على سؤال واحد: <b>هل الـ <bdi>Transformers</bdi> بتضيف قيمة فوق الـ <bdi>Parser</bdi> و<bdi>TF-IDF + LR</bdi>؟</b>
+  واتقسمت لـ 3 أجزاء: 6.0 تجهيز، و6.1 <bdi>Presence</bdi>، و6.2 <bdi>Extraction</bdi>.
+  كل الأرقام على <bdi>labels</bdi> مستخرجة من المصدر، مش <bdi>gold standard</bdi>، والـ <bdi>Test</bdi> ماتقراش في أي جزء.
+</p>
+
+<div class="kpis">
+  <div class="kpi"><span class="v" style="font-size:12pt">6,482 / 1,389 / 1,390</span><span class="l"><bdi>Train / Val / Test</bdi>، <bdi>split</bdi> ثابت</span></div>
+  <div class="kpi"><span class="v">0</span><span class="l">مرات قراية الـ <bdi>Test</bdi> في Phase 6</span></div>
+  <div class="kpi"><span class="v">14</span><span class="l">قاعدة في <bdi>Parser v1.2</bdi>، كل واحدة بدليل من <bdi>Train-aug</bdi></span></div>
+  <div class="kpi"><span class="v">52</span><span class="l">ملف متجمد بالـ <bdi>hashes</bdi> لـ Phase 8</span></div>
+</div>
+
+<h2><span class="tag"><bdi>6.0</bdi></span>التجهيز</h2>
+<ul>
+  <li><b>البيئة:</b> الـ <bdi>PyTorch</bdi> اللي كان متسطّب كان <bdi>CPU-only</bdi> رغم إن الجهاز فيه <bdi>RTX 3060</bdi> بـ <bdi>6GB</bdi>. اتسطّب بـ <bdi>CUDA</bdi>، والتدريب بقى بـ <bdi>bf16</bdi>.</li>
+  <li><b>الموديلات:</b> <bdi>BERT</bdi> و<bdi>BioBERT</bdi> و<bdi>ClinicalBERT</bdi>، كل واحد بـ <bdi>revision</bdi> ثابت، والتشغيل <bdi>offline</bdi>.</li>
+  <li><b>طول التقارير:</b> <span class="num">191</span> تقرير في <bdi>Train</bdi> و<bdi>Val</bdi> أطول من <span class="num">512</span> <bdi>token</bdi>، منهم <span class="num">100</span> فيهم <bdi>lesion</bdi>. قارنت 4 طرق للقص:
+    <bdi>head</bdi>، و<bdi>head + tail</bdi>، ونافذة حوالين ذكر الكبد، و<bdi>chunks</bdi>.
+    اخترنا <bdi>head</bdi>، لأن مفيش تقرير ضاع منه ذكر الكبد كله.</li>
+  <li><b><bdi>Presence Challenge Set</bdi>:</b> معمول من <bdi>Validation</bdi>، فيه 7 فئات × <span class="num">150</span> <bdi>item</bdi>:
+    <bdi>negation</bdi>، <bdi>other_organ_lesion</bdi>، <bdi>liver_removed</bdi>، <bdi>paraphrase</bdi>، <bdi>ocr_noise</bdi>، <bdi>liver_last</bdi>،
+    و<bdi>hedged</bdi> (مالهاش إجابة صح، فمش بتتحسب).</li>
+</ul>
+
+<h2><span class="tag"><bdi>6.1</bdi></span><bdi>Presence</bdi></h2>
+<ul>
+  <li><b>التجربة:</b> 3 موديلات × 3 <bdi>seeds</bdi>، بـ <bdi>budget</bdi> واحد ومن غير <bdi>hyperparameter search</bdi>، عشان مفيش موديل ياخد فرصة ظبط أكتر من التاني.</li>
+</ul>
+<table>
+  <thead><tr><th>النظام</th><th class="n"><bdi>Validation</bdi></th><th class="n"><bdi>Challenge</bdi> (المحسوب)</th><th>ملاحظة</th></tr></thead>
+  <tbody>
+    <tr><td><bdi>Parser v1.1</bdi></td><td class="n">1.000</td><td class="n">0.999</td><td>حاسب <span class="num">555</span> <bdi>abstention</bdi> كأنها <bdi>negative</bdi></td></tr>
+    <tr><td><bdi>TF-IDF + LR</bdi></td><td class="n">0.999</td><td class="n">0.986</td><td></td></tr>
+    <tr><td><bdi>BERT</bdi></td><td class="n">1.000 ± 0.000</td><td class="n">0.993 ± 0.006</td><td></td></tr>
+    <tr><td><bdi>BioBERT</bdi></td><td class="n">1.000 ± 0.000</td><td class="n">0.990 ± 0.008</td><td></td></tr>
+    <tr><td><bdi>ClinicalBERT</bdi></td><td class="n">1.000 ± 0.000</td><td class="n">0.997 ± 0.003</td><td>أحسن من الـ <bdi>LR</bdi> بفرق <bdi>significant</bdi> في الـ 3 <bdi>seeds</bdi></td></tr>
+  </tbody>
+</table>
+<ul>
+  <li>على الـ <bdi>Validation</bdi> وصلنا للسقف، ومفيش فرق <bdi>significant</bdi>.</li>
+  <li><b>الاختيار:</b> مااخترناش حاجة، القرار متأجل لـ Phase 8.</li>
+</ul>
+
+<h2><span class="tag"><bdi>6.2</bdi></span><bdi>Extraction</bdi></h2>
+<p>الحقول الأربعة: <bdi>count</bdi> (عدد الـ <bdi>lesions</bdi>)، و<bdi>segments</bdi> و<bdi>attenuation</bdi> و<bdi>diameter</bdi> لأكبر <bdi>lesion</bdi>.</p>
+<ol class="steps">
+  <li><b>الـ <bdi>Gate</bdi> و<bdi>Challenge v1</bdi> (<span class="num">1800</span> <bdi>item</bdi>)</b>
+    القاعدة اتحددت قبل التشغيل: أي <bdi>field</bdi> الـ <bdi>parser</bdi> يجيب فيه أقل من <span class="num">0.90</span> في أي <bdi>subtype</bdi> يدخل مرحلة الموديلات. الحقول الأربعة وقعت فيها.</li>
+  <li><b><bdi>Liver-only text</bdi></b>
+    كان فيه غلط في الـ <bdi>Control</bdi>: الـ <bdi>diameter</bdi> طلع <span class="num">7.3</span> بدل <span class="num">1.8</span> بسبب كتلة في القولون. عملنا فلتر بيسيب كلام الكبد بس، وعدنا الـ <bdi>gate</bdi>، وبنينا <bdi>v2_liver</bdi> (<span class="num">1600</span> <bdi>item</bdi>).</li>
+  <li><b>بيانات التدريب (<bdi>Train-aug</bdi>)</b>
+    الـ <bdi>targets</bdi> بتتحط بس لما النص يذكر القيمة، وغير كده <bdi>null</bdi>. الـ <bdi>Generator</bdi> منفصل عن الـ <bdi>Challenge Sets</bdi>، وفيه فحص <bdi>4-gram</bdi> بيتأكد إن مفيش تداخل بينهم.</li>
+  <li><b>الموديل الأول (<bdi>multi-head ClinicalBERT</bdi>)</b>
+    كسب الـ <bdi>parser</bdi> في الـ <bdi>segments</bdi> والـ <bdi>attenuation</bdi> والـ <bdi>diameter</bdi>، ومكسبش في الـ <bdi>count</bdi>.
+    بس وقع في حاجات الـ <bdi>parser</bdi> كان فيها كويس: ترتيب الأكبر، والعد بالتعداد، وحجم الـ <bdi>lymph node</bdi>.</li>
+  <li><b>الـ <bdi>per-lesion model</bdi></b>
+    جه من سؤال "ليه <bdi>hybrid</bdi>؟". اتعمل له <bdi>v3 held-out</bdi> وقاعدة قرار متسجلة قبل التدريب.
+    صلّح العد والترتيب، بس <span class="badge b-bad">فشل</span> لأنه بيعتبر أي "<bdi>X cm</bdi>" <bdi>lesion</bdi>: <bdi>liver span</bdi> و<bdi>vessel</bdi> و<bdi>node</bdi>.</li>
+  <li><b>خطة الـ <bdi>Review</bdi></b>
+    <bdi>Wilson CI</bdi> لكل <bdi>subtype</bdi>، و<bdi>Taxonomy</bdi> لـ <bdi>Train-aug</bdi>،
+    و<bdi>Parser v1.2</bdi> بـ <span class="num">14</span> قاعدة (كل واحدة متبررة بـ <bdi>item</bdi> من <bdi>Train-aug</bdi> ومتأكد منها بالـ <bdi>ablation</bdi>)،
+    و<bdi>Brief</bdi> لـ <bdi>Challenge-B</bdi> و<bdi>validator</bdi> ليه، و<bdi>Analysis plan</bdi> لـ Phase 8 وتجميد بالـ <bdi>hashes</bdi>.</li>
+  <li><b>الـ <bdi>Amendments</bdi></b>
+    <b>Amendment 1:</b> <bdi>H2</bdi> اتجرب مرة واحدة على <bdi>Train-aug</bdi> وخسر قدام <bdi>H</bdi> (<span class="num">613</span> قصاد <span class="num">934</span> <bdi>field</bdi> صح من <span class="num">938</span>).
+    <b>Amendment 2:</b> الـ <bdi>line endings</bdi>.</li>
+  <li><b>Amendment 3: تصليح الـ <bdi>reference</bdi> وتبسيط الـ <bdi>candidates</bdi></b>
+    اكتشفنا إن <bdi>null</bdi> في التقارير الحقيقية معناه "قيمة المصدر مالقيناهاش في النص"، مش "النص مش ذاكرها".
+    بقينا نقيّم الـ <bdi>fields</bdi> المتحقق منها بس. اتعمل <bdi>retrain</bdi> لـ <bdi>C3</bdi> بالـ <bdi>mask</bdi> بشرط متسجل قبل النتايج،
+    والشرط <span class="badge b-bad">ماتحققش</span> (<bdi>seed 87</bdi>: <span class="num">0.977</span> في الـ <bdi>count</bdi>)، فـ <bdi>C3</bdi> فضل موديل 6.2.
+    شلنا <bdi>C4</bdi> و<bdi>C6</bdi>، وضفنا خطة <bdi>Presence</bdi> وشرط <bdi>deployability</bdi>، وتجميد جديد لـ <span class="num">52</span> ملف.</li>
+</ol>
+
+<h3>الـ <bdi>Validation</bdi> بعد تصليح الـ <bdi>reference</bdi> (<span class="num">220</span> تقرير فيه <bdi>lesion</bdi>)</h3>
+<table>
+  <thead><tr><th>النظام</th><th class="n"><bdi>count</bdi></th><th class="n"><bdi>segments</bdi></th><th class="n"><bdi>attenuation</bdi></th><th class="n"><bdi>diameter</bdi></th></tr></thead>
+  <tbody>
+    <tr><td><bdi>Parser v1.2</bdi>، القاعدة القديمة</td><td class="n">0.882</td><td class="n">0.918</td><td class="n">0.973</td><td class="n">1.000</td></tr>
+    <tr><td><bdi>Parser v1.2</bdi>، الـ <bdi>fields</bdi> المتحقق منها بس</td><td class="n"><b>1.000</b></td><td class="n"><b>0.990</b></td><td class="n">0.977</td><td class="n">1.000</td></tr>
+    <tr><td>الموديل الأول (<bdi>C3</bdi>)</td><td class="n">1.000</td><td class="n">0.974</td><td class="n">1.000</td><td class="n">1.000</td></tr>
+    <tr><td><bdi>Hybrid H</bdi></td><td class="n">1.000</td><td class="n">0.995</td><td class="n">0.986</td><td class="n">1.000</td></tr>
+  </tbody>
+</table>
+<p>يعني "ضعف" الـ <bdi>parser</bdi> في الـ <bdi>count</bdi> والـ <bdi>segments</bdi> على التقارير الحقيقية في 6.2 كان جاي من الـ <bdi>reference</bdi>، مش من الـ <bdi>parser</bdi>.</p>
+
+<h3>نتيجة الموديل الأول قصاد الـ <bdi>Parser</bdi> (<bdi>v2_liver</bdi>، <bdi>Challenge-A</bdi>: للتشخيص بس)</h3>
+<table>
+  <thead><tr><th><bdi>Field</bdi></th><th class="n"><bdi>Parser v1.1</bdi></th><th class="n">الموديل (<bdi>seeds 13 / 42 / 87</bdi>)</th><th>بيضيف قيمة؟</th></tr></thead>
+  <tbody>
+    <tr><td><bdi>count</bdi></td><td class="n">0.912</td><td class="n">0.955 / 0.935 / 0.928</td><td><span class="badge b-bad">لأ</span> (مش <bdi>significant</bdi> في كل الـ <bdi>seeds</bdi>)</td></tr>
+    <tr><td><bdi>segments</bdi></td><td class="n">0.818</td><td class="n">0.961 / 0.976 / 0.946</td><td><span class="badge b-ok">أيوه</span></td></tr>
+    <tr><td><bdi>attenuation</bdi></td><td class="n">0.802</td><td class="n">0.956 / 0.949 / 0.949</td><td><span class="badge b-ok">أيوه</span></td></tr>
+    <tr><td><bdi>diameter</bdi></td><td class="n">0.909</td><td class="n">0.994 / 0.990 / 0.991</td><td><span class="badge b-ok">أيوه</span></td></tr>
+  </tbody>
+</table>
+
+<h3>الـ <bdi>Candidates</bdi> المتجمدة لـ Phase 8</h3>
+<table>
+  <thead><tr><th class="n"><bdi>Id</bdi></th><th>الـ <bdi>Candidate</bdi></th><th>الدور</th></tr></thead>
+  <tbody>
+    <tr><td class="n">C1</td><td><bdi>Parser v1.1</bdi></td><td>المرجع، وشرط الـ <bdi>clean data</bdi> على الـ <bdi>Test</bdi></td></tr>
+    <tr><td class="n">C2</td><td><bdi>Parser v1.2</bdi></td><td>الـ <bdi>default</bdi> لو مفيش حاجة كسبته</td></tr>
+    <tr><td class="n">C3</td><td>الموديل الأول (<bdi>ClinicalBERT</bdi>، 3 <bdi>seeds</bdi>)</td><td><bdi>candidate</bdi></td></tr>
+    <tr><td class="n">C5</td><td><bdi>Hybrid H</bdi>: <bdi>Parser v1.2</bdi> أولًا، والموديل الأول للحقل الفاضي</td><td>الـ <bdi>hybrid</bdi></td></tr>
+    <tr><td class="n">P1</td><td><bdi>Presence</bdi>: <bdi>TF-IDF + LR</bdi> المتجمد</td><td>الـ <bdi>default</bdi> للـ <bdi>Presence</bdi></td></tr>
+    <tr><td class="n">P2</td><td><bdi>Presence</bdi>: <bdi>ClinicalBERT</bdi> (3 <bdi>seeds</bdi>)</td><td><bdi>candidate</bdi></td></tr>
+  </tbody>
+</table>
+<p>اتشالوا في Amendment 3 عشان البساطة: <bdi>C4</bdi> (الـ <bdi>per-lesion</bdi>) و<bdi>C6</bdi> (<bdi>H2</bdi>). أي <bdi>candidate</bdi> لازم يكون <bdi>deployable</bdi> على بيانات مرضى عشان يتختار.</p>
+
+<h2 class="page-break">المشاكل اللي قابلتنا وإزاي اتحلت</h2>
+<table class="problems">
+  <thead><tr><th>المشكلة</th><th>الحل</th></tr></thead>
+  <tbody>
+    <tr><td><bdi>PyTorch</bdi> من غير <bdi>CUDA</bdi></td><td>تسطيب <bdi>CUDA</bdi>، والتدريب بـ <bdi>bf16</bdi></td></tr>
+    <tr><td>تقارير أطول من <span class="num">512</span> <bdi>token</bdi></td><td>قسنا 4 طرق للقص واخترنا <bdi>head</bdi> بالأرقام</td></tr>
+    <tr><td>الـ <bdi>Splits</bdi> وصلت للسقف ومش بتفرّق بين الموديلات</td><td><bdi>Challenge Sets</bdi> بتختبر الصيغ الصعبة</td></tr>
+    <tr><td>مقاسات أعضاء تانية بتدخل في الـ <bdi>diameter</bdi> (كتلة القولون)</td><td>فلتر <bdi>liver-only text</bdi></td></tr>
+    <tr><td>الفلتر بيلزق أجزاء الجمل في بعض ("<bdi>18.8 However</bdi>")</td><td><bdi>liver_text v1.0.1</bdi> بيحط نقطة بعد كل جزء</td></tr>
+    <tr><td><bdi>Labels</bdi> المصدر أحيانًا مش مكتوبة في النص</td><td><bdi>Targets</bdi> بتتحط بس لما النص يذكر القيمة</td></tr>
+    <tr><td>خطر إن بيانات التدريب تسرّب صيغ الـ <bdi>Challenge</bdi></td><td><bdi>Lexicon</bdi> منفصل، وفحص <bdi>4-gram</bdi> لحد ما التداخل بقى <span class="num">0</span></td></tr>
+    <tr><td>فولدر <code>models/</code> كان في الـ <bdi>gitignore</bdi> فالنتايج مابتتحفظش</td><td>النتايج بقت في <code>runs/</code></td></tr>
+    <tr><td>"الأكبر" في المصدر بالـ <bdi>volume</bdi> مش بالطول</td><td><bdi>Label</bdi> صريح للأكبر، اتسجل في <bdi>amendment</bdi> قبل البيانات</td></tr>
+    <tr><td>أرقام الـ <bdi>ranges</bdi> ("<bdi>from 0.6 to 6.3 cm</bdi>") كانت بتتحسب <bdi>lesions</bdi></td><td>استبعدناها</td></tr>
+    <tr><td>المقارنة مش عادلة: الموديل شاف <bdi>Train-aug</bdi> والـ <bdi>parser</bdi> لأ</td><td><bdi>Parser v1.2</bdi> اتظبط على <bdi>Train-aug</bdi> بس</td></tr>
+    <tr><td>خطر نضيف قواعد من غير دليل</td><td><bdi>Registry</bdi> و<bdi>ablation</bdi> لكل قاعدة، و<bdi>R2</bdi> اتشالت</td></tr>
+    <tr><td><bdi>Challenge-A</bdi> اتشاف</td><td>بقى للتشخيص بس، و<bdi>Challenge-B</bdi> هيتكتب من حد لوحده</td></tr>
+    <tr><td>عيب <bdi>H</bdi> في الـ <bdi>unquantified counts</bdi></td><td><bdi>H2</bdi> اتجرب مرة واحدة وفشل، فالعيب اتكتب في الخطة كـ <bdi>known limitation</bdi></td></tr>
+    <tr><td>الـ <bdi>hashes</bdi> بتتغير بسبب <bdi>CRLF</bdi> على <bdi>Windows</bdi></td><td><code>.gitattributes</code>، و<bdi>normalization</bdi> قبل الـ <bdi>hash</bdi></td></tr>
+    <tr><td><bdi>Bug</bdi> صغير: <bdi>numpy bool</bdi> مابيتكتبش في <bdi>JSON</bdi></td><td>اتصلّح</td></tr>
+    <tr><td><bdi>null</bdi> في التقارير الحقيقية كان بيتقيّم كأنه "مش مكتوب" وهو معناه "مش متحقق منه"</td><td>بنقيّم الـ <bdi>fields</bdi> المتحقق منها بس (Amendment 3)</td></tr>
+    <tr><td>خطة Phase 8 مافيهاش الـ <bdi>Presence</bdi></td><td>اتسجلت: <bdi>LR</bdi> هو الـ <bdi>default</bdi>، و<bdi>ClinicalBERT</bdi> <bdi>candidate</bdi></td></tr>
+    <tr><td>نظام <bdi>API</bdi> ممكن يتختار رغم إنه مايتنشرش على بيانات مرضى</td><td>شرط <bdi>deployability</bdi> في قاعدة الحكم</td></tr>
+    <tr><td>الأداة كانت هتقفل الـ <bdi>candidates</bdi> بمجرد تجميد <bdi>Challenge-B</bdi></td><td>القفل بقى مع بداية تشغيل Phase 8</td></tr>
+  </tbody>
+</table>
+
+<h2>اللي لسه مفتوح</h2>
+<div class="cols">
+  <div class="card">
+    <h3>مشاكل علمية</h3>
+    <ul class="open">
+      <li><b>الـ <bdi>Count</bdi>:</b> على التقارير الحقيقية الـ <bdi>parser</bdi> بيجيب <span class="num">1.000</span>. الضعف فاضل في صيغ ظهرت في <bdi>Challenge-A</bdi> بس (العد جملة جملة، و"<bdi>The lesion count is N</bdi>")، وعيب <bdi>H</bdi> في الـ <bdi>unquantified</bdi>. <bdi>Challenge-B</bdi> هو اللي هيقيسهم.</li>
+      <li><b>المقاسات اللي مش <bdi>lesions</bdi>:</b> الموديلات بتلخبط فيها، والموضوع محتاج فهم للسياق.</li>
+      <li><b><bdi>Limitation</bdi> في البيانات:</b> التقارير نفسها متولّدة من <bdi>measurements</bdi>، مش مكتوبة بإيد <bdi>radiologists</bdi>.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>شغل مستني</h3>
+    <ul class="open">
+      <li><b><bdi>Push</bdi> للـ <bdi>branch</bdi>:</b> قبل ما <bdi>Challenge-B</bdi> يتكتب، عشان التسجيل المسبق يبقى قابل للتحقق من برا.</li>
+      <li><b>عند الفريق:</b> <bdi>Challenge-B</bdi> (من الـ <bdi>brief</bdi>) والـ <bdi>Gold Set</bdi>. الاتنين شرط قبل Phase 8.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="callout warn">
+  <b class="t">قاعدة ثابتة لحد Phase 8</b>
+  مفيش أي ظبط على <bdi>Challenge-A</bdi> (<bdi>v1</bdi> و<bdi>v2</bdi> و<bdi>v3</bdi>) ولا <bdi>Challenge-B</bdi> ولا الـ <bdi>Test</bdi>.
+  التقييم النهائي تشغيل واحد لكل الـ <bdi>candidates</bdi>، حسب <code>docs/nlp/phase8_analysis_plan.md</code>.
+</div>
+
+<footer class="end">
+  المراجع في الـ <bdi>repo</bdi>: <code>docs/nlp/phase6_2_status.md</code> · <code>docs/nlp/phase8_analysis_plan.md</code> ·
+  <code>results/nlp/transformers/presence/comparison.md</code> · <code>results/nlp/transformers/extraction/runs/comparison.md</code> ·
+  <code>results/nlp/phase8/candidates_freeze.json</code>
+</footer>
+
+</body>
+</html>

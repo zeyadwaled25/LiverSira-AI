@@ -1,0 +1,30 @@
+{
+  "task": "extraction",
+  "train_data": "data/processed/nlp/extraction/extraction_train_v1.jsonl",
+  "selection_data": "data/processed/nlp/extraction/extraction_val_v1.jsonl",
+  "input": "liver-only text (liversira_ai.nlp.liver_text)",
+  "models": ["clinicalbert"],
+  "seeds": [13, 42, 87],
+  "max_length": 512,
+  "truncation": "head (5 of 11,871 Train + Validation texts exceed 512 tokens)",
+  "epochs": 4,
+  "batch_size": 16,
+  "gradient_accumulation": 1,
+  "eval_batch_size": 64,
+  "learning_rate": 2e-05,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "max_grad_norm": 1.0,
+  "precision": "bf16",
+  "loss": "sum of the four head losses, unweighted",
+  "early_stopping": {"metric": "val_loss", "patience": 1},
+  "hyperparameter_search": "none: the 6.1 setting with batch 16 and up to 4 epochs, fixed before any run",
+  "selection_criteria": {
+    "fixed_before": "the first training run",
+    "model_selection": "epoch with the lowest Validation loss; the Challenge Sets are never used to choose an epoch, seed or setting",
+    "adds_value_on_field": "on extraction_challenge_v2_liver, pooled accuracy over the subtypes that target the field is higher than parser v1.1 for every seed, and the exact McNemar test on the pooled items gives p < 0.05 for every seed",
+    "no_regression": "on lesion-positive Validation studies, accuracy against the extraction targets (a stated value, or null where the text does not state it) is not lower than parser v1.1 by more than 0.01 for the field (every seed)",
+    "distractor_check": "extraction_challenge_v1 distractor subtypes, scored on the liver-only text, are reported but not part of the decision",
+    "test": "not read; the system chosen in Phase 8 is evaluated on Test once"
+  }
+}

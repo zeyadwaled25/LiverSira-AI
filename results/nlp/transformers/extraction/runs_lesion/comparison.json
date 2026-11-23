@@ -1,0 +1,330 @@
+{
+  "criteria_text": {
+    "fixed_before": "the per-lesion training data, model code and first run",
+    "model_selection": "epoch with the lowest Validation loss; Challenge Sets are never used to choose an epoch, seed or setting",
+    "primary_v3": "on extraction_challenge_v3 (held out), for every field and every seed: pooled accuracy over the subtypes that target the field is at least the parser's and at least the first model's (same seed) minus 0.01; and for count, segments and diameter it is higher than the first model's (same seed) with exact McNemar p < 0.05",
+    "no_regression_v2": "on extraction_challenge_v2_liver, for every field and every seed, pooled targeted accuracy is at least the first model's (same seed) minus 0.01",
+    "no_regression_val": "on lesion-positive Validation studies, accuracy against the extraction targets is at least the parser's minus 0.01 and the first model's (same seed) minus 0.01, per field and seed",
+    "no_hidden_regression": "across extraction_challenge_v2_liver and extraction_challenge_v3, no subtype where the parser scores at least 0.95 on a targeted field has a mean model accuracy (over seeds) below 0.95 on that field",
+    "verdict": "model-only candidate if all four hold; otherwise report which fail and keep the hybrid for Phase 8",
+    "test": "not read; the system chosen in Phase 8 is evaluated on Test once"
+  },
+  "criteria": {
+    "primary_v3": false,
+    "no_regression_v2": true,
+    "no_regression_val": true,
+    "no_hidden_regression": false
+  },
+  "verdict": "hybrid kept for Phase 8",
+  "fields": {
+    "count": {
+      "v3_items": 667,
+      "v3_parser": 0.865067,
+      "v2_parser": 0.911667,
+      "val_parser": 0.886364,
+      "seeds": [
+        {
+          "seed": 13,
+          "v3_lesion": 0.796102,
+          "v3_first": 0.886057,
+          "v3_mcnemar_p": 4.5539695631785355e-05,
+          "v3_lesion_right_first_wrong": 76,
+          "v3_first_right_lesion_wrong": 136,
+          "v2_lesion": 0.986667,
+          "v2_first": 0.955,
+          "val_lesion": 0.995455,
+          "val_first": 0.990909,
+          "primary_v3": false,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        },
+        {
+          "seed": 42,
+          "v3_lesion": 0.790105,
+          "v3_first": 0.850075,
+          "v3_mcnemar_p": 0.009646603369469419,
+          "v3_lesion_right_first_wrong": 94,
+          "v3_first_right_lesion_wrong": 134,
+          "v2_lesion": 0.983333,
+          "v2_first": 0.935,
+          "val_lesion": 0.995455,
+          "val_first": 0.995455,
+          "primary_v3": false,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        },
+        {
+          "seed": 87,
+          "v3_lesion": 0.706147,
+          "v3_first": 0.875562,
+          "v3_mcnemar_p": 1.0542676024804807e-11,
+          "v3_lesion_right_first_wrong": 83,
+          "v3_first_right_lesion_wrong": 196,
+          "v2_lesion": 0.985,
+          "v2_first": 0.928333,
+          "val_lesion": 0.990909,
+          "val_first": 0.995455,
+          "primary_v3": false,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        }
+      ]
+    },
+    "segments": {
+      "v3_items": 200,
+      "v3_parser": 0.675,
+      "v2_parser": 0.8175,
+      "val_parser": 0.918182,
+      "seeds": [
+        {
+          "seed": 13,
+          "v3_lesion": 0.865,
+          "v3_first": 0.865,
+          "v3_mcnemar_p": 1.0,
+          "v3_lesion_right_first_wrong": 24,
+          "v3_first_right_lesion_wrong": 24,
+          "v2_lesion": 0.9825,
+          "v2_first": 0.96125,
+          "val_lesion": 0.972727,
+          "val_first": 0.968182,
+          "primary_v3": false,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        },
+        {
+          "seed": 42,
+          "v3_lesion": 0.915,
+          "v3_first": 0.925,
+          "v3_mcnemar_p": 0.8388197422027588,
+          "v3_lesion_right_first_wrong": 11,
+          "v3_first_right_lesion_wrong": 13,
+          "v2_lesion": 0.9725,
+          "v2_first": 0.97625,
+          "val_lesion": 0.972727,
+          "val_first": 0.972727,
+          "primary_v3": false,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        },
+        {
+          "seed": 87,
+          "v3_lesion": 0.95,
+          "v3_first": 0.96,
+          "v3_mcnemar_p": 0.79052734375,
+          "v3_lesion_right_first_wrong": 6,
+          "v3_first_right_lesion_wrong": 8,
+          "v2_lesion": 0.95125,
+          "v2_first": 0.94625,
+          "val_lesion": 0.972727,
+          "val_first": 0.972727,
+          "primary_v3": false,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        }
+      ]
+    },
+    "attenuation": {
+      "v3_items": 200,
+      "v3_parser": 0.98,
+      "v2_parser": 0.8025,
+      "val_parser": 0.972727,
+      "seeds": [
+        {
+          "seed": 13,
+          "v3_lesion": 0.99,
+          "v3_first": 0.93,
+          "v3_mcnemar_p": 0.004180908203125,
+          "v3_lesion_right_first_wrong": 14,
+          "v3_first_right_lesion_wrong": 2,
+          "v2_lesion": 0.99125,
+          "v2_first": 0.95625,
+          "val_lesion": 0.995455,
+          "val_first": 0.995455,
+          "primary_v3": true,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        },
+        {
+          "seed": 42,
+          "v3_lesion": 0.995,
+          "v3_first": 0.895,
+          "v3_mcnemar_p": 1.0967254638671875e-05,
+          "v3_lesion_right_first_wrong": 21,
+          "v3_first_right_lesion_wrong": 1,
+          "v2_lesion": 0.94875,
+          "v2_first": 0.94875,
+          "val_lesion": 0.995455,
+          "val_first": 0.995455,
+          "primary_v3": true,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        },
+        {
+          "seed": 87,
+          "v3_lesion": 0.995,
+          "v3_first": 0.97,
+          "v3_mcnemar_p": 0.125,
+          "v3_lesion_right_first_wrong": 6,
+          "v3_first_right_lesion_wrong": 1,
+          "v2_lesion": 0.98875,
+          "v2_first": 0.94875,
+          "val_lesion": 0.995455,
+          "val_first": 0.995455,
+          "primary_v3": true,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        }
+      ]
+    },
+    "diameter_cm": {
+      "v3_items": 600,
+      "v3_parser": 0.863333,
+      "v2_parser": 0.90875,
+      "val_parser": 1.0,
+      "seeds": [
+        {
+          "seed": 13,
+          "v3_lesion": 0.856667,
+          "v3_first": 0.875,
+          "v3_mcnemar_p": 0.24804574189252784,
+          "v3_lesion_right_first_wrong": 32,
+          "v3_first_right_lesion_wrong": 43,
+          "v2_lesion": 0.99375,
+          "v2_first": 0.99375,
+          "val_lesion": 1.0,
+          "val_first": 1.0,
+          "primary_v3": false,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        },
+        {
+          "seed": 42,
+          "v3_lesion": 0.87,
+          "v3_first": 0.86,
+          "v3_mcnemar_p": 0.566573442398685,
+          "v3_lesion_right_first_wrong": 41,
+          "v3_first_right_lesion_wrong": 35,
+          "v2_lesion": 0.99,
+          "v2_first": 0.99,
+          "val_lesion": 1.0,
+          "val_first": 1.0,
+          "primary_v3": false,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        },
+        {
+          "seed": 87,
+          "v3_lesion": 0.786667,
+          "v3_first": 0.895,
+          "v3_mcnemar_p": 6.8127817099494966e-12,
+          "v3_lesion_right_first_wrong": 15,
+          "v3_first_right_lesion_wrong": 80,
+          "v2_lesion": 0.98375,
+          "v2_first": 0.99125,
+          "val_lesion": 1.0,
+          "val_first": 1.0,
+          "primary_v3": false,
+          "no_regression_v2": true,
+          "no_regression_val": true
+        }
+      ]
+    }
+  },
+  "hidden_regressions": [
+    {
+      "set": "v2",
+      "subtype": "largest_order/last_implicit",
+      "field": "location_segments",
+      "mean_accuracy": 0.9104
+    },
+    {
+      "set": "v2",
+      "subtype": "largest_order/last_implicit",
+      "field": "derived_max_diameter_cm",
+      "mean_accuracy": 0.9353
+    },
+    {
+      "set": "v2",
+      "subtype": "largest_order/last_implicit",
+      "field": "attenuation",
+      "mean_accuracy": 0.8856
+    },
+    {
+      "set": "v2",
+      "subtype": "largest_order/last_keyword",
+      "field": "location_segments",
+      "mean_accuracy": 0.7463
+    },
+    {
+      "set": "v2",
+      "subtype": "largest_order/last_keyword",
+      "field": "derived_max_diameter_cm",
+      "mean_accuracy": 0.9353
+    },
+    {
+      "set": "v2",
+      "subtype": "largest_order/middle_implicit",
+      "field": "attenuation",
+      "mean_accuracy": 0.8687
+    },
+    {
+      "set": "v3",
+      "subtype": "non_lesion/liver_span",
+      "field": "lesion_count",
+      "mean_accuracy": 0.4776
+    },
+    {
+      "set": "v3",
+      "subtype": "non_lesion/liver_span",
+      "field": "derived_max_diameter_cm",
+      "mean_accuracy": 0.5124
+    },
+    {
+      "set": "v3",
+      "subtype": "non_lesion/node",
+      "field": "lesion_count",
+      "mean_accuracy": 0.0
+    },
+    {
+      "set": "v3",
+      "subtype": "non_lesion/node",
+      "field": "derived_max_diameter_cm",
+      "mean_accuracy": 0.1061
+    },
+    {
+      "set": "v3",
+      "subtype": "non_lesion/vessel",
+      "field": "lesion_count",
+      "mean_accuracy": 0.4627
+    },
+    {
+      "set": "v3",
+      "subtype": "non_lesion/vessel",
+      "field": "derived_max_diameter_cm",
+      "mean_accuracy": 0.9353
+    }
+  ],
+  "runs": [
+    {
+      "seed": 13,
+      "best_epoch": 5,
+      "best_val_loss": 0.293482,
+      "train_seconds": 1915.3,
+      "weights_sha256": "d6bcb104f0b0c255693127d1691ceb0f5649c011ff267e8132de42bf01214151"
+    },
+    {
+      "seed": 42,
+      "best_epoch": 5,
+      "best_val_loss": 0.261415,
+      "train_seconds": 1063.7,
+      "weights_sha256": "8710280c447ea893e1b21f03860231a8db906e2ea36970044669f1377ace78b7"
+    },
+    {
+      "seed": 87,
+      "best_epoch": 4,
+      "best_val_loss": 0.200403,
+      "train_seconds": 1290.1,
+      "weights_sha256": "3981898a603a5a17bee105bf232a68465967d719786f898ef65d84b48aa990f2"
+    }
+  ]
+}

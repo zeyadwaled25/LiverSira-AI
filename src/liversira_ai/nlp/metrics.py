@@ -290,3 +290,19 @@ def format_ci(item: dict[str, Any], digits: int = 3) -> str:
     if item.get("ci_low") is not None and item.get("ci_high") is not None:
         text += f" [{item['ci_low']:.{digits}f}, {item['ci_high']:.{digits}f}]"
     return text
+
+
+def wilson_interval(correct: int, n: int, confidence: float = DEFAULT_CONFIDENCE) -> dict[str, Any]:
+    """Wilson score interval for a proportion (``correct`` of ``n``); used per subtype,
+    where n is small and accuracy is often 0 or 1 (the bootstrap interval collapses there)."""
+    if n == 0:
+        return {"estimate": None, "ci_low": None, "ci_high": None, "n": 0, "correct": 0}
+    from scipy.stats import norm
+
+    z = float(norm.ppf(0.5 + confidence / 2))
+    p = correct / n
+    denominator = 1 + z * z / n
+    centre = (p + z * z / (2 * n)) / denominator
+    half = z * np.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / denominator
+    return {"estimate": _round(p), "ci_low": _round(max(0.0, centre - half)),
+            "ci_high": _round(min(1.0, centre + half)), "n": n, "correct": correct}

@@ -1,0 +1,2213 @@
+{
+  "parser_version": "1.2.0",
+  "data_policy": "Train-aug only (6.2 training data, incl. its real Train reports). Challenge Sets, Validation and Test were not read.",
+  "presence_policy": "Presence logic is unchanged from v1.1 (a report that never mentions a liver lesion stays unknown, not 0); the rules only touch count, segments, size and attenuation.",
+  "dropped_rules": [
+    {
+      "rule_id": "R2",
+      "reason": "no Train-aug item needed it (ablation changed nothing)"
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "R1",
+      "description": "An elliptical clause that continues a lesion statement is part of it (\"The largest, in segment 6, measures ...\", \"; size 8.2 x 6.8 cm\").",
+      "family": "count/present",
+      "field": "segments",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:count:present:BDMAP_00005631:059723",
+      "evidence_text": "Seven hypoattenuating lesions are present in the liver. The largest, in segment 6, measures 6.3 x 3.3 cm.",
+      "target": [
+        6
+      ],
+      "v1_1": null,
+      "v1_2": [
+        6
+      ],
+      "v1_2_without_rule": null,
+      "justified": true
+    },
+    {
+      "rule_id": "R3",
+      "description": "\"N in total\" states the count.",
+      "family": "count/in_total",
+      "field": "count",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:count:in_total:BDMAP_00001937:826725",
+      "evidence_text": "The liver shows hypoattenuating lesions, 6 in total; the largest lies in segment 1 with a size of 4.1 x 3.6 cm.",
+      "target": "6",
+      "v1_1": null,
+      "v1_2": "6",
+      "v1_2_without_rule": null,
+      "justified": true
+    },
+    {
+      "rule_id": "R4",
+      "description": "A labelled list (\"Lesion 1: ... Lesion 2: ...\") is counted by its highest label.",
+      "family": "count/listed",
+      "field": "count",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:count:listed:BDMAP_00002550:372864",
+      "evidence_text": "Lesion 1: segment 3, 0.9 x 0.7 cm, hyperattenuating. Lesion 2: segment 6, 2.9 x 2.5 cm, hypoattenuating. Lesion 3: segments 2/8, 6.1 x 5.4 cm, hypoattenuating. Lesion 4: segment 6, 4.5 x 3.6 cm, hypoattenuating. Lesion 5: segment 4, 2.5 x 2.1 cm, hyperattenuating.",
+      "target": "5",
+      "v1_1": null,
+      "v1_2": "5",
+      "v1_2_without_rule": null,
+      "justified": true
+    },
+    {
+      "rule_id": "R5",
+      "description": "A number followed by \".<digit>\" after a segment list is a size, not a segment.",
+      "family": "count/listed",
+      "field": "segments",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:count:listed:BDMAP_00002550:372864",
+      "evidence_text": "Lesion 1: segment 3, 0.9 x 0.7 cm, hyperattenuating. Lesion 2: segment 6, 2.9 x 2.5 cm, hypoattenuating. Lesion 3: segments 2/8, 6.1 x 5.4 cm, hypoattenuating. Lesion 4: segment 6, 4.5 x 3.6 cm, hypoattenuating. Lesion 5: segment 4, 2.5 x 2.1 cm, hyperattenuating.",
+      "target": [
+        2,
+        8
+      ],
+      "v1_1": [
+        2,
+        6,
+        8
+      ],
+      "v1_2": [
+        2,
+        8
+      ],
+      "v1_2_without_rule": [
+        2,
+        6,
+        8
+      ],
+      "justified": true
+    },
+    {
+      "rule_id": "R6",
+      "description": "\"Another lesion\" and \"A further lesion\" each add one lesion.",
+      "family": "count/another",
+      "field": "count",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:count:another:BDMAP_00005815:239600",
+      "evidence_text": "One hypoattenuating lesion is present in segment 6 (4.0 x 3.0 cm). Another lesion is present in segment 1 (2.0 x 1.0 cm). A further lesion is present in segment 4 (1.5 x 0.9 cm).",
+      "target": "3",
+      "v1_1": "1",
+      "v1_2": "3",
+      "v1_2_without_rule": "1",
+      "justified": true
+    },
+    {
+      "rule_id": "R7",
+      "description": "Subsegments (\"4A\", \"IVa\") map to their segment.",
+      "family": "segment/subsegment",
+      "field": "segments",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:segment:subsegment:BDMAP_00003845:231586",
+      "evidence_text": "A hypoattenuating lesion of 3.6 x 2.0 cm is present in subsegment IVa.",
+      "target": [
+        4
+      ],
+      "v1_1": null,
+      "v1_2": [
+        4
+      ],
+      "v1_2_without_rule": null,
+      "justified": true
+    },
+    {
+      "rule_id": "R8",
+      "description": "Ordinal and word segment names (\"the second segment\", \"segment eight\").",
+      "family": "segment/ordinal",
+      "field": "segments",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:segment:ordinal:BDMAP_00003333:473223",
+      "evidence_text": "An isoattenuating lesion of 8.7 x 6.1 cm is present in the second segment of the liver.",
+      "target": [
+        2
+      ],
+      "v1_1": null,
+      "v1_2": [
+        2
+      ],
+      "v1_2_without_rule": null,
+      "justified": true
+    },
+    {
+      "rule_id": "R9",
+      "description": "\"segments 2 to 3\" is a range of segments.",
+      "family": "segment/range",
+      "field": "segments",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:segment:range:BDMAP_00003237:113871",
+      "evidence_text": "A hypoattenuating lesion of 2.6 x 1.7 cm is present spanning segments 2 to 3.",
+      "target": [
+        2,
+        3
+      ],
+      "v1_1": [
+        2
+      ],
+      "v1_2": [
+        2,
+        3
+      ],
+      "v1_2_without_rule": [
+        2
+      ],
+      "justified": true
+    },
+    {
+      "rule_id": "R10",
+      "description": "\"of low/high/equal density\" and \"with low/high/equal attenuation\".",
+      "family": "attenuation/of_density",
+      "field": "attenuation",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:attenuation:of_density:BDMAP_00004586:460124",
+      "evidence_text": "A lesion of equal density is present in segment 6, with a size of 3.4 x 2.3 cm.",
+      "target": "isoattenuating",
+      "v1_1": null,
+      "v1_2": "isoattenuating",
+      "v1_2_without_rule": null,
+      "justified": true
+    },
+    {
+      "rule_id": "R11",
+      "description": "Comparisons with the liver: \"darker/less dense than\", \"brighter/denser than\", \"as dense as\", \"indistinguishable in density\".",
+      "family": "attenuation/relative",
+      "field": "attenuation",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:attenuation:relative:BDMAP_00000881:711770",
+      "evidence_text": "In segment 5 there is a 3.8 x 2.5 cm lesion, brighter than the adjacent hepatic tissue.",
+      "target": "hyperattenuating",
+      "v1_1": null,
+      "v1_2": "hyperattenuating",
+      "v1_2_without_rule": null,
+      "justified": true
+    },
+    {
+      "rule_id": "R12",
+      "description": "A sentence about the previous lesion's attenuation (\"It appears hyperattenuating.\", \"Its attenuation is low.\").",
+      "family": "attenuation/separate",
+      "field": "attenuation",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:attenuation:separate:BDMAP_00001252:554569",
+      "evidence_text": "There is a lesion in segments 3/6 with a size of 5.3 x 4.5 cm. It appears hyperattenuating.",
+      "target": "hyperattenuating",
+      "v1_1": null,
+      "v1_2": "hyperattenuating",
+      "v1_2_without_rule": null,
+      "justified": true
+    },
+    {
+      "rule_id": "R13",
+      "description": "\"focus\" and \"foci\" are lesion nouns.",
+      "family": "attenuation/appearing",
+      "field": "count",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:attenuation:appearing:BDMAP_00008962:339767",
+      "evidence_text": "Segments 4/5 contains a hyperdense focus of 4.9 x 2.7 cm.",
+      "target": "1",
+      "v1_1": null,
+      "v1_2": "1",
+      "v1_2_without_rule": null,
+      "justified": true
+    },
+    {
+      "rule_id": "R14",
+      "description": "A bare plural with no unquantified word (\"lesions are seen in segment 1 (1.3 x 1.1 cm) and ...\") is counted from the sizes it lists.",
+      "family": "order/size_list",
+      "field": "count",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:order:size_list:BDMAP_00005472:950414",
+      "evidence_text": "Hypoattenuating lesions are seen in segment 1 (1.3 x 1.1 cm) and segments 3/6 (2.3 x 1.6 cm).",
+      "target": "2",
+      "v1_1": null,
+      "v1_2": "2",
+      "v1_2_without_rule": null,
+      "justified": true
+    },
+    {
+      "rule_id": "R15",
+      "description": "\"the larger of the two\" states two lesions.",
+      "family": "order/larger_of_two",
+      "field": "count",
+      "evidence_set": "extraction_train_v1",
+      "evidence_id": "aug:order:larger_of_two:BDMAP_00007427:855788",
+      "evidence_text": "An isoattenuating lesion of 3.3 x 2.6 cm lies in segment 8. The larger of the two, hyperattenuating, lies in segment 4 with a size of 5.8 x 3.7 cm.",
+      "target": "2",
+      "v1_1": "1",
+      "v1_2": "2",
+      "v1_2_without_rule": "1",
+      "justified": true
+    }
+  ],
+  "real_train_field_changes": {
+    "better": 2,
+    "worse": 0
+  },
+  "accuracy": [
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/appearing",
+      "field": "attenuation",
+      "n": 125,
+      "v1_1": 0.536,
+      "v1_2": 0.992
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/appearing",
+      "field": "count",
+      "n": 125,
+      "v1_1": 0.536,
+      "v1_2": 0.992
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/appearing",
+      "field": "diameter_cm",
+      "n": 125,
+      "v1_1": 0.536,
+      "v1_2": 0.992
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/appearing",
+      "field": "segments",
+      "n": 125,
+      "v1_1": 0.536,
+      "v1_2": 0.992
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/of_density",
+      "field": "attenuation",
+      "n": 125,
+      "v1_1": 0.0,
+      "v1_2": 0.984
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/of_density",
+      "field": "count",
+      "n": 125,
+      "v1_1": 0.984,
+      "v1_2": 0.984
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/of_density",
+      "field": "diameter_cm",
+      "n": 125,
+      "v1_1": 0.984,
+      "v1_2": 0.984
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/of_density",
+      "field": "segments",
+      "n": 125,
+      "v1_1": 0.984,
+      "v1_2": 0.984
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/relative",
+      "field": "attenuation",
+      "n": 125,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/relative",
+      "field": "count",
+      "n": 125,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/relative",
+      "field": "diameter_cm",
+      "n": 125,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/relative",
+      "field": "segments",
+      "n": 125,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/separate",
+      "field": "attenuation",
+      "n": 125,
+      "v1_1": 0.0,
+      "v1_2": 0.928
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/separate",
+      "field": "count",
+      "n": 125,
+      "v1_1": 0.928,
+      "v1_2": 0.928
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/separate",
+      "field": "diameter_cm",
+      "n": 125,
+      "v1_1": 0.928,
+      "v1_2": 0.928
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "attenuation/separate",
+      "field": "segments",
+      "n": 125,
+      "v1_1": 0.928,
+      "v1_2": 0.928
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/another",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.988,
+      "v1_2": 0.988
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/another",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.0,
+      "v1_2": 0.988
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/another",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.988,
+      "v1_2": 0.988
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/another",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.988,
+      "v1_2": 0.988
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/in_total",
+      "field": "attenuation",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/in_total",
+      "field": "count",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/in_total",
+      "field": "diameter_cm",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/in_total",
+      "field": "segments",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/listed",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/listed",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.0,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/listed",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/listed",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.0843,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/only_one",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/only_one",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/only_one",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/only_one",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/present",
+      "field": "attenuation",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/present",
+      "field": "count",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/present",
+      "field": "diameter_cm",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/present",
+      "field": "segments",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/vague",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/vague",
+      "field": "count",
+      "n": 83,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/vague",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "count/vague",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/duct",
+      "field": "attenuation",
+      "n": 167,
+      "v1_1": 0.9521,
+      "v1_2": 0.9521
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/duct",
+      "field": "count",
+      "n": 167,
+      "v1_1": 0.9521,
+      "v1_2": 0.9521
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/duct",
+      "field": "diameter_cm",
+      "n": 167,
+      "v1_1": 0.9521,
+      "v1_2": 0.9521
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/duct",
+      "field": "segments",
+      "n": 167,
+      "v1_1": 0.9521,
+      "v1_2": 0.9521
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/length",
+      "field": "attenuation",
+      "n": 167,
+      "v1_1": 0.976,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/length",
+      "field": "count",
+      "n": 167,
+      "v1_1": 0.976,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/length",
+      "field": "diameter_cm",
+      "n": 167,
+      "v1_1": 0.976,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/length",
+      "field": "segments",
+      "n": 167,
+      "v1_1": 0.976,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/node",
+      "field": "attenuation",
+      "n": 166,
+      "v1_1": 0.9819,
+      "v1_2": 0.9819
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/node",
+      "field": "count",
+      "n": 166,
+      "v1_1": 0.9819,
+      "v1_2": 0.9819
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/node",
+      "field": "diameter_cm",
+      "n": 166,
+      "v1_1": 0.9819,
+      "v1_2": 0.9819
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "non_lesion/node",
+      "field": "segments",
+      "n": 166,
+      "v1_1": 0.9819,
+      "v1_2": 0.9819
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "ocr",
+      "field": "attenuation",
+      "n": 1000,
+      "v1_1": 0.712,
+      "v1_2": 0.759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "ocr",
+      "field": "count",
+      "n": 1000,
+      "v1_1": 0.713,
+      "v1_2": 0.8
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "ocr",
+      "field": "diameter_cm",
+      "n": 1000,
+      "v1_1": 0.783,
+      "v1_2": 0.857
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "ocr",
+      "field": "segments",
+      "n": 1000,
+      "v1_1": 0.637,
+      "v1_2": 0.742
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/larger_of_two",
+      "field": "attenuation",
+      "n": 167,
+      "v1_1": 0.2695,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/larger_of_two",
+      "field": "count",
+      "n": 167,
+      "v1_1": 0.0,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/larger_of_two",
+      "field": "diameter_cm",
+      "n": 167,
+      "v1_1": 0.0,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/larger_of_two",
+      "field": "segments",
+      "n": 167,
+      "v1_1": 0.0599,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/size_list",
+      "field": "attenuation",
+      "n": 167,
+      "v1_1": 0.9641,
+      "v1_2": 0.9641
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/size_list",
+      "field": "count",
+      "n": 167,
+      "v1_1": 0.0,
+      "v1_2": 0.9641
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/size_list",
+      "field": "diameter_cm",
+      "n": 167,
+      "v1_1": 0.9641,
+      "v1_2": 0.9641
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/size_list",
+      "field": "segments",
+      "n": 167,
+      "v1_1": 0.9641,
+      "v1_2": 0.9641
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/there_is",
+      "field": "attenuation",
+      "n": 166,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/there_is",
+      "field": "count",
+      "n": 166,
+      "v1_1": 0.0,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/there_is",
+      "field": "diameter_cm",
+      "n": 166,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "order/there_is",
+      "field": "segments",
+      "n": 166,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "paraphrase/multiple",
+      "field": "attenuation",
+      "n": 250,
+      "v1_1": 0.5,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "paraphrase/multiple",
+      "field": "count",
+      "n": 250,
+      "v1_1": 0.5,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "paraphrase/multiple",
+      "field": "diameter_cm",
+      "n": 250,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "paraphrase/multiple",
+      "field": "segments",
+      "n": 250,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "paraphrase/single",
+      "field": "attenuation",
+      "n": 250,
+      "v1_1": 0.672,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "paraphrase/single",
+      "field": "count",
+      "n": 250,
+      "v1_1": 0.672,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "paraphrase/single",
+      "field": "diameter_cm",
+      "n": 250,
+      "v1_1": 0.32,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "paraphrase/single",
+      "field": "segments",
+      "n": 250,
+      "v1_1": 0.672,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "real",
+      "field": "attenuation",
+      "n": 6482,
+      "v1_1": 0.9932,
+      "v1_2": 0.9932
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "real",
+      "field": "count",
+      "n": 6482,
+      "v1_1": 0.4462,
+      "v1_2": 0.4462
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "real",
+      "field": "diameter_cm",
+      "n": 6482,
+      "v1_1": 0.9971,
+      "v1_2": 0.9971
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "real",
+      "field": "segments",
+      "n": 6482,
+      "v1_1": 0.9861,
+      "v1_2": 0.9863
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "repeat/multiple",
+      "field": "attenuation",
+      "n": 250,
+      "v1_1": 0.968,
+      "v1_2": 0.968
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "repeat/multiple",
+      "field": "count",
+      "n": 250,
+      "v1_1": 0.976,
+      "v1_2": 0.984
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "repeat/multiple",
+      "field": "diameter_cm",
+      "n": 250,
+      "v1_1": 0.984,
+      "v1_2": 0.984
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "repeat/multiple",
+      "field": "segments",
+      "n": 250,
+      "v1_1": 0.984,
+      "v1_2": 0.984
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "repeat/single",
+      "field": "attenuation",
+      "n": 250,
+      "v1_1": 0.972,
+      "v1_2": 0.972
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "repeat/single",
+      "field": "count",
+      "n": 250,
+      "v1_1": 0.964,
+      "v1_2": 0.964
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "repeat/single",
+      "field": "diameter_cm",
+      "n": 250,
+      "v1_1": 0.972,
+      "v1_2": 0.972
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "repeat/single",
+      "field": "segments",
+      "n": 250,
+      "v1_1": 0.968,
+      "v1_2": 0.972
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/couinaud",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/couinaud",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/couinaud",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/couinaud",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/lobe",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.988,
+      "v1_2": 0.988
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/lobe",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.988,
+      "v1_2": 0.988
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/lobe",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.988,
+      "v1_2": 0.988
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/lobe",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/ordinal",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/ordinal",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/ordinal",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/ordinal",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.0,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/range",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/range",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/range",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/range",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.6024,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/roman",
+      "field": "attenuation",
+      "n": 84,
+      "v1_1": 0.9881,
+      "v1_2": 0.9881
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/roman",
+      "field": "count",
+      "n": 84,
+      "v1_1": 0.9881,
+      "v1_2": 0.9881
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/roman",
+      "field": "diameter_cm",
+      "n": 84,
+      "v1_1": 0.9881,
+      "v1_2": 0.9881
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/roman",
+      "field": "segments",
+      "n": 84,
+      "v1_1": 0.9881,
+      "v1_2": 0.9881
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/subsegment",
+      "field": "attenuation",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/subsegment",
+      "field": "count",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/subsegment",
+      "field": "diameter_cm",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "segment/subsegment",
+      "field": "segments",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/cm_by_cm",
+      "field": "attenuation",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/cm_by_cm",
+      "field": "count",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/cm_by_cm",
+      "field": "diameter_cm",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/cm_by_cm",
+      "field": "segments",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/greatest_diameter",
+      "field": "attenuation",
+      "n": 100,
+      "v1_1": 0.97,
+      "v1_2": 0.97
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/greatest_diameter",
+      "field": "count",
+      "n": 100,
+      "v1_1": 0.97,
+      "v1_2": 0.97
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/greatest_diameter",
+      "field": "diameter_cm",
+      "n": 100,
+      "v1_1": 0.97,
+      "v1_2": 0.97
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/greatest_diameter",
+      "field": "segments",
+      "n": 100,
+      "v1_1": 0.97,
+      "v1_2": 0.97
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/reaching",
+      "field": "attenuation",
+      "n": 100,
+      "v1_1": 0.93,
+      "v1_2": 0.93
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/reaching",
+      "field": "count",
+      "n": 100,
+      "v1_1": 0.93,
+      "v1_2": 0.93
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/reaching",
+      "field": "diameter_cm",
+      "n": 100,
+      "v1_1": 0.93,
+      "v1_2": 0.93
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/reaching",
+      "field": "segments",
+      "n": 100,
+      "v1_1": 0.93,
+      "v1_2": 0.93
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/single_mm",
+      "field": "attenuation",
+      "n": 100,
+      "v1_1": 0.98,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/single_mm",
+      "field": "count",
+      "n": 100,
+      "v1_1": 0.98,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/single_mm",
+      "field": "diameter_cm",
+      "n": 100,
+      "v1_1": 0.98,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/single_mm",
+      "field": "segments",
+      "n": 100,
+      "v1_1": 0.98,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/three_in_size",
+      "field": "attenuation",
+      "n": 100,
+      "v1_1": 0.98,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/three_in_size",
+      "field": "count",
+      "n": 100,
+      "v1_1": 0.98,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/three_in_size",
+      "field": "diameter_cm",
+      "n": 100,
+      "v1_1": 0.98,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_lesion_v1",
+      "family": "size/three_in_size",
+      "field": "segments",
+      "n": 100,
+      "v1_1": 0.98,
+      "v1_2": 0.98
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/appearing",
+      "field": "attenuation",
+      "n": 125,
+      "v1_1": 0.432,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/appearing",
+      "field": "count",
+      "n": 125,
+      "v1_1": 0.432,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/appearing",
+      "field": "diameter_cm",
+      "n": 125,
+      "v1_1": 0.432,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/appearing",
+      "field": "segments",
+      "n": 125,
+      "v1_1": 0.432,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/of_density",
+      "field": "attenuation",
+      "n": 125,
+      "v1_1": 0.0,
+      "v1_2": 0.96
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/of_density",
+      "field": "count",
+      "n": 125,
+      "v1_1": 0.96,
+      "v1_2": 0.96
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/of_density",
+      "field": "diameter_cm",
+      "n": 125,
+      "v1_1": 0.96,
+      "v1_2": 0.96
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/of_density",
+      "field": "segments",
+      "n": 125,
+      "v1_1": 0.96,
+      "v1_2": 0.96
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/relative",
+      "field": "attenuation",
+      "n": 125,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/relative",
+      "field": "count",
+      "n": 125,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/relative",
+      "field": "diameter_cm",
+      "n": 125,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/relative",
+      "field": "segments",
+      "n": 125,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/separate",
+      "field": "attenuation",
+      "n": 125,
+      "v1_1": 0.0,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/separate",
+      "field": "count",
+      "n": 125,
+      "v1_1": 0.976,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/separate",
+      "field": "diameter_cm",
+      "n": 125,
+      "v1_1": 0.976,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "attenuation/separate",
+      "field": "segments",
+      "n": 125,
+      "v1_1": 0.976,
+      "v1_2": 0.976
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/another",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9398,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/another",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.0,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/another",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9398,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/another",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.9398,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/in_total",
+      "field": "attenuation",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/in_total",
+      "field": "count",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/in_total",
+      "field": "diameter_cm",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/in_total",
+      "field": "segments",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/listed",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/listed",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/listed",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/listed",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.1807,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/only_one",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/only_one",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/only_one",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/only_one",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/present",
+      "field": "attenuation",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/present",
+      "field": "count",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/present",
+      "field": "diameter_cm",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/present",
+      "field": "segments",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/vague",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/vague",
+      "field": "count",
+      "n": 83,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/vague",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "count/vague",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "ocr",
+      "field": "attenuation",
+      "n": 1000,
+      "v1_1": 0.701,
+      "v1_2": 0.763
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "ocr",
+      "field": "count",
+      "n": 1000,
+      "v1_1": 0.683,
+      "v1_2": 0.787
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "ocr",
+      "field": "diameter_cm",
+      "n": 1000,
+      "v1_1": 0.745,
+      "v1_2": 0.84
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "ocr",
+      "field": "segments",
+      "n": 1000,
+      "v1_1": 0.627,
+      "v1_2": 0.739
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/larger_of_two",
+      "field": "attenuation",
+      "n": 167,
+      "v1_1": 0.2695,
+      "v1_2": 0.9641
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/larger_of_two",
+      "field": "count",
+      "n": 167,
+      "v1_1": 0.0,
+      "v1_2": 0.9641
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/larger_of_two",
+      "field": "diameter_cm",
+      "n": 167,
+      "v1_1": 0.0,
+      "v1_2": 0.9641
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/larger_of_two",
+      "field": "segments",
+      "n": 167,
+      "v1_1": 0.0599,
+      "v1_2": 0.9641
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/size_list",
+      "field": "attenuation",
+      "n": 167,
+      "v1_1": 0.9581,
+      "v1_2": 0.9581
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/size_list",
+      "field": "count",
+      "n": 167,
+      "v1_1": 0.0,
+      "v1_2": 0.9581
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/size_list",
+      "field": "diameter_cm",
+      "n": 167,
+      "v1_1": 0.9581,
+      "v1_2": 0.9581
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/size_list",
+      "field": "segments",
+      "n": 167,
+      "v1_1": 0.9581,
+      "v1_2": 0.9581
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/there_is",
+      "field": "attenuation",
+      "n": 166,
+      "v1_1": 0.9398,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/there_is",
+      "field": "count",
+      "n": 166,
+      "v1_1": 0.0,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/there_is",
+      "field": "diameter_cm",
+      "n": 166,
+      "v1_1": 0.9398,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "order/there_is",
+      "field": "segments",
+      "n": 166,
+      "v1_1": 0.9398,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "paraphrase/multiple",
+      "field": "attenuation",
+      "n": 250,
+      "v1_1": 0.536,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "paraphrase/multiple",
+      "field": "count",
+      "n": 250,
+      "v1_1": 0.536,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "paraphrase/multiple",
+      "field": "diameter_cm",
+      "n": 250,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "paraphrase/multiple",
+      "field": "segments",
+      "n": 250,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "paraphrase/single",
+      "field": "attenuation",
+      "n": 250,
+      "v1_1": 0.584,
+      "v1_2": 0.948
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "paraphrase/single",
+      "field": "count",
+      "n": 250,
+      "v1_1": 0.584,
+      "v1_2": 0.948
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "paraphrase/single",
+      "field": "diameter_cm",
+      "n": 250,
+      "v1_1": 0.304,
+      "v1_2": 0.948
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "paraphrase/single",
+      "field": "segments",
+      "n": 250,
+      "v1_1": 0.584,
+      "v1_2": 0.948
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "real",
+      "field": "attenuation",
+      "n": 6482,
+      "v1_1": 0.9932,
+      "v1_2": 0.9932
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "real",
+      "field": "count",
+      "n": 6482,
+      "v1_1": 0.4462,
+      "v1_2": 0.4462
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "real",
+      "field": "diameter_cm",
+      "n": 6482,
+      "v1_1": 0.9971,
+      "v1_2": 0.9971
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "real",
+      "field": "segments",
+      "n": 6482,
+      "v1_1": 0.9861,
+      "v1_2": 0.9863
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/couinaud",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/couinaud",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/couinaud",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/couinaud",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/lobe",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/lobe",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/lobe",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9639,
+      "v1_2": 0.9639
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/lobe",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/ordinal",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/ordinal",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/ordinal",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9759,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/ordinal",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.0,
+      "v1_2": 0.9759
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/range",
+      "field": "attenuation",
+      "n": 83,
+      "v1_1": 0.9398,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/range",
+      "field": "count",
+      "n": 83,
+      "v1_1": 0.9398,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/range",
+      "field": "diameter_cm",
+      "n": 83,
+      "v1_1": 0.9398,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/range",
+      "field": "segments",
+      "n": 83,
+      "v1_1": 0.4699,
+      "v1_2": 0.9398
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/roman",
+      "field": "attenuation",
+      "n": 84,
+      "v1_1": 0.9881,
+      "v1_2": 0.9881
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/roman",
+      "field": "count",
+      "n": 84,
+      "v1_1": 0.9881,
+      "v1_2": 0.9881
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/roman",
+      "field": "diameter_cm",
+      "n": 84,
+      "v1_1": 0.9881,
+      "v1_2": 0.9881
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/roman",
+      "field": "segments",
+      "n": 84,
+      "v1_1": 0.9881,
+      "v1_2": 0.9881
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/subsegment",
+      "field": "attenuation",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/subsegment",
+      "field": "count",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/subsegment",
+      "field": "diameter_cm",
+      "n": 84,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "segment/subsegment",
+      "field": "segments",
+      "n": 84,
+      "v1_1": 0.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/cm_by_cm",
+      "field": "attenuation",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/cm_by_cm",
+      "field": "count",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/cm_by_cm",
+      "field": "diameter_cm",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/cm_by_cm",
+      "field": "segments",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/greatest_diameter",
+      "field": "attenuation",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/greatest_diameter",
+      "field": "count",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/greatest_diameter",
+      "field": "diameter_cm",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/greatest_diameter",
+      "field": "segments",
+      "n": 100,
+      "v1_1": 0.99,
+      "v1_2": 0.99
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/reaching",
+      "field": "attenuation",
+      "n": 100,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/reaching",
+      "field": "count",
+      "n": 100,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/reaching",
+      "field": "diameter_cm",
+      "n": 100,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/reaching",
+      "field": "segments",
+      "n": 100,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/single_mm",
+      "field": "attenuation",
+      "n": 100,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/single_mm",
+      "field": "count",
+      "n": 100,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/single_mm",
+      "field": "diameter_cm",
+      "n": 100,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/single_mm",
+      "field": "segments",
+      "n": 100,
+      "v1_1": 1.0,
+      "v1_2": 1.0
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/three_in_size",
+      "field": "attenuation",
+      "n": 100,
+      "v1_1": 0.95,
+      "v1_2": 0.95
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/three_in_size",
+      "field": "count",
+      "n": 100,
+      "v1_1": 0.95,
+      "v1_2": 0.95
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/three_in_size",
+      "field": "diameter_cm",
+      "n": 100,
+      "v1_1": 0.95,
+      "v1_2": 0.95
+    },
+    {
+      "set": "extraction_train_v1",
+      "family": "size/three_in_size",
+      "field": "segments",
+      "n": 100,
+      "v1_1": 0.95,
+      "v1_2": 0.95
+    }
+  ],
+  "code_sha256": {
+    "src/liversira_ai/nlp/parser_v1_1.py": "1ececcd2969e44e2106f500cfd3ed7dc478afc664ba7ac2ec362c86b32fbb797",
+    "src/liversira_ai/nlp/parser_v1_2.py": "c4181fea66ebc9557c38931f9272f5bb6031f57cc13ff5e6a8e6d648c1ecf112",
+    "src/liversira_ai/nlp/parser_v1_2_rules.py": "9cbec7d7babcc589c13850dbdcfcef2065aa4eebf2dfec162cadc6b9ab9568f6",
+    "src/liversira_ai/nlp/baseline.py": "9d85bdfc40a812a152b40e3a8dadc393248ad6ada8ab83351c93cfec07b6747b"
+  },
+  "inputs_sha256": {
+    "data/processed/nlp/extraction/extraction_train_v1.jsonl": "d794e543934e3bbd49e337886aeb9118ddbb825702607053df4fbed86d4f2be5",
+    "data/processed/nlp/extraction/extraction_train_lesion_v1.jsonl": "23e4e8755aace28572601d1c148403d04b36a104bf072726918dd892d1824bab"
+  }
+}

@@ -74,3 +74,15 @@ def test_paired_comparison_counts_discordant_studies():
 
 def test_format_ci():
     assert format_ci({"estimate": 0.5, "ci_low": 0.4, "ci_high": 0.6}) == "0.500 [0.400, 0.600]"
+
+
+def test_wilson_interval_known_values_and_edges():
+    from liversira_ai.nlp.metrics import wilson_interval
+
+    mid = wilson_interval(8, 10)
+    assert mid["estimate"] == 0.8
+    assert mid["ci_low"] == pytest.approx(0.4902, abs=1e-3) and mid["ci_high"] == pytest.approx(0.9433, abs=1e-3)
+    perfect = wilson_interval(40, 40)
+    assert perfect["ci_high"] == 1.0 and perfect["ci_low"] == pytest.approx(0.9124, abs=1e-3)
+    assert wilson_interval(0, 33)["ci_low"] == 0.0
+    assert wilson_interval(0, 0)["estimate"] is None

@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0",
+  "task": "extraction",
+  "model": "clinicalbert",
+  "checkpoint": {
+    "repo_id": "emilyalsentzer/Bio_ClinicalBERT",
+    "revision": "d5892b39a4adaed74b92212a44081509db72f87b",
+    "lowercase": false
+  },
+  "seed": 87,
+  "config_path": "scripts/nlp/transformers/extraction/config_v2.json",
+  "config": {
+    "task": "extraction (Amendment 3: unverifiable fields masked)",
+    "train_data": "data/processed/nlp/extraction/extraction_train_v1.jsonl",
+    "selection_data": "data/processed/nlp/extraction/extraction_val_v1.jsonl",
+    "input": "liver-only text (liversira_ai.nlp.liver_text)",
+    "models": [
+      "clinicalbert"
+    ],
+    "seeds": [
+      13,
+      42,
+      87
+    ],
+    "max_length": 512,
+    "truncation": "head (5 of 11,871 Train + Validation texts exceed 512 tokens)",
+    "epochs": 4,
+    "batch_size": 16,
+    "gradient_accumulation": 1,
+    "eval_batch_size": 64,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "max_grad_norm": 1.0,
+    "precision": "bf16",
+    "loss": "sum of the four head losses, unweighted",
+    "early_stopping": {
+      "metric": "val_loss",
+      "patience": 1
+    },
+    "hyperparameter_search": "none: the 6.1 setting with batch 16 and up to 4 epochs, fixed before any run",
+    "selection_criteria": {
+      "fixed_before": "the first run of this config (Phase 8 plan, Amendment 3)",
+      "change_from_config_json": "only the loss mask: on real reports with a lesion, a field whose target is null (source value not found in the text) gets no loss, instead of being taught 'unstated'. Data, model, seeds and every other setting are identical.",
+      "model_selection": "epoch with the lowest Validation loss (masked the same way); Challenge Sets are never used to choose",
+      "validation_scoring": "verifiable fields only (train.target_accuracy)",
+      "decision": "none here: the model is a Phase 8 candidate (C3); the 6.2 'adds value' rule on Challenge-A no longer applies",
+      "test": "not read"
+    },
+    "mask_unverifiable": true,
+    "results_root": "results/nlp/transformers/extraction/runs_v2",
+    "models_root": "models/transformers/extraction_v2"
+  },
+  "smoke_test_limit": null,
+  "data": {
+    "train": 10482,
+    "val": 1389,
+    "challenge_v2_liver": 1600,
+    "challenge_v1_distractor": 200,
+    "masked_unverifiable_fields": {
+      "train": 378,
+      "val": 71
+    },
+    "train_truncated_spans": 0,
+    "val_truncated_spans": 0,
+    "test_policy": "Test was not read."
+  },
+  "best_epoch": 4,
+  "best_val_loss": 0.033498,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": {
+        "count": 0.445394,
+        "segments": 0.573552,
+        "attenuation": 0.252384,
+        "diameter": 0.09715
+      },
+      "val_loss": 0.361371,
+      "val_positive_accuracy": {
+        "n": 220,
+        "unverifiable": {
+          "count": 46,
+          "segments": 24,
+          "attenuation": 1,
+          "diameter_cm": 0
+        },
+        "count": 0.965517,
+        "n_count": 174,
+        "segments": 0.545918,
+        "n_segments": 196,
+        "attenuation": 0.990868,
+        "n_attenuation": 219,
+        "diameter_cm": 1.0,
+        "n_diameter_cm": 220
+      },
+      "elapsed_s": 138.3
+    },
+    {
+      "epoch": 2,
+      "train_loss": {
+        "count": 0.06477,
+        "segments": 0.132296,
+        "attenuation": 0.023388,
+        "diameter": 0.006743
+      },
+      "val_loss": 0.0665,
+      "val_positive_accuracy": {
+        "n": 220,
+        "unverifiable": {
+          "count": 46,
+          "segments": 24,
+          "attenuation": 1,
+          "diameter_cm": 0
+        },
+        "count": 0.971264,
+        "n_count": 174,
+        "segments": 0.979592,
+        "n_segments": 196,
+        "attenuation": 1.0,
+        "n_attenuation": 219,
+        "diameter_cm": 1.0,
+        "n_diameter_cm": 220
+      },
+      "elapsed_s": 276.1
+    },
+    {
+      "epoch": 3,
+      "train_loss": {
+        "count": 0.034727,
+        "segments": 0.047589,
+        "attenuation": 0.008799,
+        "diameter": 0.002416
+      },
+      "val_loss": 0.038787,
+      "val_positive_accuracy": {
+        "n": 220,
+        "unverifiable": {
+          "count": 46,
+          "segments": 24,
+          "attenuation": 1,
+          "diameter_cm": 0
+        },
+        "count": 0.971264,
+        "n_count": 174,
+        "segments": 0.984694,
+        "n_segments": 196,
+        "attenuation": 1.0,
+        "n_attenuation": 219,
+        "diameter_cm": 1.0,
+        "n_diameter_cm": 220
+      },
+      "elapsed_s": 413.1
+    },
+    {
+      "epoch": 4,
+      "train_loss": {
+        "count": 0.017152,
+        "segments": 0.034648,
+        "attenuation": 0.005284,
+        "diameter": 0.001126
+      },
+      "val_loss": 0.033498,
+      "val_positive_accuracy": {
+        "n": 220,
+        "unverifiable": {
+          "count": 46,
+          "segments": 24,
+          "attenuation": 1,
+          "diameter_cm": 0
+        },
+        "count": 0.977011,
+        "n_count": 174,
+        "segments": 0.984694,
+        "n_segments": 196,
+        "attenuation": 1.0,
+        "n_attenuation": 219,
+        "diameter_cm": 1.0,
+        "n_diameter_cm": 220
+      },
+      "elapsed_s": 551.0
+    }
+  ],
+  "weights": {
+    "path": "models/transformers/extraction_v2/clinicalbert/seed87/model.safetensors",
+    "sha256": "30e21ac82617ed8be1f55cf870114d470c91d33865bc8d8e71e12afc9e48d898"
+  },
+  "inputs_sha256": {
+    "data/processed/nlp/extraction/extraction_train_v1.jsonl": "d794e543934e3bbd49e337886aeb9118ddbb825702607053df4fbed86d4f2be5",
+    "data/processed/nlp/extraction/extraction_val_v1.jsonl": "8db93f3c1630f03c6a0e00570f037996ad01b5912b7018cc70fc52d3540ae464",
+    "data/processed/nlp/challenge/extraction_challenge_v2_liver.jsonl": "851b257c460b11576784cf89d41a467b8c76633b78d311913fb0b09be29e672b",
+    "data/processed/nlp/challenge/extraction_challenge_v1.jsonl": "1e836f2e1a67755f93ec7df9b1481f8426cf15c6edb5707b834a707cc12bb9af"
+  },
+  "environment": {
+    "python": "3.14.4",
+    "torch": "2.15.0+cu132",
+    "cuda": "13.2",
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "peak_gpu_memory_gib": 4.6,
+    "transformers": "5.22.2",
+    "deterministic_note": "cuDNN deterministic mode is on; GPU kernels can still differ slightly between runs."
+  },
+  "git_commit": "77d1dc70991076fa36a2b5d55d72eef8438eae65",
+  "train_seconds": 591.7
+}

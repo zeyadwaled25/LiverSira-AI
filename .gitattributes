@@ -1,0 +1,25 @@
+# Text files are stored and checked out with LF on every platform, so the
+# Phase 8 freeze hashes do not change with core.autocrlf (Windows).
+* text=auto eol=lf
+
+# Binary: never converted.
+*.safetensors binary
+*.bin binary
+*.pt binary
+*.pth binary
+*.ckpt binary
+*.joblib binary
+*.pkl binary
+*.npy binary
+*.npz binary
+*.nii binary
+*.nii.gz binary
+*.gz binary
+*.zip binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.xlsx binary
+*.docx binary
+*.pptx binary
