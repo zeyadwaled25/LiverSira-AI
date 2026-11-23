@@ -11,11 +11,11 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from liversira_ai.common.provenance import sha256_file
 from liversira_ai.nlp import parser_v1_2
 from liversira_ai.nlp.baseline import extract_liver_lesion_features, extract_liver_lesion_features_v1_2
 from liversira_ai.nlp.parser_v1_2_rules import RULES, ablate
 from scripts.nlp.transformers.extraction.compare import parser_targets
+from scripts.nlp.transformers.extraction.freeze_candidates import freeze_hash
 from scripts.nlp.transformers.extraction.train import TARGET_FIELDS, field_correct, read_jsonl
 
 DATA = Path("data/processed/nlp/extraction")
@@ -81,8 +81,8 @@ def main() -> None:
         "rules": rules,
         "real_train_field_changes": changed,
         "accuracy": table,
-        "code_sha256": {p.as_posix(): sha256_file(p) for p in CODE},
-        "inputs_sha256": {(DATA / f"{n}.jsonl").as_posix(): sha256_file(DATA / f"{n}.jsonl") for n in SETS},
+        "code_sha256": {p.as_posix(): freeze_hash(p) for p in CODE},
+        "inputs_sha256": {(DATA / f"{n}.jsonl").as_posix(): freeze_hash(DATA / f"{n}.jsonl") for n in SETS},
     }
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "train_aug_report.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")

@@ -104,7 +104,7 @@ Cells: v1.1 → v1.2 (bold where it changed). Almost all errors left in generate
 
 ## Code hashes
 
-- `src/liversira_ai/nlp/parser_v1_1.py`: `a112ce0ea2ab75bc33d644e58d32735f49dce0298f680eb0ff67b2305bc6797f`
-- `src/liversira_ai/nlp/parser_v1_2.py`: `18b42a76c0820b5b1234680046c76f799d0026bb1f3ab0098e1899f74b887089`
+- `src/liversira_ai/nlp/parser_v1_1.py`: `1ececcd2969e44e2106f500cfd3ed7dc478afc664ba7ac2ec362c86b32fbb797`
+- `src/liversira_ai/nlp/parser_v1_2.py`: `c4181fea66ebc9557c38931f9272f5bb6031f57cc13ff5e6a8e6d648c1ecf112`
 - `src/liversira_ai/nlp/parser_v1_2_rules.py`: `9cbec7d7babcc589c13850dbdcfcef2065aa4eebf2dfec162cadc6b9ab9568f6`
-- `src/liversira_ai/nlp/baseline.py`: `c12e578fe7463ac076ba3d4cdde71c954fcebfcc7f8deb502991ff9b722824b1`
+- `src/liversira_ai/nlp/baseline.py`: `9d85bdfc40a812a152b40e3a8dadc393248ad6ada8ab83351c93cfec07b6747b`

@@ -1,9 +1,24 @@
 {
   "schema_version": "1.0",
   "frozen_on": "2026-11-23",
-  "git_commit_at_freeze": "2da87bb0763ea6a8b4205b225b1e1106fd4cc9d4",
+  "git_commit_at_freeze": "aaf707ce6eddcd8eb3fdfe18a8a6ce827145ca32",
   "note": "The hashes are the freeze. git_commit_at_freeze is HEAD when this was written; the frozen files may have been uncommitted at that moment. No candidate had read Test or Challenge-B.",
   "analysis_plan": "docs/nlp/phase8_analysis_plan.md",
+  "amendment": 2,
+  "amendment_reason": "Amendment 1 (parser field status, exploratory hybrid H2 as C6; H stays primary) and Amendment 2 (LF-normalized text hashes); both before Challenge-B was written",
+  "challenge_b_frozen_at_this_freeze": false,
+  "hash_method": "sha256; text files (by suffix) after CRLF->LF normalization, other files raw bytes",
+  "original_freeze": {
+    "commit": "9b088a8",
+    "hash_method": "sha256 of raw bytes for every file (before .gitattributes)"
+  },
+  "supersedes": {
+    "freeze_file_sha256": "d8dfb47f536a51f83d2f3ebf6b914624e2d0f0d2c3dc1291de3b1a109afa82e2",
+    "frozen_on": "2026-11-23",
+    "git_commit_at_freeze": "2da87bb0763ea6a8b4205b225b1e1106fd4cc9d4",
+    "amendment": 0,
+    "hash_method": "sha256 of raw bytes for every file (before .gitattributes)"
+  },
   "candidates": {
     "C1": {
       "name": "parser v1.1",
@@ -87,7 +102,21 @@
       }
     },
     "C5": {
-      "name": "hybrid H = C2, falling back to C3 per field (analysis plan \u00a74)",
+      "name": "hybrid H = C2, falling back to C3 per field (analysis plan \u00a74); the primary hybrid",
+      "files": [
+        "src/liversira_ai/nlp/hybrid.py"
+      ],
+      "uses": [
+        "C2",
+        "C3"
+      ]
+    },
+    "C6": {
+      "name": "hybrid H2, exploratory (Amendment 1); appendix only, never eligible",
+      "files": [
+        "src/liversira_ai/nlp/hybrid.py",
+        "results/nlp/phase8/amendment1_train_aug.json"
+      ],
       "uses": [
         "C2",
         "C3"
@@ -96,47 +125,49 @@
   },
   "sha256": {
     "docs/nlp/challenge_b_brief.md": "ccbebac4fba6fa2cabf394811929da9d2e696d123c6d49b2c031735465f6c405",
-    "docs/nlp/extraction_train_aug_taxonomy.json": "3d16347d87130538af019b7a6a2b4fa8e2b6f167bb7dc7e64878dc2f2dac5b38",
-    "docs/nlp/extraction_train_aug_taxonomy.md": "c49be0f46aac0a20c1c108bf171f67b77c46a2850b7aad6d0ecf45156a584da3",
-    "docs/nlp/phase8_analysis_plan.md": "fbbc35d45e1a12104d71268666ffa6c13b2c0f860959290ce56ebde4316d48ad",
+    "docs/nlp/extraction_train_aug_taxonomy.json": "b2a61c0fb53e764f9a0d22ef71d768fa18260471f36a05325ad8f3ced59852e9",
+    "docs/nlp/extraction_train_aug_taxonomy.md": "d45be19d7fffd72342192bdc0d842ea7643562dca904f2a4cd87d109f4849b12",
+    "docs/nlp/phase8_analysis_plan.md": "59834a2c5215504cb24d9783df57ff0d4c76d2a4a0f17901cf28fd28e4640fe5",
     "models/transformers/extraction/clinicalbert/seed13/model.safetensors": "4c79074aa33e7432f079983797030a2c77d989704e88f962f0260d71ea18f866",
     "models/transformers/extraction/clinicalbert/seed13/tokenizer.json": "cb26b43c98e8266ae3e99c2a583cf8315d73b33a17e6b20b4df7ff1f22392d34",
-    "models/transformers/extraction/clinicalbert/seed13/tokenizer_config.json": "c27efea0abd8dbd28d6ae76a7c50d33e2f20b7b7ef3dc16fe3583f1a954c87d0",
+    "models/transformers/extraction/clinicalbert/seed13/tokenizer_config.json": "f2798e35c25f42f2183aa52a2f9ad1cb28509c09744b862298ba7633fce54d91",
     "models/transformers/extraction/clinicalbert/seed42/model.safetensors": "8145de7fcecfc01202b15947c0cd143c171dde14ea1f8430c92ef0768f944b3c",
     "models/transformers/extraction/clinicalbert/seed42/tokenizer.json": "cb26b43c98e8266ae3e99c2a583cf8315d73b33a17e6b20b4df7ff1f22392d34",
-    "models/transformers/extraction/clinicalbert/seed42/tokenizer_config.json": "c27efea0abd8dbd28d6ae76a7c50d33e2f20b7b7ef3dc16fe3583f1a954c87d0",
+    "models/transformers/extraction/clinicalbert/seed42/tokenizer_config.json": "f2798e35c25f42f2183aa52a2f9ad1cb28509c09744b862298ba7633fce54d91",
     "models/transformers/extraction/clinicalbert/seed87/model.safetensors": "5a2df393dc7161b57cd2760f5af44e97350e2f9394a72a80cc397f562918ec18",
     "models/transformers/extraction/clinicalbert/seed87/tokenizer.json": "cb26b43c98e8266ae3e99c2a583cf8315d73b33a17e6b20b4df7ff1f22392d34",
-    "models/transformers/extraction/clinicalbert/seed87/tokenizer_config.json": "c27efea0abd8dbd28d6ae76a7c50d33e2f20b7b7ef3dc16fe3583f1a954c87d0",
+    "models/transformers/extraction/clinicalbert/seed87/tokenizer_config.json": "f2798e35c25f42f2183aa52a2f9ad1cb28509c09744b862298ba7633fce54d91",
     "models/transformers/extraction_lesion/clinicalbert/seed13/model.safetensors": "d6bcb104f0b0c255693127d1691ceb0f5649c011ff267e8132de42bf01214151",
     "models/transformers/extraction_lesion/clinicalbert/seed13/tokenizer.json": "cb26b43c98e8266ae3e99c2a583cf8315d73b33a17e6b20b4df7ff1f22392d34",
-    "models/transformers/extraction_lesion/clinicalbert/seed13/tokenizer_config.json": "c27efea0abd8dbd28d6ae76a7c50d33e2f20b7b7ef3dc16fe3583f1a954c87d0",
+    "models/transformers/extraction_lesion/clinicalbert/seed13/tokenizer_config.json": "f2798e35c25f42f2183aa52a2f9ad1cb28509c09744b862298ba7633fce54d91",
     "models/transformers/extraction_lesion/clinicalbert/seed42/model.safetensors": "8710280c447ea893e1b21f03860231a8db906e2ea36970044669f1377ace78b7",
     "models/transformers/extraction_lesion/clinicalbert/seed42/tokenizer.json": "cb26b43c98e8266ae3e99c2a583cf8315d73b33a17e6b20b4df7ff1f22392d34",
-    "models/transformers/extraction_lesion/clinicalbert/seed42/tokenizer_config.json": "c27efea0abd8dbd28d6ae76a7c50d33e2f20b7b7ef3dc16fe3583f1a954c87d0",
+    "models/transformers/extraction_lesion/clinicalbert/seed42/tokenizer_config.json": "f2798e35c25f42f2183aa52a2f9ad1cb28509c09744b862298ba7633fce54d91",
     "models/transformers/extraction_lesion/clinicalbert/seed87/model.safetensors": "3981898a603a5a17bee105bf232a68465967d719786f898ef65d84b48aa990f2",
     "models/transformers/extraction_lesion/clinicalbert/seed87/tokenizer.json": "cb26b43c98e8266ae3e99c2a583cf8315d73b33a17e6b20b4df7ff1f22392d34",
-    "models/transformers/extraction_lesion/clinicalbert/seed87/tokenizer_config.json": "c27efea0abd8dbd28d6ae76a7c50d33e2f20b7b7ef3dc16fe3583f1a954c87d0",
-    "results/nlp/parser_v1_2/train_aug_report.json": "c83c066a2c208c10353e639b86d50a6bd2945cfc5a27fff5c25d858aa87d857f",
-    "results/nlp/transformers/extraction/runs/clinicalbert/seed13/run_manifest.json": "0242b58a6da337089bc6b58d9f1910b3ea9137be27b9ac49acb5788eecf62a7d",
-    "results/nlp/transformers/extraction/runs/clinicalbert/seed42/run_manifest.json": "707d3d7a2c31455ac69aa74ced434b0cd0b3d12e19baaeb0383fbf5c988b9b4f",
-    "results/nlp/transformers/extraction/runs/clinicalbert/seed87/run_manifest.json": "c297752441514cf500fa1058c321991925fbcc13dcbdb3092cbe647db6f66c4a",
-    "results/nlp/transformers/extraction/runs_lesion/clinicalbert/seed13/run_manifest.json": "e00a086c6e2055f514cf5208debca50b3596780779cbd82a82e8ea48f702dd3e",
-    "results/nlp/transformers/extraction/runs_lesion/clinicalbert/seed42/run_manifest.json": "77d0fbf3af43821e6cf11a9c0931e072b5dd603506c4884fce6e4cf020087299",
-    "results/nlp/transformers/extraction/runs_lesion/clinicalbert/seed87/run_manifest.json": "c4e56e7c5fdd2933383c0c8766a3b00854b8f29737089ad785e85ae9ded37311",
+    "models/transformers/extraction_lesion/clinicalbert/seed87/tokenizer_config.json": "f2798e35c25f42f2183aa52a2f9ad1cb28509c09744b862298ba7633fce54d91",
+    "results/nlp/parser_v1_2/train_aug_report.json": "56c2f69a2efbef5a2fff217a09227f51fdbce12219ca6a08e72fd22cf4e2bc22",
+    "results/nlp/phase8/amendment1_train_aug.json": "e7d30469f88d0db5d60f97a31a762ae18232410b86db04f84c7904c6c5fb58bc",
+    "results/nlp/transformers/extraction/runs/clinicalbert/seed13/run_manifest.json": "d49f421d23c8ad14bfbf2c1435d250a015fc72f77ce21a90665bfd448cb38617",
+    "results/nlp/transformers/extraction/runs/clinicalbert/seed42/run_manifest.json": "b556cd17557600bd6aadfe09c9ecd24f4fc2a832c5da1cc2e4afeb09fbf00b65",
+    "results/nlp/transformers/extraction/runs/clinicalbert/seed87/run_manifest.json": "a5eeccf8e0addaaa929de64ec9984d146b220f04711489439c5bfe87b6fc26d9",
+    "results/nlp/transformers/extraction/runs_lesion/clinicalbert/seed13/run_manifest.json": "4c5ad8b2497938df5cb6426dc462963819d8a268b419694289f6df773a79c57e",
+    "results/nlp/transformers/extraction/runs_lesion/clinicalbert/seed42/run_manifest.json": "a3f8e922036922fc1df294c68ad093367f9c60306cdeac30dec4cb36235dd62b",
+    "results/nlp/transformers/extraction/runs_lesion/clinicalbert/seed87/run_manifest.json": "7005c218c3c8bc368d090c6559105bf4e76603c2a1f70493f8363cb3a2fed5ca",
     "scripts/nlp/transformers/extraction/config.json": "f4ea36fb3fba6ad290d1a3af7980edf3eb80d86b6da07b35ac20bbb67fe8c5ae",
     "scripts/nlp/transformers/extraction/config_lesion.json": "bb48b98fed844296372c8b09e067733dba315b7aebca6e72a39aa6c138389aa0",
     "scripts/nlp/transformers/extraction/train.py": "25747844cfc53fd22593900a210e110c0961c0eb03a94ba1a4890acaf456ed2a",
-    "scripts/nlp/transformers/extraction/validate_challenge_b.py": "9b11c0d80ef56ef34bb32f4770fd7690b2b1bebfafc4abd67214c7b091a9c1d1",
-    "src/liversira_ai/nlp/baseline.py": "c12e578fe7463ac076ba3d4cdde71c954fcebfcc7f8deb502991ff9b722824b1",
+    "scripts/nlp/transformers/extraction/validate_challenge_b.py": "900cc48a19472aac8db51e1967374645657e8720f5d44b616687864ef5b934a2",
+    "src/liversira_ai/nlp/baseline.py": "9d85bdfc40a812a152b40e3a8dadc393248ad6ada8ab83351c93cfec07b6747b",
     "src/liversira_ai/nlp/extraction_model.py": "ca3bdc02a128ae9eef9323f72e59ee4c3d368087073c30e16a1f2d6f4c98436d",
     "src/liversira_ai/nlp/extraction_targets.py": "1d83688f0c7d1a3dc5cd5ca2bedbc13cc71fc9d4809a8eb15950328594f65ff4",
+    "src/liversira_ai/nlp/hybrid.py": "4f3cb4b0300748776e7f310981ec1cad450837fa0b2e185278f8d2b8771c51eb",
     "src/liversira_ai/nlp/lesion_model.py": "f913720e2021eed82ee5d062c36816e024e1445622a9acd91a51b71f7a3354a2",
     "src/liversira_ai/nlp/lesion_targets.py": "05da20099e608a15b9dc9d5cd7d7373e9fc419b079fdfb740ac87796c4ac7b09",
     "src/liversira_ai/nlp/liver_text.py": "1bc06aee86ddeb8e499dd378589aac97468bfa37cb09b281f1711b3e019b0cd5",
-    "src/liversira_ai/nlp/metrics.py": "184db93336c466c25d604cc50e40148c51bf98d0d644c015392d5de2d7139173",
-    "src/liversira_ai/nlp/parser_v1_1.py": "a112ce0ea2ab75bc33d644e58d32735f49dce0298f680eb0ff67b2305bc6797f",
-    "src/liversira_ai/nlp/parser_v1_2.py": "18b42a76c0820b5b1234680046c76f799d0026bb1f3ab0098e1899f74b887089",
+    "src/liversira_ai/nlp/metrics.py": "2fb40941752793c05b7b2d243e28040181f2f7b12cb03cf2ebc14f9482b3d736",
+    "src/liversira_ai/nlp/parser_v1_1.py": "1ececcd2969e44e2106f500cfd3ed7dc478afc664ba7ac2ec362c86b32fbb797",
+    "src/liversira_ai/nlp/parser_v1_2.py": "c4181fea66ebc9557c38931f9272f5bb6031f57cc13ff5e6a8e6d648c1ecf112",
     "src/liversira_ai/nlp/parser_v1_2_rules.py": "9cbec7d7babcc589c13850dbdcfcef2065aa4eebf2dfec162cadc6b9ab9568f6"
   }
 }
