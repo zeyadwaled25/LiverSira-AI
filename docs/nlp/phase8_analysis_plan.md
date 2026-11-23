@@ -16,7 +16,8 @@ Every candidate reads the liver-only text `extract_liver_text(text).text` (liver
 | C2 | Parser v1.2 | `parser_v1_2.py` + `parser_v1_2_rules.py`: 14 rules, each justified by a Train-aug item (`results/nlp/parser_v1_2/train_aug_report.md`) |
 | C3 | First extraction model, ClinicalBERT, seeds 13 / 42 / 87 | `config.json`, `models/transformers/extraction/clinicalbert/seed*/model.safetensors` |
 | C4 | Per-lesion model, ClinicalBERT, seeds 13 / 42 / 87 | `config_lesion.json`, `models/transformers/extraction_lesion/clinicalbert/seed*/model.safetensors` |
-| C5 | Hybrid H = C2 + C3 (rule below), one run per C3 seed | the rule in §4 |
+| C5 | Hybrid H = C2 + C3 (rule in §4), one run per C3 seed. **The primary hybrid.** | `hybrid.py` (`hybrid_h`) |
+| C6 | Hybrid H2, exploratory (Amendment 1). **Appendix only. Not eligible for the decision rule; it cannot be selected or become the primary hybrid, even if it wins on Challenge-B.** | `hybrid.py` (`hybrid_h2`) |
 
 Phase 7 (LLM extraction) candidates may join this list only by an amendment. The amendment must freeze their prompt, model id and settings the same way, and it must be made before any candidate is run on Challenge-B. After that, the list is closed.
 
@@ -43,7 +44,17 @@ For each study and each field:
 - Otherwise, H takes parser v1.2's value for the field when it is not empty, and the first model's value (C3, same seed) when it is.
 - Count classes, segment lists, attenuation labels and diameters pass through unchanged. There is no averaging and no thresholds.
 
-Why this rule: parser v1.2 is deterministic and gives evidence spans for every value it outputs. The model fills only the fields the parser leaves empty. C3, not C4, is the fallback because C4 failed its registered rule in 6.2 (`runs_lesion/comparison.md`: it tags non-lesion sizes as lesions).
+**H2 (exploratory, Amendment 1).** Same as H, except a field that parser v1.2 leaves empty is taken from the model only when the parser's status for it is `unparsed`. When the status is `not_mentioned`, the field stays empty. H does not use the status at all.
+
+The parser's field status (`field_status`) is:
+
+- **`stated`:** a value was read.
+- **`not_mentioned`:** for count, the report states the count as unquantified. For segments, attenuation and diameter, the lesion statements contain no cue for the field.
+- **`unparsed`:** a cue is present but no value was read, or presence is unknown.
+
+The semantics are verified for **count only**. For segments and attenuation they are weak: the cue is searched only in the affirmative lesion clauses, so statements such as "It is hypoattenuating" or "all are hypoattenuating relative to the liver" are missed, and so are OCR-damaged words (Amendment 1).
+
+Why H: parser v1.2 is deterministic and gives evidence spans for every value it outputs. The model fills only the fields the parser leaves empty. C3, not C4, is the fallback because C4 failed its registered rule in 6.2 (`runs_lesion/comparison.md`: it tags non-lesion sizes as lesions).
 
 ## 5. Metrics
 
@@ -55,7 +66,7 @@ Fields: `count` (classes `0`–`9`, `10+`, or unstated), `segments` (set of Coui
   - An empty prediction is correct only when the target is unstated, and wrong otherwise.
 - **Per field.** Accuracy over the items that target the field, with a Wilson 95% interval and n. On E1 the pooled targeted accuracy is the primary metric.
 - **Per subtype.** Accuracy with a Wilson 95% interval and n for every Challenge-B category × subtype, and for every coverage group (Train-aug family / `new`).
-- **Seeds.** Model-based candidates (C3, C4, C5) are reported per seed, plus the mean ± SD.
+- **Seeds.** Model-based candidates (C3, C4, C5, C6) are reported per seed, plus the mean ± SD.
 - **Paired tests.** On the items of each field, every candidate is compared with C2 using an exact McNemar test, per seed.
 - **Descriptive only.** The following are reported but do not decide anything:
   - Accuracy on `new` items vs Train-aug-family items, per candidate.
@@ -69,6 +80,8 @@ For each field, a candidate is **eligible** only if both of these hold:
 
 1. **Control.** E2 accuracy ≥ 0.98 for every model seed.
 2. **Clean data.** E3 accuracy ≥ (C1's E3 accuracy − 0.01) for every model seed.
+
+C6 (H2) is never eligible: it is reported in an appendix, with the same metrics, for transparency only.
 
 Among eligible candidates, the one with the highest E1 accuracy wins (mean over seeds for model-based candidates). It replaces C2 only if all three of these hold:
 
@@ -93,6 +106,32 @@ None of the following may change after the freeze:
 
 If a bug is found in the scoring code, the fix is recorded as an amendment. If it is found after results were seen, both versions are reported.
 
+## 8. Known limitations (written before Challenge-B)
+
+- **H and unquantified counts.** When a report states the count as unquantified ("Countless lesions", "A cluster of lesions"), parser v1.2 correctly leaves the count empty. H cannot tell this apart from a count the parser failed to read, so it takes the first model's count instead. On Challenge-A (v3 `count/unquantified`, 50 items) the parser scores 1.00 and H scores 0.43, which is the first model's own accuracy there. If Challenge-B contains such items, this weakness is expected to show in H's count accuracy. It is stated here before Challenge-B is written. H2 was the attempted fix; see Amendment 1.
+
 ## Amendments
 
-None.
+### Amendment 1 (23 November 2026): parser field status and hybrid H2
+
+**Reason.** The Challenge-A diagnostics (`results/nlp/phase8/challenge_a_diagnostics.md`) showed the weakness in §8. Because it was found on Challenge-A, the fix was allowed one attempt only, checked on Train-aug only. It was not to be repeated or tuned on Challenge-A.
+
+**Change.**
+
+- **Parser v1.2:** now outputs `field_status` for each field (§4). This is additive: on all 21,964 Train-aug items its values are identical to the originally frozen `parser_v1_2.py` (commit `9b088a8`).
+- **`hybrid.py`:** holds H (unchanged) and H2.
+
+**The single attempt** (`results/nlp/phase8/amendment1_train_aug.md`):
+
+- **Evidence:** no Train-aug item with an unquantified count has H wrong and H2 right. On Train-aug, the first model already leaves those counts empty (`count/vague`: 166 / 166 for both H and H2). The weakness is known only from the Challenge-A diagnostics.
+- **Result:** H and H2 can differ on 871 Train-aug items (938 fields). There H is right on 934 fields (935 for seed 42) and H2 on 613, the same for seeds 13, 42 and 87.
+- **Cause:** H2 empties correct model values wherever the status cue misses. The segment and attenuation cues are searched only in affirmative lesion clauses, so they miss attenuation stated in a separate or relative sentence and segments stated outside such clauses. OCR damage breaks the cue words. The loss is in `ocr` (all four fields) and in `real` and `repeat/multiple` attenuation. On `count/vague`, `segment/lobe` and `real` count and segments, H and H2 are equal.
+- **Stopped** as the one-attempt condition requires. The status cues were not revised.
+
+**Decision.**
+
+- **H stays the primary hybrid (C5).** H2 is added as C6: exploratory, appendix only, never eligible (§2, §6).
+- **Field status is kept.** Its semantics are documented as verified for count only (§4).
+- **Known limitation recorded** in §8.
+
+**Timing.** This amendment was made before Challenge-B was written: no `results/nlp/phase8/challenge_b_freeze.json` exists, and no candidate has read Challenge-B or Test. The candidates were re-frozen afterwards (`candidates_freeze.json`, `amendment` = 1).

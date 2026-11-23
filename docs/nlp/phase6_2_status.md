@@ -44,6 +44,4 @@ The analysis plan, the taxonomy, the Challenge-B brief and validator, the liver-
 1. **Challenge-B:** a team member writes it from the brief and freezes it in two steps.
 2. **Gold Set:** annotation, agreement, clinician adjudication, finalize.
 3. **Phase 7 (LLM extraction):** its candidates join the frozen list by amendment, before the Phase 8 run.
-4. **Decision on H:**
-   - **Option 1:** keep it as frozen.
-   - **Option 2:** amend it before Challenge-B exists, so that "stated as unquantified" (the parser's `count_reason`) keeps the count empty. This amendment would be labelled as informed by Challenge-A diagnostics.
+4. ~~Decision on H~~ **decided (Amendment 1).** H2 was tried once on Train-aug and lost (613 vs 934 of 938 fields), with no Train-aug item to justify it. H stays the primary hybrid. H2 is an exploratory appendix candidate that can never be selected. The H limitation on unquantified counts is written into the plan before Challenge-B. See `docs/nlp/phase8_analysis_plan.md` §8 and Amendments.

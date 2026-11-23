@@ -48,7 +48,11 @@ CANDIDATES: dict[str, dict[str, Any]] = {
            "code": ["src/liversira_ai/nlp/lesion_model.py", "src/liversira_ai/nlp/lesion_targets.py"],
            "weights": "models/transformers/extraction_lesion/clinicalbert/seed{seed}",
            "run": "results/nlp/transformers/extraction/runs_lesion/clinicalbert/seed{seed}/run_manifest.json"},
-    "C5": {"name": "hybrid H = C2, falling back to C3 per field (analysis plan §4)", "uses": ["C2", "C3"]},
+    "C5": {"name": "hybrid H = C2, falling back to C3 per field (analysis plan §4); the primary hybrid",
+           "files": ["src/liversira_ai/nlp/hybrid.py"], "uses": ["C2", "C3"]},
+    "C6": {"name": "hybrid H2, exploratory (Amendment 1); appendix only, never eligible",
+           "files": ["src/liversira_ai/nlp/hybrid.py", "results/nlp/phase8/amendment1_train_aug.json"],
+           "uses": ["C2", "C3"]},
 }
 WEIGHT_FILES = ("model.safetensors", "tokenizer.json", "tokenizer_config.json")
 

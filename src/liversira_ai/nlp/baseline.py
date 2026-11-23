@@ -29,6 +29,8 @@ def extract_liver_lesion_features(text: str | None, parse=parse_liver_report) ->
 
     ``parse`` defaults to the frozen parser v1.1; see ``extract_liver_lesion_features_v1_2``."""
     parsed = parse(text, include_broad_attenuation_fallback=True)
+    # Parser v1.2 explains each empty field (Amendment 1); v1.1 has no status.
+    status = getattr(parsed, "field_status", None)
     if parsed.presence is False:
         return {
             "has_lesion": False,
@@ -39,6 +41,7 @@ def extract_liver_lesion_features(text: str | None, parse=parse_liver_report) ->
             "attenuation": None,
             "missing_or_unclear": [],
             "evidence": [item.__dict__ for item in parsed.evidence],
+            "field_status": status,
         }
 
     if parsed.presence is None:
@@ -56,6 +59,7 @@ def extract_liver_lesion_features(text: str | None, parse=parse_liver_report) ->
                 }
             ],
             "evidence": [item.__dict__ for item in parsed.evidence],
+            "field_status": status,
         }
 
     # v1.1 never imputes: a field the report does not state stays None and is
@@ -83,6 +87,7 @@ def extract_liver_lesion_features(text: str | None, parse=parse_liver_report) ->
         "attenuation": parsed.attenuation,
         "missing_or_unclear": missing,
         "evidence": [item.__dict__ for item in parsed.evidence],
+        "field_status": status,
     }
 
 

@@ -208,6 +208,13 @@ class ParsedLiverReport:
     evidence: list[ParsedEvidence]
     count_reason: str | None = None
     parser_version: str = PARSER_VERSION
+    # Amendment 1 (Phase 8 plan): why each empty field is empty. Keys are the
+    # extraction fields; values are "stated", "not_mentioned" (the report gives
+    # no value: no cue for the field, or a count stated as unquantified) or
+    # "unparsed" (the report has a cue for the field but no value was read).
+    # Verified for count only; weak for segments and attenuation (cues are
+    # searched in affirmative lesion clauses only). Hybrid H does not use it.
+    field_status: dict[str, str] | None = None
 
 
 @dataclass
@@ -651,6 +658,34 @@ def _clause_text_at(clauses: list[_Clause], span: _Span) -> str:
     return next(c.text for c in clauses if c.start <= span.start < c.end)
 
 
+# ── Field status (Amendment 1) ─────────────────────────────────────────────
+# Cues that a field is written somewhere in the lesion statements. A cue with no
+# value read means "unparsed"; no cue means "not_mentioned". No thresholds.
+STATUS_STATED, STATUS_NOT_MENTIONED, STATUS_UNPARSED = "stated", "not_mentioned", "unparsed"
+_SEGMENT_CUE_RE = re.compile(r"\b(?:sub)?segments?\b|\bcouinaud\b", re.I)
+_ATTENUATION_CUE_RE = re.compile(r"attenuat|\bdens(?:e|ity)\b|(?:hypo|hyper|iso)dense\b|\b(?:darker|brighter)\s+than\b", re.I)
+
+
+def _field_status(
+    presence: bool | None, values: dict[str, object], count_reason: str | None, affirmative: list[_Clause]
+) -> dict[str, str]:
+    if presence is None:
+        return {name: STATUS_UNPARSED for name in values}
+    if presence is False:
+        return {name: STATUS_STATED if value is not None else STATUS_NOT_MENTIONED for name, value in values.items()}
+    lesion_text = " ".join(c.text for c in affirmative)
+    cues = {
+        "lesion_count": count_reason != "unquantified",
+        "location_segments": bool(_SEGMENT_CUE_RE.search(lesion_text)),
+        "attenuation": bool(_ATTENUATION_CUE_RE.search(lesion_text)),
+        "derived_max_diameter_cm": bool(_DIMENSION_RE.search(lesion_text)),
+    }
+    return {
+        name: STATUS_STATED if value is not None else (STATUS_UNPARSED if cues[name] else STATUS_NOT_MENTIONED)
+        for name, value in values.items()
+    }
+
+
 # ── Public API ──────────────────────────────────────────────────────────────
 def _evidence(target: str, span: _Span | _Clause, text: str) -> ParsedEvidence:
     return ParsedEvidence(target, text[span.start:span.end], span.start, span.end)
@@ -724,6 +759,13 @@ def parse_liver_report(
     elif decision.presence is False:
         count = 0
 
+    status = _field_status(
+        decision.presence,
+        {"lesion_count": count, "location_segments": segments, "attenuation": attenuation,
+         "derived_max_diameter_cm": max(dimensions) if dimensions else None},
+        count_reason,
+        affirmative,
+    )
     return ParsedLiverReport(
         liver_sentences=liver_sentences,
         liver_text=" ".join(liver_sentences),
@@ -737,4 +779,5 @@ def parse_liver_report(
         attenuation=attenuation,
         evidence=evidence,
         count_reason=count_reason,
+        field_status=status,
     )

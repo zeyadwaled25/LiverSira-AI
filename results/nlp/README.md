@@ -26,6 +26,7 @@ standard.
 | What does parser v1.2 add, and which Train-aug item justifies each rule? | `parser_v1_2/train_aug_report.md` |
 | What is frozen for the Phase 8 final evaluation? | `phase8/candidates_freeze.json` (plan: `docs/nlp/phase8_analysis_plan.md`) |
 | How do all frozen candidates do per subtype on the seen Challenge Sets (diagnosis only)? | `phase8/challenge_a_diagnostics.md` |
+| Did hybrid H2 (Amendment 1) beat H on Train-aug? | `phase8/amendment1_train_aug.md` |
 | Where does 6.2 stand? | `docs/nlp/phase6_2_status.md` |
 
 ## Folders

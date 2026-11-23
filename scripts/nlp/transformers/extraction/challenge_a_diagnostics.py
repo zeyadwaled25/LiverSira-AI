@@ -6,6 +6,9 @@ decision (docs/nlp/phase8_analysis_plan.md). Run after the freeze; it checks the
 freeze first. Test and Challenge-B are not read.
 
 Writes results/nlp/phase8/challenge_a_diagnostics.{md,json}.
+
+Its "hybrid H" column is C5 (``hybrid.hybrid_h``, same rule). H2 (C6, Amendment 1) is
+deliberately not run on Challenge-A: the amendment allowed one attempt, on Train-aug only.
 """
 
 import json
