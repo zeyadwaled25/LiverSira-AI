@@ -21,7 +21,9 @@ def test_every_candidate_in_the_plan_is_frozen():
     if not FREEZE_PATH.exists():
         pytest.skip("no freeze")
     frozen = json.loads(FREEZE_PATH.read_text(encoding="utf-8"))
-    assert set(frozen["candidates"]) == {"C1", "C2", "C3", "C5", "P1", "P2"}
+    assert set(frozen["candidates"]) == {"C1", "C2", "C3", "C5", "P1", "P2", "R1", "R2"}
+    # R1/R2 (Amendment 4) are references: frozen like candidates, never eligible.
+    assert all("reference only" in frozen["candidates"][r]["name"] for r in ("R1", "R2"))
     assert all(len(c.get("seeds", {"x": 1})) in (1, 3) for c in frozen["candidates"].values())
 
 
