@@ -74,14 +74,14 @@ CANDIDATES: dict[str, dict[str, Any]] = {
            "run": "results/nlp/transformers/presence/clinicalbert/seed{seed}/run_manifest.json"},
 }
 # References, not candidates (analysis plan, Amendment 4): the Phase 7 API LLMs. Not deployable, so never
-# eligible (§6). Frozen like the candidates; the LLM config.json is left out because it holds the pacing,
+# eligible (§6), and not run in Phase 8. Frozen like the candidates; the LLM config.json is left out because it holds the pacing,
 # while models and settings are fixed by prompt_freeze.json.
 LLM_FILES = ["results/nlp/llm/prompt_freeze.json", "results/nlp/llm/prompts.json",
              "src/liversira_ai/nlp/llm_extraction.py", "scripts/nlp/llm/few_shot_v1.json", "scripts/nlp/llm/few_shot.py"]
 CANDIDATES["R1"] = {"name": "reference only (Amendment 4): nvidia/nemotron-3.5-lightning-30b-a3b (NVIDIA NIM), "
-                            "prompt v2; not deployable, never eligible", "files": LLM_FILES}
+                            "prompt v2; not deployable, never eligible, not run in Phase 8", "files": LLM_FILES}
 CANDIDATES["R2"] = {"name": "reference only (Amendment 4): gemini-3.5-flash-lite (Gemini API), prompt v2; "
-                            "not deployable, never eligible", "files": LLM_FILES}
+                            "not deployable, never eligible, not run in Phase 8", "files": LLM_FILES}
 WEIGHT_FILES = ("model.safetensors", "tokenizer.json", "tokenizer_config.json")
 
 

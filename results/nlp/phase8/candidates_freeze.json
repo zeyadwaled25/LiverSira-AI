@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
   "frozen_on": "2026-11-24",
-  "git_commit_at_freeze": "15efa38c8c11d7ca65309f95f280288303c00296",
+  "git_commit_at_freeze": "c1d6adf04f335331931c265f8818af7280db9591",
   "note": "The hashes are the freeze. git_commit_at_freeze is HEAD when this was written; the frozen files may have been uncommitted at that moment. No candidate had read Test or Challenge-B.",
   "analysis_plan": "docs/nlp/phase8_analysis_plan.md",
   "amendment": 4,
-  "amendment_reason": "Amendment 4: Phase 7 LLMs R1 (Nemotron 3.5 Lightning) and R2 (Gemini 3.5 Flash-Lite) registered as references only, not deployable; two H observations from Challenge-A, no change to H or the parser",
+  "amendment_reason": "Amendment 4 corrected before any run: R1/R2 are not run in Phase 8 (Challenge-B is confidential, free tiers may keep inputs, no decision depends on them); a later separate Nemotron appendix on Challenge-B is allowed after NVIDIA terms are reviewed",
   "challenge_b_frozen_at_this_freeze": false,
   "hash_method": "sha256; text files (by suffix) after CRLF->LF normalization, other files raw bytes",
   "original_freeze": {
@@ -13,10 +13,10 @@
     "hash_method": "sha256 of raw bytes for every file (before .gitattributes)"
   },
   "supersedes": {
-    "freeze_file_sha256": "489a0e6b8f9e75a25fb4f905e62b3c7a46e7ca2a16c782a04a2dcc9fa3779779",
-    "frozen_on": "2026-11-23",
-    "git_commit_at_freeze": "77d1dc70991076fa36a2b5d55d72eef8438eae65",
-    "amendment": 3,
+    "freeze_file_sha256": "a13ead5a7e34c11bb10b8b91d341ca53ae40040b4ffb90c3e56692bd24b90e89",
+    "frozen_on": "2026-11-24",
+    "git_commit_at_freeze": "15efa38c8c11d7ca65309f95f280288303c00296",
+    "amendment": 4,
     "hash_method": "sha256; text files (by suffix) after CRLF->LF normalization, other files raw bytes"
   },
   "candidates": {
@@ -125,7 +125,7 @@
       }
     },
     "R1": {
-      "name": "reference only (Amendment 4): nvidia/nemotron-3.5-lightning-30b-a3b (NVIDIA NIM), prompt v2; not deployable, never eligible",
+      "name": "reference only (Amendment 4): nvidia/nemotron-3.5-lightning-30b-a3b (NVIDIA NIM), prompt v2; not deployable, never eligible, not run in Phase 8",
       "files": [
         "results/nlp/llm/prompt_freeze.json",
         "results/nlp/llm/prompts.json",
@@ -135,7 +135,7 @@
       ]
     },
     "R2": {
-      "name": "reference only (Amendment 4): gemini-3.5-flash-lite (Gemini API), prompt v2; not deployable, never eligible",
+      "name": "reference only (Amendment 4): gemini-3.5-flash-lite (Gemini API), prompt v2; not deployable, never eligible, not run in Phase 8",
       "files": [
         "results/nlp/llm/prompt_freeze.json",
         "results/nlp/llm/prompts.json",
@@ -149,7 +149,7 @@
     "docs/nlp/challenge_b_brief.md": "ccbebac4fba6fa2cabf394811929da9d2e696d123c6d49b2c031735465f6c405",
     "docs/nlp/extraction_train_aug_taxonomy.json": "b2a61c0fb53e764f9a0d22ef71d768fa18260471f36a05325ad8f3ced59852e9",
     "docs/nlp/extraction_train_aug_taxonomy.md": "d45be19d7fffd72342192bdc0d842ea7643562dca904f2a4cd87d109f4849b12",
-    "docs/nlp/phase8_analysis_plan.md": "748e331bdadd657792bc415c26f07630dce0e52acdd20c162d516e32fa8d8b51",
+    "docs/nlp/phase8_analysis_plan.md": "35c68438f56c5ddf9f0bd9c6f01975368b57143e0b5f5ef3156a4a947980bd3a",
     "models/transformers/extraction/clinicalbert/seed13/model.safetensors": "4c79074aa33e7432f079983797030a2c77d989704e88f962f0260d71ea18f866",
     "models/transformers/extraction/clinicalbert/seed13/tokenizer.json": "cb26b43c98e8266ae3e99c2a583cf8315d73b33a17e6b20b4df7ff1f22392d34",
     "models/transformers/extraction/clinicalbert/seed13/tokenizer_config.json": "f2798e35c25f42f2183aa52a2f9ad1cb28509c09744b862298ba7633fce54d91",

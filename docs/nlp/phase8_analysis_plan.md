@@ -19,7 +19,7 @@ Every candidate reads the liver-only text `extract_liver_text(text).text` (liver
 
 Retired by Amendment 3, to keep the comparison simple: C4 (per-lesion model; it failed its own registered rule) and C6 (hybrid H2; it lost to H on Train-aug). The masked retraining of C3 (Amendment 3) did not meet its condition and is reported only. Their results stay in the repository; they are not run in Phase 8.
 
-References, not candidates (Amendment 4): R1 Nemotron 3.5 Lightning and R2 Gemini 3.5 Flash-Lite, the Phase 7 API LLMs. They are reported beside the candidates and are never eligible (§6, deployability).
+References, not candidates (Amendment 4): R1 Nemotron 3.5 Lightning and R2 Gemini 3.5 Flash-Lite, the Phase 7 API LLMs. They are never eligible (§6, deployability) and are not run in Phase 8; their Phase 7 results are the record.
 
 Phase 7 (LLM extraction) candidates may join this list only by an amendment. The amendment must freeze their prompt, model id and settings the same way, and it must be made before the Phase 8 run starts (`freeze_candidates` refuses once `results/nlp/phase8/run_started.json` exists). Nobody who develops a candidate reads Challenge-B, so Challenge-B may be frozen before or after that amendment. After the run starts, the list is closed.
 
@@ -209,8 +209,14 @@ Hybrid H gives the same Validation accuracy with either model (count 1.000, segm
 | R1 | `nvidia/nemotron-3.5-lightning-30b-a3b` (open weights) | NVIDIA NIM, free tier | JSON schema, `max_tokens` 4,000, `chat_template_kwargs.enable_thinking` false, provider default temperature |
 | R2 | `gemini-3.5-flash-lite` (closed) | Google Gemini API, free tier | JSON schema, `max_tokens` 4,000, provider default temperature |
 
-- **Not in the routing decision.** Both are API models: the reports would be sent to a provider, and the project has no data agreement for patient reports. They fail the deployability condition (§6), so they are never eligible and never replace C2 or any field's verdict. They are reported for reference only, beside the candidates.
-- **In the Phase 8 run.** If they run, they run once on E1–E3 with the frozen settings above. Pacing (rpm, retries, daily caps) may differ, because it does not change outputs (Phase 7 freeze note). Items a free quota does not cover are reported as not run, with n, and are not run on a later day. Their results change nothing in §6.
+- **Not in the routing decision.** Both are API models: the reports would be sent to a provider, and the project has no data agreement for patient reports. They fail the deployability condition (§6), so they are never eligible and never replace C2 or any field's verdict.
+- **Not run in Phase 8 at all.** R1 and R2 read neither Challenge-B nor Test in the Phase 8 run, for three reasons:
+  - Challenge-B is confidential to its author until the run.
+  - A free tier may keep or use what is sent (Gemini's terms say so; NVIDIA's trial terms do not address training), which is at odds with a held-out set.
+  - No Phase 8 decision would depend on them.
+
+  Their Phase 7 results (`docs/nlp/phase7_report.md`) are the record.
+- **A later, separate appendix (optional).** After the Phase 8 run, Nemotron (R1) may be run on Challenge-B as an appendix of its own, only after NVIDIA's data terms are reviewed and accepted by the team. It would be reported apart from the Phase 8 results and would never enter the decision or change a verdict. R2 is not run there.
 - **Phase 7 coverage, for the record.** R1 ran every Phase 7 set (920 items). R2 is partial: Extraction Challenge v3 174 of 260 (no non-lesion subtype), and neither the repeat run nor Presence Challenge v1 ran (daily quota, Phase 7 Amendment 3). gpt-oss-120b was dropped in Phase 7 for the rate limit only and is not registered.
 - **R1 as a possible local candidate later.** Its weights are open, so it could run locally and become deployable. That would be a new candidate, with its own amendment and freeze before the Phase 8 run starts. Nothing here registers it as one.
 - **Freeze.** `freeze_candidates.py` now hashes the R1/R2 files (prompt freeze record, pipeline, few-shot examples and their check) like every candidate's. The LLM `config.json` is not hashed, because it holds the pacing; models and settings are fixed by `prompt_freeze.json`.
@@ -219,6 +225,6 @@ Hybrid H gives the same Validation accuracy with either model (count 1.000, segm
 
 - **Largest lesion not listed first (v3 `order/ascending`, 67 items).** Segments: C1/C2 0.09, C3 0.92, H 0.09. Diameter: C1/C2 0.00, C3 0.60, H 0.00. The parser answers with the first lesion's values instead of leaving the field empty, so H keeps them and never asks C3. The diagnostics `.md` lists only targeted rows, so this row shows only in the `.json`.
 - **Counts given as one lesion per sentence (v3 `count/listed_sentences`, 50 items).** C1/C2 0.00, C3 0.01, H 0.01. The parser and C3 both miss them.
-- **Expected effect on Challenge-B.** The brief asks for "which lesion is the largest" and for "lesions listed one by one so they can be counted" (`challenge_b_brief.md`). If Challenge-B holds such items, H's segment, diameter and count accuracy is expected to drop on them. In Phase 7, the LLMs read the listed counts better (0.85 on the 20-item subsample, both models). On order they are not consistent (R1 0.00–0.45 on `order` segments, R2 1.00 but partial). They are references, so neither result changes anything here.
+- **Expected effect on Challenge-B.** The brief asks for "which lesion is the largest" and for "lesions listed one by one so they can be counted" (`challenge_b_brief.md`). If Challenge-B holds such items, H's segment, diameter and count accuracy is expected to drop on them. In Phase 7, the LLMs read the listed counts better (0.85 on the 20-item subsample, both models). On order they are not consistent (R1 0.00–0.45 on `order` segments, R2 1.00 but partial). They are references and are not run in Phase 8, so neither result changes anything here.
 
-**Timing.** Made on 24 November 2026, before Challenge-B was written and before any candidate or reference read Test. The candidates were re-frozen after this amendment (`candidates_freeze.json`, `amendment` = 4).
+**Timing.** Made on 24 November 2026, before Challenge-B was written and before any candidate or reference read Test. The candidates were re-frozen after this amendment (`candidates_freeze.json`, `amendment` = 4). The first version of this amendment (commit `c1d6adf`) allowed R1/R2 to run on E1–E3 as references. Before anything was run, and before the branch was shared, it was corrected the same day to "not run in Phase 8", and the candidates were re-frozen again under the same amendment number.
