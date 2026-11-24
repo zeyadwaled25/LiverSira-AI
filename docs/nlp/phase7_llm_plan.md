@@ -208,3 +208,43 @@ The runner refuses an evaluation set if the prompt, a model, or any of these fil
 
 Each set runs once per model. Groq, at about 90 calls per day, needs about 10 days, and the runner resumes from the cache.
 
+### Amendment 3 (24 November 2026): two models, finished in hours
+
+**Reason.** The team decided the evaluation must finish within hours on free tiers, not over days. The first evaluation run (23-24 November) stopped on provider limits:
+
+| Model | Items done of 920 | Limit hit |
+|---|---|---|
+| Groq `openai/gpt-oss-120b` | 0 | 200,000 tokens per day, about 90 calls, so about 10 days |
+| Gemini `gemini-3.5-flash-lite` | 215 (Validation) | 500 requests per day per model on the free tier (429 `generate_content_free_tier_requests`, quota value 500) |
+| NVIDIA `nemotron-3.5-lightning-30b-a3b` | 789 (Validation 400, Challenge v3 260, Presence 124, repeat 5) | temporary 429s and timeouts; a request on 24 November answered normally |
+
+**No free host for gpt-oss-120b in hours** (checked 24 November):
+- NVIDIA does not serve it (its model list has 32 models, none of them gpt-oss).
+- Cerebras is a 30-day trial that needs a card, with 1M tokens per day, about 2 days.
+- OpenRouter's free tier allows 50 requests per day, and SambaNova's 20.
+
+**Decision (team, 24 November):**
+
+1. **gpt-oss-120b is dropped**, for the rate limit only. No evaluation item ran on it. Its development result (prompt v2, 49 of 100 items, 1.000 on all four fields) is reported as a reference only, not as an evaluation result.
+2. **No model is added.** Adding a model after the freeze, with the evaluation under way for the others, would need a justification. Replacements were tried on 1-3 Train items only and are not used:
+   - `minimaxai/minimax-m3.1-flash`: about 30 s per call;
+   - `google/gemma-4-31b-it` and `moonshotai/kimi-k3.1-pro`: timed out;
+   - `nvidia/nemotron-3-ultra-550b-a55b`: noted in an earlier draft of this amendment, which was never run.
+
+   Phase 7 reports two models: Nemotron (open weights, so it can later run locally) and Gemini Flash-Lite (closed, as a reference).
+3. **Nemotron Lightning** finishes its 131 remaining items (Presence 86, repeat 45). Nothing changes for it.
+4. **Gemini Flash-Lite** runs within one daily quota of 500 requests, in this order:
+   - Validation (185 left);
+   - Extraction Challenge v3 (260);
+   - repeat (50);
+   - then it stops.
+
+   That is 495 calls. The repeat comes before Presence because it measures stability, and Presence is not an LLM role in Phase 8 (the presence candidates are P1 LR and P2 ClinicalBERT). **Presence Challenge v1 is not run for Gemini (quota).** If the quota ends earlier, for example because retries used it, whatever is missing is reported as not run, with its n, and is not run on a later day.
+5. The frozen prompt, few-shot examples, pipeline, subsample and Nemotron/Gemini settings are unchanged, so no frozen file changes. `config.json` records Groq as dropped, the Gemini daily cap (rpd 500) and its scope.
+
+**Results seen before this decision.** No evaluation metric was opened by the session or reported to the team before this amendment:
+- The runner writes `metrics.json` by itself.
+- To track progress, the session read only item counts and the status label of each prediction file (all rows "ok"). It did not read field values or compare them with labels.
+- The decision was based only on the limits in the table above.
+
+**Evaluation order per model:** Amendment 2's order. For Gemini, the order and scope in item 4.

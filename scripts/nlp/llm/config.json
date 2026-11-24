@@ -18,7 +18,8 @@
       },
       "data_terms": "ZDR available; a no-training clause is reported by a third party, not verified on Groq's site",
       "model_choice": "openai/gpt-oss-120b: listed by the provider on 2026-11-23 (OpenAI open-weight family)",
-      "max_retries": 6
+      "max_retries": 6,
+      "status": "dropped in Phase 7 Amendment 3 (rate limit only: 200,000 tokens per day, about 10 days for the evaluation; no free host found); development result kept as a reference"
     },
     "nvidia": {
       "client": "openai_compatible",
@@ -52,13 +53,14 @@
       "extra": {},
       "limits": {
         "rpm": 10,
-        "rpd": null,
+        "rpd": 500,
         "tpd": null,
-        "reported": "to confirm: the free daily limit shows only in a 429 or in AI Studio (ai.dev/rate-limit)"
+        "reported": "500 requests per day on the free tier (429 generate_content_free_tier_requests, limit 500, 24 November 2026)"
       },
       "data_terms": "free tier: Google may use inputs and outputs to improve its products and human reviewers may read them (accepted by the team, Phase 7 Amendment 1)",
       "model_choice": "gemini-3.5-flash: fixed version, not a preview or 'latest' alias. Smoke test 2026-11-23: gemini-3.8-flash returned 503 twice; gemini-3.5-flash answered all five fields correctly. Later the same day gemini-3.5-flash returned 503 'high demand' (temporary, per Google) while gemini-3.5-flash-lite and gemini-2.5-flash answered correctly. Kept gemini-3.5-flash: the SDK retries 503 with backoff and the run resumes from the cache; it can still be changed before the prompt is frozen, never during a run. Dev round 1 (prompt v1, 2026-11-23): gemini-3.5-flash finished 14 of 100 items (86 failed with 503 'high demand' or timeouts; median latency 31 s), so the model was switched to gemini-2.5-flash (answered correctly in the smoke test) before any freeze. Dev round 2: gemini-2.5-flash allows only 20 free requests per day (429, quota metric generate_content_free_tier_requests), so the model was switched to gemini-3.5-flash-lite (same family, answered correctly in the smoke test) before any freeze.",
-      "max_retries": 6
+      "max_retries": 6,
+      "evaluation_scope": "Phase 7 Amendment 3: one daily quota (500); validation, extraction_challenge_v3, repeat in that order (495 calls), then stop; presence_challenge_v1 not run (quota)"
     },
     "claude": {
       "client": "anthropic",
