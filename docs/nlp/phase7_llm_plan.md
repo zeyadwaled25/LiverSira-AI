@@ -248,3 +248,9 @@ Each set runs once per model. Groq, at about 90 calls per day, needs about 10 da
 - The decision was based only on the limits in the table above.
 
 **Evaluation order per model:** Amendment 2's order. For Gemini, the order and scope in item 4.
+
+**Addendum, after the runs (24 November, no result-driven change):**
+
+- **Transport log.** `scripts/nlp/llm/run_logged.py` wraps the frozen runner without changing it. Every failed attempt (timeout, connection, HTTP 408/409/429/5xx) and every skipped item now goes to `<set folder>/transport_log.jsonl`. A skipped item writes no row and is retried by the next run, so it is never counted as `llm_invalid_output` or as an abstention. Skips from earlier runs are in `results/nlp/llm/transport_errors_unlogged.json`, as counts only: no error type, no item, and no failed attempt that a later retry recovered.
+- **Nemotron pacing (24 November 2026, during the Nemotron runs).** At 40 rpm NVIDIA rejected most requests with HTTP 429 (281 failed attempts and 51 skipped items logged, 12:45-12:52 UTC). So `config.json` was set to rpm 10 and 8 SDK retries (from the default 4); after that, 161 attempts still got 429 and 4 items were skipped, all finished on a rerun. This only paces calls, as the freeze allows (`prompt_freeze.json` note); outputs and frozen settings are unchanged. Every item finished after it.
+- **Gemini.** Its daily quota of 500 ran out after about 360 successful calls, so Challenge v3 stopped at 174 of 260 and repeat at 0 of 50. By item 4, these are reported as not run and are not run on a later day. Retried attempts were not logged in that run, so where the rest of the quota went is not known.

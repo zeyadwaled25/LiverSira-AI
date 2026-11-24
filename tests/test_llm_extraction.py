@@ -370,3 +370,56 @@ def test_evaluation_sets_score_with_a_fake_client(monkeypatch, tmp_path):
     cfg.write_text(json.dumps(config), encoding="utf-8")
     with pytest.raises(SystemExit, match="not the frozen"):
         rl.run("gemini", "validation", limit=1)
+
+
+# ── Transport errors (Phase 7 Amendment 3) ────────────────────────────────
+def test_transport_failure_is_skipped_logged_and_retried_never_invalid(monkeypatch, tmp_path):
+    """A timeout or 5xx after every SDK retry writes no row (not llm_invalid_output, not an abstention),
+    is logged per attempt and as a final skip, and the item is called again on the next run."""
+    import logging
+    from pathlib import Path
+
+    import httpx2 as httpx
+    import openai
+
+    if not Path("results/nlp/llm/dev_set_v1.json").exists() or not Path("data/processed/nlp/liver_nlp_liver_only.csv").exists():
+        pytest.skip("dev set or data not built")
+    from scripts.nlp.llm import run_llm_extraction as rl
+    from scripts.nlp.llm import run_logged
+
+    config = json.loads(Path("scripts/nlp/llm/config.json").read_text(encoding="utf-8"))
+    config.update(results_root=str(tmp_path / "results"), cache_dir=str(tmp_path / "cache"), state_dir=str(tmp_path / "s"))
+    cfg = tmp_path / "config.json"
+    cfg.write_text(json.dumps(config), encoding="utf-8")
+    monkeypatch.setattr(rl, "CONFIG", cfg)
+    neg = {"has_lesion": answer("no", None), "lesion_count": answer(None, None), "location_segments": answer(None, None),
+           "reported_dimensions_cm": answer(None, None), "attenuation": answer(None, None)}
+
+    class Flaky(FakeClient):
+        def __init__(self, replies, fail_first):
+            super().__init__(replies)
+            self.fail_first = fail_first
+
+        def complete(self, system, messages, schema):
+            if self.fail_first:
+                self.fail_first -= 1
+                sdk = logging.getLogger("openai._base_client")
+                sdk.debug("Encountered an HTTP status error: %i", 503)
+                sdk.debug("Encountered a timeout exception: %s", "ReadTimeout")
+                raise openai.APITimeoutError(request=httpx.Request("POST", "https://example.invalid"))
+            return super().complete(system, messages, schema)
+
+    fake = Flaky([neg] * 5, fail_first=1)
+    monkeypatch.setattr(rl, "make_client", lambda *a: fake)
+    run_logged.run("nvidia", "dev", limit=2)
+    folder = run_logged.set_folder("nvidia", "dev")
+    rows = [json.loads(line) for line in (folder / "predictions.jsonl").read_text().splitlines()]
+    assert len(rows) == 1 and rows[0]["status"] == "ok"  # the failed item has no row at all
+    log = [json.loads(line) for line in (folder / "transport_log.jsonl").read_text().splitlines()]
+    assert [e["event"] for e in log] == ["http_503", "timeout", "skipped_APITimeoutError"]
+    assert [e["final"] for e in log] == [False, False, True] and len({e["id"] for e in log}) == 1
+    run_logged.run("nvidia", "dev", limit=2)  # the next run calls the skipped item again
+    rows = [json.loads(line) for line in (folder / "predictions.jsonl").read_text().splitlines()]
+    assert len(rows) == 2 and {r["id"] for r in rows} >= {log[0]["id"]}
+    assert all(r["status"] == "ok" for r in rows)
+    assert le.extract.__module__ == "liversira_ai.nlp.llm_extraction"  # the wrapper restores the pipeline

@@ -1,0 +1,3296 @@
+{
+  "subsample": {
+    "seed": 2027,
+    "validation_reports": 1389,
+    "validation_positive_all": 220,
+    "validation_negative_all": 1169,
+    "validation_positive_used": 220,
+    "validation_negative_used": 180,
+    "presence_challenge_v1": {
+      "hedged": 30,
+      "liver_last": 30,
+      "liver_removed": 30,
+      "negation": 30,
+      "ocr_noise": 30,
+      "other_organ_lesion": 30,
+      "paraphrase": 30
+    },
+    "extraction_challenge_v3": {
+      "control/canonical": 20,
+      "count/altogether": 20,
+      "count/isolated": 20,
+      "count/listed_sentences": 20,
+      "count/unquantified": 20,
+      "non_lesion/liver_span": 20,
+      "non_lesion/node": 20,
+      "non_lesion/vessel": 20,
+      "order/ascending": 20,
+      "order/middle": 20,
+      "order/smallest_first": 20,
+      "repeat/multiple": 20,
+      "repeat/single": 20
+    }
+  },
+  "coverage": {
+    "nemotron": {
+      "validation": {
+        "done": 400,
+        "total": 400,
+        "note": ""
+      },
+      "extraction_challenge_v3": {
+        "done": 260,
+        "total": 260,
+        "note": ""
+      },
+      "presence_challenge_v1": {
+        "done": 210,
+        "total": 210,
+        "note": ""
+      },
+      "repeat": {
+        "done": 50,
+        "total": 50,
+        "note": ""
+      }
+    },
+    "flash_lite": {
+      "validation": {
+        "done": 400,
+        "total": 400,
+        "note": ""
+      },
+      "extraction_challenge_v3": {
+        "done": 174,
+        "total": 260,
+        "note": "rest not run: daily quota ended (Amendment 3)"
+      },
+      "presence_challenge_v1": {
+        "done": 0,
+        "total": 210,
+        "note": "not run: daily quota (Amendment 3)"
+      },
+      "repeat": {
+        "done": 0,
+        "total": 50,
+        "note": "not run: daily quota ended (Amendment 3)"
+      }
+    }
+  },
+  "validation": {
+    "fields": {
+      "nemotron": {
+        "count": {
+          "estimate": 0.9827586206896551,
+          "ci_low": 0.9505422775507923,
+          "ci_high": 0.9941193391163503,
+          "n": 174,
+          "correct": 171
+        },
+        "segments": {
+          "estimate": 0.9132653061224489,
+          "ci_low": 0.8654997194616705,
+          "ci_high": 0.9451428817082548,
+          "n": 196,
+          "correct": 179
+        },
+        "attenuation": {
+          "estimate": 0.9771689497716894,
+          "ci_low": 0.9476770891569748,
+          "ci_high": 0.9902094293843013,
+          "n": 219,
+          "correct": 214
+        },
+        "diameter_cm": {
+          "estimate": 0.9954545454545455,
+          "ci_low": 0.9747064239774249,
+          "ci_high": 0.9991971645201224,
+          "n": 220,
+          "correct": 219
+        }
+      },
+      "flash_lite": {
+        "count": {
+          "estimate": 0.9942528735632183,
+          "ci_low": 0.9681687902785345,
+          "ci_high": 0.998984769642588,
+          "n": 174,
+          "correct": 173
+        },
+        "segments": {
+          "estimate": 0.9897959183673469,
+          "ci_low": 0.9635644035588974,
+          "ci_high": 0.9971971978276809,
+          "n": 196,
+          "correct": 194
+        },
+        "attenuation": {
+          "estimate": 0.9771689497716894,
+          "ci_low": 0.9476770891569748,
+          "ci_high": 0.9902094293843013,
+          "n": 219,
+          "correct": 214
+        },
+        "diameter_cm": {
+          "estimate": 0.990909090909091,
+          "ci_low": 0.9674652989147715,
+          "ci_high": 0.9975033942754591,
+          "n": 220,
+          "correct": 218
+        }
+      },
+      "C1 parser v1.1": {
+        "count": {
+          "estimate": 1.0,
+          "ci_low": 0.9783995315481122,
+          "ci_high": 1.0,
+          "n": 174,
+          "correct": 174
+        },
+        "segments": {
+          "estimate": 0.9897959183673469,
+          "ci_low": 0.9635644035588974,
+          "ci_high": 0.9971971978276809,
+          "n": 196,
+          "correct": 194
+        },
+        "attenuation": {
+          "estimate": 0.9771689497716894,
+          "ci_low": 0.9476770891569748,
+          "ci_high": 0.9902094293843013,
+          "n": 219,
+          "correct": 214
+        },
+        "diameter_cm": {
+          "estimate": 1.0,
+          "ci_low": 0.9828384838048642,
+          "ci_high": 0.9999999999999999,
+          "n": 220,
+          "correct": 220
+        }
+      },
+      "C2 parser v1.2": {
+        "count": {
+          "estimate": 1.0,
+          "ci_low": 0.9783995315481122,
+          "ci_high": 1.0,
+          "n": 174,
+          "correct": 174
+        },
+        "segments": {
+          "estimate": 0.9897959183673469,
+          "ci_low": 0.9635644035588974,
+          "ci_high": 0.9971971978276809,
+          "n": 196,
+          "correct": 194
+        },
+        "attenuation": {
+          "estimate": 0.9771689497716894,
+          "ci_low": 0.9476770891569748,
+          "ci_high": 0.9902094293843013,
+          "n": 219,
+          "correct": 214
+        },
+        "diameter_cm": {
+          "estimate": 1.0,
+          "ci_low": 0.9828384838048642,
+          "ci_high": 0.9999999999999999,
+          "n": 220,
+          "correct": 220
+        }
+      },
+      "C3 first model (6.2)": {
+        "count": {
+          "estimate": 1.0,
+          "sd": 0.0,
+          "n": 174,
+          "ci_low": 0.9783995315481122,
+          "ci_high": 1.0
+        },
+        "segments": {
+          "estimate": 0.9744897959183674,
+          "sd": 0.0,
+          "n": 196,
+          "ci_low": 0.9416823647208152,
+          "ci_high": 0.9890554366224324
+        },
+        "attenuation": {
+          "estimate": 1.0,
+          "sd": 0.0,
+          "n": 219,
+          "ci_low": 0.9827614715815287,
+          "ci_high": 1.0
+        },
+        "diameter_cm": {
+          "estimate": 1.0,
+          "sd": 0.0,
+          "n": 220,
+          "ci_low": 0.9828384838048642,
+          "ci_high": 0.9999999999999999
+        }
+      },
+      "H = C2 + C3": {
+        "count": {
+          "estimate": 1.0,
+          "sd": 0.0,
+          "n": 174,
+          "ci_low": 0.9783995315481122,
+          "ci_high": 1.0
+        },
+        "segments": {
+          "estimate": 0.9948979591836735,
+          "sd": 0.0,
+          "n": 196,
+          "ci_low": 0.9716707386849194,
+          "ci_high": 0.9990987960494359
+        },
+        "attenuation": {
+          "estimate": 0.9863013698630136,
+          "sd": 0.0,
+          "n": 219,
+          "ci_low": 0.960506010700854,
+          "ci_high": 0.9953304890565232
+        },
+        "diameter_cm": {
+          "estimate": 1.0,
+          "sd": 0.0,
+          "n": 220,
+          "ci_low": 0.9828384838048642,
+          "ci_high": 0.9999999999999999
+        }
+      }
+    },
+    "presence": {
+      "nemotron": {
+        "positives": 220,
+        "negatives": 180,
+        "unclear_on_positives": 0,
+        "unclear_on_negatives": 136,
+        "wrong": 0
+      },
+      "flash_lite": {
+        "positives": 220,
+        "negatives": 180,
+        "unclear_on_positives": 0,
+        "unclear_on_negatives": 73,
+        "wrong": 0
+      },
+      "P1 frozen LR": {
+        "positives": 220,
+        "negatives": 180,
+        "unclear_on_positives": 0,
+        "unclear_on_negatives": 0,
+        "wrong": 1
+      }
+    },
+    "presence_scoring": {
+      "nemotron": {
+        "sensitivity_strict": {
+          "estimate": 1.0,
+          "ci_low": 0.9828384838048642,
+          "ci_high": 0.9999999999999999,
+          "n": 220,
+          "correct": 220
+        },
+        "specificity_strict": {
+          "estimate": 0.24444444444444444,
+          "ci_low": 0.18743271646074589,
+          "ci_high": 0.31213609358807853,
+          "n": 180,
+          "correct": 44
+        },
+        "specificity_abstain_as_negative": {
+          "estimate": 1.0,
+          "ci_low": 0.9791045020783868,
+          "ci_high": 1.0,
+          "n": 180,
+          "correct": 180
+        }
+      },
+      "flash_lite": {
+        "sensitivity_strict": {
+          "estimate": 1.0,
+          "ci_low": 0.9828384838048642,
+          "ci_high": 0.9999999999999999,
+          "n": 220,
+          "correct": 220
+        },
+        "specificity_strict": {
+          "estimate": 0.5944444444444444,
+          "ci_low": 0.521468259978129,
+          "ci_high": 0.6634737015255664,
+          "n": 180,
+          "correct": 107
+        },
+        "specificity_abstain_as_negative": {
+          "estimate": 1.0,
+          "ci_low": 0.9791045020783868,
+          "ci_high": 1.0,
+          "n": 180,
+          "correct": 180
+        }
+      },
+      "P1 frozen LR": {
+        "sensitivity_strict": {
+          "estimate": 0.9954545454545455,
+          "ci_low": 0.9747064239774249,
+          "ci_high": 0.9991971645201224,
+          "n": 220,
+          "correct": 219
+        },
+        "specificity_strict": {
+          "estimate": 1.0,
+          "ci_low": 0.9791045020783868,
+          "ci_high": 1.0,
+          "n": 180,
+          "correct": 180
+        },
+        "specificity_abstain_as_negative": {
+          "estimate": 1.0,
+          "ci_low": 0.9791045020783868,
+          "ci_high": 1.0,
+          "n": 180,
+          "correct": 180
+        }
+      }
+    },
+    "interval_overlap_with_C2": {
+      "nemotron": {
+        "count": {
+          "llm_errors": 3,
+          "c2_errors": 0,
+          "intervals_overlap": true
+        },
+        "segments": {
+          "llm_errors": 17,
+          "c2_errors": 2,
+          "intervals_overlap": false
+        },
+        "attenuation": {
+          "llm_errors": 5,
+          "c2_errors": 5,
+          "intervals_overlap": true
+        },
+        "diameter_cm": {
+          "llm_errors": 1,
+          "c2_errors": 0,
+          "intervals_overlap": true
+        }
+      },
+      "flash_lite": {
+        "count": {
+          "llm_errors": 1,
+          "c2_errors": 0,
+          "intervals_overlap": true
+        },
+        "segments": {
+          "llm_errors": 2,
+          "c2_errors": 2,
+          "intervals_overlap": true
+        },
+        "attenuation": {
+          "llm_errors": 5,
+          "c2_errors": 5,
+          "intervals_overlap": true
+        },
+        "diameter_cm": {
+          "llm_errors": 2,
+          "c2_errors": 0,
+          "intervals_overlap": true
+        }
+      }
+    }
+  },
+  "challenge_v3": {
+    "items": 260,
+    "items_done": {
+      "nemotron": 260,
+      "flash_lite": 174
+    },
+    "all_items": [
+      {
+        "category": "control",
+        "subtype": "canonical",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "control",
+        "subtype": "canonical",
+        "field": "location_segments",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "control",
+        "subtype": "canonical",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "control",
+        "subtype": "canonical",
+        "field": "attenuation",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "count",
+        "subtype": "altogether",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.45,
+            "ci_low": 0.2581978582556243,
+            "ci_high": 0.6579146575496577,
+            "n": 20,
+            "correct": 9
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.45,
+            "ci_low": 0.2581978582556243,
+            "ci_high": 0.6579146575496577,
+            "n": 20,
+            "correct": 9
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9666666666666667,
+            "sd": 0.04714045207910316,
+            "n": 20,
+            "ci_low": 0.6989663547715128,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 0.9666666666666667,
+            "sd": 0.04714045207910316,
+            "n": 20,
+            "ci_low": 0.6989663547715128,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "count",
+        "subtype": "isolated",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "count",
+        "subtype": "listed_sentences",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.85,
+            "ci_low": 0.6395811352592431,
+            "ci_high": 0.9476312541037835,
+            "n": 20,
+            "correct": 17
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938,
+            "n": 20,
+            "correct": 0
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938,
+            "n": 20,
+            "correct": 0
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.016666666666666666,
+            "sd": 0.023570226039551584,
+            "n": 20,
+            "ci_low": 0.0,
+            "ci_high": 0.23613119344674205
+          },
+          "H = C2 + C3": {
+            "estimate": 0.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938
+          }
+        }
+      },
+      {
+        "category": "count",
+        "subtype": "unquantified",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.43333333333333335,
+            "sd": 0.02357022603955158,
+            "n": 20,
+            "ci_low": 0.21880653237281705,
+            "ci_high": 0.6579146575496577
+          },
+          "H = C2 + C3": {
+            "estimate": 0.43333333333333335,
+            "sd": 0.02357022603955158,
+            "n": 20,
+            "ci_low": 0.21880653237281705,
+            "ci_high": 0.6579146575496577
+          }
+        }
+      },
+      {
+        "category": "non_lesion",
+        "subtype": "liver_span",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "non_lesion",
+        "subtype": "liver_span",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9666666666666667,
+            "sd": 0.04714045207910316,
+            "n": 20,
+            "ci_low": 0.6989663547715128,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "non_lesion",
+        "subtype": "node",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "non_lesion",
+        "subtype": "node",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.5166666666666666,
+            "sd": 0.062360956446232345,
+            "n": 20,
+            "ci_low": 0.2581978582556243,
+            "ci_high": 0.781193467627183
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "non_lesion",
+        "subtype": "vessel",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "non_lesion",
+        "subtype": "vessel",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9833333333333333,
+            "sd": 0.023570226039551605,
+            "n": 20,
+            "ci_low": 0.763868806553258,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "ascending",
+        "field": "location_segments",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.15,
+            "ci_low": 0.052368745896216595,
+            "ci_high": 0.36041886474075696,
+            "n": 20,
+            "correct": 3
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.05,
+            "ci_low": 0.008881448800795402,
+            "ci_high": 0.23613119344674205,
+            "n": 20,
+            "correct": 1
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.05,
+            "ci_low": 0.008881448800795402,
+            "ci_high": 0.23613119344674205,
+            "n": 20,
+            "correct": 1
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.8666666666666667,
+            "sd": 0.08498365855987973,
+            "n": 20,
+            "ci_low": 0.531299122381256,
+            "ci_high": 0.9911185511992047
+          },
+          "H = C2 + C3": {
+            "estimate": 0.05,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.008881448800795402,
+            "ci_high": 0.23613119344674205
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "ascending",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.7,
+            "ci_low": 0.4810271816464765,
+            "ci_high": 0.8545227551323956,
+            "n": 20,
+            "correct": 14
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938,
+            "n": 20,
+            "correct": 0
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938,
+            "n": 20,
+            "correct": 0
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.6166666666666667,
+            "sd": 0.1699673171197595,
+            "n": 20,
+            "ci_low": 0.2581978582556243,
+            "ci_high": 0.9476312541037835
+          },
+          "H = C2 + C3": {
+            "estimate": 0.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "ascending",
+        "field": "attenuation",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "ascending",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9,
+            "sd": 0.10801234497346433,
+            "n": 20,
+            "ci_low": 0.531299122381256,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "middle",
+        "field": "location_segments",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938,
+            "n": 20,
+            "correct": 0
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.75,
+            "sd": 0.12247448713915893,
+            "n": 20,
+            "ci_low": 0.3865815007622531,
+            "ci_high": 0.9721335187862319
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "middle",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.8,
+            "ci_low": 0.5839825677481064,
+            "ci_high": 0.919342337420202,
+            "n": 20,
+            "correct": 16
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9833333333333333,
+            "sd": 0.023570226039551605,
+            "n": 20,
+            "ci_low": 0.763868806553258,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "middle",
+        "field": "attenuation",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.7,
+            "ci_low": 0.4810271816464765,
+            "ci_high": 0.8545227551323956,
+            "n": 20,
+            "correct": 14
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9,
+            "sd": 0.08164965809277258,
+            "n": 20,
+            "ci_low": 0.5839825677481064,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "smallest_first",
+        "field": "location_segments",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.45,
+            "ci_low": 0.2581978582556243,
+            "ci_high": 0.6579146575496577,
+            "n": 20,
+            "correct": 9
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.95,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "smallest_first",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.6,
+            "ci_low": 0.3865815007622531,
+            "ci_high": 0.781193467627183,
+            "n": 20,
+            "correct": 12
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9833333333333333,
+            "sd": 0.023570226039551605,
+            "n": 20,
+            "ci_low": 0.763868806553258,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "smallest_first",
+        "field": "attenuation",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 0.65,
+            "ci_low": 0.43285427668523624,
+            "ci_high": 0.818808175898918,
+            "n": 20,
+            "correct": 13
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9833333333333333,
+            "sd": 0.023570226039551605,
+            "n": 20,
+            "ci_low": 0.763868806553258,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "repeat",
+        "subtype": "multiple",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "repeat",
+        "subtype": "multiple",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "repeat",
+        "subtype": "single",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "repeat",
+        "subtype": "single",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      }
+    ],
+    "flash_lite_items": [
+      {
+        "category": "control",
+        "subtype": "canonical",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "control",
+        "subtype": "canonical",
+        "field": "location_segments",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "control",
+        "subtype": "canonical",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "control",
+        "subtype": "canonical",
+        "field": "attenuation",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "count",
+        "subtype": "altogether",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.45,
+            "ci_low": 0.2581978582556243,
+            "ci_high": 0.6579146575496577,
+            "n": 20,
+            "correct": 9
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.45,
+            "ci_low": 0.2581978582556243,
+            "ci_high": 0.6579146575496577,
+            "n": 20,
+            "correct": 9
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9666666666666667,
+            "sd": 0.04714045207910316,
+            "n": 20,
+            "ci_low": 0.6989663547715128,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 0.9666666666666667,
+            "sd": 0.04714045207910316,
+            "n": 20,
+            "ci_low": 0.6989663547715128,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "count",
+        "subtype": "isolated",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.95,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047,
+            "n": 20,
+            "correct": 19
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "count",
+        "subtype": "listed_sentences",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 0.85,
+            "ci_low": 0.6395811352592431,
+            "ci_high": 0.9476312541037835,
+            "n": 20,
+            "correct": 17
+          },
+          "nemotron": {
+            "estimate": 0.85,
+            "ci_low": 0.6395811352592431,
+            "ci_high": 0.9476312541037835,
+            "n": 20,
+            "correct": 17
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938,
+            "n": 20,
+            "correct": 0
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938,
+            "n": 20,
+            "correct": 0
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.016666666666666666,
+            "sd": 0.023570226039551584,
+            "n": 20,
+            "ci_low": 0.0,
+            "ci_high": 0.23613119344674205
+          },
+          "H = C2 + C3": {
+            "estimate": 0.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938
+          }
+        }
+      },
+      {
+        "category": "count",
+        "subtype": "unquantified",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.43333333333333335,
+            "sd": 0.02357022603955158,
+            "n": 20,
+            "ci_low": 0.21880653237281705,
+            "ci_high": 0.6579146575496577
+          },
+          "H = C2 + C3": {
+            "estimate": 0.43333333333333335,
+            "sd": 0.02357022603955158,
+            "n": 20,
+            "ci_low": 0.21880653237281705,
+            "ci_high": 0.6579146575496577
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "ascending",
+        "field": "location_segments",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 0.15,
+            "ci_low": 0.052368745896216595,
+            "ci_high": 0.36041886474075696,
+            "n": 20,
+            "correct": 3
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.05,
+            "ci_low": 0.008881448800795402,
+            "ci_high": 0.23613119344674205,
+            "n": 20,
+            "correct": 1
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.05,
+            "ci_low": 0.008881448800795402,
+            "ci_high": 0.23613119344674205,
+            "n": 20,
+            "correct": 1
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.8666666666666667,
+            "sd": 0.08498365855987973,
+            "n": 20,
+            "ci_low": 0.531299122381256,
+            "ci_high": 0.9911185511992047
+          },
+          "H = C2 + C3": {
+            "estimate": 0.05,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.008881448800795402,
+            "ci_high": 0.23613119344674205
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "ascending",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 0.7,
+            "ci_low": 0.4810271816464765,
+            "ci_high": 0.8545227551323956,
+            "n": 20,
+            "correct": 14
+          },
+          "C1 parser v1.1": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938,
+            "n": 20,
+            "correct": 0
+          },
+          "C2 parser v1.2": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938,
+            "n": 20,
+            "correct": 0
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.6166666666666667,
+            "sd": 0.1699673171197595,
+            "n": 20,
+            "ci_low": 0.2581978582556243,
+            "ci_high": 0.9476312541037835
+          },
+          "H = C2 + C3": {
+            "estimate": 0.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.0,
+            "ci_high": 0.16112515805281938
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "ascending",
+        "field": "attenuation",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "ascending",
+        "field": "lesion_count",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9,
+            "sd": 0.10801234497346433,
+            "n": 20,
+            "ci_low": 0.531299122381256,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "middle",
+        "field": "location_segments",
+        "n": 19,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0,
+            "n": 19,
+            "correct": 19
+          },
+          "nemotron": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.16817922405261626,
+            "n": 19,
+            "correct": 0
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0,
+            "n": 19,
+            "correct": 19
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0,
+            "n": 19,
+            "correct": 19
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.7543859649122807,
+            "sd": 0.1509179871410987,
+            "n": 19,
+            "ci_low": 0.3627590353425504,
+            "ci_high": 0.9906480059376995
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 19,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "middle",
+        "field": "derived_max_diameter_cm",
+        "n": 19,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0,
+            "n": 19,
+            "correct": 19
+          },
+          "nemotron": {
+            "estimate": 0.7894736842105263,
+            "ci_low": 0.5666572155618583,
+            "ci_high": 0.9149232336708375,
+            "n": 19,
+            "correct": 15
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0,
+            "n": 19,
+            "correct": 19
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0,
+            "n": 19,
+            "correct": 19
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9824561403508771,
+            "sd": 0.024810764252159587,
+            "n": 19,
+            "ci_low": 0.753612688331012,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 19,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "middle",
+        "field": "attenuation",
+        "n": 19,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0,
+            "n": 19,
+            "correct": 19
+          },
+          "nemotron": {
+            "estimate": 0.6842105263157895,
+            "ci_low": 0.46010407675327475,
+            "ci_high": 0.8463562091220773,
+            "n": 19,
+            "correct": 13
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0,
+            "n": 19,
+            "correct": 19
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0,
+            "n": 19,
+            "correct": 19
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.8947368421052632,
+            "sd": 0.085947008518708,
+            "n": 19,
+            "ci_low": 0.5666572155618583,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 19,
+            "ci_low": 0.8318207759473837,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "smallest_first",
+        "field": "location_segments",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 0.45,
+            "ci_low": 0.2581978582556243,
+            "ci_high": 0.6579146575496577,
+            "n": 20,
+            "correct": 9
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.95,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.763868806553258,
+            "ci_high": 0.9911185511992047
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "smallest_first",
+        "field": "derived_max_diameter_cm",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 0.6,
+            "ci_low": 0.3865815007622531,
+            "ci_high": 0.781193467627183,
+            "n": 20,
+            "correct": 12
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9833333333333333,
+            "sd": 0.023570226039551605,
+            "n": 20,
+            "ci_low": 0.763868806553258,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "order",
+        "subtype": "smallest_first",
+        "field": "attenuation",
+        "n": 20,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "nemotron": {
+            "estimate": 0.65,
+            "ci_low": 0.43285427668523624,
+            "ci_high": 0.818808175898918,
+            "n": 20,
+            "correct": 13
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0,
+            "n": 20,
+            "correct": 20
+          },
+          "C3 first model (6.2)": {
+            "estimate": 0.9833333333333333,
+            "sd": 0.023570226039551605,
+            "n": 20,
+            "ci_low": 0.763868806553258,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 20,
+            "ci_low": 0.8388748419471806,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "repeat",
+        "subtype": "multiple",
+        "field": "lesion_count",
+        "n": 10,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999,
+            "n": 10,
+            "correct": 10
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999,
+            "n": 10,
+            "correct": 10
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999,
+            "n": 10,
+            "correct": 10
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999,
+            "n": 10,
+            "correct": 10
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 10,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 10,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999
+          }
+        }
+      },
+      {
+        "category": "repeat",
+        "subtype": "multiple",
+        "field": "derived_max_diameter_cm",
+        "n": 10,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999,
+            "n": 10,
+            "correct": 10
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999,
+            "n": 10,
+            "correct": 10
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999,
+            "n": 10,
+            "correct": 10
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999,
+            "n": 10,
+            "correct": 10
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 10,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 10,
+            "ci_low": 0.7224672001371107,
+            "ci_high": 0.9999999999999999
+          }
+        }
+      },
+      {
+        "category": "repeat",
+        "subtype": "single",
+        "field": "lesion_count",
+        "n": 5,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0,
+            "n": 5,
+            "correct": 5
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0,
+            "n": 5,
+            "correct": 5
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0,
+            "n": 5,
+            "correct": 5
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0,
+            "n": 5,
+            "correct": 5
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 5,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 5,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0
+          }
+        }
+      },
+      {
+        "category": "repeat",
+        "subtype": "single",
+        "field": "derived_max_diameter_cm",
+        "n": 5,
+        "cells": {
+          "flash_lite": {
+            "estimate": 1.0,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0,
+            "n": 5,
+            "correct": 5
+          },
+          "nemotron": {
+            "estimate": 1.0,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0,
+            "n": 5,
+            "correct": 5
+          },
+          "C1 parser v1.1": {
+            "estimate": 1.0,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0,
+            "n": 5,
+            "correct": 5
+          },
+          "C2 parser v1.2": {
+            "estimate": 1.0,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0,
+            "n": 5,
+            "correct": 5
+          },
+          "C3 first model (6.2)": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 5,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0
+          },
+          "H = C2 + C3": {
+            "estimate": 1.0,
+            "sd": 0.0,
+            "n": 5,
+            "ci_low": 0.5655175352168251,
+            "ci_high": 1.0
+          }
+        }
+      }
+    ],
+    "subtypes_without_flash_lite": [
+      "non_lesion/liver_span",
+      "non_lesion/node",
+      "non_lesion/vessel"
+    ]
+  },
+  "presence_challenge": {
+    "hedged": {
+      "scored": false,
+      "n": 30,
+      "labels": {
+        "lesion": 0,
+        "no lesion": 0,
+        "none (hedged)": 30
+      },
+      "systems": {
+        "nemotron": {
+          "n": 30,
+          "yes": 0,
+          "no": 0,
+          "unclear": 30
+        },
+        "C1 parser v1.1": {
+          "n": 30,
+          "yes": 0,
+          "no": 0,
+          "unclear": 30
+        },
+        "C2 parser v1.2": {
+          "n": 30,
+          "yes": 0,
+          "no": 0,
+          "unclear": 30
+        }
+      }
+    },
+    "liver_last": {
+      "scored": true,
+      "n": 30,
+      "labels": {
+        "lesion": 15,
+        "no lesion": 15,
+        "none (hedged)": 0
+      },
+      "systems": {
+        "nemotron": {
+          "n": 30,
+          "yes": 15,
+          "no": 4,
+          "unclear": 11,
+          "correct": 19,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.6333333333333333,
+            "ci_low": 0.4551356365479487,
+            "ci_high": 0.7812607919389929,
+            "n": 30,
+            "correct": 19
+          }
+        },
+        "C1 parser v1.1": {
+          "n": 30,
+          "yes": 15,
+          "no": 6,
+          "unclear": 9,
+          "correct": 21,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.7,
+            "ci_low": 0.5212421254128504,
+            "ci_high": 0.8333525173175619,
+            "n": 30,
+            "correct": 21
+          }
+        },
+        "C2 parser v1.2": {
+          "n": 30,
+          "yes": 15,
+          "no": 6,
+          "unclear": 9,
+          "correct": 21,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.7,
+            "ci_low": 0.5212421254128504,
+            "ci_high": 0.8333525173175619,
+            "n": 30,
+            "correct": 21
+          }
+        }
+      }
+    },
+    "liver_removed": {
+      "scored": true,
+      "n": 30,
+      "labels": {
+        "lesion": 0,
+        "no lesion": 30,
+        "none (hedged)": 0
+      },
+      "systems": {
+        "nemotron": {
+          "n": 30,
+          "yes": 0,
+          "no": 0,
+          "unclear": 30,
+          "correct": 0,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.11351339317396876,
+            "n": 30,
+            "correct": 0
+          }
+        },
+        "C1 parser v1.1": {
+          "n": 30,
+          "yes": 0,
+          "no": 0,
+          "unclear": 30,
+          "correct": 0,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.11351339317396876,
+            "n": 30,
+            "correct": 0
+          }
+        },
+        "C2 parser v1.2": {
+          "n": 30,
+          "yes": 0,
+          "no": 0,
+          "unclear": 30,
+          "correct": 0,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.0,
+            "ci_low": 0.0,
+            "ci_high": 0.11351339317396876,
+            "n": 30,
+            "correct": 0
+          }
+        }
+      }
+    },
+    "negation": {
+      "scored": true,
+      "n": 30,
+      "labels": {
+        "lesion": 0,
+        "no lesion": 30,
+        "none (hedged)": 0
+      },
+      "systems": {
+        "nemotron": {
+          "n": 30,
+          "yes": 0,
+          "no": 30,
+          "unclear": 0,
+          "correct": 30,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 1.0,
+            "ci_low": 0.8864866068260312,
+            "ci_high": 0.9999999999999999,
+            "n": 30,
+            "correct": 30
+          }
+        },
+        "C1 parser v1.1": {
+          "n": 30,
+          "yes": 0,
+          "no": 30,
+          "unclear": 0,
+          "correct": 30,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 1.0,
+            "ci_low": 0.8864866068260312,
+            "ci_high": 0.9999999999999999,
+            "n": 30,
+            "correct": 30
+          }
+        },
+        "C2 parser v1.2": {
+          "n": 30,
+          "yes": 0,
+          "no": 30,
+          "unclear": 0,
+          "correct": 30,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 1.0,
+            "ci_low": 0.8864866068260312,
+            "ci_high": 0.9999999999999999,
+            "n": 30,
+            "correct": 30
+          }
+        }
+      }
+    },
+    "ocr_noise": {
+      "scored": true,
+      "n": 30,
+      "labels": {
+        "lesion": 12,
+        "no lesion": 18,
+        "none (hedged)": 0
+      },
+      "systems": {
+        "nemotron": {
+          "n": 30,
+          "yes": 12,
+          "no": 5,
+          "unclear": 13,
+          "correct": 17,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.5666666666666667,
+            "ci_low": 0.3919730700081361,
+            "ci_high": 0.7262251442353347,
+            "n": 30,
+            "correct": 17
+          }
+        },
+        "C1 parser v1.1": {
+          "n": 30,
+          "yes": 12,
+          "no": 7,
+          "unclear": 11,
+          "correct": 19,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.6333333333333333,
+            "ci_low": 0.4551356365479487,
+            "ci_high": 0.7812607919389929,
+            "n": 30,
+            "correct": 19
+          }
+        },
+        "C2 parser v1.2": {
+          "n": 30,
+          "yes": 12,
+          "no": 7,
+          "unclear": 11,
+          "correct": 19,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.6333333333333333,
+            "ci_low": 0.4551356365479487,
+            "ci_high": 0.7812607919389929,
+            "n": 30,
+            "correct": 19
+          }
+        }
+      }
+    },
+    "other_organ_lesion": {
+      "scored": true,
+      "n": 30,
+      "labels": {
+        "lesion": 0,
+        "no lesion": 30,
+        "none (hedged)": 0
+      },
+      "systems": {
+        "nemotron": {
+          "n": 30,
+          "yes": 0,
+          "no": 1,
+          "unclear": 29,
+          "correct": 1,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.03333333333333333,
+            "ci_low": 0.005908590381612455,
+            "ci_high": 0.16670390991409173,
+            "n": 30,
+            "correct": 1
+          }
+        },
+        "C1 parser v1.1": {
+          "n": 30,
+          "yes": 0,
+          "no": 4,
+          "unclear": 26,
+          "correct": 4,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.13333333333333333,
+            "ci_low": 0.053096554840547455,
+            "ci_high": 0.296813266820363,
+            "n": 30,
+            "correct": 4
+          }
+        },
+        "C2 parser v1.2": {
+          "n": 30,
+          "yes": 0,
+          "no": 4,
+          "unclear": 26,
+          "correct": 4,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.13333333333333333,
+            "ci_low": 0.053096554840547455,
+            "ci_high": 0.296813266820363,
+            "n": 30,
+            "correct": 4
+          }
+        }
+      }
+    },
+    "paraphrase": {
+      "scored": true,
+      "n": 30,
+      "labels": {
+        "lesion": 11,
+        "no lesion": 19,
+        "none (hedged)": 0
+      },
+      "systems": {
+        "nemotron": {
+          "n": 30,
+          "yes": 11,
+          "no": 12,
+          "unclear": 7,
+          "correct": 23,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.7666666666666667,
+            "ci_low": 0.5907167384187784,
+            "ci_high": 0.8820761185551049,
+            "n": 30,
+            "correct": 23
+          }
+        },
+        "C1 parser v1.1": {
+          "n": 30,
+          "yes": 11,
+          "no": 15,
+          "unclear": 4,
+          "correct": 26,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.8666666666666667,
+            "ci_low": 0.703186733179637,
+            "ci_high": 0.9469034451594526,
+            "n": 30,
+            "correct": 26
+          }
+        },
+        "C2 parser v1.2": {
+          "n": 30,
+          "yes": 11,
+          "no": 15,
+          "unclear": 4,
+          "correct": 26,
+          "wrong": 0,
+          "accuracy_unclear_not_correct": {
+            "estimate": 0.8666666666666667,
+            "ci_low": 0.703186733179637,
+            "ci_high": 0.9469034451594526,
+            "n": 30,
+            "correct": 26
+          }
+        }
+      }
+    }
+  },
+  "repeat": {
+    "nemotron": {
+      "pairs": 50,
+      "field_agreement": {
+        "count": {
+          "estimate": 0.98,
+          "ci_low": 0.8950455641036219,
+          "ci_high": 0.9964607407283539,
+          "n": 50,
+          "correct": 49
+        },
+        "segments": {
+          "estimate": 0.94,
+          "ci_low": 0.8378290831116182,
+          "ci_high": 0.979385029651026,
+          "n": 50,
+          "correct": 47
+        },
+        "attenuation": {
+          "estimate": 1.0,
+          "ci_low": 0.9286524008666414,
+          "ci_high": 1.0,
+          "n": 50,
+          "correct": 50
+        },
+        "diameter_cm": {
+          "estimate": 0.98,
+          "ci_low": 0.8950455641036219,
+          "ci_high": 0.9964607407283539,
+          "n": 50,
+          "correct": 49
+        }
+      },
+      "presence_agreement": {
+        "estimate": 1.0,
+        "ci_low": 0.9286524008666414,
+        "ci_high": 1.0,
+        "n": 50,
+        "correct": 50
+      },
+      "all_fields_identical": {
+        "estimate": 0.94,
+        "ci_low": 0.8378290831116182,
+        "ci_high": 0.979385029651026,
+        "n": 50,
+        "correct": 47
+      }
+    }
+  },
+  "rejection_outcomes": {
+    "nemotron": {
+      "has_lesion": {
+        "value right": 0,
+        "value wrong": 0,
+        "not scored": 11
+      },
+      "lesion_count": {
+        "value right": 118,
+        "value wrong": 1,
+        "not scored": 50
+      },
+      "location_segments": {
+        "value right": 1,
+        "value wrong": 35,
+        "not scored": 8
+      },
+      "reported_dimensions_cm": {
+        "value right": 7,
+        "value wrong": 1,
+        "not scored": 0
+      },
+      "attenuation": {
+        "value right": 0,
+        "value wrong": 2,
+        "not scored": 2
+      }
+    },
+    "flash_lite": {
+      "has_lesion": {
+        "value right": 4,
+        "value wrong": 0,
+        "not scored": 0
+      },
+      "lesion_count": {
+        "value right": 4,
+        "value wrong": 0,
+        "not scored": 18
+      },
+      "location_segments": {
+        "value right": 0,
+        "value wrong": 0,
+        "not scored": 0
+      },
+      "reported_dimensions_cm": {
+        "value right": 0,
+        "value wrong": 0,
+        "not scored": 0
+      },
+      "attenuation": {
+        "value right": 0,
+        "value wrong": 0,
+        "not scored": 0
+      }
+    }
+  },
+  "llm_measures": {
+    "nemotron": {
+      "invalid_output_rate": 0.0,
+      "refusal_rate": 0.0,
+      "evidence_rejections": {
+        "has_lesion": 11,
+        "lesion_count": 169,
+        "location_segments": 44,
+        "reported_dimensions_cm": 8,
+        "attenuation": 4
+      },
+      "tokens": {
+        "input_tokens": 1413665,
+        "output_tokens": 118727,
+        "cache_read_tokens": 0
+      },
+      "latency_ms": {
+        "p50": 833.6,
+        "p95": 6779.2
+      },
+      "items": 920,
+      "duplicate_quote_items": 263,
+      "cost_usd": 0.0
+    },
+    "flash_lite": {
+      "invalid_output_rate": 0.0,
+      "refusal_rate": 0.0,
+      "evidence_rejections": {
+        "has_lesion": 4,
+        "lesion_count": 22,
+        "location_segments": 0,
+        "reported_dimensions_cm": 0,
+        "attenuation": 0
+      },
+      "tokens": {
+        "input_tokens": 841226,
+        "output_tokens": 89713,
+        "cache_read_tokens": 0
+      },
+      "latency_ms": {
+        "p50": 1311.7,
+        "p95": 25064.7
+      },
+      "items": 574,
+      "duplicate_quote_items": 219,
+      "cost_usd": 0.0
+    }
+  },
+  "transport_errors": {
+    "nemotron": {
+      "skipped_items_before_log": 232,
+      "logged_failed_attempts": {
+        "http_429": 442,
+        "http_502": 1
+      },
+      "logged_skipped_items": 55
+    },
+    "flash_lite": {
+      "skipped_items_before_log": 321,
+      "logged_failed_attempts": {},
+      "logged_skipped_items": 0
+    }
+  },
+  "dev_reference": {
+    "model": "openai/gpt-oss-120b (Groq)",
+    "items": 49,
+    "fields": {
+      "count": {
+        "estimate": 1.0,
+        "ci_low": 0.8830302015002593,
+        "ci_high": 1.0,
+        "n": 29,
+        "correct": 29
+      },
+      "segments": {
+        "estimate": 1.0,
+        "ci_low": 0.8864866068260312,
+        "ci_high": 0.9999999999999999,
+        "n": 30,
+        "correct": 30
+      },
+      "attenuation": {
+        "estimate": 1.0,
+        "ci_low": 0.8928208017449293,
+        "ci_high": 1.0,
+        "n": 32,
+        "correct": 32
+      },
+      "diameter_cm": {
+        "estimate": 1.0,
+        "ci_low": 0.8928208017449293,
+        "ci_high": 1.0,
+        "n": 32,
+        "correct": 32
+      }
+    },
+    "note": "Development set (Train), prompt v2, 49 of 100 items. Dropped from the evaluation for the rate limit only (Phase 7 Amendment 3). A reference, not an evaluation result."
+  },
+  "pacing_change": "24 November 2026, 12:53 UTC, during the Nemotron runs: at 40 requests per minute NVIDIA rejected most requests with HTTP 429 (281 failed attempts, 51 skipped items), so `config.json` was set to 10 requests per minute and 8 SDK retries (from the default 4); after it, 161 attempts still got 429 and 4 items were skipped, all finished on a rerun. This paces calls only, as the freeze allows (`prompt_freeze.json` note); outputs and settings are unchanged.",
+  "test_policy": "Test was not read."
+}

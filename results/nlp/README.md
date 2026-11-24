@@ -25,6 +25,7 @@ standard.
 | What does the held-out Challenge Set v3 test, and how does the parser do? | `transformers/challenge/extraction_challenge_v3.md`, `transformers/extraction/parser_challenge_v3.md` |
 | Does the per-lesion model fix order and counting? | `transformers/extraction/runs_lesion/comparison.md` |
 | What does parser v1.2 add, and which Train-aug item justifies each rule? | `parser_v1_2/train_aug_report.md` |
+| How do the API LLMs (Phase 7) do, beside the frozen candidates? | `docs/nlp/phase7_report.md` (numbers: `llm/phase7_report.json`) |
 | What is frozen for the Phase 8 final evaluation? | `phase8/candidates_freeze.json` (plan: `docs/nlp/phase8_analysis_plan.md`) |
 | How do all frozen candidates do per subtype on the seen Challenge Sets (diagnosis only)? | `phase8/challenge_a_diagnostics.md` |
 | Did hybrid H2 (Amendment 1) beat H on Train-aug? | `phase8/amendment1_train_aug.md` |
@@ -44,6 +45,7 @@ standard.
 | `gold_set/` | IDs and hashes of the gold-set sample (no report text) | `gold_set.py sample` |
 | `liver_text/` | Checks of the liver-only copy of the cleaned CSV: values kept, other organs left, parser v1.1 on full vs liver-only text | `build_liver_only_dataset.py` |
 | `parser_v1_2/` | Parser v1.2 vs v1.1 on 6.2 Train-aug, and the ablation evidence for each v1.2 rule | `transformers/extraction/parser_v1_2_report.py` |
+| `llm/` | Phase 7 LLM extraction: subsample, prompt versions and freeze, per-model predictions (`<provider>/<model>/<set>_<prompt>/`, with liver-sentence quotes as evidence), transport-error logs, and the Step 7 report numbers | `scripts/nlp/llm/` |
 | `phase8/` | Hashes of every frozen Phase 8 candidate and the Challenge-A diagnostics (Challenge-B's freeze record goes here too) | `freeze_candidates.py`, `challenge_a_diagnostics.py`, `validate_challenge_b.py` |
 | `transformers/` | Token lengths, the presence and extraction Challenge Set manifests, the BERT / BioBERT / ClinicalBERT presence runs and comparison, and parser v1.1 on the extraction Challenge Set | `scripts/nlp/transformers/` |
 

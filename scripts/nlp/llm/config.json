@@ -34,14 +34,15 @@
         }
       },
       "limits": {
-        "rpm": 40,
+        "rpm": 10,
         "rpd": null,
         "tpd": null,
         "trial_credits": 1000,
-        "reported": "no rate-limit headers returned; trial credits per public guides"
+        "reported": "no rate-limit headers returned; trial credits per public guides; 24 November 2026: repeated 429s on this model at 40 rpm (281 failed attempts logged), so rpm 10 and 8 SDK retries"
       },
       "data_terms": "trial terms: content not stored or used after the session, with exceptions; training not addressed",
-      "model_choice": "nvidia/nemotron-3.5-lightning-30b-a3b (Nemotron family, as the plan suggested), thinking off. Smoke tests 2026-11-23: mistral-large-4 and glm-5.3-flash timed out (300 s, 180 s); Nemotron with thinking on used all 4,000-16,000 tokens before answering; with thinking off and the JSON schema it answered in about 1 s."
+      "model_choice": "nvidia/nemotron-3.5-lightning-30b-a3b (Nemotron family, as the plan suggested), thinking off. Smoke tests 2026-11-23: mistral-large-4 and glm-5.3-flash timed out (300 s, 180 s); Nemotron with thinking on used all 4,000-16,000 tokens before answering; with thinking off and the JSON schema it answered in about 1 s.",
+      "max_retries": 8
     },
     "gemini": {
       "client": "openai_compatible",

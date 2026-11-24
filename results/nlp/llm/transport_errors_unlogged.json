@@ -1,0 +1,23 @@
+{
+  "what": "Items skipped after every SDK retry (timeouts, connection errors, HTTP 408/409/429/5xx) in the evaluation runs made before scripts/nlp/llm/run_logged.py existed. A skipped item writes no row and is called again by the next run, so none of these became llm_invalid_output or an abstention. Failed attempts that a later SDK retry recovered were not logged in these runs, and the error type of each skip was not kept.",
+  "sources": "the runners' final lines ('errors this run') and run_manifest.json api_errors_this_run, copied on 24 November 2026",
+  "runs": [
+    {
+      "run": "first evaluation run, 23-24 November 2026 (all three providers in parallel)",
+      "skipped_items": {
+        "gemini": {"validation": 185},
+        "nvidia": {"validation": 4, "extraction_challenge_v3": 1, "presence_challenge_v1": 108, "repeat": 45},
+        "groq": {"validation": 0, "extraction_challenge_v3": 0, "presence_challenge_v1": 0, "repeat": 0}
+      },
+      "note": "Gemini: the free-tier daily quota (429 generate_content_free_tier_requests, limit 500). Groq stopped at the client-side daily cap before any call."
+    },
+    {
+      "run": "second evaluation run, 24 November 2026, about 11:00-12:45 UTC (Amendment 3)",
+      "skipped_items": {
+        "gemini": {"validation": 0, "extraction_challenge_v3": 86, "repeat": 50},
+        "nvidia": {"presence_challenge_v1": 39, "repeat": 35}
+      },
+      "note": "Gemini: the daily quota of 500 was exhausted (a check at about 12:45 UTC returned 429 generate_content_free_tier_requests, limit 500), so Challenge v3 stopped at 174 of 260 and repeat at 0 of 50. Under Amendment 3 they are not run on a later day. The quota ended after about 360 successful calls (185 + 174, plus 2 one-line checks), not 495: attempts that the SDK retried were not logged in this run, so where the other requests of the 500 went (retried 503s or per-minute 429s, which Google may count) is not known."
+    }
+  ]
+}
