@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="title desc">
+  <title id="title">From report text to structured liver-lesion features</title>
+  <desc id="desc">Animation on a synthetic report: sentences about other organs are dropped by the liver-only text filter, then the lesion count, attenuation, Couinaud segment and largest diameter are highlighted in the text and appear as JSON fields with evidence spans.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1220"/><stop offset="0.6" stop-color="#111a33"/><stop offset="1" stop-color="#1a1235"/></linearGradient>
+    <style>
+      @keyframes v-count { 0%,22% { opacity:0; transform:translateX(-6px); } 26%,90% { opacity:1; transform:translateX(0); } 96%,100% { opacity:0; } }
+      .v-count { opacity:0; animation:v-count 12s ease-out infinite; }
+      @keyframes h-count { 0%,22% { fill:#e2e8f0; } 25%,90% { fill:#fbbf24; } 96%,100% { fill:#e2e8f0; } }
+      .h-count { font-weight:700; animation:h-count 12s ease-out infinite; }
+      @keyframes v-att { 0%,30% { opacity:0; transform:translateX(-6px); } 34%,90% { opacity:1; transform:translateX(0); } 96%,100% { opacity:0; } }
+      .v-att { opacity:0; animation:v-att 12s ease-out infinite; }
+      @keyframes h-att { 0%,30% { fill:#e2e8f0; } 33%,90% { fill:#fb7185; } 96%,100% { fill:#e2e8f0; } }
+      .h-att { font-weight:700; animation:h-att 12s ease-out infinite; }
+      @keyframes v-seg { 0%,38% { opacity:0; transform:translateX(-6px); } 42%,90% { opacity:1; transform:translateX(0); } 96%,100% { opacity:0; } }
+      .v-seg { opacity:0; animation:v-seg 12s ease-out infinite; }
+      @keyframes h-seg { 0%,38% { fill:#e2e8f0; } 41%,90% { fill:#c4b5fd; } 96%,100% { fill:#e2e8f0; } }
+      .h-seg { font-weight:700; animation:h-seg 12s ease-out infinite; }
+      @keyframes v-dia { 0%,46% { opacity:0; transform:translateX(-6px); } 50%,90% { opacity:1; transform:translateX(0); } 96%,100% { opacity:0; } }
+      .v-dia { opacity:0; animation:v-dia 12s ease-out infinite; }
+      @keyframes h-dia { 0%,46% { fill:#e2e8f0; } 49%,90% { fill:#5eead4; } 96%,100% { fill:#e2e8f0; } }
+      .h-dia { font-weight:700; animation:h-dia 12s ease-out infinite; }
+      @keyframes v-has { 0%,22% { opacity:0; transform:translateX(-6px); } 26%,90% { opacity:1; transform:translateX(0); } 96%,100% { opacity:0; } }
+      .v-has { opacity:0; animation:v-has 12s ease-out infinite; }
+      @keyframes v-ev { 0%,54% { opacity:0; transform:translateX(-6px); } 58%,90% { opacity:1; transform:translateX(0); } 96%,100% { opacity:0; } }
+      .v-ev { opacity:0; animation:v-ev 12s ease-out infinite; }
+      @keyframes tag { 0%,10% { opacity:0; transform:translateX(-6px); } 14%,90% { opacity:1; transform:translateX(0); } 96%,100% { opacity:0; } }
+      .tag { opacity:0; animation:tag 12s ease-out infinite; }
+      @keyframes st1 { 0%,8% { fill-opacity:.06; stroke-opacity:.25; } 10%,18% { fill-opacity:.28; stroke-opacity:1; } 20%,100% { fill-opacity:.06; stroke-opacity:.25; } }
+      .st1 { animation:st1 12s ease-in-out infinite; }
+      @keyframes st2 { 0%,20% { fill-opacity:.06; stroke-opacity:.25; } 22%,50% { fill-opacity:.28; stroke-opacity:1; } 52%,100% { fill-opacity:.06; stroke-opacity:.25; } }
+      .st2 { animation:st2 12s ease-in-out infinite; }
+      @keyframes st3 { 0%,52% { fill-opacity:.06; stroke-opacity:.25; } 54%,90% { fill-opacity:.28; stroke-opacity:1; } 92%,100% { fill-opacity:.06; stroke-opacity:.25; } }
+      .st3 { animation:st3 12s ease-in-out infinite; }
+      @keyframes dim { 0%,8% { opacity:1; } 14%,90% { opacity:.28; } 96%,100% { opacity:1; } } .dim { animation:dim 12s ease-in-out infinite; }
+      @keyframes strike { 0%,9% { transform:scaleX(0); } 15%,90% { transform:scaleX(1); } 96%,100% { transform:scaleX(0); } } .strike { transform-box:fill-box; transform-origin:left center; transform:scaleX(0); animation:strike 12s ease-in-out infinite; }
+      .flow { stroke-dasharray:6 8; animation:flow 1s linear infinite; } @keyframes flow { to { stroke-dashoffset:-14; } }
+      @keyframes prog { 0% { transform:scaleX(0); } 90% { transform:scaleX(1); } 100% { transform:scaleX(1); opacity:0; } } .prog { transform-box:fill-box; transform-origin:left center; animation:prog 12s linear infinite; }
+      @media (prefers-reduced-motion: reduce) { * { animation:none !important; } [class^='v-'], .tag { opacity:1 !important; } .strike { transform:scaleX(1) !important; } }
+    </style>
+  </defs>
+  <rect width="1200" height="440" rx="22" fill="url(#bg)"/>
+  <rect class="st1" x="300" y="22" width="190" height="30" rx="15" fill="#5eead4" stroke="#5eead4"/><text x="395" y="42" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#ccfbf1">1 · liver-only text</text><path d="M492 37 H508" stroke="#5eead4" stroke-opacity=".5" stroke-width="2"/><rect class="st2" x="510" y="22" width="190" height="30" rx="15" fill="#5eead4" stroke="#5eead4"/><text x="605" y="42" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#ccfbf1">2 · extract fields</text><path d="M702 37 H718" stroke="#5eead4" stroke-opacity=".5" stroke-width="2"/><rect class="st3" x="720" y="22" width="190" height="30" rx="15" fill="#5eead4" stroke="#5eead4"/><text x="815" y="42" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#ccfbf1">3 · structured + evidence</text>
+  <rect x="30" y="70" width="560" height="330" rx="14" fill="#0f172a" stroke="#334155"/><path d="M30 84 a14 14 0 0 1 14 -14 H576 a14 14 0 0 1 14 14 V104 H30 Z" fill="#1e293b"/><circle cx="50" cy="87" r="5" fill="#f87171"/><circle cx="68" cy="87" r="5" fill="#fbbf24"/><circle cx="86" cy="87" r="5" fill="#4ade80"/><text x="106" y="92" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" fill="#94a3b8">report.txt — synthetic example</text>
+  <rect x="650" y="70" width="520" height="330" rx="14" fill="#0f172a" stroke="#334155"/><path d="M650 84 a14 14 0 0 1 14 -14 H1156 a14 14 0 0 1 14 14 V104 H650 Z" fill="#1e293b"/><circle cx="670" cy="87" r="5" fill="#f87171"/><circle cx="688" cy="87" r="5" fill="#fbbf24"/><circle cx="706" cy="87" r="5" fill="#4ade80"/><text x="726" y="92" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" fill="#94a3b8">structured output (JSON)</text>
+  <g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="16">
+    <text x="56" y="150" fill="#94a3b8" font-weight="700">FINDINGS:</text><g class="dim"><text x="56" y="182" fill="#e2e8f0" textLength="279" lengthAdjust="spacing">The spleen is normal in size.</text><rect class="strike" x="56" y="176" width="279" height="2" fill="#f87171"/></g><text x="56" y="214" fill="#e2e8f0"><tspan class="h-count">Two</tspan> <tspan class="h-att">hypoattenuating</tspan> lesions are seen in</text><text x="56" y="246" fill="#e2e8f0">the liver, the largest in <tspan class="h-seg">segment 7</tspan>,</text><text x="56" y="278" fill="#e2e8f0">measuring <tspan class="h-dia">3.2 x 2.1 cm</tspan>.</text><g class="dim"><text x="56" y="310" fill="#e2e8f0" textLength="279" lengthAdjust="spacing">The kidneys are unremarkable.</text><rect class="strike" x="56" y="304" width="279" height="2" fill="#f87171"/></g>
+    <text x="680" y="122" fill="#94a3b8">{</text><circle class="v-has" cx="684" cy="145" r="4" fill="#86efac"/><text x="698" y="150"><tspan fill="#93c5fd">"has_lesion"</tspan><tspan fill="#94a3b8">: </tspan><tspan class="v-has" fill="#86efac" font-weight="700">true</tspan><tspan fill="#94a3b8">,</tspan></text><circle class="v-count" cx="684" cy="177" r="4" fill="#fbbf24"/><text x="698" y="182"><tspan fill="#93c5fd">"lesion_count"</tspan><tspan fill="#94a3b8">: </tspan><tspan class="v-count" fill="#fbbf24" font-weight="700">2</tspan><tspan fill="#94a3b8">,</tspan></text><circle class="v-seg" cx="684" cy="209" r="4" fill="#c4b5fd"/><text x="698" y="214"><tspan fill="#93c5fd">"location_segments"</tspan><tspan fill="#94a3b8">: </tspan><tspan class="v-seg" fill="#c4b5fd" font-weight="700">[7]</tspan><tspan fill="#94a3b8">,</tspan></text><circle class="v-dia" cx="684" cy="241" r="4" fill="#5eead4"/><text x="698" y="246"><tspan fill="#93c5fd">"derived_max_diameter_cm"</tspan><tspan fill="#94a3b8">: </tspan><tspan class="v-dia" fill="#5eead4" font-weight="700">3.2</tspan><tspan fill="#94a3b8">,</tspan></text><circle class="v-att" cx="684" cy="273" r="4" fill="#fb7185"/><text x="698" y="278"><tspan fill="#93c5fd">"attenuation"</tspan><tspan fill="#94a3b8">: </tspan><tspan class="v-att" fill="#fb7185" font-weight="700">"hypoattenuating"</tspan><tspan fill="#94a3b8">,</tspan></text><circle class="v-ev" cx="684" cy="305" r="4" fill="#e2e8f0"/><text x="698" y="310"><tspan fill="#93c5fd">"evidence"</tspan><tspan fill="#94a3b8">: </tspan><tspan class="v-ev" fill="#e2e8f0" font-weight="700">4 spans → offsets</tspan><tspan fill="#94a3b8"></tspan></text><text x="680" y="342" fill="#94a3b8">}</text>
+  </g>
+  <g class="tag"><rect x="350" y="165" width="196" height="24" rx="12" fill="#f87171" fill-opacity=".12" stroke="#f87171" stroke-opacity=".55"/><text x="448" y="182" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#fecaca">other organ · not liver text</text></g><g class="tag"><rect x="350" y="293" width="196" height="24" rx="12" fill="#f87171" fill-opacity=".12" stroke="#f87171" stroke-opacity=".55"/><text x="448" y="310" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#fecaca">other organ · not liver text</text></g>
+  <g fill="none" stroke-width="2.5">
+    <path class="flow" d="M592 235 H648" stroke="#5eead4"/>
+    <path d="M640 228 L649 235 L640 242" stroke="#5eead4"/>
+  </g>
+  <rect x="30" y="412" width="1140" height="3" rx="1.5" fill="#1e293b"/>
+  <rect class="prog" x="30" y="412" width="1140" height="3" rx="1.5" fill="#5eead4" fill-opacity=".7"/>
+  <text x="1170" y="432" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#64748b">parser v1.2 · ClinicalBERT extractor · hybrid H — illustrative, not a real report</text>
+</svg>

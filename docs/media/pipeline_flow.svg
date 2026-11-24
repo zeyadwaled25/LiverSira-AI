@@ -1,33 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="120" viewBox="0 0 900 120">
-  <style>
-    .node { fill:#1f6feb; stroke:#fff; stroke-width:2; rx:8; }
-    .label { fill:#fff; font-family:sans-serif; font-size:11px; text-anchor:middle; }
-    .pulse { animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
-  </style>
-  <g class="pulse">
-    <rect class="node" x="10" y="40" width="90" height="40"/>
-    <text class="label" x="55" y="65">Audit</text>
-  </g>
-  <line x1="100" y1="60" x2="120" y2="60" stroke="#888" stroke-width="2"/>
-  <rect class="node" x="120" y="40" width="90" height="40"/>
-  <text class="label" x="165" y="65">PDF Match</text>
-  <line x1="210" y1="60" x2="230" y2="60" stroke="#888" stroke-width="2"/>
-  <rect class="node" x="230" y="40" width="90" height="40"/>
-  <text class="label" x="275" y="65">Clean NLP</text>
-  <line x1="320" y1="60" x2="340" y2="60" stroke="#888" stroke-width="2"/>
-  <rect class="node" x="340" y="40" width="90" height="40"/>
-  <text class="label" x="385" y="65">Master JSONL</text>
-  <line x1="430" y1="60" x2="450" y2="60" stroke="#888" stroke-width="2"/>
-  <rect class="node" x="450" y="40" width="90" height="40"/>
-  <text class="label" x="495" y="65">Ground Truth</text>
-  <line x1="540" y1="60" x2="560" y2="60" stroke="#888" stroke-width="2"/>
-  <rect class="node" x="560" y="40" width="90" height="40"/>
-  <text class="label" x="605" y="65">Consistency</text>
-  <line x1="650" y1="60" x2="670" y2="60" stroke="#888" stroke-width="2"/>
-  <rect class="node" x="670" y="40" width="90" height="40"/>
-  <text class="label" x="715" y="65">Split</text>
-  <line x1="760" y1="60" x2="780" y2="60" stroke="#888" stroke-width="2"/>
-  <rect class="node" x="780" y="40" width="110" height="40"/>
-  <text class="label" x="835" y="65">Baseline Eval</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="530" viewBox="0 0 1200 530" role="img" aria-labelledby="title desc">
+  <title id="title">LiverSira AI pipelines</title>
+  <desc id="desc">Animated diagram of the two pipelines. NLP: AbdomenAtlas 3.0 Mini reports are audited and cleaned, split into frozen Train, Validation and Test sets, reduced to liver-only text, and passed to the frozen extraction candidates (parser v1.1, parser v1.2, ClinicalBERT extractor, hybrid H) and presence candidates (TF-IDF with logistic regression, ClinicalBERT); Phase 7 API LLMs are references only. All candidates go to the single Phase 8 run, which awaits Challenge-B and the Gold Set. CV: SMC-LUD ultrasound images, a patient-level manifest, a checksum-verified split, native-aspect preprocessing and a ResNet18 baseline notebook with no recorded results yet.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1220"/><stop offset="0.6" stop-color="#111a33"/><stop offset="1" stop-color="#1a1235"/></linearGradient>
+    <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c4b5fd" stop-opacity="0"/><stop offset=".5" stop-color="#c4b5fd" stop-opacity=".07"/><stop offset="1" stop-color="#c4b5fd" stop-opacity="0"/></linearGradient>
+    <filter id="soft" x="-20%" y="-30%" width="140%" height="160%"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#5eead4" flood-opacity=".45"/></filter>
+    
+  <path id="pNlp" d="M130 150 H1090" fill="none"/>
+  <path id="pPres" d="M470 150 V292 H760" fill="none"/>
+  <path id="pLlm" d="M640 182 V226" fill="none"/>
+  <path id="pCv" d="M130 430 H1000" fill="none"/>
+    <style>
+      .flow { fill:none; stroke-width:2.2; stroke-opacity:.55; stroke-dasharray:7 9; animation: flow 1.2s linear infinite; }
+      @keyframes flow { to { stroke-dashoffset:-16; } }
+      .node { animation: glow 3s ease-in-out infinite; }
+      @keyframes glow { 0%,100% { filter:none; } 50% { filter:url(#soft); } }
+      .await { animation: wait 1.8s ease-in-out infinite; }
+      @keyframes wait { 0%,100% { opacity:1; } 50% { opacity:.45; } }
+      .sweep { animation: sweep 4s ease-in-out infinite; }
+      @keyframes sweep { 0% { opacity:0; } 50% { opacity:1; } 100% { opacity:0; } }
+      @media (prefers-reduced-motion: reduce) { .flow, .node, .await, .sweep { animation:none; } .dot { display:none; } }
+    </style>
+  </defs>
+  <rect width="1200" height="530" rx="22" fill="url(#bg)"/>
+    <rect x="20" y="28" width="1160" height="292" rx="18" fill="#5eead4" fill-opacity=".03" stroke="#5eead4" stroke-opacity=".18"/>
+  <rect x="20" y="338" width="1160" height="170" rx="18" fill="#93c5fd" fill-opacity=".03" stroke="#93c5fd" stroke-opacity=".18"/>
+  <text x="40" y="56" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" letter-spacing="2" fill="#5eead4">NLP · RADIOLOGY REPORTS → LESION FEATURES</text>
+  <text x="40" y="366" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" letter-spacing="2" fill="#93c5fd">CV · LIVER ULTRASOUND → HCC vs HEMANGIOMA</text>
+  <use href="#pNlp" class="flow" stroke="#5eead4"/>
+  <use href="#pPres" class="flow" stroke="#c4b5fd"/>
+  <use href="#pLlm" stroke="#94a3b8" stroke-dasharray="3 5" stroke-width="1.6"/>
+  <use href="#pCv" class="flow" stroke="#93c5fd"/>
+  <circle r="4" fill="#5eead4" class="dot"><animateMotion dur="7s" repeatCount="indefinite" begin="0.00s"><mpath href="#pNlp"/></animateMotion></circle><circle r="4" fill="#5eead4" class="dot"><animateMotion dur="7s" repeatCount="indefinite" begin="-1.40s"><mpath href="#pNlp"/></animateMotion></circle><circle r="4" fill="#5eead4" class="dot"><animateMotion dur="7s" repeatCount="indefinite" begin="-2.80s"><mpath href="#pNlp"/></animateMotion></circle><circle r="4" fill="#5eead4" class="dot"><animateMotion dur="7s" repeatCount="indefinite" begin="-4.20s"><mpath href="#pNlp"/></animateMotion></circle><circle r="4" fill="#5eead4" class="dot"><animateMotion dur="7s" repeatCount="indefinite" begin="-5.60s"><mpath href="#pNlp"/></animateMotion></circle>
+  <circle r="4" fill="#c4b5fd" class="dot"><animateMotion dur="4s" repeatCount="indefinite" begin="0.00s"><mpath href="#pPres"/></animateMotion></circle><circle r="4" fill="#c4b5fd" class="dot"><animateMotion dur="4s" repeatCount="indefinite" begin="-2.00s"><mpath href="#pPres"/></animateMotion></circle>
+  <circle r="4" fill="#93c5fd" class="dot"><animateMotion dur="6s" repeatCount="indefinite" begin="0.00s"><mpath href="#pCv"/></animateMotion></circle><circle r="4" fill="#93c5fd" class="dot"><animateMotion dur="6s" repeatCount="indefinite" begin="-1.50s"><mpath href="#pCv"/></animateMotion></circle><circle r="4" fill="#93c5fd" class="dot"><animateMotion dur="6s" repeatCount="indefinite" begin="-3.00s"><mpath href="#pCv"/></animateMotion></circle><circle r="4" fill="#93c5fd" class="dot"><animateMotion dur="6s" repeatCount="indefinite" begin="-4.50s"><mpath href="#pCv"/></animateMotion></circle>
+  <g class="node " style="animation-delay:0s"><rect x="50" y="118" width="160" height="64" rx="12" fill="#0f172a" stroke="#5eead4" stroke-width="1.6"/><rect x="50" y="118" width="5" height="64" rx="2.5" fill="#5eead4"/><text x="132.0" y="147.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#e2e8f0">AbdomenAtlas 3.0</text><text x="132.0" y="166.0" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" fill="#94a3b8">CSV + PDF reports</text></g>
+  <g class="node " style="animation-delay:0.5s"><rect x="230" y="118" width="145" height="64" rx="12" fill="#0f172a" stroke="#5eead4" stroke-width="1.6"/><rect x="230" y="118" width="5" height="64" rx="2.5" fill="#5eead4"/><text x="304.5" y="147.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#e2e8f0">Audit &amp; clean</text><text x="304.5" y="166.0" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" fill="#94a3b8">prepare_dataset</text></g>
+  <g class="node " style="animation-delay:1s"><rect x="395" y="118" width="150" height="64" rx="12" fill="#0f172a" stroke="#5eead4" stroke-width="1.6"/><rect x="395" y="118" width="5" height="64" rx="2.5" fill="#5eead4"/><text x="472.0" y="147.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#e2e8f0">Frozen splits</text><text x="472.0" y="166.0" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" fill="#94a3b8">Train · Val · Test</text></g>
+  <g class="node " style="animation-delay:1.5s"><rect x="565" y="118" width="150" height="64" rx="12" fill="#0f172a" stroke="#5eead4" stroke-width="1.6"/><rect x="565" y="118" width="5" height="64" rx="2.5" fill="#5eead4"/><text x="642.0" y="147.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#e2e8f0">Liver-only text</text><text x="642.0" y="166.0" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" fill="#94a3b8">liver_text 1.0.1</text></g>
+  <rect x="560" y="226" width="160" height="34" rx="10" fill="#0f172a" stroke="#94a3b8" stroke-dasharray="4 4"/><text x="640" y="241" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#cbd5e1">Phase 7 API LLMs</text><text x="640" y="254" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10" fill="#94a3b8">R1 · R2 — references only</text>
+  <g class="node" style="animation-delay:2s"><rect x="745" y="70" width="240" height="236" rx="14" fill="#0f172a" stroke="#c4b5fd" stroke-width="1.6"/></g>
+  <text x="759" y="92" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" font-weight="800" letter-spacing="1.5" fill="#5eead4">EXTRACTION CANDIDATES</text>
+  <rect x="757" y="102" width="216" height="26" rx="8" fill="#5eead4" fill-opacity=".1" stroke="#5eead4" stroke-opacity=".55"/><text x="767" y="119" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="700" fill="#5eead4">C1</text><text x="797" y="119" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#e2e8f0">Parser v1.1</text>
+  <rect x="757" y="133" width="216" height="26" rx="8" fill="#5eead4" fill-opacity=".1" stroke="#5eead4" stroke-opacity=".55"/><text x="767" y="150" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="700" fill="#5eead4">C2</text><text x="797" y="150" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#e2e8f0">Parser v1.2 · 14 rules</text>
+  <rect x="757" y="164" width="216" height="26" rx="8" fill="#5eead4" fill-opacity=".1" stroke="#5eead4" stroke-opacity=".55"/><text x="767" y="181" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="700" fill="#5eead4">C3</text><text x="797" y="181" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#e2e8f0">ClinicalBERT extractor</text>
+  <rect x="757" y="195" width="216" height="26" rx="8" fill="#5eead4" fill-opacity=".1" stroke="#5eead4" stroke-opacity=".55"/><text x="767" y="212" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="700" fill="#5eead4">C5</text><text x="797" y="212" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#e2e8f0">Hybrid H = C2 + C3</text>
+  <text x="759" y="248" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" font-weight="800" letter-spacing="1.5" fill="#c4b5fd">PRESENCE CANDIDATES</text>
+  <rect x="757" y="256" width="105.0" height="26" rx="8" fill="#c4b5fd" fill-opacity=".1" stroke="#c4b5fd" stroke-opacity=".55"/><text x="767" y="273" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="700" fill="#c4b5fd">P1</text><text x="797" y="273" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#e2e8f0">TF-IDF+LR</text>
+  <rect x="868.0" y="256" width="105.0" height="26" rx="8" fill="#c4b5fd" fill-opacity=".1" stroke="#c4b5fd" stroke-opacity=".55"/><text x="878.0" y="273" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" font-weight="700" fill="#c4b5fd">P2</text><text x="908.0" y="273" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#e2e8f0">ClinBERT</text>
+  <rect class="sweep" x="747" y="72" width="236" height="232" rx="12" fill="url(#sweep)"/>
+  <g class="node p8" style="animation-delay:2.5s"><rect x="1010" y="118" width="155" height="64" rx="12" fill="#0f172a" stroke="#fbbf24" stroke-width="1.6"/><rect x="1010" y="118" width="5" height="64" rx="2.5" fill="#fbbf24"/><text x="1089.5" y="147.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#e2e8f0">Phase 8</text><text x="1089.5" y="166.0" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" fill="#94a3b8">one frozen run</text></g>
+  <g class="await" style="animation-delay:0.0s"><rect x="1010" y="200" width="155" height="26" rx="13" fill="#fbbf24" fill-opacity=".12" stroke="#fbbf24" stroke-opacity=".6"/><circle cx="1026" cy="213" r="4" fill="#fbbf24"/><text x="1094" y="217" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#fde68a">awaiting Challenge-B</text></g>
+  <g class="await" style="animation-delay:0.6s"><rect x="1010" y="234" width="155" height="26" rx="13" fill="#fbbf24" fill-opacity=".12" stroke="#fbbf24" stroke-opacity=".6"/><circle cx="1026" cy="247" r="4" fill="#fbbf24"/><text x="1094" y="251" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#fde68a">awaiting Gold Set</text></g>
+  <g class="node " style="animation-delay:0.0s"><rect x="50" y="398" width="160" height="64" rx="12" fill="#0f172a" stroke="#93c5fd" stroke-width="1.6"/><rect x="50" y="398" width="5" height="64" rx="2.5" fill="#93c5fd"/><text x="132.0" y="427.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#e2e8f0">SMC-LUD</text><text x="132.0" y="446.0" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" fill="#94a3b8">HCC vs Hemangioma</text></g>
+  <g class="node " style="animation-delay:0.6s"><rect x="240" y="398" width="160" height="64" rx="12" fill="#0f172a" stroke="#93c5fd" stroke-width="1.6"/><rect x="240" y="398" width="5" height="64" rx="2.5" fill="#93c5fd"/><text x="322.0" y="427.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#e2e8f0">Patient manifest</text><text x="322.0" y="446.0" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" fill="#94a3b8">source of truth</text></g>
+  <g class="node " style="animation-delay:1.2s"><rect x="430" y="398" width="165" height="64" rx="12" fill="#0f172a" stroke="#93c5fd" stroke-width="1.6"/><rect x="430" y="398" width="5" height="64" rx="2.5" fill="#93c5fd"/><text x="514.5" y="427.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#e2e8f0">Materialize split</text><text x="514.5" y="446.0" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" fill="#94a3b8">checksum-verified</text></g>
+  <g class="node " style="animation-delay:1.7999999999999998s"><rect x="625" y="398" width="165" height="64" rx="12" fill="#0f172a" stroke="#93c5fd" stroke-width="1.6"/><rect x="625" y="398" width="5" height="64" rx="2.5" fill="#93c5fd"/><text x="709.5" y="427.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#e2e8f0">Native aspect</text><text x="709.5" y="446.0" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" fill="#94a3b8">short side 224</text></g>
+  <g class="node " style="animation-delay:2.4s"><rect x="820" y="398" width="180" height="64" rx="12" fill="#0f172a" stroke="#93c5fd" stroke-width="1.6"/><rect x="820" y="398" width="5" height="64" rx="2.5" fill="#93c5fd"/><text x="912.0" y="427.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#e2e8f0">ResNet18 baseline</text><text x="912.0" y="446.0" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="11" fill="#94a3b8">notebook 05 · Train/Val</text></g>
+  <rect x="1018" y="416" width="150" height="28" rx="14" fill="#94a3b8" fill-opacity=".1" stroke="#94a3b8" stroke-opacity=".5" stroke-dasharray="4 3"/><text x="1093" y="434" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11.5" fill="#cbd5e1">no recorded results yet</text>
+  <path d="M1000 430 H1018" stroke="#94a3b8" stroke-dasharray="3 4" stroke-width="1.6"/>
 </svg>
