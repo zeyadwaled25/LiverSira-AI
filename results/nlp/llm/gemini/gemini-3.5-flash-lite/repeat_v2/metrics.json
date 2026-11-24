@@ -1,0 +1,63 @@
+{
+  "items": 0,
+  "pairs": 0,
+  "field_agreement": {
+    "count": {
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "n": 0,
+      "correct": 0
+    },
+    "segments": {
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "n": 0,
+      "correct": 0
+    },
+    "attenuation": {
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "n": 0,
+      "correct": 0
+    },
+    "diameter_cm": {
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "n": 0,
+      "correct": 0
+    }
+  },
+  "presence_agreement": {
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "n": 0,
+    "correct": 0
+  },
+  "all_fields_identical": {
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "n": 0,
+    "correct": 0
+  },
+  "invalid_output_rate": null,
+  "refusal_rate": null,
+  "evidence_rejections": {
+    "has_lesion": 0,
+    "lesion_count": 0,
+    "location_segments": 0,
+    "reported_dimensions_cm": 0,
+    "attenuation": 0
+  },
+  "tokens": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "latency_ms": null
+}

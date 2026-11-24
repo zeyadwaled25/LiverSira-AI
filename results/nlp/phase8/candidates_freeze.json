@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "frozen_on": "2026-11-23",
-  "git_commit_at_freeze": "77d1dc70991076fa36a2b5d55d72eef8438eae65",
+  "frozen_on": "2026-11-24",
+  "git_commit_at_freeze": "c1d6adf04f335331931c265f8818af7280db9591",
   "note": "The hashes are the freeze. git_commit_at_freeze is HEAD when this was written; the frozen files may have been uncommitted at that moment. No candidate had read Test or Challenge-B.",
   "analysis_plan": "docs/nlp/phase8_analysis_plan.md",
-  "amendment": 3,
-  "amendment_reason": "Amendment 3: verifiable-only scoring of real reports; masked C3 retrained but did not meet its pre-registered condition, so C3 stays the 6.2 model; C4 and C6 retired; presence candidates P1/P2 added; deployability rule; list closes when the Phase 8 run starts",
+  "amendment": 4,
+  "amendment_reason": "Amendment 4 corrected before any run: R1/R2 are not run in Phase 8 (Challenge-B is confidential, free tiers may keep inputs, no decision depends on them); a later separate Nemotron appendix on Challenge-B is allowed after NVIDIA terms are reviewed",
   "challenge_b_frozen_at_this_freeze": false,
   "hash_method": "sha256; text files (by suffix) after CRLF->LF normalization, other files raw bytes",
   "original_freeze": {
@@ -13,10 +13,10 @@
     "hash_method": "sha256 of raw bytes for every file (before .gitattributes)"
   },
   "supersedes": {
-    "freeze_file_sha256": "086373622169167b5bdee8bad3fc729336e98fcc6371c80d014bcb8e5c349e00",
-    "frozen_on": "2026-11-23",
-    "git_commit_at_freeze": "aaf707ce6eddcd8eb3fdfe18a8a6ce827145ca32",
-    "amendment": 2,
+    "freeze_file_sha256": "a13ead5a7e34c11bb10b8b91d341ca53ae40040b4ffb90c3e56692bd24b90e89",
+    "frozen_on": "2026-11-24",
+    "git_commit_at_freeze": "15efa38c8c11d7ca65309f95f280288303c00296",
+    "amendment": 4,
     "hash_method": "sha256; text files (by suffix) after CRLF->LF normalization, other files raw bytes"
   },
   "candidates": {
@@ -123,13 +123,33 @@
           "run_manifest": "results/nlp/transformers/presence/clinicalbert/seed87/run_manifest.json"
         }
       }
+    },
+    "R1": {
+      "name": "reference only (Amendment 4): nvidia/nemotron-3.5-lightning-30b-a3b (NVIDIA NIM), prompt v2; not deployable, never eligible, not run in Phase 8",
+      "files": [
+        "results/nlp/llm/prompt_freeze.json",
+        "results/nlp/llm/prompts.json",
+        "src/liversira_ai/nlp/llm_extraction.py",
+        "scripts/nlp/llm/few_shot_v1.json",
+        "scripts/nlp/llm/few_shot.py"
+      ]
+    },
+    "R2": {
+      "name": "reference only (Amendment 4): gemini-3.5-flash-lite (Gemini API), prompt v2; not deployable, never eligible, not run in Phase 8",
+      "files": [
+        "results/nlp/llm/prompt_freeze.json",
+        "results/nlp/llm/prompts.json",
+        "src/liversira_ai/nlp/llm_extraction.py",
+        "scripts/nlp/llm/few_shot_v1.json",
+        "scripts/nlp/llm/few_shot.py"
+      ]
     }
   },
   "sha256": {
     "docs/nlp/challenge_b_brief.md": "ccbebac4fba6fa2cabf394811929da9d2e696d123c6d49b2c031735465f6c405",
     "docs/nlp/extraction_train_aug_taxonomy.json": "b2a61c0fb53e764f9a0d22ef71d768fa18260471f36a05325ad8f3ced59852e9",
     "docs/nlp/extraction_train_aug_taxonomy.md": "d45be19d7fffd72342192bdc0d842ea7643562dca904f2a4cd87d109f4849b12",
-    "docs/nlp/phase8_analysis_plan.md": "cee4528fcf35b27a32e505546c45283c5b4e9d4483cd60b12786a060238fc9ad",
+    "docs/nlp/phase8_analysis_plan.md": "35c68438f56c5ddf9f0bd9c6f01975368b57143e0b5f5ef3156a4a947980bd3a",
     "models/transformers/extraction/clinicalbert/seed13/model.safetensors": "4c79074aa33e7432f079983797030a2c77d989704e88f962f0260d71ea18f866",
     "models/transformers/extraction/clinicalbert/seed13/tokenizer.json": "cb26b43c98e8266ae3e99c2a583cf8315d73b33a17e6b20b4df7ff1f22392d34",
     "models/transformers/extraction/clinicalbert/seed13/tokenizer_config.json": "f2798e35c25f42f2183aa52a2f9ad1cb28509c09744b862298ba7633fce54d91",
@@ -154,6 +174,8 @@
     "results/nlp/final_test/learned_presence_word_logreg_final.joblib": "333d4e2aed0c93e3add9934e662b4461ae0db6bf6c8de49eb04f3a61f49ea19a",
     "results/nlp/final_test/learned_presence_word_logreg_final_config.json": "7dea9cb4dbefe87487b4f1592ce8b12240b0d74bc57fe4419d85da31562f9351",
     "results/nlp/final_test/learned_presence_word_logreg_final_model_manifest.json": "9f76b102d93ab3c5648985af5d22cc54dc90b70ffc1ed4a1b0cb8413dc143e8e",
+    "results/nlp/llm/prompt_freeze.json": "da3beb6fab3e1ffd0462064f08e57c572a93f4c809c687a15e1f2350519034ee",
+    "results/nlp/llm/prompts.json": "599fca64287a3c20ac111cfaf8ed36074d0cce715d8de9c1eb77f5d4e01b92fe",
     "results/nlp/parser_v1_2/train_aug_report.json": "56c2f69a2efbef5a2fff217a09227f51fdbce12219ca6a08e72fd22cf4e2bc22",
     "results/nlp/predictions/learned_presence_test_predictions.jsonl": "3ead0bbc39fd476dcfd3be2fc71c0123e16ba356d7e24b9c828a2213fa2b5afa",
     "results/nlp/transformers/extraction/runs/clinicalbert/seed13/run_manifest.json": "d49f421d23c8ad14bfbf2c1435d250a015fc72f77ce21a90665bfd448cb38617",
@@ -162,6 +184,8 @@
     "results/nlp/transformers/presence/clinicalbert/seed13/run_manifest.json": "cc747c684f3f716c5a0eccb28f7de9583a6b21b0010d5ce95dd116fb8496a324",
     "results/nlp/transformers/presence/clinicalbert/seed42/run_manifest.json": "5636163a648901e2317f507525f1730c61e274bced1fa2f74f12d2d1115e23ca",
     "results/nlp/transformers/presence/clinicalbert/seed87/run_manifest.json": "c0b96b0b74a6b5448b881875dd5e4bfad9732d6a4132ed1b51ecf3d4fc8af62a",
+    "scripts/nlp/llm/few_shot.py": "292985821a998f74c98e22ed52637e0cd654f3eb3efabcf500abdc58ae26dbff",
+    "scripts/nlp/llm/few_shot_v1.json": "6c41b6547cd8daf6c0355526d1594a18f6e9877e3823ff604a848b71163f7053",
     "scripts/nlp/transformers/extraction/config.json": "f4ea36fb3fba6ad290d1a3af7980edf3eb80d86b6da07b35ac20bbb67fe8c5ae",
     "scripts/nlp/transformers/extraction/train.py": "857f17aad2a46729c5aa81393f07e9a9319c4284989e17c80397991b33979d84",
     "scripts/nlp/transformers/extraction/validate_challenge_b.py": "900cc48a19472aac8db51e1967374645657e8720f5d44b616687864ef5b934a2",
@@ -173,6 +197,7 @@
     "src/liversira_ai/nlp/hybrid.py": "67828cfabcf02f16b4375aedf364d38b6065b5c9e8847816ad6207a5f3d0f407",
     "src/liversira_ai/nlp/learned_presence.py": "5a6f5e9d2767c6a432a657ee894a8bf74c98b2c6b3bc0241e9cd0ada9cdfa86e",
     "src/liversira_ai/nlp/liver_text.py": "1bc06aee86ddeb8e499dd378589aac97468bfa37cb09b281f1711b3e019b0cd5",
+    "src/liversira_ai/nlp/llm_extraction.py": "e312ee97be384c699ac3195ce08ec1d0953f6d251690370b517ea5664f0b1055",
     "src/liversira_ai/nlp/metrics.py": "2fb40941752793c05b7b2d243e28040181f2f7b12cb03cf2ebc14f9482b3d736",
     "src/liversira_ai/nlp/parser_v1_1.py": "1ececcd2969e44e2106f500cfd3ed7dc478afc664ba7ac2ec362c86b32fbb797",
     "src/liversira_ai/nlp/parser_v1_2.py": "c4181fea66ebc9557c38931f9272f5bb6031f57cc13ff5e6a8e6d648c1ecf112",

@@ -1,0 +1,40 @@
+{
+  "version": "few_shot_v1",
+  "source_split": "train",
+  "text": "the liver-only text of each study (liver_nlp_liver_only.csv, narrative_clean = extract_liver_text(narrative_full_clean)); loaded at run time, not stored here",
+  "examples": [
+    {
+      "id": "BDMAP_00000201",
+      "teaches": "count from a listed largest lesion plus 'four smaller' (5); the largest lesion's segments and size; smaller lesions' sizes and the liver volume are not the largest lesion's size",
+      "output": {
+        "has_lesion": {"value": "yes", "quote": "there are multiple lesions"},
+        "lesion_count": {"value": 5, "quote": "Four smaller hypoattenuating liver lesions are also present"},
+        "location_segments": {"value": [2, 3, 4], "quote": "hepatic segments 2, 3, and 4"},
+        "reported_dimensions_cm": {"value": [16.0, 11.8], "quote": "16.0 x 11.8 cm"},
+        "attenuation": {"value": "hypoattenuating", "quote": "a large hypoattenuating mass"}
+      }
+    },
+    {
+      "id": "BDMAP_00000230",
+      "teaches": "explicit negation: count 0, every other value null",
+      "output": {
+        "has_lesion": {"value": "no", "quote": "No focal hepatic lesions are identified"},
+        "lesion_count": {"value": 0, "quote": null},
+        "location_segments": {"value": null, "quote": null},
+        "reported_dimensions_cm": {"value": null, "quote": null},
+        "attenuation": {"value": null, "quote": null}
+      }
+    },
+    {
+      "id": "BDMAP_00000171",
+      "teaches": "one lesion ('a liver lesion'); segment pair written as 6/7; attenuation in a separate sentence",
+      "output": {
+        "has_lesion": {"value": "yes", "quote": "a liver lesion is identified in hepatic segment 6/7"},
+        "lesion_count": {"value": 1, "quote": "a liver lesion is identified in hepatic segment 6/7"},
+        "location_segments": {"value": [6, 7], "quote": "hepatic segment 6/7"},
+        "reported_dimensions_cm": {"value": [6.2, 5.2], "quote": "6.2 x 5.2 cm"},
+        "attenuation": {"value": "hypoattenuating", "quote": "This lesion is hypoattenuating"}
+      }
+    }
+  ]
+}

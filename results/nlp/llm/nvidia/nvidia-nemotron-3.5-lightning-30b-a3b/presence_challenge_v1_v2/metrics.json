@@ -1,0 +1,108 @@
+{
+  "items": 210,
+  "by_category": {
+    "hedged": {
+      "n": 30,
+      "yes": 0,
+      "no": 0,
+      "unclear": 30,
+      "note": "no correct answer (hedged); the share answered 'unclear' is the measure"
+    },
+    "liver_last": {
+      "n": 30,
+      "yes": 15,
+      "no": 4,
+      "unclear": 11,
+      "accuracy": {
+        "estimate": 0.6333333333333333,
+        "ci_low": 0.4551356365479487,
+        "ci_high": 0.7812607919389929,
+        "n": 30,
+        "correct": 19
+      }
+    },
+    "liver_removed": {
+      "n": 30,
+      "yes": 0,
+      "no": 0,
+      "unclear": 30,
+      "accuracy": {
+        "estimate": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.11351339317396876,
+        "n": 30,
+        "correct": 0
+      }
+    },
+    "negation": {
+      "n": 30,
+      "yes": 0,
+      "no": 30,
+      "unclear": 0,
+      "accuracy": {
+        "estimate": 1.0,
+        "ci_low": 0.8864866068260312,
+        "ci_high": 0.9999999999999999,
+        "n": 30,
+        "correct": 30
+      }
+    },
+    "ocr_noise": {
+      "n": 30,
+      "yes": 12,
+      "no": 5,
+      "unclear": 13,
+      "accuracy": {
+        "estimate": 0.5666666666666667,
+        "ci_low": 0.3919730700081361,
+        "ci_high": 0.7262251442353347,
+        "n": 30,
+        "correct": 17
+      }
+    },
+    "other_organ_lesion": {
+      "n": 30,
+      "yes": 0,
+      "no": 1,
+      "unclear": 29,
+      "accuracy": {
+        "estimate": 0.03333333333333333,
+        "ci_low": 0.005908590381612455,
+        "ci_high": 0.16670390991409173,
+        "n": 30,
+        "correct": 1
+      }
+    },
+    "paraphrase": {
+      "n": 30,
+      "yes": 11,
+      "no": 12,
+      "unclear": 7,
+      "accuracy": {
+        "estimate": 0.7666666666666667,
+        "ci_low": 0.5907167384187784,
+        "ci_high": 0.8820761185551049,
+        "n": 30,
+        "correct": 23
+      }
+    }
+  },
+  "invalid_output_rate": 0.0,
+  "refusal_rate": 0.0,
+  "evidence_rejections": {
+    "has_lesion": 0,
+    "lesion_count": 41,
+    "location_segments": 0,
+    "reported_dimensions_cm": 0,
+    "attenuation": 2
+  },
+  "tokens": {
+    "input_tokens": 313781,
+    "output_tokens": 20516,
+    "cache_read_tokens": 0
+  },
+  "latency_ms": {
+    "p50": 1516.5,
+    "p95": 10524.5
+  }
+}

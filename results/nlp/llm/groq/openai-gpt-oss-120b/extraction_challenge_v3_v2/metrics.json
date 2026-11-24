@@ -1,0 +1,19 @@
+{
+  "items": 0,
+  "by_subtype": {},
+  "invalid_output_rate": null,
+  "refusal_rate": null,
+  "evidence_rejections": {
+    "has_lesion": 0,
+    "lesion_count": 0,
+    "location_segments": 0,
+    "reported_dimensions_cm": 0,
+    "attenuation": 0
+  },
+  "tokens": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "latency_ms": null
+}

@@ -1,0 +1,166 @@
+{
+  "version": "dev_set_v1",
+  "seed": 2028,
+  "source": "data/processed/nlp/extraction/extraction_train_v1.jsonl",
+  "source_sha256": "d794e543934e3bbd49e337886aeb9118ddbb825702607053df4fbed86d4f2be5",
+  "rule": "Train only; few-shot studies excluded; 28 real lesion-positive, 20 real lesion-free, 2 per generated subtype",
+  "real_positive": [
+    "BDMAP_00000006",
+    "BDMAP_00000012",
+    "BDMAP_00000169",
+    "BDMAP_00000204",
+    "BDMAP_00000403",
+    "BDMAP_00000745",
+    "BDMAP_00001166",
+    "BDMAP_00001501",
+    "BDMAP_00001841",
+    "BDMAP_00001861",
+    "BDMAP_00002003",
+    "BDMAP_00002104",
+    "BDMAP_00002243",
+    "BDMAP_00002543",
+    "BDMAP_00002937",
+    "BDMAP_00003269",
+    "BDMAP_00003337",
+    "BDMAP_00003415",
+    "BDMAP_00003920",
+    "BDMAP_00003926",
+    "BDMAP_00003980",
+    "BDMAP_00004103",
+    "BDMAP_00004566",
+    "BDMAP_00004607",
+    "BDMAP_00005124",
+    "BDMAP_00005180",
+    "BDMAP_00005691",
+    "BDMAP_00009065"
+  ],
+  "real_negative": [
+    "BDMAP_00000253",
+    "BDMAP_00002822",
+    "BDMAP_00003019",
+    "BDMAP_00003486",
+    "BDMAP_00003643",
+    "BDMAP_00003781",
+    "BDMAP_00004436",
+    "BDMAP_00004689",
+    "BDMAP_00005385",
+    "BDMAP_00005507",
+    "BDMAP_00005566",
+    "BDMAP_00005794",
+    "BDMAP_00005874",
+    "BDMAP_00007051",
+    "BDMAP_00007111",
+    "BDMAP_00007186",
+    "BDMAP_00007653",
+    "BDMAP_00007959",
+    "BDMAP_00008046",
+    "BDMAP_00008928"
+  ],
+  "generated": {
+    "attenuation/appearing": [
+      "aug:attenuation:appearing:BDMAP_00002106:770497",
+      "aug:attenuation:appearing:BDMAP_00006326:052603"
+    ],
+    "attenuation/of_density": [
+      "aug:attenuation:of_density:BDMAP_00005091:450736",
+      "aug:attenuation:of_density:BDMAP_00007867:458173"
+    ],
+    "attenuation/relative": [
+      "aug:attenuation:relative:BDMAP_00005371:000587",
+      "aug:attenuation:relative:BDMAP_00005758:383039"
+    ],
+    "attenuation/separate": [
+      "aug:attenuation:separate:BDMAP_00002665:040667",
+      "aug:attenuation:separate:BDMAP_00006897:528950"
+    ],
+    "count/another": [
+      "aug:count:another:BDMAP_00001609:476865",
+      "aug:count:another:BDMAP_00001989:101875"
+    ],
+    "count/in_total": [
+      "aug:count:in_total:BDMAP_00007600:233764",
+      "aug:count:in_total:BDMAP_00008952:012319"
+    ],
+    "count/listed": [
+      "aug:count:listed:BDMAP_00003353:868874",
+      "aug:count:listed:BDMAP_00008696:151791"
+    ],
+    "count/only_one": [
+      "aug:count:only_one:BDMAP_00004296:749558",
+      "aug:count:only_one:BDMAP_00006327:502957"
+    ],
+    "count/present": [
+      "aug:count:present:BDMAP_00005578:440503",
+      "aug:count:present:BDMAP_00006331:813996"
+    ],
+    "count/vague": [
+      "aug:count:vague:BDMAP_00002523:616214",
+      "aug:count:vague:BDMAP_00007783:176364"
+    ],
+    "order/larger_of_two": [
+      "aug:order:larger_of_two:BDMAP_00004815:596772",
+      "aug:order:larger_of_two:BDMAP_00007489:677459"
+    ],
+    "order/size_list": [
+      "aug:order:size_list:BDMAP_00002558:945412",
+      "aug:order:size_list:BDMAP_00006300:074528"
+    ],
+    "order/there_is": [
+      "aug:order:there_is:BDMAP_00001840:338173",
+      "aug:order:there_is:BDMAP_00006190:958132"
+    ],
+    "paraphrase/multiple": [
+      "aug:paraphrase:multiple:BDMAP_00008097:319154",
+      "aug:paraphrase:multiple:BDMAP_00008357:118799"
+    ],
+    "paraphrase/single": [
+      "aug:paraphrase:single:BDMAP_00006375:861938",
+      "aug:paraphrase:single:BDMAP_00006570:411688"
+    ],
+    "segment/couinaud": [
+      "aug:segment:couinaud:BDMAP_00006398:486155",
+      "aug:segment:couinaud:BDMAP_00009217:946525"
+    ],
+    "segment/lobe": [
+      "aug:segment:lobe:BDMAP_00000598:967103",
+      "aug:segment:lobe:BDMAP_00007811:468618"
+    ],
+    "segment/ordinal": [
+      "aug:segment:ordinal:BDMAP_00001331:815021",
+      "aug:segment:ordinal:BDMAP_00008445:423760"
+    ],
+    "segment/range": [
+      "aug:segment:range:BDMAP_00003413:197188",
+      "aug:segment:range:BDMAP_00004675:436161"
+    ],
+    "segment/roman": [
+      "aug:segment:roman:BDMAP_00000122:892853",
+      "aug:segment:roman:BDMAP_00001968:540781"
+    ],
+    "segment/subsegment": [
+      "aug:segment:subsegment:BDMAP_00007671:538655",
+      "aug:segment:subsegment:BDMAP_00008017:048404"
+    ],
+    "size/cm_by_cm": [
+      "aug:size:cm_by_cm:BDMAP_00006270:892812",
+      "aug:size:cm_by_cm:BDMAP_00006664:747194"
+    ],
+    "size/greatest_diameter": [
+      "aug:size:greatest_diameter:BDMAP_00000719:968524",
+      "aug:size:greatest_diameter:BDMAP_00004031:130461"
+    ],
+    "size/reaching": [
+      "aug:size:reaching:BDMAP_00008579:301480",
+      "aug:size:reaching:BDMAP_00008866:366259"
+    ],
+    "size/single_mm": [
+      "aug:size:single_mm:BDMAP_00000152:841390",
+      "aug:size:single_mm:BDMAP_00006219:926322"
+    ],
+    "size/three_in_size": [
+      "aug:size:three_in_size:BDMAP_00001036:850122",
+      "aug:size:three_in_size:BDMAP_00005684:771763"
+    ]
+  },
+  "count": 100
+}

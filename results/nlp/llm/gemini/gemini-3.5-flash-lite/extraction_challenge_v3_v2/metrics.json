@@ -1,0 +1,241 @@
+{
+  "items": 174,
+  "by_subtype": {
+    "control/canonical": {
+      "lesion_count": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "location_segments": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "derived_max_diameter_cm": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "attenuation": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      }
+    },
+    "count/altogether": {
+      "lesion_count": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      }
+    },
+    "count/isolated": {
+      "lesion_count": {
+        "estimate": 0.95,
+        "ci_low": 0.763868806553258,
+        "ci_high": 0.9911185511992047,
+        "n": 20,
+        "correct": 19,
+        "abstained": 1,
+        "wrong": 0
+      }
+    },
+    "count/listed_sentences": {
+      "lesion_count": {
+        "estimate": 0.85,
+        "ci_low": 0.6395811352592431,
+        "ci_high": 0.9476312541037835,
+        "n": 20,
+        "correct": 17,
+        "abstained": 3,
+        "wrong": 0
+      }
+    },
+    "count/unquantified": {
+      "lesion_count": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      }
+    },
+    "order/ascending": {
+      "location_segments": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "derived_max_diameter_cm": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "attenuation": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "lesion_count": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      }
+    },
+    "order/middle": {
+      "location_segments": {
+        "estimate": 1.0,
+        "ci_low": 0.8318207759473837,
+        "ci_high": 1.0,
+        "n": 19,
+        "correct": 19,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "derived_max_diameter_cm": {
+        "estimate": 1.0,
+        "ci_low": 0.8318207759473837,
+        "ci_high": 1.0,
+        "n": 19,
+        "correct": 19,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "attenuation": {
+        "estimate": 1.0,
+        "ci_low": 0.8318207759473837,
+        "ci_high": 1.0,
+        "n": 19,
+        "correct": 19,
+        "abstained": 0,
+        "wrong": 0
+      }
+    },
+    "order/smallest_first": {
+      "location_segments": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "derived_max_diameter_cm": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "attenuation": {
+        "estimate": 1.0,
+        "ci_low": 0.8388748419471806,
+        "ci_high": 1.0,
+        "n": 20,
+        "correct": 20,
+        "abstained": 0,
+        "wrong": 0
+      }
+    },
+    "repeat/multiple": {
+      "lesion_count": {
+        "estimate": 1.0,
+        "ci_low": 0.7224672001371107,
+        "ci_high": 0.9999999999999999,
+        "n": 10,
+        "correct": 10,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "derived_max_diameter_cm": {
+        "estimate": 1.0,
+        "ci_low": 0.7224672001371107,
+        "ci_high": 0.9999999999999999,
+        "n": 10,
+        "correct": 10,
+        "abstained": 0,
+        "wrong": 0
+      }
+    },
+    "repeat/single": {
+      "lesion_count": {
+        "estimate": 1.0,
+        "ci_low": 0.5655175352168251,
+        "ci_high": 1.0,
+        "n": 5,
+        "correct": 5,
+        "abstained": 0,
+        "wrong": 0
+      },
+      "derived_max_diameter_cm": {
+        "estimate": 1.0,
+        "ci_low": 0.5655175352168251,
+        "ci_high": 1.0,
+        "n": 5,
+        "correct": 5,
+        "abstained": 0,
+        "wrong": 0
+      }
+    }
+  },
+  "invalid_output_rate": 0.0,
+  "refusal_rate": 0.0,
+  "evidence_rejections": {
+    "has_lesion": 0,
+    "lesion_count": 13,
+    "location_segments": 0,
+    "reported_dimensions_cm": 0,
+    "attenuation": 0
+  },
+  "tokens": {
+    "input_tokens": 252577,
+    "output_tokens": 31896,
+    "cache_read_tokens": 0
+  },
+  "latency_ms": {
+    "p50": 1268.7,
+    "p95": 24540.6
+  }
+}

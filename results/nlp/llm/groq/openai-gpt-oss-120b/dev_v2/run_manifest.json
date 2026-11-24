@@ -1,0 +1,25 @@
+{
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "set": "dev",
+  "prompt_version": "v2",
+  "prompt_hash": "337a2921ba519b5b77b9ae48d3daf9dbc09148b980b61dc68d1f549779c4ec74",
+  "structured": "json_schema",
+  "extra": {},
+  "items_done": 49,
+  "items_total": 100,
+  "stopped_by_daily_cap": null,
+  "api_errors_this_run": 51,
+  "rate_limit_headers": {
+    "x-ratelimit-limit-requests": "1000",
+    "x-ratelimit-limit-tokens": "8000",
+    "x-ratelimit-remaining-requests": "910",
+    "x-ratelimit-remaining-tokens": "5886",
+    "x-ratelimit-reset-requests": "2h9m36s",
+    "x-ratelimit-reset-tokens": "15.854s"
+  },
+  "dev_set": "results/nlp/llm/dev_set_v1.json",
+  "updated": "2026-11-23T22:04:02+00:00",
+  "git_commit": "77f64a6a1d04938198c106eac3121e7ce2389cf1",
+  "test_policy": "Test was not read."
+}

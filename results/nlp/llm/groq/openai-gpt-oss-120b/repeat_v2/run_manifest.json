@@ -1,0 +1,18 @@
+{
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "set": "repeat",
+  "prompt_version": "v2",
+  "prompt_hash": "337a2921ba519b5b77b9ae48d3daf9dbc09148b980b61dc68d1f549779c4ec74",
+  "structured": "json_schema",
+  "extra": {},
+  "items_done": 0,
+  "items_total": 50,
+  "stopped_by_daily_cap": "daily cap reached for groq ({'day': '2026-11-23', 'requests': 148, 'tokens': 351395})",
+  "api_errors_this_run": 0,
+  "rate_limit_headers": {},
+  "dev_set": "results/nlp/llm/dev_set_v1.json",
+  "updated": "2026-11-23T22:10:09+00:00",
+  "git_commit": "0eb377986cf64887c2ccf2579ba49c23374eb036",
+  "test_policy": "Test was not read."
+}

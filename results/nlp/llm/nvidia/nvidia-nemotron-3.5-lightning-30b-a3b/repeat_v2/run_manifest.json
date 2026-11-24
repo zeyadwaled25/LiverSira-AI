@@ -1,0 +1,22 @@
+{
+  "provider": "nvidia",
+  "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "set": "repeat",
+  "prompt_version": "v2",
+  "prompt_hash": "337a2921ba519b5b77b9ae48d3daf9dbc09148b980b61dc68d1f549779c4ec74",
+  "structured": "json_schema",
+  "extra": {
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    }
+  },
+  "items_done": 50,
+  "items_total": 50,
+  "stopped_by_daily_cap": null,
+  "api_errors_this_run": 0,
+  "rate_limit_headers": {},
+  "dev_set": "results/nlp/llm/dev_set_v1.json",
+  "updated": "2026-11-24T13:04:28+00:00",
+  "git_commit": "b8419dbf680d64702f5003da6769689928959721",
+  "test_policy": "Test was not read."
+}

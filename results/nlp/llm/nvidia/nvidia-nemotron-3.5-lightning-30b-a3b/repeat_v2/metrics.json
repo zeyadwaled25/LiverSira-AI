@@ -1,0 +1,66 @@
+{
+  "items": 50,
+  "pairs": 50,
+  "field_agreement": {
+    "count": {
+      "estimate": 0.98,
+      "ci_low": 0.8950455641036219,
+      "ci_high": 0.9964607407283539,
+      "n": 50,
+      "correct": 49
+    },
+    "segments": {
+      "estimate": 0.94,
+      "ci_low": 0.8378290831116182,
+      "ci_high": 0.979385029651026,
+      "n": 50,
+      "correct": 47
+    },
+    "attenuation": {
+      "estimate": 1.0,
+      "ci_low": 0.9286524008666414,
+      "ci_high": 1.0,
+      "n": 50,
+      "correct": 50
+    },
+    "diameter_cm": {
+      "estimate": 0.98,
+      "ci_low": 0.8950455641036219,
+      "ci_high": 0.9964607407283539,
+      "n": 50,
+      "correct": 49
+    }
+  },
+  "presence_agreement": {
+    "estimate": 1.0,
+    "ci_low": 0.9286524008666414,
+    "ci_high": 1.0,
+    "n": 50,
+    "correct": 50
+  },
+  "all_fields_identical": {
+    "estimate": 0.94,
+    "ci_low": 0.8378290831116182,
+    "ci_high": 0.979385029651026,
+    "n": 50,
+    "correct": 47
+  },
+  "invalid_output_rate": 0.0,
+  "refusal_rate": 0.0,
+  "evidence_rejections": {
+    "has_lesion": 0,
+    "lesion_count": 11,
+    "location_segments": 2,
+    "reported_dimensions_cm": 1,
+    "attenuation": 0
+  },
+  "tokens": {
+    "input_tokens": 77519,
+    "output_tokens": 5910,
+    "cache_read_tokens": 0
+  },
+  "latency_ms": {
+    "p50": 1896.7,
+    "p95": 22742.7
+  }
+}

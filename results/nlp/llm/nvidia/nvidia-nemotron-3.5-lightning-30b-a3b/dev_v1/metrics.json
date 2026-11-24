@@ -1,0 +1,59 @@
+{
+  "items": 100,
+  "fields_lesion_positive": {
+    "count": {
+      "estimate": 0.961038961038961,
+      "ci_low": 0.8916001812736711,
+      "ci_high": 0.986662049959409,
+      "n": 77,
+      "correct": 74
+    },
+    "segments": {
+      "estimate": 0.8205128205128205,
+      "ci_low": 0.7209764606558008,
+      "ci_high": 0.8899608408107412,
+      "n": 78,
+      "correct": 64
+    },
+    "attenuation": {
+      "estimate": 0.9375,
+      "ci_low": 0.8618985123272557,
+      "ci_high": 0.973010624329158,
+      "n": 80,
+      "correct": 75
+    },
+    "diameter_cm": {
+      "estimate": 0.925,
+      "ci_low": 0.8458798391878072,
+      "ci_high": 0.9651747507069949,
+      "n": 80,
+      "correct": 74
+    }
+  },
+  "presence": {
+    "correct": 83,
+    "abstained": 17,
+    "wrong": 0
+  },
+  "invalid_output_rate": 0.0,
+  "refusal_rate": 0.0,
+  "retry_rate": 0.0,
+  "evidence_rejections": {
+    "has_lesion": 3,
+    "lesion_count": 15,
+    "location_segments": 7,
+    "reported_dimensions_cm": 3,
+    "attenuation": 1
+  },
+  "duplicate_quote_items": 27,
+  "tokens": {
+    "input_tokens": 146342,
+    "output_tokens": 13888,
+    "cache_read_tokens": 0
+  },
+  "latency_ms": {
+    "p50": 924.5,
+    "p95": 5345.1
+  },
+  "cost_usd": 0.0
+}
